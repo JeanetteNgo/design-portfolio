@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeanette's Portfolio</title>
+  <link rel="stylesheet" href="../../../styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body class="body-container">
+    <nav>
+      <a href="#" class="logo">
+        <img src="../../../logo.svg" alt="Logo">     
+      </a>
+      <ul class="nav-links">
+          <li><a href="../../../index.html">Portfolio</a></li>
+          <li><a href="#resume">Resume</a></li>
+      </ul>
+    </nav>
+
+    <header class="project-header">
+      <img src="img/cover.png" alt="Aureus Trial Adventure cover">
+      <h1>Aureus Trial Adventure:</h1>
+      <p>Reimagining classroom learning.</p> 
+
+      <section class="project-info">
+        <div class="project-info-item">
+          <h5>Timeline</h5>
+          <p>Mid Feb - End Mar 2023</p>
+        </div>
+        <span class="separator">&#x025C9;</span>
+        <div class="project-info-item">
+          <h5>My Role</h5>
+          <p>UI/UX Designer</p>
+        </div>
+        <span class="separator">&#x025C9;</span>
+        <div class="project-info-item">
+          <h5>Platform</h5>
+          <p>Tablet App</p>
+        </div>
+      </section>
+    </header>
+
+    <main class="project-container">
+      <section>
+        <h2>Introduction</h2>
+        <p>
+          Aureus Academy is a leading music school in Singapore, with over 18 outlets offering tailored one-on-one music lessons for students of all ages and skill levels. Prospective students are able to sign up for a free trial lesson before committing to regular music lessons.
+          <br><br>
+          The Aureus Trial Adventure (ATA) is an initiative to <b>digitalise and elevate the current classroom experience for trial music lessons.</b> Developed as a tablet application, v1.0.0 was released in April 2023 as a minimum viable product, featuring a set of basic but essential screens to help teachers better conduct their lessons in class.
+        </p>
+      </section>
+  
+      <section>
+        <h2>My Role</h2>
+        <p>
+          I worked collaboratively with a team of around 20, including graphic illustrators, motion graphic designers, audio producers, and developers.
+        </p>
+        <ul> As the lead UI/UX designer, I:
+          <li>Gathered requirements and worked cross-functionally to understand and chart out lesson flows</li>
+          <li>Designed UI elements and accompanying interactions for all screens</li>
+          <li>Created a comprehensive prototype for a product demo</li>
+          <li>Managed the consolidation of graphic assets across team functions, resulting in a more streamlined content upload process</li>
+          <li>Took charge of design QA by reporting any discrepancies between what was built versus what was designed</li>
+        </ul>
+      </section>
+
+      <section class="content-vertical">
+        <h2>Key Objectives</h2>
+        <p>
+          Before diving in, the team invited a training manager who is familiar with on-the-ground activities to give us a walkthrough of the current trial experience and answer any questions we had. 
+          <br><br>
+          We gained a better understanding of the class structure and learned that in a single trial lesson, teachers had to switch back and forth between multiple mediums such as videos, printed booklets, and external websites, according to internal curriculum requirements.
+        </p>
+        <img src="img/walkthrough-structure.png" alt="introductory walkthrough">
+        <ol> After getting to know some of the pain points teachers faced in conducting current trial lessons, we established several key objectives we hoped to accomplish with the app:
+          <li>To <b>streamline the teaching process for teachers</b> by consolidating multiple mediums onto one singular platform.</li>
+          <li>To <b>better engage young students aged 3-6 years old,</b> who account for a major demographic, during the trial lesson.</li>
+          <li>To <b>foster a three-way interaction between the teacher, student, and app.</b> The app should not take away from, but rather, complement the teacher's presence in the classroom.</li>
+        </ol>
+      </section>
+
+      <hr>
+      
+      <section>
+        <h2>Design & Development</h2>
+        <p>
+          Given the short timeline, we optimised the build process by constraining the designs to a set of reusable layouts to facilitate the ease of development and content management.
+        </p>
+        <!-- <div class="content-vertical">
+          <h3>Initialisation</h3>
+          <p>
+            This is the start of an amazing adventure!
+          </p>
+          <video controls>
+            <source src="img/ata-intro-compressed.mp4" type="video/mp4">
+          </video>
+        </div> -->
+        <hr>
+        <div class="content-horizontal">
+          <video controls autoplay loop muted>
+            <source src="img/layout-infobottom-2.mov" type="video/mp4">
+          </video>
+          <div>
+            <h3>Introducing Activities</h3>
+            <p>
+              At the start of each milestone, an information box appears alongside one of our Aureus characters to introduce the upcoming activity to the student.
+              <br><br>
+              The intention is to position the character as both a friend and a guide to the student to help ease them into the lesson activities, as opposed to having the teacher instruct them at every turn.
+            </p>
+          </div>
+        </div>
+        <hr>
+        <div class="content-horizontal">
+          <video controls autoplay loop muted>
+            <source src="img/layout-carousel.mov" type="video/mp4">
+          </video>
+          <div>
+            <h3>Teaching with Carousels</h3>
+            <p>
+              We needed a fun way to display a series of informational or instructional screens, and that's where the "carousel" layout comes into play.
+              <br><br>
+              The carousel layout is distinguished by its left and right arrows, which students can use to navigate to the previous or next in sequence in a series of related screens. This breaks up the monotony of having to tap on the 'Next' button multiple times in a row whenever instructional screens come up.
+            </p>
+          </div>
+        </div>
+        <hr>
+        <div class="content-horizontal">
+          <img src="img/layout-audiocard.png">
+          <div>
+            <h3>Engaging with Audio</h3>
+            <p>
+              The Aureus team places great importance on creating immersive and engaging music experiences. The "audio card" layout features a few of our characters in their natural habitats, along with types of sounds that the students have to identity upon tapping on each card.
+            </p>
+          </div>
+        </div>
+        <hr>
+        <div class="content-horizontal">
+          <video controls autoplay loop muted>
+            <source src="img/layout-videoplayer.mov" type="video/mp4">
+          </video>
+          <div>
+            <h3>Practicing with Videos</h3>
+            <p>
+              What good is theory without practice? After going through the necessary know-hows, students are given the chance to hone their practical skills by picking a song of their choice to play along.
+            </p>
+            <span class="note"> Note: audio available! </span>
+          </div>
+        </div>
+        <hr>
+        <div class="content-horizontal">
+          <video controls autoplay loop muted>
+            <source src="img/layout-popup.mov" type="video/mp4">
+          </video>
+          <div>
+            <h3>“Great Job” Pop-ups</h3>
+            <p>
+              A little encouragement goes a long way! The pop-up layout is used for congratulatory messages that appear upon completion of a milestone activity.
+              <br><br>
+              On top of providing segmentation in the flow, serving as an indicator that the current stage has ended and the next stage is about to begin, these pop-ups invoke in students a sense of achievement and fulfilment.
+            </p>
+          </div>
+        </div>
+        <hr>
+        <div class="content-horizontal">
+          <video controls autoplay loop muted>
+            <source src="img/evaluation-report.mov" type="video/mp4">
+          </video>
+          <div>
+            <h3>Progress Report</h3>
+            <p>
+              At the end of their journey, teachers can evaluate the student based on their performance in various categories. A report card will be generated for each student as a keepsake of their experience with Aureus.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <section>
+        <h2>Impact</h2>
+        <p>
+          Borrowing from gamification theories, the team was able to experiment and create an engaging and delightful musical experience for young students dipping their toes into music for the first time.
+          <br><br>
+          The project concluded as a success with positive engagement and feedback from teachers, students and parents. This has kickstarted plans to expand on the project to encompass not only trial lessons, but also normal lessons at Aureus Academy.
+        </p>
+      </section>
+
+    </main>
+
+
+
+  <footer>
+    <div class="footer-top">
+      <div class="footer-text">
+        <h2>Thanks for dropping by!</h2>
+        <p>If you would like to reach out for any questions or a chat, I’m just a click away!</p>
+      </div>
+      <div class="footer-cta">
+        <a class="cta-button" href="#">Resume</a>
+        <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <span class="separator">&#9729;</span>
+    <p class="copyright">&copy; 2023 Jeanette Ngo. All rights reserved.</p>
+  </footer>
+</body>
+</html>
