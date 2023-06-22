@@ -347,7 +347,7 @@ footer .copyright {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100;
+  width: 100%;
   gap: 20px;
 }
 .image-horizontal img {
@@ -358,7 +358,7 @@ footer .copyright {
   font-weight: 500;
 }
 
-/* Responsive Mobile & Tablet */
+/* Responsive Mobile and Tablet */
 @media (max-width: 1024px) {
   .body-container {
     padding: 0 16px;
@@ -472,11 +472,18 @@ footer .copyright {
     margin: 0;
   }
   .content-horizontal img, .content-horizontal video {
-    max-width: 100%;
+    width: 100%;
     height: auto;
     border-radius: 12px;
   }
   .content-horizontal p {
     font-size: 14px;
+  }
+  .image-horizontal {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .image-horizontal img {
+    max-width: 100%;
   }
 }
