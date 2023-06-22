@@ -358,8 +358,8 @@ footer .copyright {
   font-weight: 500;
 }
 
-/* Responsive Mobile */
-@media (max-width: 768px) {
+/* Responsive Mobile & Tablet */
+@media (max-width: 1024px) {
   .body-container {
     padding: 0 16px;
   }  
