@@ -385,10 +385,10 @@ footer .copyright {
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 20px;
+  gap: 16px;
 }
 .image-horizontal img {
-  max-width: 48%;
+  width: 48%;
 }
 .note {
   color: red;
@@ -540,6 +540,6 @@ footer .copyright {
     gap: 4px;
   }
   .image-horizontal img {
-    max-width: 100%;
+    width: 100%;
   }
 }
