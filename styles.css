@@ -281,9 +281,9 @@ footer p {
 }
 footer .copyright {
   margin-top: 20px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #8a808080;
+  font-size: 12px;
+  font-weight: 00;
+  color: #8a808090;
 }
 
 .project-header {
@@ -515,7 +515,7 @@ footer .copyright {
     padding: 20px;
   }
   .project-container hr {
-      margin: 20px 0px;
+    margin: 20px 0px;
   }
   .project-container .border-left {
     width: 80px;
@@ -537,9 +537,10 @@ footer .copyright {
   }
   .image-horizontal {
     flex-direction: column;
-    gap: 4px;
+    gap: 0px;
   }
   .image-horizontal img {
     width: 100%;
+    border-radius: 12px;
   }
 }
