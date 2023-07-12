@@ -30,7 +30,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 
 h1 {
-  font-size: 40px;
+  font-size: 36px;
   text-align: center;
   line-height: 133%;
 }
@@ -134,12 +134,60 @@ nav {
   background-color: #e5e5e5;
   border-radius: 20px;
 }
+.home-header h1 {
+  margin-bottom: 0;
+}
 .home-header p {
   font-family: 'Nunito', sans-serif;
   color: #FF6F66;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  margin-top: 0;
+  margin-top: 8px;
+}
+
+.wave {
+  /* font-size: 28px; */
+  animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s;        /* Change to speed up or slow down */
+  animation-iteration-count: infinite;  /* Never stop waving :) */
+  transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+    0% { transform: rotate( 0.0deg) }
+   10% { transform: rotate(12.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+   20% { transform: rotate(-6.0deg) }
+   30% { transform: rotate(12.0deg) }
+   40% { transform: rotate(-2.0deg) }
+   50% { transform: rotate(8.0deg) }
+   60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+  100% { transform: rotate( 0.0deg) }
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.social-links li {
+  list-style: none;
+  margin: auto;
+}
+.social-links li a {
+  margin: 16px;
+  text-decoration: none;
+}
+.social-links i {
+  color: #FF6E6580;
+  width: 8px;
+  font-size: 20px;
+  transition: 0.5s;
+}
+.social-links i:hover {
+  color: #FF6E65;
+  font-size: 24px;
+  transition: 0.5s;
 }
 
 main {
