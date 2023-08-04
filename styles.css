@@ -443,6 +443,18 @@ footer .copyright {
   font-weight: 500;
 }
 
+.experience-container {
+  max-width: 1080px;
+  margin: 40px auto 120px;
+  display: flex;
+  gap: 80px;
+}
+
+.experience-item .span {
+  display: flex;
+}
+
+
 /* Responsive Mobile and Tablet */
 @media (max-width: 1024px) {
   .body-container {
