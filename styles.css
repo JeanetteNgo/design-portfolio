@@ -488,7 +488,7 @@ footer .copyright {
   }
   .featured-projects {
     width: 100%;
-    margin: 60px auto;
+    margin: 40px auto 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
