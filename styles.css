@@ -1,4 +1,36 @@
-/* Reset some default styles */
+:root {
+  /* Font family */
+  --font-primary: 'Nunito', sans-serif;
+  --font-secondary: 'Lexend', sans-serif;
+
+  /* General Colors */
+  --neutral-0: #FFFFFF;
+  --neutral-25: #F6F5F7;
+  --neutral-50: #EEEDF0; 
+  --neutral-100: #CBCAD1;
+  --neutral-200: #BAB8C2;
+  --neutral-300: #868394;
+  --neutral-400: #524E66;
+  --neutral-500: #312F3D;
+
+  --salmon-25: #FFF1F0;
+  --salmon-50: #FFE2E0;
+  --salmon-100: #FFD4D1;
+  --salmon-200: #FFA8A3;
+  --salmon-300: #FF8B84;
+  --salmon-400: #FF6E65;
+  --salmon-500: #E6635B;
+
+  /* Theme Colors */
+  --text-color-primary: var(--salmon-400);
+  --text-color-secondary: var(--neutral-400);
+  --text-color-accent: var(--salmon-200);
+
+  --background-color: linear-gradient(to bottom, #FFF4F4, #ffffff);
+}
+
+
+/*------------------------------------*/
 html, body {
     margin: 0;
     padding: 0;
@@ -10,9 +42,9 @@ body {
     font-family: 'Nunito', sans-serif;
     min-height: 100vh;
     margin: 0 auto;
-    background: linear-gradient(to bottom, #FFF4F4, #ffffff);
+    background: var(--background-color);
   }
-  .body-container {
+.body-container {
     max-width: 1000px;
     padding: 0 40px;
   }
@@ -22,8 +54,8 @@ section {
 
 /* Header styles */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Nunito', sans-serif;
-    color: #FF6E65;
+    font-family: var(--font-primary);
+    color: var(--text-color-primary);
     font-weight: 900;
     line-height: 1;
     margin-bottom: 0.4em;
@@ -50,8 +82,8 @@ h5 {
 }
 
 p, ul, ol {
-    font-family: 'Lexend', sans-serif;
-    color: #524e66;
+    font-family: var(--font-secondary);
+    color: var(--neutral-400);
     font-size: 16px;
     font-weight: 400;
     line-height: 140%;
@@ -66,7 +98,7 @@ li {
   line-height: 1.2;
 }
 a {
-  color: #FF6E65;
+  color: var(--salmon-400);
 }
 a:hover {
   font-weight: bold;
@@ -113,10 +145,10 @@ nav {
   font-weight: 900;
   letter-spacing: 0.5px;
   transition: 500ms ease;
-  color: #FF6E65;
+  color: var(--salmon-400);
 }
 .nav-links .active {
-  color: #FF6E65;
+  color: var(--salmon-400);
 }
 
 .home-header {
@@ -130,9 +162,9 @@ nav {
 }
 .home-header img{
   width: 100px;
-  height: 100px;
   background-color: #e5e5e5;
-  border-radius: 20px;
+  border-radius: 16px;
+  border: 1px solid #FF6F6610;
 }
 .home-header h1 {
   margin-bottom: 0;
@@ -234,7 +266,7 @@ main {
   margin-bottom: 20px;
 }
 .feature-container {
-  background-color: #ffffff;
+  background-color: var(--neutral-0);
   box-shadow: 0px 4px 12px 0 rgba(0, 0, 0, 0.04);
   border-radius: 24px;
   margin: 16px 0;
