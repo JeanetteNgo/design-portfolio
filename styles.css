@@ -120,8 +120,8 @@ nav {
   top: 0;
   left: 0;
   z-index: 1000;
-  background-color: #fff1f080;
-  backdrop-filter: blur(60px);
+  background-color: #fff1f0aa;
+  backdrop-filter: blur(40px);
   border-bottom: 1px solid #FF6E6510;
 }
 .nav-container {
@@ -129,7 +129,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 12px 0 8px;
   margin: 0 auto;
 }
 .nav-container img {
@@ -310,13 +310,13 @@ main {
 .feature-container a {
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
   padding: 16px;
   text-decoration: none;
 }
 .feature-container img {
   border-radius: 20px;
-  width: 480px;
+  width: 460px;
   flex-shrink: 0;
 }
 .feature-container h2 {
@@ -332,18 +332,24 @@ main {
 
 .feature-container--external {
   background-color: var(--neutral-0);
-  box-shadow: none;
+  border: 3px dashed transparent;
 }
 .feature-container--external:hover {
   background-color: var(--neutral-25);
   border: 3px dashed var(--neutral-100);
 }
 
+.feature-container--disabled {
+  opacity:0.7; 
+  pointer-events:none; 
+  cursor:default;
+}
+
 .tag-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 4px;
+  margin-bottom: 8px;
   align-items: center;
 }
 .tag {
@@ -507,7 +513,7 @@ footer .copyright {
 .projects-timeline-section {
   max-width: 960px;
   width: 100%;
-  margin: 32px auto 100px;
+  margin: 40px auto 100px;
   padding: 0 20px;
   box-sizing: border-box;
 }
@@ -516,7 +522,7 @@ footer .copyright {
 .timeline-group {
   display: flex;
   min-width: 100%;
-  gap: -8px;
+  gap: -20px;
   align-items: stretch;
   margin-bottom: 0;  
 }
@@ -525,11 +531,10 @@ footer .copyright {
 .timeline-left {
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
   flex-shrink: 0;
 }
 .timeline-pill {
-  min-width: 60px;
   font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
@@ -545,10 +550,9 @@ footer .copyright {
 .timeline-line {
   flex: 1;
   width: 2px;
-  min-height: 180px;
   background: var(--salmon-100);
   border-radius: 2px;
-  margin-left: 40px;
+  margin-left: 4px;
 }
 
 .timeline-group:last-child .timeline-line {
@@ -1113,8 +1117,12 @@ footer .copyright {
     border-radius: 12px;
     max-width: 100%;
   }
-  .project-header h1 { font-size: 30px; }
-  .project-header p { font-size: 18px; }
+  .project-header h1 { 
+    font-size: 30px; 
+  }
+  .project-header p { 
+    font-size: 18px; 
+  }
   .project-info {
     flex-direction: column;
     background-color: #FFFCFC60;
@@ -1135,14 +1143,21 @@ footer .copyright {
     font-size: 14px;
     font-weight: 400;
   }
-  .project-info span { display: none; }
+  .project-info span { 
+    display: none; 
+  }
   .project-container {
     max-width: 96%;
     margin: 20px auto;
     padding: 20px;
   }
-  .project-container hr { margin: 20px 0; }
-  .project-container .border-left { width: 80px; margin: 20px 0; }
+  .project-container hr { 
+    margin: 20px 0; 
+  }
+  .project-container .border-left { 
+    width: 80px; 
+    margin: 20px 0; 
+  }
   .content-horizontal {
     flex-direction: column;
     gap: 12px;
@@ -1154,7 +1169,9 @@ footer .copyright {
     height: auto;
     border-radius: 12px;
   }
-  .content-horizontal p { font-size: 14px; }
+  .content-horizontal p { 
+    font-size: 14px; 
+  }
   .image-horizontal {
     flex-direction: column;
     gap: 0px;
@@ -1168,7 +1185,11 @@ footer .copyright {
   .projects-header h1 { 
     font-size: 30px; 
   }
-  
+
+  .projects-timeline-section {
+    width: 96%;
+  }
+ 
   .timeline-entry {
     flex-direction: column;
     gap: 8px;

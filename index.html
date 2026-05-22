@@ -14,7 +14,7 @@
 <body>
   <nav>
     <div class="nav-container">
-      <a href="index.html" class="logo">
+      <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" aria-label="Back to top">
         <img src="logo.svg" alt="Logo">
       </a>
       <ul class="nav-links">
@@ -74,8 +74,7 @@
       </a>
     </section>
 
-    <!-- APA – coming soon -->
-    <section class="feature-container" style="opacity:0.7; pointer-events:none; cursor:default;">
+    <section class="feature-container feature-container--disabled">
       <a href="projects/ui-ux/apa/index.html">
         <img src="projects/ui-ux/asua/img/cover.png" alt="APA cover">
         <div class="feature-info">
@@ -90,10 +89,9 @@
       </a>
     </section>
 
-    <!-- View all -->
-    <a class="view-all-link" href="projects.html">
+    <!-- <a class="view-all-link" href="projects.html">
       View all projects <span class="arrow">→</span>
-    </a>
+    </a> -->
   </main>
 
   <footer>
