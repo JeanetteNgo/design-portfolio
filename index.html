@@ -9,100 +9,106 @@
   <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 </head>
 
 <body>
-    <nav>
-      <div class="nav-container">
-        <a href="#" class="logo">
-          <img src="logo.svg" alt="Logo">     
-        </a>
-        <ul class="nav-links">
-            <li><a class="active" href="#">Portfolio</a></li>
-            <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li>
-        </ul>
-      </div>
-    </nav>
-    
-    <header class="home-header">
-      <img src="img/dp_2.jpeg" alt="display picture">
-      <h1>Hi! I am Jeanette. </h1>
-      <p>I dabble in design <span class="wave"> 🤘</span></p> 
-      <!-- <ul>
-        <li><a href="#">Email</a></li>
-        <li><a href="#">Linkedin</a></li>
-        <li><a href="#">GitHub</a></li>
-      </ul>  -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.svg" alt="Logo">
+      </a>
+      <ul class="nav-links">
+        <li><a class="active" href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <!-- <li><a href="about.html">About</a></li> -->
+        <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      <div class="about">
-        <ul>
-            <!-- <li>☀️ Based in sunny Singapore</li> -->
-            <li>☀️ Based in sunny Singapore</li>
-            <li>❤️ Likes picking up new skills. And penguins. </li>
-            <li>🛼 Currently Learning: Inline Skating</li>
-            <li>📚 Latest Read: Origin by Dan Brown</li>
-          </ul>
-      </div>
-    </header>
-  
-    <main class="featured-projects">
-      <h3> <span class="separator">&#9729;</span> Selected Works <span class="separator">&#9729;</span></h3>
+  <header class="home-page-header">
+    <img src="img/dp_2.jpeg" alt="Jeanette's photo">
+    <h1>Hi! I am Jeanette.</h1>
+    <p>I dabble in design <span class="wave">🤘</span></p>
 
-      <section class="feature-container">
-        <a href="projects/ui-ux/ata/index.html">
-          <img src="projects/ui-ux/ata/img/cover.png" alt="ATA cover">
-          <div class="feature-info">
+    <div class="about">
+      <ul>
+        <li>☀️ Based in sunny Singapore</li>
+        <li>❤️ Likes picking up new skills. And penguins.</li>
+        <li>🛼 Currently Learning: Inline Skating</li>
+        <li>📚 Latest Read: Origin by Dan Brown</li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="featured-projects">
+    <h3><span class="separator">&#9729;</span> Selected Works <span class="separator">&#9729;</span></h3>
+
+    <!-- ATA -->
+    <section class="feature-container">
+      <a href="projects/ui-ux/ata/index.html">
+        <img src="projects/ui-ux/ata/img/cover.png" alt="ATA cover">
+        <div class="feature-info">
+          <div class="tag-row">
             <span class="tag">UI/UX</span>
             <span class="tag">Case Study</span>
-            <h2>Aureus Trial Adventure</h2>
-            <p>Reimagining the classroom experience for Singapore's budding musicians.</p>
           </div>
-        </a>
-      </section>
+          <h2>Aureus Trial Adventure</h2>
+          <p>Reimagining the classroom experience for Singapore's budding musicians.</p>
+        </div>
+      </a>
+    </section>
 
-      <section class="feature-container">
-        <a href="projects/ui-ux/univus/index.html">
-          <img src="projects/ui-ux/univus/img/cover.png" alt="uNivUS cover">
-          <div class="feature-info">
+    <!-- uNivUS -->
+    <section class="feature-container">
+      <a href="projects/ui-ux/univus/index.html">
+        <img src="projects/ui-ux/univus/img/cover.png" alt="uNivUS cover">
+        <div class="feature-info">
+          <div class="tag-row">
             <span class="tag">UI</span>
             <span class="tag">Showcase</span>
-            <h2>uNivUS</h2>
-            <p>Centralising campus resources for busy university students.</p>
           </div>
-        </a>
-      </section>
+          <h2>uNivUS</h2>
+          <p>Centralising campus resources for busy university students.</p>
+        </div>
+      </a>
+    </section>
 
-      <section class="feature-container">
-        <a href="projects/ui-ux/apa/index.html">
-          <img src="projects/ui-ux/apa/img/cover.png" alt="APA cover">
-          <div class="feature-info">
+    <!-- APA – coming soon -->
+    <section class="feature-container" style="opacity:0.7; pointer-events:none; cursor:default;">
+      <a href="projects/ui-ux/apa/index.html">
+        <img src="projects/ui-ux/asua/img/cover.png" alt="APA cover">
+        <div class="feature-info">
+          <div class="tag-row">
             <span class="tag">UI/UX</span>
             <span class="tag">Case Study</span>
-            <h2>Aureus Academy App</h2>
-            <p>Helping parents manage their child's music lessons, stress-free.</p>
-            <span class="note"> Coming soon! </span>
           </div>
-        </a>
-      </section>
+          <h2>Aureus Trial Booking</h2>
+          <p>Simplifying trial lesson bookings for aspiring young musicians.</p>
+          <span class="note">✦ Coming soon!</span>
+        </div>
+      </a>
+    </section>
 
-    </main>
-
+    <!-- View all -->
+    <a class="view-all-link" href="projects.html">
+      View all projects <span class="arrow">→</span>
+    </a>
+  </main>
 
   <footer>
     <div class="footer-container">
       <div class="footer-top">
         <div class="footer-text">
-          <h2>Thanks for dropping by &#10083; </h2>
-          <p>If you would like to reach out for a chat, I’m just a click away.  </p>
+          <h2>Thanks for dropping by &#10083;</h2>
+          <p>If you would like to reach out for a chat, I'm just a click away.</p>
         </div>
         <div class="footer-cta">
           <a class="cta-button" href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a>
           <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank">LinkedIn</a>
         </div>
       </div>
-      <!-- <span class="separator">&#9729;</span> -->
-      <p class="copyright">&copy; 2023 Jeanette Ngo. All rights reserved.</p>
+      <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
     </div>
   </footer>
 </body>

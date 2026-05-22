@@ -2,118 +2,160 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeanette's Portfolio</title>
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/4bab21cbed.js" crossorigin="anonymous"></script>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Jeanette's Portfolio</title>
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <nav>
-      <div class="nav-container">
-        <a href="#" class="logo">
-          <img src="logo.svg" alt="Logo">     
-        </a>
-        <ul class="nav-links">
-            <li><a href="index.html">Portfolio</a></li>
-            <li><a class="active" href="#">About</a></li>
-            <!-- <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li> -->
-        </ul>
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        <img src="logo.svg" alt="Logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a class="active" href="about.html">About</a></li>
+        <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="about-page">
+
+    <!-- ── HERO ── -->
+    <section class="about-hero">
+      <img class="about-hero-img" src="img/dp_2.jpeg" alt="Jeanette">
+      <div class="about-hero-text">
+        <h1>Hey, I'm Jeanette 👋</h1>
+        <p class="subtitle">UI/UX Designer · Based in Singapore</p>
+        <p>
+          I'm a designer who loves crafting intuitive, delightful digital experiences — from gamified learning apps to campus super-apps. I believe good design should be invisible: it just feels right.
+          <br><br>
+          When I'm not pushing pixels, you'll find me lacing up my inline skates, getting lost in a Dan Brown novel, or searching for the world's cutest penguin content.
+        </p>
       </div>
-    </nav>
-    
-    <header class="home-header">
-        <img src="img/dp_5.jpg" alt="display picture">
-        <h1>Hi! I am Jeanette. </h1>
-        <p>I dabble in design <span class="wave"> 🤘</span></p> 
+    </section>
 
-        <ul class="social-links"> 
-            <li> <a href ="mailto: jeanettengo@u.nus.edu.com" data-toggle="tooltip" data-placement="top" title="Email"> 
-            <i class="fas fa-envelope"> </i> </a></li>
-            <li> <a href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank" data-toggle="tooltip" data-placement="top" title="LinkedIn"> 
-            <i class="fab fa-linkedin"></i> </a></li>
-            <li> <a href="https://www.behance.net/jeanettengo" target="_blank" data-toggle="tooltip" data-placement="top" title="Behance"> 
-            <i class="fab fa-behance-square"></i> </a></li>
-            <li> <a href = "https://github.com/JeanetteNgo/" target="_blank" data-toggle="tooltip" data-placement="top" title="GitHub"> 
-            <i class="fab fa-github"></i> </a></li>
-        </ul>
+    <!-- ── FUN FACTS ── -->
+    <section class="about-section">
+      <h2>About Me</h2>
 
-        <div class="about">
-            <ul>
-                <li>☀️ Based in sunny Singapore</li>
-                <li>❤️ Likes picking up new skills. And penguins. </li>
-                <li>🛼 Currently Learning: Inline Skating</li>
-                <li>📚 Latest Read: Origin by Dan Brown</li>
-            </ul>
+      <div class="fun-facts">
+        <div class="fun-fact-card">
+          <span class="fact-emoji">☀️</span>
+          <h6>Home base</h6>
+          <p>Sunny Singapore</p>
         </div>
-    </header>
-
-
-    <main>
-        <section class="experience-container">
-            <h3>Experience</h3>
-            <div>
-                <div class="experience-item">
-                    <h4> Aureus Group Pte Ltd  </h4> 
-                    <span>
-                        <h5 class="experience-role"> UI/UX Designer </h5>
-                        <p class="date"> Jun 22 - Present </p>
-                    </span>
-                    <div class="experience-info">
-                        <ul> As part of the Aureus Tech Team,
-                            <li> Worked in an agile environment to gather feature requirements, draft user stories and contribute to the successful launch of multiple projects in a timely manner </li>
-                            <li> Led and executed design across a suite of Aureus digital products, including creating user flows, wireframes and high-fidelity prototypes </li>
-                            <li> Worked closely with developers to raise issues and verify bug fixes, resulting in minimal design and functional bugs in production </li>
-                            <br>
-                            <li style="list-style: none;"> <b>Key Projects:</b> Aureus Academy App, Aureus Trial Adventure, KOKO Music </li>
-                        </ul>
-                    </div>
-                </div>
-                <br>
-                <div class="experience-item">
-                    <div class="experience-info">
-                        <h4> National University of Singapore </h4> 
-                        <h5 class="experience-role"> UI/UX Design Assistant </h5>
-                        <p class="date"> Oct 2021 - Mar 2022 </p>
-                        <ul>
-                            <li> Led UI design efforts for uNivUS, a one-stop app to access campus resources that is currently used by over 10,000 NUS students and staff  </li>
-                            <li> Created wireframes and high fidelity prototypes for various new features according to the product roadmap </li>
-                            <li> Designed publicity materials such as posters and banners to promote the use of uNivUS  </li>
-                        </ul>
-                    </div>
-                </div>
-
-            </div>
-
-
-        </section>
-
-    </main>
-
-  
-
-
-
-    <footer>
-        <div class="footer-container">
-        <div class="footer-top">
-            <div class="footer-text">
-            <h2>Thanks for dropping by &#10083; </h2>
-            <p>If you would like to reach out for a chat, I’m just a click away.  </p>
-            </div>
-            <div class="footer-cta">
-            <a class="cta-button" href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a>
-            <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank">LinkedIn</a>
-            </div>
+        <div class="fun-fact-card">
+          <span class="fact-emoji">🐧</span>
+          <h6>Favourite animal</h6>
+          <p>Penguins!</p>
         </div>
-        <!-- <span class="separator">&#9729;</span> -->
-        <p class="copyright">&copy; 2023 Jeanette Ngo. All rights reserved.</p>
+        <div class="fun-fact-card">
+          <span class="fact-emoji">🛼</span>
+          <h6>Currently learning</h6>
+          <p>Inline skating</p>
         </div>
-    </footer>
+        <div class="fun-fact-card">
+          <span class="fact-emoji">📚</span>
+          <p><strong>Latest read</strong><br><em>Origin</em> by Dan Brown. Thrills &amp; philosophy in one.</p>
+        </div>
+        <div class="fun-fact-card">
+          <span class="fact-emoji">🎵</span>
+          <p><strong>Background music</strong><br>Lo-fi beats on repeat when I'm in the zone.</p>
+        </div>
+        <div class="fun-fact-card">
+          <span class="fact-emoji">✨</span>
+          <p><strong>Ideal Superpower</strong><br>Time manipulation - so many things to learn, so little time</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SKILLS ── -->
+    <section class="about-section">
+      <h2>Skills &amp; Tools</h2>
+      <p>I work across the full design process — from user research and wireframing through to high-fidelity UI and developer handoff.</p>
+
+      <div class="skills-grid">
+        <span class="skill-chip highlight">UI Design</span>
+        <span class="skill-chip highlight">UX Design</span>
+        <span class="skill-chip highlight">Interaction Design</span>
+        <span class="skill-chip highlight">Prototyping</span>
+        <span class="skill-chip">User Research</span>
+        <span class="skill-chip">Usability Testing</span>
+        <span class="skill-chip">Design Systems</span>
+        <span class="skill-chip">Design QA</span>
+        <span class="skill-chip">Figma</span>
+        <span class="skill-chip">Adobe Illustrator</span>
+        <span class="skill-chip">Adobe Photoshop</span>
+        <span class="skill-chip">HTML / CSS</span>
+        <span class="skill-chip">Cross-functional Collaboration</span>
+        <span class="skill-chip">Stakeholder Communication</span>
+      </div>
+    </section>
+
+    <!-- ── EXPERIENCE ── -->
+    <section class="about-section">
+      <h2>Experience</h2>
+
+      <div class="exp-list">
+
+        <div class="exp-item">
+          <p class="exp-date">Feb 2023 – Mar 2023</p>
+          <p class="exp-title">UI/UX Designer</p>
+          <p class="exp-company">Aureus Group Pte Ltd · Singapore</p>
+          <p class="exp-desc">
+            Led the design of <em>Aureus Trial Adventure</em>, a gamified tablet app to digitalise and elevate trial music lessons. Worked cross-functionally with a 20-person team spanning illustration, motion graphics, audio production, and development. Owned requirements gathering, UI design, prototyping, asset management, and design QA.
+          </p>
+        </div>
+
+        <div class="exp-item">
+          <p class="exp-date">Oct 2021 – Mar 2022</p>
+          <p class="exp-title">UI/UX Design &amp; Publicity Assistant</p>
+          <p class="exp-company">National University of Singapore · Singapore</p>
+          <p class="exp-desc">
+            Sole student designer on NUS's campus super-app, used by 10,000+ students and staff. Conceptualised and designed key features including Calendar, Inbox, Events, E-Attendance, and Dark Mode. Also created publicity materials to promote new feature launches across campus.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── EDUCATION ── -->
+    <section class="about-section">
+      <h2>Education</h2>
+
+      <div class="edu-list">
+        <div class="edu-item">
+          <h4>National University of Singapore</h4>
+          <p>Bachelor of Arts (Hons) · Global Studies<br>
+          Specialisation: Global Health, Environment & Technology</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-text">
+          <h2>Thanks for dropping by &#10083;</h2>
+          <p>If you would like to reach out for a chat, I'm just a click away.</p>
+        </div>
+        <div class="footer-cta">
+          <a class="cta-button" href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a>
+          <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
+    </div>
+  </footer>
 </body>
 </html>
