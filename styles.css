@@ -180,18 +180,17 @@ nav {
    HOME PAGE
 ══════════════════════════════════════════ */
 .home-page-header {
-  padding: 60px 20px;
+  padding: 60px 20px 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 8px;
 }
 .home-page-header img{
   width: 100px;
-  background-color: #e5e5e5;
+  background-color: var(--neutral-25);
   border-radius: 16px;
-  border: 1px solid #FF6F6610;
+  border: 1px solid var(--salmon-50);
 }
 .home-page-header h1 {
   margin-bottom: 0;
@@ -254,9 +253,6 @@ main {
   justify-content: center;
   align-items: center;
 }
-.about-strip {
-  background-color: #FFEEED;
-}
 
 .about {
   width: 100%;
@@ -276,12 +272,13 @@ main {
   font-size: 15px;
   font-weight: 600;
   line-height: 1.5;
+  margin-top: 0;
 }
 
 /* ── HOME FEATURED PROJECTS ── */
 .featured-projects {
   width: 1000px;
-  margin: 40px auto;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -299,7 +296,7 @@ main {
   border-radius: 24px;
   margin: 16px 0;
   max-width: 90%;
-  border: 3px solid transparent;
+  border: 1px solid var(--salmon-25);
   transition: border 400ms ease, box-shadow 400ms ease, transform 400ms ease;
 }
 .feature-container:hover {
@@ -332,7 +329,7 @@ main {
 
 .feature-container--external {
   background-color: var(--neutral-0);
-  border: 3px dashed transparent;
+  border: 1px dashed var(--neutral-25);
 }
 .feature-container--external:hover {
   background-color: var(--neutral-25);
@@ -463,22 +460,20 @@ footer p {
   gap: 8px;
 }
 .cta-button {
-  height: 100%;
+  display: inline-block;
   text-decoration: none;
   text-transform: uppercase;
   font-weight: 800;
-  color: #ffffff;
-  background-color: #FF6F66;
+  color: var(--neutral-0);
+  background-color: var(--salmon-400);
   padding: 12px 48px;
   border-radius: 20px;
   border: 3px solid transparent;
   transition: border 300ms ease, transform 200ms ease;
-  display: inline-block;
 }
 .cta-button:hover {
-  border: 3px solid #E86860;
+  border: 3px solid var(--salmon-500);
   transform: translateY(-2px);
-  font-weight: 800;
 }
 .separator {
   font-size: 18px;
@@ -495,6 +490,9 @@ footer .copyright {
    PROJECTS PAGE
 ══════════════════════════════════════════ */
 .projects-page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   text-align: center;
   padding: 60px 20px 40px;
 }
@@ -513,12 +511,11 @@ footer .copyright {
 .projects-timeline-section {
   max-width: 960px;
   width: 100%;
-  margin: 40px auto 100px;
+  margin: 20px auto 100px;
   padding: 0 20px;
   box-sizing: border-box;
 }
  
-/* One group = one month bucket (pill + vertical line + stacked cards) */
 .timeline-group {
   display: flex;
   min-width: 100%;
@@ -554,7 +551,6 @@ footer .copyright {
   border-radius: 2px;
   margin-left: 4px;
 }
-
 .timeline-group:last-child .timeline-line {
   background: linear-gradient(to bottom, #FFD4D1, #FF6E6505);
 }
