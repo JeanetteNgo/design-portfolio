@@ -101,7 +101,7 @@ li {
   list-style-position: outside;
   margin-left: 1em;
   margin-top: 16px;
-  line-height: 120%;
+  line-height: 133%;
 }
 a {
   color: var(--salmon-400);
@@ -271,13 +271,13 @@ main {
   list-style: none;
   font-size: 15px;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.8;
   margin-top: 0;
 }
 
 /* ── HOME FEATURED PROJECTS ── */
 .featured-projects {
-  width: 1000px;
+  max-width: 1000px;
   margin: 20px auto;
   display: flex;
   flex-direction: column;
@@ -290,12 +290,17 @@ main {
 }
 
 /* ── PROJECT CARD (home & projects page) ── */
+
+.featured-projects .feature-container {
+  width: auto;
+  max-width: 92%;
+  margin: 16px auto;
+}
 .feature-container {
   background-color: var(--neutral-0);
   box-shadow: 0px 4px 12px 0 rgba(0, 0, 0, 0.04);
   border-radius: 24px;
   margin: 16px 0;
-  max-width: 90%;
   border: 1px solid var(--salmon-25);
   transition: border 400ms ease, box-shadow 400ms ease, transform 400ms ease;
 }
@@ -1073,6 +1078,7 @@ footer .copyright {
     width: 100%;
     margin: 40px auto 60px;
   }
+
   .feature-container a {
     flex-direction: column;
     gap: 8px;
