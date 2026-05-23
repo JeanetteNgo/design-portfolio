@@ -30,6 +30,7 @@
     <img src="img/dp_2.jpeg" alt="Jeanette's photo">
     <h1>Hi! I am Jeanette.</h1>
     <p>I dabble in design <span class="wave">🤘</span></p>
+
     <div class="about">
       <ul>
         <li>☀️ Based in sunny Singapore</li>
@@ -43,9 +44,54 @@
   <main class="featured-projects">
     <h3><span class="separator">&#9729;</span> Selected Works <span class="separator">&#9729;</span></h3>
 
-    <!-- Projects are injected here by render-projects.js -->
-    <div id="featured-projects-list"></div>
+    <!-- ATA -->
+    <section class="feature-container">
+      <a href="projects/ui-ux/ata/index.html">
+        <img src="projects/ui-ux/ata/img/cover.png" alt="ATA cover">
+        <div class="feature-info">
+          <div class="tag-row">
+            <span class="tag">UI/UX</span>
+            <span class="tag">Case Study</span>
+          </div>
+          <h2>Aureus Trial Adventure</h2>
+          <p>Reimagining the classroom experience for Singapore's budding musicians.</p>
+        </div>
+      </a>
+    </section>
 
+    <!-- uNivUS -->
+    <section class="feature-container">
+      <a href="projects/ui-ux/univus/index.html">
+        <img src="projects/ui-ux/univus/img/cover.png" alt="uNivUS cover">
+        <div class="feature-info">
+          <div class="tag-row">
+            <span class="tag">UI</span>
+            <span class="tag">Showcase</span>
+          </div>
+          <h2>uNivUS</h2>
+          <p>Centralising campus resources for busy university students.</p>
+        </div>
+      </a>
+    </section>
+
+    <section class="feature-container feature-container--disabled">
+      <a href="projects/ui-ux/apa/index.html">
+        <img src="projects/ui-ux/asua/img/cover.png" alt="APA cover">
+        <div class="feature-info">
+          <div class="tag-row">
+            <span class="tag">UI/UX</span>
+            <span class="tag">Case Study</span>
+          </div>
+          <h2>Aureus Trial Booking</h2>
+          <p>Simplifying trial lesson bookings for aspiring young musicians.</p>
+          <span class="note">✦ Coming soon!</span>
+        </div>
+      </a>
+    </section>
+
+    <!-- <a class="view-all-link" href="projects.html">
+      View all projects <span class="arrow">→</span>
+    </a> -->
   </main>
 
   <footer>
@@ -63,11 +109,5 @@
       <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
     </div>
   </footer>
-
-  <script src="projects-registry.js"></script>
-  <script src="render-projects.js"></script>
-  <script>
-    renderFeatured('#featured-projects-list');
-  </script>
 </body>
 </html>

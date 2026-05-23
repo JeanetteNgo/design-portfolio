@@ -14,7 +14,7 @@
 <body>
   <nav>
     <div class="nav-container">
-      <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" aria-label="Back to top">
+      <a href="index.html" class="logo" aria-label="Home">
         <img src="logo.svg" alt="Logo">
       </a>
       <ul class="nav-links">
@@ -33,138 +33,8 @@
 
   <main class="projects-timeline-section">
 
-    <!-- ══ 2026 ══ -->
-    <div class="timeline-group">
-      <div class="timeline-left">
-        <span class="timeline-pill">2026</span>
-        <div class="timeline-line"></div>
-      </div>
-      
-      <div class="timeline-cards">
-        <section class="feature-container feature-container--external">
-          <a href="https://nz.jeanettengo.com/" target="_blank" rel="noopener noreferrer">
-            <img src="projects/img/nz-blog-cover.png" alt="NZ Work Holiday Blog cover">
-            <div class="feature-info">
-              <div class="tag-row">
-                <span class="tag">Personal Project</span>
-                <span class="tag-outline">Web</span>
-              </div>
-              <h2>NZ Work Holiday Blog</h2>
-              <p>Vibe coding a personal blog to document my work holiday experience in NZ.</p>
-              <div class="tag-row">
-                <span class="note">✦ Work in Progress</span>
-                <span class="external-badge">
-                  <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 10L10 2M10 2H5M10 2V7"/>
-                  </svg>
-                  External link
-                </span>
-              </div>
-            </div>
-          </a>
-        </section>
-      </div>
-    </div>
-
-
-    <!-- ══ 2025 ══ -->
-    <div class="timeline-group">
-        <div class="timeline-left">
-          <span class="timeline-pill">2025</span>
-          <div class="timeline-line"></div>
-        </div>
-      
-        <div class="timeline-cards">
-            <section class="feature-container feature-container--disabled">
-                <a href="#" tabindex="-1" aria-disabled="true">
-                    <img src="projects/ui-ux/asua/img/cover.png" alt="Aureus Trial Booking cover">
-                    <div class="feature-info">
-                      <div class="tag-row">
-                        <span class="tag">UI/UX</span>
-                        <span class="tag">Case Study</span>
-                        <span class="tag-outline">Web</span>
-                      </div>
-                      <h2>Aureus Trial Booking</h2>
-                      <p>Simplifying trial lesson bookings for aspiring musicians.</p>
-                      <span class="note">✦ Coming soon!</span>
-                    </div>
-                </a>
-            </section>
-        </div>
-    </div>
-
-
-    <!-- ══ 2023 ══ -->
-    <div class="timeline-group">
-      <div class="timeline-left">
-        <span class="timeline-pill">2023</span>
-        <div class="timeline-line"></div>
-      </div>
-      
-      <div class="timeline-cards">
-        <section class="feature-container">
-          <a href="projects/ui-ux/ata/index.html">
-            <img src="projects/ui-ux/ata/img/cover.png" alt="Aureus Trial Adventure cover">
-            <div class="feature-info">
-              <div class="tag-row">
-                <span class="tag">UI/UX</span>
-                <span class="tag">Case Study</span>
-                <span class="tag-outline">Tablet</span>
-              </div>
-              <h2>Aureus Trial Adventure</h2>
-              <p>Reimagining the classroom experience for Singapore's budding musicians.</p>
-            </div>
-          </a>
-        </section>
-      </div>
-    </div>
-
-
-    <!-- ══ 2022 ══ -->
-    <div class="timeline-group">
-      <div class="timeline-left">
-        <span class="timeline-pill">2022</span>
-        <div class="timeline-line"></div>
-      </div>
-      
-      <div class="timeline-cards">
-        <section class="feature-container feature-container--external">
-            <a href="https://www.kokomusic.com/" target="_blank" rel="noopener noreferrer">
-              <img src="projects/img/koko-cover.png" alt="KOKO Music cover">
-              <div class="feature-info">
-                <div class="tag-row">
-                  <span class="tag">UI/UX</span>
-                  <span class="tag">Live Site</span>
-                  <span class="tag-outline">Web</span>
-                </div>
-                <h2>KOKO Music</h2>
-                <p>Leveraging e-learning to make music more accessible for all.</p>
-                <span class="external-badge">
-                  <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M2 10L10 2M10 2H5M10 2V7"/>
-                  </svg>
-                  External link
-                </span>
-              </div>
-            </a>
-        </section>
-
-        <section class="feature-container">
-          <a href="projects/ui-ux/univus/index.html">
-            <img src="projects/ui-ux/univus/img/cover.png" alt="uNivUS cover">
-            <div class="feature-info">
-              <div class="tag-row">
-                <span class="tag">UI</span>
-                <span class="tag">Showcase</span>
-                <span class="tag-outline">Mobile</span>
-              </div>
-              <h2>uNivUS</h2>
-              <p>Centralising campus resources for busy university students.</p>
-            </div>
-          </a>
-        </section>
-      </div>
-    </div>
+    <!-- Timeline groups are injected here by render-projects.js -->
+    <div id="projects-timeline"></div>
 
   </main>
 
@@ -183,5 +53,11 @@
       <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
     </div>
   </footer>
+
+  <script src="projects-registry.js"></script>
+  <script src="render-projects.js"></script>
+  <script>
+    renderTimeline('#projects-timeline');
+  </script>
 </body>
 </html>
