@@ -53,6 +53,21 @@ const PROJECTS = [
     featuredOrder: 3,
   },
 
+  /* ── 2024 ─────────────────────────────────── */
+  {
+    id:           "haast-compendium",
+    title:        "Haast River Motels Visitor Guide",
+    description:  "Digitising a visitor guidebook to provide ease of access for motel guests.",
+    year:         "2024",
+    cover:        "projects/asua/img/cover.png",
+    coverAlt:     "Haast River Compendium cover",
+    tags:         ["Freelance"],
+    tagOutlines:  ["Web"],
+    type:         "external",
+    href:         "https://haastrivermotels.github.io/compendium/index.html",
+    featured:     false,
+  },
+
   /* ── 2023 ─────────────────────────────────── */
   {
     id:           "ata",
