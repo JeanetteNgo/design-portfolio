@@ -20,28 +20,10 @@
     />
   </head>
 
-  <body>
-    <nav>
-      <div class="nav-container">
-        <a
-          href="#"
-          class="logo"
-          onclick="
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            return false;
-          "
-          aria-label="Back to top"
-        >
-          <img src="img/logo.svg" alt="Logo" />
-        </a>
-        <ul class="nav-links">
-          <li><a class="active" href="index.html">Home</a></li>
-          <li><a href="projects.html">Projects</a></li>
-          <!-- <li><a href="about.html">About</a></li> -->
-          <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li>
-        </ul>
-      </div>
-    </nav>
+  <body data-page="home" data-logo="top">
+    <nav id="site-nav"></nav>
+    <script src="data/site.js"></script>
+    <script src="js/site-shell.js"></script>
 
     <header class="home-page-header">
       <img src="img/profile/dp_2.jpeg" alt="Jeanette's photo" />
@@ -66,23 +48,7 @@
       <div id="featured-projects-list"></div>
     </main>
 
-    <footer>
-      <div class="footer-container">
-        <div class="footer-top">
-          <div class="footer-text">
-            <h2>Thanks for dropping by &#10083;</h2>
-            <p>If you would like to reach out for a chat, I'm just a click away.</p>
-          </div>
-          <div class="footer-cta">
-            <a class="cta-button" href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a>
-            <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank"
-              >LinkedIn</a
-            >
-          </div>
-        </div>
-        <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
-      </div>
-    </footer>
+    <footer id="site-footer"></footer>
 
     <script src="data/projects.js"></script>
     <script src="js/render-projects.js"></script>
