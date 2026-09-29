@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Jeanette's Portfolio</title>
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -28,7 +28,7 @@
           "
           aria-label="Back to top"
         >
-          <img src="logo.svg" alt="Logo" />
+          <img src="img/logo.svg" alt="Logo" />
         </a>
         <ul class="nav-links">
           <li><a class="active" href="index.html">Home</a></li>
@@ -40,7 +40,7 @@
     </nav>
 
     <header class="home-page-header">
-      <img src="img/dp_2.jpeg" alt="Jeanette's photo" />
+      <img src="img/profile/dp_2.jpeg" alt="Jeanette's photo" />
       <h1>Hi! I am Jeanette.</h1>
       <p>I dabble in design <span class="wave">🤘</span></p>
       <div class="about">
@@ -58,7 +58,7 @@
         <span class="separator">&#9729;</span> Selected Works <span class="separator">&#9729;</span>
       </h3>
 
-      <!-- Projects are injected here by render-projects.js -->
+      <!-- Projects are injected here by js/render-projects.js -->
       <div id="featured-projects-list"></div>
     </main>
 
@@ -80,8 +80,8 @@
       </div>
     </footer>
 
-    <script src="projects-registry.js"></script>
-    <script src="render-projects.js"></script>
+    <script src="data/projects.js"></script>
+    <script src="js/render-projects.js"></script>
     <script>
       renderFeatured('#featured-projects-list');
     </script>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Projects — Jeanette's Portfolio</title>
     <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -20,7 +20,7 @@
     <nav>
       <div class="nav-container">
         <a href="index.html" class="logo" aria-label="Home">
-          <img src="logo.svg" alt="Logo" />
+          <img src="img/logo.svg" alt="Logo" />
         </a>
         <ul class="nav-links">
           <li><a href="index.html">Home</a></li>
@@ -39,7 +39,7 @@
     </header>
 
     <main class="projects-timeline-section">
-      <!-- Timeline groups are injected here by render-projects.js -->
+      <!-- Timeline groups are injected here by js/render-projects.js -->
       <div id="projects-timeline"></div>
     </main>
 
@@ -61,8 +61,8 @@
       </div>
     </footer>
 
-    <script src="projects-registry.js"></script>
-    <script src="render-projects.js"></script>
+    <script src="data/projects.js"></script>
+    <script src="js/render-projects.js"></script>
     <script>
       renderTimeline('#projects-timeline');
     </script>

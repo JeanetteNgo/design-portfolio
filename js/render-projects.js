@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    RENDER PROJECTS
-   Consumes the PROJECTS array from projects-registry.js.
+   Consumes the PROJECTS array from data/projects.js.
    Exposes two public functions:
      renderFeatured(selector)  → Home page Selected Works section
      renderTimeline(selector)  → Projects page timeline
