@@ -1,63 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Jeanette's Portfolio</title>
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects — Jeanette's Portfolio</title>
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="stylesheet" href="styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-</head>
-
-<body>
-  <nav>
-    <div class="nav-container">
-      <a href="index.html" class="logo" aria-label="Home">
-        <img src="logo.svg" alt="Logo">
-      </a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a class="active" href="projects.html">Projects</a></li>
-        <!-- <li><a href="about.html">About</a></li> -->
-        <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <header class="projects-page-header">
-    <h1><span class="separator">&#9729;</span> All Projects <span class="separator">&#9729;</span></h1>
-    <p>Welcome to my design space 🎨</p>
-  </header>
-
-  <main class="projects-timeline-section">
-
-    <!-- Timeline groups are injected here by render-projects.js -->
-    <div id="projects-timeline"></div>
-
-  </main>
-
-  <footer>
-    <div class="footer-container">
-      <div class="footer-top">
-        <div class="footer-text">
-          <h2>Thanks for dropping by &#10083;</h2>
-          <p>If you would like to reach out for a chat, I'm just a click away.</p>
-        </div>
-        <div class="footer-cta">
-          <a class="cta-button" href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a>
-          <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank">LinkedIn</a>
-        </div>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="index.html" class="logo" aria-label="Home">
+          <img src="logo.svg" alt="Logo" />
+        </a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a class="active" href="projects.html">Projects</a></li>
+          <!-- <li><a href="about.html">About</a></li> -->
+          <li><a href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a></li>
+        </ul>
       </div>
-      <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
-    </div>
-  </footer>
+    </nav>
 
-  <script src="projects-registry.js"></script>
-  <script src="render-projects.js"></script>
-  <script>
-    renderTimeline('#projects-timeline');
-  </script>
-</body>
+    <header class="projects-page-header">
+      <h1>
+        <span class="separator">&#9729;</span> All Projects <span class="separator">&#9729;</span>
+      </h1>
+      <p>Welcome to my design space 🎨</p>
+    </header>
+
+    <main class="projects-timeline-section">
+      <!-- Timeline groups are injected here by render-projects.js -->
+      <div id="projects-timeline"></div>
+    </main>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-top">
+          <div class="footer-text">
+            <h2>Thanks for dropping by &#10083;</h2>
+            <p>If you would like to reach out for a chat, I'm just a click away.</p>
+          </div>
+          <div class="footer-cta">
+            <a class="cta-button" href="https://tinyurl.com/dem4s9x2" target="_blank">Resume</a>
+            <a class="cta-button" href="https://www.linkedin.com/in/jeanette-ngo/" target="_blank"
+              >LinkedIn</a
+            >
+          </div>
+        </div>
+        <p class="copyright">&copy; 2024 Jeanette Ngo. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="projects-registry.js"></script>
+    <script src="render-projects.js"></script>
+    <script>
+      renderTimeline('#projects-timeline');
+    </script>
+  </body>
 </html>
