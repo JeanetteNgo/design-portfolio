@@ -1,0 +1,97 @@
+:root {
+  color-scheme: light;
+
+  /* ══════════════════════════════════════════
+     DESIGN TOKENS
+     Layer 1 = PALETTE  (raw colours; defined once, never used directly in components)
+     Layer 2 = ROLES    (what each colour is FOR; components only use these)
+     To add a mode or palette later, override Layer 2 only, on the <html> element,
+     e.g. [data-mode="dark"] { ... } and [data-theme="sage"] { ... }.
+  ══════════════════════════════════════════ */
+
+  /* Font family */
+  --font-primary: 'Nunito', sans-serif;
+  --font-secondary: 'Lexend', sans-serif;
+
+  /* ── LAYER 1: PALETTE ── */
+  --neutral-0: #ffffff;
+  --neutral-25: #f6f5f7;
+  --neutral-50: #eeedf0;
+  --neutral-100: #cbcad1;
+  --neutral-200: #bab8c2;
+  --neutral-300: #868394;
+  --neutral-400: #524e66;
+  --neutral-500: #312f3d;
+
+  --salmon-25: #fff1f0;
+  --salmon-50: #ffe2e0;
+  --salmon-100: #ffd4d1;
+  --salmon-200: #ffa8a3;
+  --salmon-300: #ff8b84;
+  --salmon-400: #ff6e65;
+  --salmon-500: #e6635b;
+  --salmon-rgb: 255 110 101; /* = salmon-400, for translucent tints */
+
+  /* ── LAYER 2: ROLES ── */
+
+  /* Accent ramp: points at the active palette */
+  --accent-25: var(--salmon-25);
+  --accent-50: var(--salmon-50);
+  --accent-100: var(--salmon-100);
+  --accent-200: var(--salmon-200);
+  --accent-300: var(--salmon-300);
+  --accent-400: var(--salmon-400);
+  --accent-500: var(--salmon-500);
+  --accent: var(--accent-400);
+  --accent-rgb: var(--salmon-rgb);
+
+  /* Translucent accent tints (borders, dividers, hovers) */
+  --accent-a8: rgb(var(--accent-rgb) / 8%);
+  --accent-a14: rgb(var(--accent-rgb) / 14%);
+  --accent-a20: rgb(var(--accent-rgb) / 20%);
+  --accent-a25: rgb(var(--accent-rgb) / 25%);
+  --accent-a33: rgb(var(--accent-rgb) / 33%);
+  --accent-a50: rgb(var(--accent-rgb) / 50%);
+
+  /* Text */
+  --text-heading: var(--accent-400);
+  --text-accent: var(--accent-400); /* coloured links, labels, tags */
+  --text-body: var(--neutral-400);
+  --text-muted: var(--neutral-300);
+  --text-strong: var(--neutral-500);
+  --text-faint: #8a808090;
+  --text-band: #6e6666; /* home info strip */
+  --text-on-accent: var(--neutral-0); /* text sitting on an accent fill */
+  --nav-link: var(--accent-200);
+
+  /* Surfaces */
+  --bg-top: #fff4f4;
+  --bg-bottom: #ffffff;
+  --page-bg: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+  --surface: var(--neutral-0); /* cards */
+  --surface-soft: #fff4f4;
+  --surface-faint: #fffcfc;
+  --surface-band: #ffeeed; /* home info strip */
+  --surface-glass: #fffcfc90;
+  --surface-glass-soft: #fffcfc60;
+  --surface-neutral: var(--neutral-25);
+  --surface-neutral-strong: var(--neutral-50);
+  --nav-bg: #fff1f0aa;
+  --placeholder-bg: #e5e5e5;
+
+  /* Lines */
+  --border-neutral: var(--neutral-100);
+  --divider: #efebeb;
+
+  /* Shadows */
+  --shadow-rgb: 0 0 0;
+  --shadow-card: 0px 4px 12px 0 rgb(var(--shadow-rgb) / 4%);
+  --shadow-card-hover: 0px 8px 24px 0 rgb(var(--shadow-rgb) / 12%);
+  --shadow-accent-hover: 0 6px 24px rgb(var(--accent-rgb) / 10%);
+
+  /* Legacy names (kept so nothing else that uses them breaks) */
+  --text-color-primary: var(--text-heading);
+  --text-color-secondary: var(--text-body);
+  --text-color-accent: var(--accent-200);
+  --background-color: var(--page-bg);
+}

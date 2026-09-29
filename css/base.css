@@ -1,0 +1,127 @@
+/* ══════════════════════════════════════════
+   BASE
+   Reset, page background, typography. Loaded on every page.
+══════════════════════════════════════════ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+body {
+  font-family: var(--font-primary);
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--page-bg);
+}
+.body-container {
+  max-width: 1000px;
+  padding: 0 40px;
+}
+section {
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ══════════════════════════════════════════
+   GENERAL STYLES
+══════════════════════════════════════════ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-primary);
+  color: var(--text-color-primary);
+  line-height: 1;
+  margin-bottom: 0.4em;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 900;
+  text-align: center;
+  line-height: 133%;
+}
+h2 {
+  font-size: 32px;
+  font-weight: 900;
+}
+h3 {
+  font-size: 28px;
+  font-weight: 900;
+}
+h4 {
+  font-size: 24px;
+  font-weight: 800;
+}
+h5 {
+  font-size: 20px;
+  font-weight: 800;
+}
+h6 {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+p,
+ul,
+ol {
+  font-family: var(--font-secondary);
+  color: var(--text-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 140%;
+}
+ul,
+ol {
+  padding-left: 0;
+}
+li {
+  list-style-position: outside;
+  margin-left: 1em;
+  margin-top: 16px;
+  line-height: 133%;
+}
+a {
+  color: var(--text-accent);
+}
+a:hover {
+  font-weight: bold;
+  transition: 500ms ease;
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .body-container {
+    padding: 0 16px;
+  }
+  h1 {
+    font-size: 30px;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+  h4 {
+    font-size: 18px;
+  }
+  h5 {
+    font-size: 16px;
+  }
+  p,
+  ul,
+  ol {
+    font-size: 15px;
+  }
+}

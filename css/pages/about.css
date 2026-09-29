@@ -1,0 +1,227 @@
+/* ══════════════════════════════════════════
+   ABOUT PAGE
+══════════════════════════════════════════ */
+.about-page {
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto 100px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.about-hero {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  padding: 60px 0 48px;
+  border-bottom: 1.5px solid var(--accent-a8);
+}
+.about-hero-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 24px;
+  object-fit: cover;
+  background: var(--placeholder-bg);
+  flex-shrink: 0;
+  border: 2px solid var(--accent-a14);
+}
+.about-hero-text h1 {
+  text-align: left;
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+.about-hero-text .subtitle {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-accent);
+  margin: 0 0 16px;
+}
+.about-hero-text p {
+  font-size: 16px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Fun facts strip */
+.fun-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 40px 0;
+}
+.fun-fact-card {
+  background: var(--surface-soft);
+  border: 1.5px solid var(--accent-a14);
+  border-radius: 16px;
+  padding: 20px;
+  flex: 1 1 180px;
+  min-width: 160px;
+}
+.fun-fact-card .fact-emoji {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 8px;
+}
+.fun-fact-card h6 {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--text-strong);
+  margin: 0;
+  line-height: 1.4;
+}
+.fun-fact-card p {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+.fun-fact-card strong {
+  color: var(--text-body);
+}
+
+/* About page sections */
+.about-section {
+  margin: 52px 0;
+}
+.about-section h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+.about-section p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+/* Skills chips */
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.skill-chip {
+  font-family: var(--font-primary);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-body);
+  background: var(--surface-neutral);
+  border: 1.5px solid var(--surface-neutral-strong);
+  border-radius: 100px;
+  padding: 6px 16px;
+}
+.skill-chip.highlight {
+  color: var(--text-accent);
+  background: var(--accent-25);
+  border-color: var(--accent-a20);
+}
+
+/* Experience timeline */
+.exp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-left: 2px solid var(--accent-a14);
+  margin-left: 8px;
+  padding-left: 32px;
+  margin-top: 8px;
+}
+.exp-item {
+  position: relative;
+  padding-bottom: 36px;
+}
+.exp-item:last-child {
+  padding-bottom: 0;
+}
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: -40px;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 3px solid var(--surface);
+  box-shadow: 0 0 0 2px var(--accent-a25);
+}
+.exp-date {
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-300);
+  margin-bottom: 4px;
+  letter-spacing: 0.3px;
+}
+.exp-title {
+  font-family: var(--font-primary);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--text-body);
+  margin: 0 0 2px;
+}
+.exp-company {
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin: 0 0 8px;
+}
+.exp-desc {
+  font-size: 14px;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Education */
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 8px;
+}
+.edu-item {
+  background: var(--surface-faint);
+  border: 1.5px solid var(--accent-a8);
+  border-radius: 16px;
+  padding: 20px;
+}
+.edu-item h4 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 4px 0;
+}
+.edu-item p {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .about-hero {
+    flex-direction: column;
+    gap: 24px;
+    text-align: center;
+    padding: 40px 0 32px;
+  }
+  .about-hero-text h1 {
+    text-align: center;
+  }
+  .fun-facts {
+    gap: 8px;
+  }
+  .fun-fact-card {
+    flex: 1 1 140px;
+  }
+  .exp-list {
+    padding-left: 24px;
+  }
+  .exp-item::before {
+    left: -32px;
+  }
+}

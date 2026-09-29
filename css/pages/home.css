@@ -1,0 +1,134 @@
+/* ══════════════════════════════════════════
+   HOME PAGE
+══════════════════════════════════════════ */
+.home-page-header {
+  padding: 60px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home-page-header img {
+  width: 100px;
+  background-color: var(--surface-neutral);
+  border-radius: 16px;
+  border: 1px solid var(--accent-50);
+}
+.home-page-header h1 {
+  margin-bottom: 0;
+}
+.home-page-header p {
+  font-family: var(--font-primary);
+  color: var(--text-accent);
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.wave {
+  animation-name: wave-animation;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(12deg);
+  }
+  20% {
+    transform: rotate(-6deg);
+  }
+  30% {
+    transform: rotate(12deg);
+  }
+  40% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.social-links li {
+  list-style: none;
+  margin: auto;
+}
+.social-links li a {
+  margin: 16px;
+  text-decoration: none;
+}
+.social-links i {
+  color: var(--accent-a50);
+  width: 8px;
+  font-size: 20px;
+  transition: 0.5s;
+}
+.social-links i:hover {
+  color: var(--accent);
+  font-size: 24px;
+  transition: 0.5s;
+}
+
+.about {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  background-color: var(--surface-band);
+  padding: 20px;
+  margin: 20px 0;
+}
+.about li {
+  color: var(--text-band);
+  display: inline-block;
+  font-family: var(--font-primary);
+  list-style: none;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.8;
+  margin-top: 0;
+}
+
+/* ── HOME FEATURED PROJECTS ── */
+.featured-projects {
+  max-width: 1000px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+.featured-projects h3 {
+  margin-bottom: 20px;
+}
+
+.featured-projects .feature-container {
+  width: auto;
+  max-width: 92%;
+  margin: 16px auto;
+}
+
+@media (max-width: 1024px) {
+  .featured-projects {
+    width: 100%;
+    margin: 40px auto 60px;
+  }
+}

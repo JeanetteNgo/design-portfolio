@@ -1,0 +1,167 @@
+/* ══════════════════════════════════════════
+   COMPONENTS
+   Shared pieces: project cards, tags, badges, links. Loaded on every page.
+══════════════════════════════════════════ */
+
+/* ── PROJECT CARD (home & projects page) ── */
+
+.feature-container {
+  background-color: var(--text-on-accent);
+  box-shadow: var(--shadow-card);
+  border-radius: 24px;
+  margin: 16px 0;
+  border: 1px solid var(--accent-25);
+  transition:
+    border 400ms ease,
+    box-shadow 400ms ease,
+    transform 400ms ease;
+}
+.feature-container:hover {
+  border: 3px solid var(--accent-100);
+  box-shadow: var(--shadow-card-hover);
+  transform: scale(1.02);
+}
+.feature-container a {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  padding: 16px;
+  text-decoration: none;
+}
+.feature-container img {
+  border-radius: 20px;
+  width: 460px;
+  flex-shrink: 0;
+}
+.feature-container h2 {
+  font-size: 24px;
+  font-weight: 800;
+}
+.feature-info {
+  padding: 20px;
+}
+.feature-info p {
+  margin-top: 8px;
+}
+
+.feature-container--external {
+  background-color: var(--text-on-accent);
+  border: 1px dashed var(--surface-neutral);
+}
+.feature-container--external:hover {
+  background-color: var(--surface-neutral);
+  border: 3px dashed var(--border-neutral);
+}
+
+.feature-container--disabled {
+  opacity: 0.7;
+  pointer-events: none;
+  cursor: default;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+.tag {
+  color: var(--text-on-accent);
+  background-color: var(--accent-400);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.tag-outline {
+  color: var(--text-accent);
+  background-color: transparent;
+  border: 1.5px solid var(--accent-200);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.note {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-accent);
+  background: var(--accent-25);
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-top: 4px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+
+.external-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-muted);
+  background: var(--surface-neutral-strong);
+  border-radius: 100px;
+  padding: 4px 8px;
+  margin-top: 4px;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+}
+.external-badge svg {
+  width: 10px;
+  height: 10px;
+  stroke: var(--text-muted);
+  flex-shrink: 0;
+}
+
+/* ── VIEW ALL PROJECTS LINK (home) ── */
+.view-all-link {
+  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-primary);
+  font-weight: 800;
+  font-size: 15px;
+  color: var(--text-accent);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: gap 300ms ease;
+}
+.view-all-link:hover {
+  gap: 12px;
+  font-weight: 800;
+}
+.view-all-link .arrow {
+  font-size: 18px;
+  transition: transform 300ms ease;
+}
+.view-all-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+.separator {
+  font-size: 18px;
+  margin: 16px;
+  color: var(--accent-a50);
+}
+
+@media (max-width: 1024px) {
+  .feature-container a {
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+  }
+  .feature-container img {
+    border-radius: 12px;
+    width: 100%;
+  }
+  .feature-info {
+    width: 96%;
+    padding: 12px;
+  }
+}
