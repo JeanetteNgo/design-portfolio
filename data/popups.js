@@ -20,7 +20,7 @@ const POPUPS = {
       { heading: 'Design', items: ['Figma', 'Adobe Creative Suite'] },
       { heading: 'AI workflow', pencil: 'AI', items: ['Claude', 'Claude Code', 'Figma MCP'] },
       { heading: 'Skills', items: ['Wireframing', 'Prototyping', 'Usability Testing'] },
-      { heading: 'Others', items: ['Jira', 'GitHub'] },
+      { heading: 'Others', items: ['Jira', 'GitHub', 'VS Code'] },
     ],
   },
   doodles: {
