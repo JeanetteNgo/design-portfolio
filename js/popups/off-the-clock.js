@@ -92,10 +92,15 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     back.type = 'button';
     back.append(popupEl('kbd', '←', 'esc-key'), ' back to the list');
     back.addEventListener('click', _showList);
-    parts.push(back);
+
+    // The story scrolls; the back tag stays pinned in the footer
+    const scroll = popupEl('div', '', 'quest-scroll');
+    scroll.append(...parts);
+    const footer = popupEl('div', '', 'quest-footer');
+    footer.appendChild(back);
 
     lastButton = button;
-    memoryView.replaceChildren(...parts);
+    memoryView.replaceChildren(scroll, footer);
     listView.hidden = true;
     memoryView.hidden = false;
     back.focus();
@@ -144,14 +149,19 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   close.dataset.popupClose = '';
   close.append(popupEl('kbd', 'Esc', 'esc-key'), ' to close');
 
-  // Title and intro sit in a header that stays pinned while the list scrolls. The title is
-  // repeated here for the eye; the dialog's own (hidden) title still names it for screen readers.
+  // Title and intro sit in a header above the scrolling list. The title is repeated here
+  // for the eye; the dialog's own (hidden) title still names it for screen readers.
   const head = popupEl('div', '', 'quest-head');
   const headTitle = popupEl('p', popup.title, 'quest-head-title');
   headTitle.setAttribute('aria-hidden', 'true');
   head.appendChild(headTitle);
   if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
-  listView.append(head, list, close);
+  // Only the list scrolls; the header above and the Esc tag below stay put
+  const scroll = popupEl('div', '', 'quest-scroll');
+  scroll.appendChild(list);
+  const footer = popupEl('div', '', 'quest-footer');
+  footer.appendChild(close);
+  listView.append(head, scroll, footer);
 
   // ← goes back from a memory to the list (not while a video's own controls have focus,
   // where ← rewinds it), and closing the popup (Esc, ×, tapping outside) stops a video
