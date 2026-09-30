@@ -36,15 +36,29 @@
 }
 /* The × is a paper sticker with a dashed edge and a pen-drawn cross, so it stays
    readable when the content scrolls underneath it. The cross is two rounded strokes
-   (the × character itself is hidden; the button's aria-label still names it). */
-.popup[data-paper] .popup-close {
+   (the × character itself is hidden; the button's aria-label still names it).
+   The same sticker is reusable on other buttons inside a paper popup: add class
+   paper-sticker, plus paper-sticker--plus or paper-sticker--minus for a pen-drawn + or −
+   (a button with plain text, like "1×", keeps its text). A popup can tint the dashed ring
+   by setting --sticker-ring. */
+.popup[data-paper] .paper-sticker {
+  position: relative; /* the pen strokes are placed inside it (the × is already sticky) */
+}
+.popup[data-paper] :is(.popup-close, .paper-sticker) {
   z-index: 2; /* above anything that scrolls or sticks */
-  border: 2px dashed var(--accent-a50);
+  border: 2px dashed var(--sticker-ring, var(--accent-a50));
   background: var(--paper-bg);
+}
+.popup[data-paper] .paper-sticker {
+  border-radius: 50%;
+  color: var(--text-body);
+  cursor: pointer;
+}
+.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus) {
   font-size: 0;
 }
-.popup[data-paper] .popup-close::before,
-.popup[data-paper] .popup-close::after {
+.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::before,
+.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -60,13 +74,27 @@
 .popup[data-paper] .popup-close::after {
   rotate: -45deg;
 }
-.popup[data-paper] .popup-close:hover {
+.popup[data-paper] .paper-sticker--plus::before,
+.popup[data-paper] .paper-sticker--minus::before {
+  rotate: 0deg;
+}
+.popup[data-paper] .paper-sticker--plus::after {
+  rotate: 90deg;
+}
+.popup[data-paper] .paper-sticker--minus::after {
+  display: none;
+}
+.popup[data-paper] :is(.popup-close, .paper-sticker):hover {
   border-color: var(--ink-red);
   background: linear-gradient(var(--accent-a8), var(--accent-a8)), var(--paper-bg);
 }
-.popup[data-paper] .popup-close:hover::before,
-.popup[data-paper] .popup-close:hover::after {
+.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus):hover::before,
+.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus):hover::after {
   background: var(--ink-red);
+}
+.popup[data-paper] .paper-sticker:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
 }
 
 @media (max-width: 640px) {
@@ -79,8 +107,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .popup[data-paper] .popup-close::before,
-  .popup[data-paper] .popup-close::after {
+  .popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::before,
+  .popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::after {
     transition: none;
   }
 }

@@ -436,11 +436,11 @@ POPUP_RENDERERS.map = function (popup) {
 
   const zoomButtons = popupEl('div', '', 'map-zoom');
   [
-    ['+', 'Zoom in', () => _zoomBy(0.5)],
-    ['1×', 'Reset zoom to 100%', () => _zoomTo(MIN_ZOOM)],
-    ['−', 'Zoom out', () => _zoomBy(-0.5)],
-  ].forEach(([text, label, onClick]) => {
-    const b = popupEl('button', text, 'map-zoom-btn');
+    ['+', 'Zoom in', 'paper-sticker--plus', () => _zoomBy(0.5)],
+    ['1×', 'Reset zoom to 100%', '', () => _zoomTo(MIN_ZOOM)],
+    ['−', 'Zoom out', 'paper-sticker--minus', () => _zoomBy(-0.5)],
+  ].forEach(([text, label, glyph, onClick]) => {
+    const b = popupEl('button', text, `map-zoom-btn paper-sticker ${glyph}`.trim());
     b.type = 'button';
     b.setAttribute('aria-label', label);
     b.addEventListener('click', onClick);

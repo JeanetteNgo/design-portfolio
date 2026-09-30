@@ -32,6 +32,7 @@ const POPUPS = {
     intro: 'Snapshots and the stories behind them.',
   },
   map: {
+    paper: true, // paper-note look (css/features/popups/paper.css)
     title: 'Map',
     // the pins are in data/places.js
   },
