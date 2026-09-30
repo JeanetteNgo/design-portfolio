@@ -249,16 +249,22 @@
 .map-stamps li:nth-child(even) .map-stamp {
   rotate: 1deg;
 }
-/* Four inks in turn. With 2 or 3 stamps to a row, neighbours (across and down) never match, and
-   the colours don't line up in columns. */
-.map-stamps li:nth-child(4n + 2) .map-stamp {
+/* Six inks, in a run of 8 that has no colour within three places of itself, so neighbours across
+   and down never match (with 2 or 3 stamps to a row) and the colours don't line up in columns. */
+.map-stamps li:nth-child(8n + 2) .map-stamp {
+  --ink: var(--ink-blue);
+}
+.map-stamps li:is(:nth-child(8n + 3), :nth-child(8n + 7)) .map-stamp {
   --ink: var(--ink-red);
 }
-.map-stamps li:nth-child(4n + 3) .map-stamp {
+.map-stamps li:is(:nth-child(8n + 4), :nth-child(8n + 8)) .map-stamp {
+  --ink: var(--ink-purple);
+}
+.map-stamps li:nth-child(8n + 5) .map-stamp {
   --ink: var(--ink-green);
 }
-.map-stamps li:nth-child(4n + 4) .map-stamp {
-  --ink: var(--text-body);
+.map-stamps li:nth-child(8n + 6) .map-stamp {
+  --ink: var(--ink-orange);
 }
 .map-stamp-name {
   font: 700 14px/1.25 var(--font-secondary);
