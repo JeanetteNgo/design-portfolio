@@ -1,0 +1,245 @@
+/* ══════════════════════════════════════════
+   DOODLES POPUP
+   An app-style window: title bar, filter pills, and a grid of doodle cards.
+   Built by js/popups/doodles.js from data/doodles.js.
+   The card's edge padding is zero so the title bar and grid can reach the edges, and the
+   grid gets its own spacing below.
+══════════════════════════════════════════ */
+
+.popup[data-popup='doodles'] .popup-card {
+  width: min(100%, 880px);
+  --pad-top: 0px;
+  --pad-x: 0px;
+  --pad-bottom: 0px;
+  --close-top: 8px; /* centres the × in the 60px title bar */
+  overflow: hidden; /* rounds the bar's and the grid's corners with the window */
+}
+
+/* The two views (grid, opened doodle) fill the window under the title bar */
+.doodle-view:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+.doodle-view .popup-scroll {
+  margin-inline: 0;
+  padding: 16px 24px 24px;
+}
+
+/* ── Title bar ── */
+.doodles-bar {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  height: 60px;
+  padding: 0 68px 0 20px; /* the right gap leaves room for the × */
+  background: var(--surface-soft);
+  border-bottom: 1px solid var(--divider);
+}
+.doodles-dots {
+  display: flex;
+  gap: 6px;
+}
+.doodles-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-300);
+}
+.doodles-dots span:nth-child(2) {
+  background: var(--pencil-a);
+}
+.doodles-dots span:nth-child(3) {
+  background: var(--pencil-d);
+}
+.doodles-bar-title {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font: 700 14px var(--font-secondary);
+  color: var(--text-body);
+  pointer-events: none;
+}
+
+/* ── Filters ── */
+.doodle-filters {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px 24px 0;
+}
+.doodle-filter {
+  padding: 6px 16px;
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--surface-soft);
+  font: 700 13px var(--font-secondary);
+  color: var(--text-body);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.doodle-filter:hover {
+  background: var(--accent-50);
+}
+.doodle-filter[aria-pressed='true'] {
+  background: var(--accent-100);
+  border-color: var(--accent-400);
+  color: var(--text-strong);
+}
+.doodle-filter:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+
+/* ── Grid: 3 columns, then 2, then 1 ── */
+.doodle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.doodle-grid li {
+  margin: 0; /* reset the global li spacing */
+}
+.doodle-grid li:nth-child(4n + 1) {
+  --pencil: var(--pencil-a);
+}
+.doodle-grid li:nth-child(4n + 2) {
+  --pencil: var(--pencil-b);
+}
+.doodle-grid li:nth-child(4n + 3) {
+  --pencil: var(--pencil-c);
+}
+.doodle-grid li:nth-child(4n + 4) {
+  --pencil: var(--pencil-d);
+}
+@media (max-width: 720px) {
+  .doodle-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 440px) {
+  .doodle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* A doodle card */
+.doodle {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--divider);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+@media (hover: hover) {
+  .doodle:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+  }
+}
+.doodle:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+.doodle-frame {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  border-radius: 10px;
+  background: var(--surface-soft);
+  overflow: hidden;
+}
+.doodle-frame > .doodle-media,
+.doodle-frame > .doodle-blank {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.doodle-media {
+  display: block;
+}
+/* Stand-in until a real doodle is added */
+.doodle-blank {
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  border: 2px dashed var(--accent-a50);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--pencil) 30%, var(--surface));
+  font: 400 15px var(--font-hand);
+  color: var(--text-muted);
+}
+.doodle-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--text-strong);
+  font: 700 11px var(--font-secondary);
+  letter-spacing: 0.04em;
+  color: var(--surface);
+}
+.doodle-tile-caption {
+  display: block;
+  padding: 10px 4px 4px;
+  font: 400 15px/1.35 var(--font-hand);
+  text-wrap: balance;
+  text-align: center;
+  color: var(--text-body);
+}
+
+/* ── An opened doodle ── */
+.doodle-detail .doodle-media,
+.doodle-detail .doodle-blank {
+  display: block;
+  max-width: 100%;
+  max-height: min(58vh, 520px);
+  margin-inline: auto;
+  border-radius: 12px;
+  background: var(--surface-soft);
+}
+.doodle-detail .doodle-blank {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+.doodle-title {
+  margin: 16px 0 4px;
+  font-size: 22px;
+  color: var(--text-strong);
+}
+.doodle-caption {
+  margin: 0;
+  font: 400 16px/1.5 var(--font-hand);
+  color: var(--text-body);
+}
+.doodle-footer {
+  flex: none;
+  padding: 0 16px 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doodle,
+  .doodle-filter {
+    transition: none;
+  }
+  .doodle:hover {
+    transform: none;
+  }
+}
