@@ -92,9 +92,20 @@
   border-width: 0 3px 3px 0;
   rotate: 40deg;
 }
-.quest--done .quest-title {
-  /* thin and slightly see-through, so the letters stay readable under it */
-  text-decoration: line-through color-mix(in srgb, var(--ink-red) 75%, transparent) 1.5px;
+/* Strike line: thin, slightly see-through and a little below the middle of the text,
+   so it passes under the crossbars of letters and they stay readable.
+   Drawn as a background so it can be positioned; it repeats on each line if the text wraps */
+.quest--done .quest-text {
+  --strike: color-mix(in srgb, var(--ink-red) 75%, transparent);
+  --strike-at: 64%; /* 50% = dead centre; higher = lower down */
+  padding-inline: 2px;
+  background: linear-gradient(
+    transparent calc(var(--strike-at) - 0.75px),
+    var(--strike) calc(var(--strike-at) - 0.75px) calc(var(--strike-at) + 0.75px),
+    transparent calc(var(--strike-at) + 0.75px)
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 /* In progress: dashed box, half filled */
 .quest--wip .quest-box {
@@ -173,7 +184,7 @@
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
-  font: 600 22px/1.1 var(--font-hand);
+  font: 400 18px/1.2 var(--font-hand);
   color: var(--text-strong);
   text-align: center;
 }

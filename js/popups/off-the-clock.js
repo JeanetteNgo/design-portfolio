@@ -88,9 +88,11 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     const item = popupEl('li', '', `quest quest--${quest.status}`);
     const button = popupEl('button', '', 'quest-btn');
     button.type = 'button';
+    const title = popupEl('span', '', 'quest-title');
+    title.appendChild(popupEl('span', quest.title, 'quest-text')); // inner span carries the strike line
     button.append(
       popupEl('span', '', 'quest-box'),
-      popupEl('span', quest.title, 'quest-title'),
+      title,
       popupEl('span', ` (${STATUS_TEXT[quest.status]})`, 'visually-hidden')
     );
     button.addEventListener('click', () =>
