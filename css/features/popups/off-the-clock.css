@@ -242,7 +242,7 @@
   outline-offset: 2px;
 }
 
-/* Scribbled note link ("back to the list"): handwriting with a red arrow */
+/* Note link ("back to the list"): plain text with a red arrow */
 .paper-btn {
   min-height: 44px; /* comfortable tap target */
   margin-left: -8px; /* lines the text up with the content above */
@@ -250,7 +250,7 @@
   border: 0;
   border-radius: 8px;
   background: none;
-  font: 400 14px/1.5 var(--font-hand);
+  font: 600 14px/1.5 var(--font-secondary);
   color: var(--text-strong);
   cursor: pointer;
 }
