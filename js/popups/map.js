@@ -444,7 +444,7 @@ POPUP_RENDERERS.map = function (popup) {
   const zoomButtons = popupEl('div', '', 'map-zoom');
   [
     ['−', 'Zoom out', 'paper-sticker--minus', () => _zoomBy(-0.5)],
-    ['1×', 'Reset zoom to 100%', '', () => _zoomTo(MIN_ZOOM)],
+    ['1×', 'Zoom 1×', '', () => _zoomTo(MIN_ZOOM)], // shows the current zoom; clicking it goes back to 1×
     ['+', 'Zoom in', 'paper-sticker--plus', () => _zoomBy(0.5)],
   ].forEach(([text, label, glyph, onClick]) => {
     const b = popupEl('button', text, `map-zoom-btn paper-sticker ${glyph}`.trim());
@@ -454,10 +454,16 @@ POPUP_RENDERERS.map = function (popup) {
     zoomButtons.appendChild(b);
   });
 
+  // The middle button shows the current zoom (1×, 1.5×, 2×...) and is the shortcut back to 1×.
   // − is switched off at the smallest zoom and + at the largest. aria-disabled (not disabled)
   // so a button keeps keyboard focus when it switches off.
   function _syncZoomButtons() {
-    const [minus, , plus] = zoomButtons.children;
+    const [minus, level, plus] = zoomButtons.children;
+    if (level) {
+      const text = `${Number(zoomTo.toFixed(1))}×`;
+      level.textContent = text;
+      level.setAttribute('aria-label', zoomTo > MIN_ZOOM ? `Zoom ${text}. Reset to 1×` : `Zoom ${text}`);
+    }
     minus?.setAttribute('aria-disabled', String(zoomTo <= MIN_ZOOM));
     plus?.setAttribute('aria-disabled', String(zoomTo >= MAX_ZOOM));
   }
