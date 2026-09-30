@@ -12,7 +12,7 @@
 .popup[data-popup='map'] .popup-card {
   width: min(100%, 720px);
   rotate: none; /* the sheet lies flat, so the globe stays crisp and pin taps stay exact */
-  --sticker-ring: var(--ink-brown-a40);
+  --sticker-ring: var(--sticker-ring-brown);
 }
 /* The sheet, top layer first: soft stains and a ring-shaped one, crumple shading, one faint
    compass rose (img/map/chart.svg) and paper grain over warm paper; the edges are a little

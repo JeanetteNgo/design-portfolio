@@ -119,7 +119,7 @@
 
   /* Pencils (the Tools popup's pen holder) */
   --ink-brown: #4a2e25; /* outline, same as the dock icons */
-  --ink-brown-a40: rgb(74 46 37 / 40%); /* the same brown, softer (dashed rings on the Map) */
+  --sticker-ring-brown: rgb(160 105 62 / 75%); /* a warm paper-brown for dashed rings (Map) */
   --pencil-wood: #f3d9b1;
   --pencil-a: #ffd36e;
   --pencil-b: #8ec5e8;

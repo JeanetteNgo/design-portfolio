@@ -49,7 +49,8 @@ POPUP_RENDERERS.map = function (popup) {
   let lat = Math.max(-45, Math.min(45, home.lat)) + 10;
   let zoom = MIN_ZOOM;
   let zoomTo = MIN_ZOOM;
-  let spin = calmMotion ? 0 : 4; // degrees a second until the visitor touches it
+  const SPIN = calmMotion ? 0 : 4; // slow auto-spin, in degrees a second
+  let spin = SPIN; // stops when the visitor touches the globe; starts again on "back to all places"
   let velocity = [0, 0]; // degrees a second, after a flick
   let turn = null; // an eased turn to a place: { from, to, start }
   let hits = []; // where each pin was drawn, for tapping
@@ -300,7 +301,12 @@ POPUP_RENDERERS.map = function (popup) {
     selected = home;
     detailView.hidden = true;
     listView.hidden = false;
-    if (refocus) stamps.get(place)?.focus();
+    if (refocus) {
+      stamps.get(place)?.focus();
+      spin = SPIN; // back on the stamps: the globe drifts again
+      last = performance.now();
+      _wake();
+    }
     _draw();
   }
 
@@ -436,9 +442,9 @@ POPUP_RENDERERS.map = function (popup) {
 
   const zoomButtons = popupEl('div', '', 'map-zoom');
   [
-    ['+', 'Zoom in', 'paper-sticker--plus', () => _zoomBy(0.5)],
-    ['1×', 'Reset zoom to 100%', '', () => _zoomTo(MIN_ZOOM)],
     ['−', 'Zoom out', 'paper-sticker--minus', () => _zoomBy(-0.5)],
+    ['1×', 'Reset zoom to 100%', '', () => _zoomTo(MIN_ZOOM)],
+    ['+', 'Zoom in', 'paper-sticker--plus', () => _zoomBy(0.5)],
   ].forEach(([text, label, glyph, onClick]) => {
     const b = popupEl('button', text, `map-zoom-btn paper-sticker ${glyph}`.trim());
     b.type = 'button';
