@@ -95,6 +95,14 @@ html:has(.popup[open]) {
   flex: 1;
   min-height: 0; /* lets a flex child shrink and scroll instead of growing past the card */
 }
+/* One screen of a popup that has several (a grid and an opened item). Only the visible one
+   is laid out, so [hidden] still hides it. */
+.popup-view:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
 /* The scrolling part of a popup. It reaches out to the card's edges so the scrollbar sits
    on the edge, then gets its side padding back inside. */
 .popup-scroll {
@@ -110,7 +118,7 @@ html:has(.popup[open]) {
 
 /* Popups that draw their own title (in a header or title bar) keep the real one for screen
    readers only: it still names the dialog */
-.popup:is([data-popup='off-the-clock'], [data-popup='doodles']) .popup-title {
+.popup:is([data-popup='off-the-clock'], [data-popup='doodles'], [data-popup='gallery']) .popup-title {
   position: absolute;
   width: 1px;
   height: 1px;

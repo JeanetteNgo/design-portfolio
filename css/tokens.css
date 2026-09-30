@@ -126,6 +126,12 @@
   --gallery-wall: #fbf7f3; /* the wall */
   --frame: var(--ink-brown); /* picture frames */
 
+  /* Corkboard (the Gallery popup) */
+  --cork: #d6a56b;
+  --cork-fleck: #b98548;
+  --cork-frame: #8a5a3b;
+  --pin: var(--accent-500);
+
   /* Sparkles (fired by the dock's Sparkles tile) */
   --sparkle-a: var(--accent-300);
   --sparkle-b: #ffd98a;

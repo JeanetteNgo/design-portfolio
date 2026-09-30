@@ -28,8 +28,8 @@ const POPUPS = {
     intro: 'A small exhibition of drawings and animations.',
   },
   gallery: {
-    title: 'Gallery',
-    intro: 'Snapshots and the stories behind them. Coming soon.',
+    title: 'Gallery', // the photos themselves are in data/gallery.js
+    intro: 'Snapshots and the stories behind them.',
   },
   map: {
     title: 'Map',

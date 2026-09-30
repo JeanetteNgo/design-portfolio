@@ -17,14 +17,8 @@
   border-radius: 8px;
 }
 
-/* The two views (grid, opened doodle) fill the window under the title bar */
-.doodle-view:not([hidden]) {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
-.doodle-view .popup-scroll {
+/* The grid and opened views fill the wall under the heading */
+.popup[data-popup='doodles'] .popup-scroll {
   margin-inline: 0;
   padding: 24px 32px 32px;
 }

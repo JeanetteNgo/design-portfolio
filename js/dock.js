@@ -28,6 +28,13 @@ function popupEl(tag, text, className) {
   return el;
 }
 
+/** Reserve room for a picture before it loads: sets its shape from item.width / item.height
+    (or 4 / 3 if not given), and lets its own shape take over once loadedEvent fires. */
+function popupReserveShape(el, item, loadedEvent) {
+  el.style.aspectRatio = item.width && item.height ? `${item.width} / ${item.height}` : '4 / 3';
+  if (loadedEvent) el.addEventListener(loadedEvent, () => (el.style.aspectRatio = ''), { once: true });
+}
+
 /** A key-hint tag button: "← back to the list". Clicking it calls onBack. */
 function popupBackTag(label, onBack) {
   const tag = popupEl('button', '', 'esc-tag');

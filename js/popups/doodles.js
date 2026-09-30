@@ -18,13 +18,6 @@ POPUP_RENDERERS.doodles = function (popup) {
 
   /* ── Pictures ── */
 
-  // The shape to reserve for a doodle before its picture has loaded (width / height from the
-  // data, or 4 / 3 if not given). Once the real picture arrives its own shape takes over.
-  function _reserve(el, doodle, loadedEvent) {
-    el.style.aspectRatio = doodle.width && doodle.height ? `${doodle.width} / ${doodle.height}` : '4 / 3';
-    if (loadedEvent) el.addEventListener(loadedEvent, () => (el.style.aspectRatio = ''), { once: true });
-  }
-
   // The picture, video or placeholder for a doodle. `big` is the opened view.
   function _media(doodle, big) {
     if (doodle.video) {
@@ -34,7 +27,7 @@ POPUP_RENDERERS.doodles = function (popup) {
       video.playsInline = true;
       video.poster = doodle.image || '';
       if (doodle.alt) video.setAttribute('aria-label', doodle.alt);
-      _reserve(video, doodle, 'loadedmetadata');
+      popupReserveShape(video, doodle, 'loadedmetadata');
       if (big) {
         // Opened: plays by itself (unless motion is reduced) and can be paused
         video.src = doodle.video;
@@ -53,12 +46,12 @@ POPUP_RENDERERS.doodles = function (popup) {
       img.alt = doodle.alt || '';
       img.loading = 'lazy'; // only downloaded when it scrolls near view
       img.decoding = 'async';
-      _reserve(img, doodle, 'load');
+      popupReserveShape(img, doodle, 'load');
       return img;
     }
     const blank = popupEl('div', 'coming soon', 'doodle-blank');
     blank.setAttribute('aria-hidden', 'true');
-    _reserve(blank, doodle); // a placeholder keeps its shape, so the empty grid looks like the real one
+    popupReserveShape(blank, doodle); // a placeholder keeps its shape, so the empty grid looks like the real one
     return blank;
   }
 
@@ -75,9 +68,9 @@ POPUP_RENDERERS.doodles = function (popup) {
 
   /* ── Opened view ── */
 
-  const detailView = popupEl('div', '', 'doodle-view doodle-detail');
+  const detailView = popupEl('div', '', 'popup-view doodle-detail');
   detailView.hidden = true;
-  const gridView = popupEl('div', '', 'doodle-view');
+  const gridView = popupEl('div', '', 'popup-view');
 
   function _open(doodle, tile) {
     const scroll = popupEl('div', '', 'popup-scroll');
