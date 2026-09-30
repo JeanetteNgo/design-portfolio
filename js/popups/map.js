@@ -245,6 +245,7 @@ POPUP_RENDERERS.map = function (popup) {
   function _zoomTo(level, instant) {
     _stopSpin();
     zoomTo = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, level));
+    _syncZoomButtons();
     last = performance.now();
     if (instant || calmMotion) zoom = zoomTo;
     _wake();
@@ -449,9 +450,18 @@ POPUP_RENDERERS.map = function (popup) {
     const b = popupEl('button', text, `map-zoom-btn paper-sticker ${glyph}`.trim());
     b.type = 'button';
     b.setAttribute('aria-label', label);
-    b.addEventListener('click', onClick);
+    b.addEventListener('click', () => b.getAttribute('aria-disabled') !== 'true' && onClick());
     zoomButtons.appendChild(b);
   });
+
+  // − is switched off at the smallest zoom and + at the largest. aria-disabled (not disabled)
+  // so a button keeps keyboard focus when it switches off.
+  function _syncZoomButtons() {
+    const [minus, , plus] = zoomButtons.children;
+    minus?.setAttribute('aria-disabled', String(zoomTo <= MIN_ZOOM));
+    plus?.setAttribute('aria-disabled', String(zoomTo >= MAX_ZOOM));
+  }
+  _syncZoomButtons();
 
   const globeFrame = popupEl('div', '', 'map-globe-frame'); // holds the outline ring around the canvas
   globeFrame.appendChild(canvas);

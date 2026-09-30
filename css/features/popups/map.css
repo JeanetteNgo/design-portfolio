@@ -127,6 +127,20 @@
   font: 700 14px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
 
+/* At the smallest or largest zoom the − or + is switched off: faded, and no hover reaction */
+.map-zoom-btn[aria-disabled='true'] {
+  opacity: 0.4;
+  cursor: default;
+}
+.popup[data-paper] .map-zoom-btn[aria-disabled='true']:hover {
+  border-color: var(--sticker-ring);
+  background: var(--paper-bg);
+}
+.popup[data-paper] .map-zoom-btn[aria-disabled='true']:hover::before,
+.popup[data-paper] .map-zoom-btn[aria-disabled='true']:hover::after {
+  background: var(--text-body);
+}
+
 /* ── "Based in" banner: always shown above the stamps ── */
 .map-home {
   display: flex;
