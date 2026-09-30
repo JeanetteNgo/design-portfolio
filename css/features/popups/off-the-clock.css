@@ -242,18 +242,32 @@
   outline-offset: 2px;
 }
 
-/* Dashed paper button ("back to the list") */
+/* Scribbled note link ("back to the list"): handwriting with a wavy red underline */
 .paper-btn {
-  padding: 8px 16px;
-  border: 2px dashed var(--text-strong);
-  border-radius: 10px;
-  background: var(--surface);
-  font: italic 600 14px var(--font-secondary);
+  min-height: 44px; /* comfortable tap target */
+  margin-left: -8px; /* lines the text up with the content above */
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: 400 14px/1.5 var(--font-hand);
   color: var(--text-strong);
+  text-decoration: underline wavy var(--ink-red) 1.5px;
+  text-underline-offset: 5px;
   cursor: pointer;
+}
+.paper-btn::before {
+  content: '\2190' / ''; /* left arrow, skipped by screen readers */
+  display: inline-block;
+  margin-right: 6px;
+  color: var(--ink-red);
+  transition: translate 0.2s ease;
 }
 .paper-btn:hover {
   background: var(--accent-a14);
+}
+.paper-btn:hover::before {
+  translate: -3px 0;
 }
 .paper-btn:focus-visible {
   outline: 3px solid var(--accent-500);
@@ -270,5 +284,8 @@
   .quest.is-jiggling .quest-btn,
   .quest-reply:not(:empty) {
     animation: none;
+  }
+  .paper-btn::before {
+    transition: none;
   }
 }
