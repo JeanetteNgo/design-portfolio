@@ -9,7 +9,10 @@
 .popup[data-popup='off-the-clock'] .popup-card {
   isolation: isolate;
   width: min(100%, 460px);
-  padding: 44px 32px 28px;
+  --pad-top: 44px;
+  --pad-x: 32px;
+  --pad-bottom: 28px;
+  --close-top: 24px;
   background: none;
   border-radius: 0;
   box-shadow: none;
@@ -32,12 +35,38 @@
 .popup[data-popup='off-the-clock'] .popup-title {
   color: var(--text-strong);
 }
+/* The × is a paper sticker with a dashed edge and a pen-drawn cross, so it stays
+   readable when the list scrolls underneath it. The cross is two rounded strokes
+   (the × character itself is hidden; the button's aria-label still names it). */
 .popup[data-popup='off-the-clock'] .popup-close {
-  top: 24px;
-  background: none;
+  border: 2px dashed var(--accent-a50);
+  background: var(--paper-bg);
+  font-size: 0;
+}
+.popup[data-popup='off-the-clock'] .popup-close::before,
+.popup[data-popup='off-the-clock'] .popup-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2.5px;
+  margin: -1.25px 0 0 -9px;
+  border-radius: 2px;
+  background: var(--text-body);
+  rotate: 45deg;
+  transition: background-color 0.15s ease;
+}
+.popup[data-popup='off-the-clock'] .popup-close::after {
+  rotate: -45deg;
 }
 .popup[data-popup='off-the-clock'] .popup-close:hover {
-  background: var(--accent-a14);
+  border-color: var(--ink-red);
+  background: linear-gradient(var(--accent-a8), var(--accent-a8)), var(--paper-bg);
+}
+.popup[data-popup='off-the-clock'] .popup-close:hover::before,
+.popup[data-popup='off-the-clock'] .popup-close:hover::after {
+  background: var(--ink-red);
 }
 
 /* ── Checklist ── */
@@ -274,7 +303,10 @@
 
 @media (max-width: 640px) {
   .popup[data-popup='off-the-clock'] .popup-card {
-    padding: 40px 20px 24px;
+    --pad-top: 40px;
+    --pad-x: 20px;
+    --pad-bottom: 24px;
+    --close-top: 20px;
   }
 }
 
