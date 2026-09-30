@@ -107,9 +107,16 @@
   --paper-rule: var(--accent-a14); /* ruled lines */
   --ink-red: var(--accent-500); /* ticks, crossings-out, handwritten notes */
   --ink-green: #4e8c63; /* "Quest complete" stamp */
-  --ink-blue: #2f6fd0; /* stamp inks on the Map, with the brown, red and green */
-  --ink-orange: #d9701a;
-  --ink-purple: #7b4fc9;
+  /* Stamp inks (Map popup): six muted, vintage-looking inks with similar weight so they sit well
+     together. Each reads clearly on the cream paper. */
+  --stamp-ink-brown: #81584a;
+  --stamp-ink-red: #bb5047;
+  --stamp-ink-orange: #b4721f;
+  --stamp-ink-green: #478359;
+  --stamp-ink-blue: #3f70ad;
+  --stamp-ink-purple: #7a5aa6;
+  --stamp-ink-teal: #2b7f82;
+  --stamp-ink-plum: #95507f;
   /* Faint grain, drawn as a tiny inline SVG so there's no image file to load */
   --paper-texture: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .3 0 0 0 0 .25 0 0 0 .1 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
 
