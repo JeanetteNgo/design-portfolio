@@ -117,7 +117,10 @@
   --pencil-b: #8ec5e8;
   --pencil-c: var(--accent-300);
   --pencil-d: #a9d6a0;
+  --pencil-light: rgb(255 255 255 / 35%); /* highlight along a pencil's side */
+  --pencil-shade: rgb(var(--shadow-rgb) / 10%); /* shaded side and the pouch's underside */
   --pouch: var(--accent-200);
+  --pouch-back: var(--accent-300); /* the inside back of the pouch */
 
   /* Sparkles (fired by the dock's Sparkles tile) */
   --sparkle-a: var(--accent-300);

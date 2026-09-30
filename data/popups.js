@@ -15,12 +15,12 @@
 const POPUPS = {
   tools: {
     paper: true, // paper-note look (css/features/popups/paper.css)
-    title: 'Tools',
+    title: 'Skills & Tools',
     groups: [
       { heading: 'Design', items: ['Figma', 'Adobe Creative Suite'] },
       { heading: 'AI workflow', pencil: 'AI', items: ['Claude', 'Claude Code', 'Figma MCP'] },
       { heading: 'Skills', items: ['Wireframing', 'Prototyping', 'Usability Testing'] },
-      { heading: 'Other tools', items: ['Jira', 'GitHub'] },
+      { heading: 'Others', items: ['Jira', 'GitHub'] },
     ],
   },
   doodles: {

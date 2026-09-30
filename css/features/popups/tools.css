@@ -1,32 +1,12 @@
 /* ══════════════════════════════════════════
    TOOLS POPUP
-   A paper note (the shared look is in paper.css) held up with a strip of washi tape,
-   beside a pen holder with one pencil per group. Built by js/popups/tools.js.
+   A paper note (the shared look is in paper.css), beside a pen holder with one pencil
+   per group. Built by js/popups/tools.js.
    Pencil colours cycle through --pencil-a to --pencil-d, so a fifth group starts over.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='tools'] .popup-card {
   width: min(100%, 640px);
-}
-
-/* Washi tape across the top edge, in the dock's gingham */
-.popup[data-popup='tools'] .popup-card::after {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  z-index: 1;
-  width: 120px;
-  height: 28px;
-  translate: -50% 0;
-  rotate: 2deg;
-  background:
-    linear-gradient(90deg, var(--accent-a25) 50%, transparent 50%) 0 0 / 10px 10px,
-    linear-gradient(var(--accent-a25) 50%, transparent 50%) 0 0 / 10px 10px,
-    var(--surface-band);
-  box-shadow: 0 1px 3px var(--accent-a25);
-  opacity: 0.92;
-  pointer-events: none;
 }
 
 /* ── Layout: pen holder above the note on phones, beside it on wider screens ── */
@@ -70,13 +50,13 @@
   margin-top: 4px;
 }
 .tools-group {
-  margin-top: 18px;
+  margin-top: 30px;
 }
 .tools-heading {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 0 6px;
+  margin: 0 0 12px;
   font: 700 12px var(--font-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -114,15 +94,35 @@
    --s scales the whole thing, so it can be smaller on phones */
 .pen-holder {
   --s: 1;
+  position: relative;
+  isolation: isolate;
   justify-self: center;
-  width: calc(var(--s) * 168px);
+  width: calc(var(--s) * 160px);
+}
+@media (min-width: 560px) {
+  .pen-holder {
+    margin-right: 20px; /* keeps it off the sheet's right edge */
+  }
+}
+/* The inside back of the pouch, just visible behind the pencils above the front */
+.pen-holder::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: calc(var(--s) * 6px);
+  right: calc(var(--s) * 6px);
+  bottom: calc(var(--s) * 130px);
+  height: calc(var(--s) * 24px);
+  border: 3px solid var(--ink-brown);
+  border-radius: 14px 14px 0 0;
+  background: var(--pouch-back);
 }
 .pencils {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: 0;
-  margin-bottom: calc(var(--s) * -100px); /* the pouch covers most of the pencils */
+  gap: calc(var(--s) * -3px); /* a little overlap, so they sit snugly together */
+  margin-bottom: calc(var(--s) * -124px); /* the pouch covers most of the pencils */
 }
 .pencil {
   --wood-h: calc(var(--s) * 28px);
@@ -145,7 +145,7 @@
   rotate: 3deg;
 }
 .pencil:nth-child(4n + 4) {
-  height: calc(var(--s) * 238px);
+  height: calc(var(--s) * 214px);
   rotate: 7deg;
 }
 /* Sharpened end: a brown outline triangle with a wood-coloured one inside */
@@ -156,11 +156,14 @@
   background: var(--ink-brown);
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
+/* the wood, with the graphite point at its tip */
 .pencil-tip::after {
   content: '';
   position: absolute;
   inset: 5px 4px 0;
-  background: var(--pencil-wood);
+  background:
+    linear-gradient(var(--ink-brown) 0 36%, transparent 36%),
+    var(--pencil-wood);
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 .pencil-body {
@@ -172,7 +175,15 @@
   border: 3px solid var(--ink-brown);
   border-top: 0;
   border-radius: 2px 2px 0 0;
-  background: var(--pencil);
+  /* a lit stripe on one side and a shaded one on the other, so it reads as six-sided */
+  background:
+    linear-gradient(
+      90deg,
+      var(--pencil-light) 0 24%,
+      transparent 24% 68%,
+      var(--pencil-shade) 68%
+    ),
+    var(--pencil);
 }
 .pencil-label {
   font: 700 11px var(--font-secondary);
@@ -184,17 +195,28 @@
 }
 .pouch {
   position: relative;
-  height: calc(var(--s) * 120px);
+  height: calc(var(--s) * 144px);
   border: 3px solid var(--ink-brown);
   border-radius: 12px 12px 22px 22px;
-  background: var(--pouch);
+  background: linear-gradient(transparent 78%, var(--pencil-shade) 78%), var(--pouch);
 }
-/* The stitched line, as on the dock icon */
+/* The stitched line, as on the dock icon, with a little zip pull at one end */
 .pouch::after {
   content: '';
   position: absolute;
   inset: calc(var(--s) * 30px) 10px auto;
   border-top: 2px dashed var(--ink-brown);
+}
+.pouch::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--s) * 30px - 7px);
+  right: 12px;
+  width: 16px;
+  height: 12px;
+  border: 2px solid var(--ink-brown);
+  border-radius: 6px;
+  background: var(--pencil-a);
 }
 
 @media (max-width: 559px) {
