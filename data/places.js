@@ -18,15 +18,178 @@
      photo    optional. A small photo, e.g. 'img/map/tokyo.webp' (WebP, around 400px wide)
      alt      describes the photo for screen readers
    All of these show in the card next to the globe when a pin or chip is selected; any you
-   leave out are simply skipped. The names and coordinates below are placeholders, so swap in your own.
+   leave out are simply skipped. Pins are placed on each country's capital city, so they are consistent.
 ────────────────────────────────────────────── */
 
 const PLACES = [
-  { name: 'Singapore', status: 'home', lat: 1.35, lng: 103.82, note: 'Where I live and design.' },
-  { name: 'Place 1', status: 'been', lat: 35.68, lng: 139.69, when: '[Year]', cities: ['[City]', '[City]'], note: '[A line about this place.]' },
-  { name: 'Place 2', status: 'been', lat: -36.85, lng: 174.76, when: '[Year]', cities: ['[City]', '[City]'], note: '[A line about this place.]' },
-  { name: 'Place 3', status: 'been', lat: -33.87, lng: 151.21, when: '[Year]', cities: ['[City]', '[City]'], note: '[A line about this place.]' },
-  { name: 'Place 4', status: 'been', lat: 13.76, lng: 100.5, when: '[Year]', cities: ['[City]', '[City]'], note: '[A line about this place.]' },
-  { name: 'Place 5', status: 'next', lat: 51.51, lng: -0.13, when: '[When]', cities: ['[City]'], note: '[Why it is on the list.]' },
-  { name: 'Place 6', status: 'next', lat: 40.71, lng: -74.0, when: '[When]', cities: ['[City]'], note: '[Why it is on the list.]' },
+  {
+    name: 'Singapore',
+    status: 'home',
+    lat: 1.35,
+    lng: 103.82,
+    note: 'Where I live and design.',
+  },
+
+  {
+    name: 'Malaysia',
+    status: 'been',
+    lat: 3.14,
+    lng: 101.69,
+    when: '2010, 2023, 2025, 2026',
+    cities: [
+      'Malacca',
+      'Johor Bahru',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'Thailand',
+    status: 'been',
+    lat: 13.76,
+    lng: 100.5,
+    when: '2015',
+    cities: [
+      'Bangkok',
+      'Pattaya',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'China',
+    status: 'been',
+    lat: 39.9,
+    lng: 116.41,
+    when: '2005, 2007, 2011, 2017, 2023',
+    cities: [
+      'Hainan Island',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'Taiwan',
+    status: 'been',
+    lat: 23.5,
+    lng: 121,
+    when: '2013, 2018',
+    cities: [
+      'Taipei',
+      'Kaohsiung',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'Italy',
+    status: 'been',
+    lat: 41.9029,
+    lng: 12.4964,
+    when: '2016',
+    cities: [
+      'Rome',
+      'Venice',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'Switzerland',
+    status: 'been',
+    lat: 46.8182,
+    lng: 8.2275,
+    when: '2016',
+    cities: [
+      'Lucerne',
+      'Interlaken',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'The Netherlands',
+    status: 'been',
+    lat: 52.3676,
+    lng: 4.9041,
+    when: '2016',
+    cities: [
+      'Amsterdam',
+      'Rotterdam',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'France',
+    status: 'been',
+    lat: 48.8566,
+    lng: 2.3522,
+    when: '2016',
+    cities: [
+      'Paris',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'South Korea',
+    status: 'been',
+    lat: 37.57,
+    lng: 126.98,
+    when: '2023, 2026',
+    cities: [
+      'Seoul',
+      'Busan',
+      'Gangneung',
+      'Sokcho',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'New Zealand',
+    status: 'been',
+    lat: -41.29,
+    lng: 174.78,
+    when: '2024, 2025',
+    cities: [
+      'Christchurch',
+      'Hanmer Springs',
+      'Queenstown',
+      'Wanaka',
+      'Auckland',
+      'Taupo',
+      'Rotorua',
+      'Wellington',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'Japan',
+    status: 'been',
+    lat: 35.68,
+    lng: 139.69,
+    when: '2026',
+    cities: [
+      'Tokyo',
+      'Kamakura',
+      'Kawaguchiko',
+      'Hakone',
+    ],
+    note: '[A line about this place.]',
+  },
+  {
+    name: 'Australia',
+    status: 'next',
+    lat: -35.28,
+    lng: 149.13,
+    when: '[When]',
+    cities: [
+      '[City]',
+    ],
+    note: '[Why it is on the list.]',
+  },
+  {
+    name: 'Kyrgyzstan',
+    status: 'next',
+    lat: 42.87,
+    lng: 74.59,
+    when: '[When]',
+    cities: [
+      '[City]',
+    ],
+    note: '[Why it is on the list.]',
+  },
 ];
