@@ -59,6 +59,11 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
     }
+
+    // Nav blends into the page at the top; show its background and line once scrolled
+    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   }
 
   /* ── Footer ────────────────────────────────── */

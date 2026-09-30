@@ -89,6 +89,9 @@
   --shadow-card-hover: 0px 8px 24px 0 rgb(var(--shadow-rgb) / 12%);
   --shadow-accent-hover: 0 6px 24px rgb(var(--accent-rgb) / 10%);
 
+  /* Layout */
+  --nav-height: 75px; /* height of the sticky nav bar */
+
   /* My Dock */
   --dock-tile-a: var(--accent-50);
   --dock-tile-b: #fff3d6;

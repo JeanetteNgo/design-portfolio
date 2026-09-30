@@ -7,11 +7,9 @@
 ══════════════════════════════════════════ */
 .dock-strip {
   box-sizing: border-box; /* keep padding inside the global section width: 100% */
-  margin: 40px 0 104px;
+  margin: 40px 0 0;
   padding: 28px 20px 16px; /* extra room on top for the tag */
-  background:
-    radial-gradient(var(--accent-a20) 1.2px, transparent 1.8px) 0 0 / 10px 10px,
-    var(--surface-band);
+  background: var(--accent-a8); /* tint only: the dots come from .home-top behind it */
   border-block: 1px solid var(--accent-a8);
 }
 /* Shrink-wraps the icon row so the tag sits right by the first icon */
@@ -127,8 +125,14 @@
   border-radius: 16px;
 }
 
-/* Touch screens and phones: smaller tiles so all six fit */
+/* Touch screens and phones: smaller tiles and tighter spacing so all six fit (down to 360px) */
 @media (hover: none), (max-width: 640px) {
+  .dock-strip {
+    padding-inline: 10px;
+  }
+  .dock-list {
+    gap: clamp(6px, 2vw, 14px);
+  }
   .dock-btn {
     width: 48px;
   }
@@ -137,18 +141,12 @@
 /* Phones: tag tucks in so it stays on screen */
 @media (max-width: 640px) {
   .dock-tag {
-    left: -12px;
+    left: -10px;
   }
 }
 
 /* Touch screens: labels always visible */
 @media (hover: none) {
-  .dock-strip {
-    padding-inline: 12px;
-  }
-  .dock-list {
-    gap: clamp(6px, 2.5vw, 14px);
-  }
   .dock-label {
     display: block;
     position: static;
