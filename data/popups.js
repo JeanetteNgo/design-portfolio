@@ -34,18 +34,8 @@ const POPUPS = {
     intro: 'Based in Singapore. Places I have been and next stops are coming soon.',
   },
   'off-the-clock': {
-    title: 'Off the clock',
-    intro: 'What I get up to outside of work.',
-    groups: [
-      {
-        heading: 'Side quests',
-        items: [
-          'Picking up new skills (and anything to do with penguins)',
-          'Learning inline skating',
-          'Latest read: Origin by Dan Brown',
-        ],
-      },
-    ],
+    title: 'Side quests',
+    intro: 'Things I am ticking off outside of work.', // the checklist itself is in data/quests.js
   },
   palette: {
     title: 'Palette',

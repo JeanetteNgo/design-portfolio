@@ -1,0 +1,194 @@
+/* ══════════════════════════════════════════
+   OFF THE CLOCK POPUP
+   A side-quest checklist on a sheet torn from a notebook.
+   Built by js/popups/off-the-clock.js from data/quests.js.
+   Everything is scoped to this popup; the shared shell is css/features/popup.css.
+══════════════════════════════════════════ */
+
+/* ── The sheet of paper ── */
+.popup[data-popup='off-the-clock'] .popup-card {
+  isolation: isolate;
+  width: min(100%, 460px);
+  padding: 44px 32px 28px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 8px 18px rgb(var(--shadow-rgb) / 18%)); /* follows the torn edge */
+  rotate: -0.8deg;
+}
+/* Paper with ruled lines; the top edge is a row of torn punch-holes */
+.popup[data-popup='off-the-clock'] .popup-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    var(--paper-texture),
+    repeating-linear-gradient(transparent 0 31px, var(--paper-rule) 31px 32px) 0 22px,
+    var(--paper-bg);
+  -webkit-mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
+  mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
+}
+.popup[data-popup='off-the-clock'] .popup-title {
+  color: var(--text-strong);
+}
+.popup[data-popup='off-the-clock'] .popup-close {
+  top: 24px;
+  background: none;
+}
+.popup[data-popup='off-the-clock'] .popup-close:hover {
+  background: var(--accent-a14);
+}
+
+/* ── Checklist ── */
+.quest-list {
+  margin: 20px 0 0;
+  list-style: none;
+}
+.quest {
+  margin: 0; /* reset the global li spacing */
+}
+.quest-btn {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: 400 16px/1.3 var(--font-secondary);
+  color: var(--text-strong);
+  text-align: left;
+  cursor: pointer;
+}
+.quest-btn:hover {
+  background: var(--accent-a8);
+}
+.quest-btn:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+
+/* The tick box */
+.quest-box {
+  flex: none;
+  position: relative;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--text-strong);
+  border-radius: 4px;
+}
+/* Done: red tick, crossed out */
+.quest--done .quest-box::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: -4px;
+  width: 7px;
+  height: 15px;
+  border: solid var(--ink-red);
+  border-width: 0 3px 3px 0;
+  rotate: 40deg;
+}
+.quest--done .quest-title {
+  color: var(--ink-red);
+  text-decoration: line-through;
+}
+/* In progress: dashed box, half filled */
+.quest--wip .quest-box {
+  border-style: dashed;
+  background: linear-gradient(to top, var(--accent-a33) 50%, transparent 50%);
+}
+
+/* What an unfinished quest says back when clicked */
+.quest-reply {
+  display: block;
+  margin-left: 40px; /* lines up with the quest text */
+  font: italic 600 14px/1.3 var(--font-secondary);
+  color: var(--ink-red);
+}
+.quest-reply:not(:empty) {
+  padding-bottom: 6px;
+  animation: popup-fade 0.2s ease;
+}
+.quest.is-jiggling .quest-btn {
+  animation: quest-jiggle 0.45s ease;
+}
+@keyframes quest-jiggle {
+  20% {
+    transform: rotate(-2deg) translateX(-3px);
+  }
+  40% {
+    transform: rotate(2deg) translateX(3px);
+  }
+  60% {
+    transform: rotate(-1.5deg) translateX(-2px);
+  }
+  80% {
+    transform: rotate(1deg) translateX(1px);
+  }
+}
+
+.quest-hint {
+  margin: 12px 0 20px;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* ── Memory of a finished quest ── */
+.quest-memory-date {
+  margin: 8px 0 0;
+  font: 700 12px var(--font-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-red);
+}
+.quest-memory-title {
+  margin: 6px 0 0;
+  font-size: 22px;
+  color: var(--text-strong);
+}
+.quest-memory-photo {
+  display: block;
+  box-sizing: border-box;
+  max-width: 100%;
+  margin-bottom: 20px;
+  padding: 6px;
+  background: var(--surface);
+  border-radius: 6px;
+  box-shadow: var(--shadow-card);
+}
+
+/* Dashed paper button ("pin it back up", "back to the list") */
+.paper-btn {
+  padding: 8px 16px;
+  border: 2px dashed var(--text-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  font: italic 600 14px var(--font-secondary);
+  color: var(--text-strong);
+  cursor: pointer;
+}
+.paper-btn:hover {
+  background: var(--accent-25);
+}
+.paper-btn:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .popup[data-popup='off-the-clock'] .popup-card {
+    padding: 40px 20px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quest.is-jiggling .quest-btn,
+  .quest-reply:not(:empty) {
+    animation: none;
+  }
+}
