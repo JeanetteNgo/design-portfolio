@@ -229,10 +229,16 @@
     0 1px 2px rgb(var(--shadow-rgb) / 10%),
     0 6px 14px rgb(var(--shadow-rgb) / 12%);
 }
-.quest-polaroid img {
+.quest-polaroid :is(img, video) {
   display: block;
   max-width: 100%;
   height: auto;
+}
+/* Upright videos would otherwise be taller than the screen; keep the whole clip in view */
+.quest-polaroid video {
+  max-height: min(60vh, 480px);
+  margin-inline: auto;
+  background: var(--text-strong); /* fills any bars if the shape doesn't match */
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;

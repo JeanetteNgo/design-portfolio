@@ -46,20 +46,33 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   /* ── Memory for finished quests ── */
 
   function _showMemory(quest, button) {
-    const { date, description, image, alt, caption } = quest.memory || {};
+    const { date, description, image, video, poster, alt, caption } = quest.memory || {};
 
     // A "Quest complete" stamp sits at the top, where the popup's title is on the list
     const parts = [popupEl('p', '✓ Quest complete', 'quest-stamp')];
     if (date) parts.push(popupEl('p', date, 'quest-memory-date'));
     parts.push(popupEl('h3', quest.title, 'quest-memory-title'));
     if (description) parts.push(popupEl('p', description));
-    if (image) {
-      // Polaroid: the photo, with an optional scribbled caption underneath
+    if (image || video) {
+      // Polaroid: the photo or video, with an optional scribbled caption underneath
       const polaroid = popupEl('figure', '', 'quest-polaroid');
-      const img = popupEl('img');
-      img.src = image;
-      img.alt = alt || '';
-      polaroid.appendChild(img);
+      let media;
+      if (video) {
+        // Plays on tap, never on its own. preload "none" means the file only downloads
+        // when someone presses play; until then the poster frame (or the photo) shows.
+        media = popupEl('video');
+        media.src = video;
+        media.poster = poster || image || '';
+        media.controls = true;
+        media.playsInline = true; // plays in the polaroid on iPhones, not full screen
+        media.preload = 'none';
+        if (alt) media.setAttribute('aria-label', alt);
+      } else {
+        media = popupEl('img');
+        media.src = image;
+        media.alt = alt || '';
+      }
+      polaroid.appendChild(media);
       if (caption) polaroid.appendChild(popupEl('figcaption', caption));
       parts.push(polaroid);
     }
@@ -76,7 +89,13 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     back.focus();
   }
 
+  // A video mustn't keep playing (and talking) once its memory is out of sight
+  function _stopVideo() {
+    memoryView.querySelector('video')?.pause();
+  }
+
   function _showList() {
+    _stopVideo();
     memoryView.hidden = true;
     listView.hidden = false;
     if (lastButton) lastButton.focus();
@@ -115,6 +134,9 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
 
   if (popup.intro) listView.appendChild(popupEl('p', popup.intro, 'popup-intro'));
   listView.append(list, popupEl('p', 'tap a quest', 'quest-hint'), close);
+
+  // Closing the popup (Esc, ×, tapping outside) stops a playing video too
+  document.getElementById('popup').addEventListener('close', _stopVideo, { once: true });
 
   return [listView, memoryView];
 };
