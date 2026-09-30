@@ -96,17 +96,19 @@
    Drawn as a background (a diagonal across a short band) so it can be angled and positioned;
    it repeats on each line if the text wraps */
 .quest--done .quest-text {
-  --strike: color-mix(in srgb, var(--ink-red) 75%, transparent);
-  --strike-rise: 7px; /* how much higher the right end is than the left; 1.5px = flat */
-  --strike-at: 60%; /* 50% = centred on the text; higher = lower down */
+  --strike: color-mix(in srgb, var(--ink-red) 80%, transparent);
+  --strike-width: 1.5px; /* thickness of the line */
+  --strike-rise: 1.5px; /* how much higher the right end is than the left; 0px = flat */
+  --strike-at: 55%; /* 50% = centred on the text; higher = lower down */
+  --strike-half: calc(var(--strike-width) / 2); /* worked out from the width; no need to edit */
   padding-inline: 2px;
   background: linear-gradient(
       to bottom right,
-      transparent calc(50% - 0.75px),
-      var(--strike) calc(50% - 0.75px) calc(50% + 0.75px),
-      transparent calc(50% + 0.75px)
+      transparent calc(50% - var(--strike-half)),
+      var(--strike) calc(50% - var(--strike-half)) calc(50% + var(--strike-half)),
+      transparent calc(50% + var(--strike-half))
     )
-    0 var(--strike-at) / 100% var(--strike-rise) no-repeat;
+    0 var(--strike-at) / 100% calc(var(--strike-rise) + var(--strike-width)) no-repeat;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
