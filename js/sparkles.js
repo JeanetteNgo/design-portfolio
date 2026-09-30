@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────
-   CONFETTI BURST
-   Clicking the dock's Confetti tile (button[data-action="party"]) shoots
-   sparkles out of it like a party popper. They're added to .home-sparkles
+   SPARKLE BURST
+   Clicking the dock's Sparkles tile (button[data-action="party"]) shoots
+   sparkles up to the nav bar like a party popper, where they scatter and float down. They're added to .home-sparkles
    and removed again once they've faded.
    The look and the animation live in css/features/sparkles.css;
    this file only creates the elements and gives each one random values.
@@ -29,24 +29,32 @@
     const x = from.left + from.width / 2 - box.left;
     const y = from.top + from.height / 2 - box.top;
 
+    // Where the shot "hits": the nav bar at the top of the screen
+    const nav = document.getElementById('site-nav');
+    const topY = (nav ? nav.getBoundingClientRect().bottom : 0) - box.top - 20;
+    const room = box.height - topY; // space to float back down in
+
     for (let i = 0; i < count; i++) {
       const el = document.createElement('span');
       el.className = `sparkle sparkle--${pick(SHAPES)}`;
 
-      // Fan out upwards: 0° is straight up, ±80° either side, reaching up to half the screen
-      const angle = (rand(-80, 80) * Math.PI) / 180;
-      const distance = rand(120, Math.max(260, Math.min(window.innerWidth * 0.5, 640)));
+      // After the hit, each one heads for its own column so they cover the full width
+      const landX = ((i + rand(0.1, 0.9)) / count) * box.width;
+      const landY = topY + rand(10, room * 0.25);
 
       el.style.left = `${x.toFixed(0)}px`;
       el.style.top = `${y.toFixed(0)}px`;
-      el.style.setProperty('--dx', `${(Math.sin(angle) * distance).toFixed(0)}px`);
-      el.style.setProperty('--dy', `${(-Math.cos(angle) * distance).toFixed(0)}px`);
+      el.style.setProperty('--ux', `${rand(-24, 24).toFixed(0)}px`); // slight wobble in the shot
+      el.style.setProperty('--uy', `${(topY - y).toFixed(0)}px`);
+      el.style.setProperty('--dx', `${(landX - x).toFixed(0)}px`);
+      el.style.setProperty('--dy', `${(landY - y).toFixed(0)}px`);
+      el.style.setProperty('--fall', `${rand(room * 0.25, room * 0.6).toFixed(0)}px`);
+      el.style.setProperty('--sway', `${rand(-50, 50).toFixed(0)}px`);
       el.style.setProperty('--spin', `${rand(-240, 240).toFixed(0)}deg`);
       el.style.setProperty('--size', `${Math.round(rand(12, 26))}px`);
       el.style.setProperty('--colour', pick(COLOURS));
-      el.style.setProperty('--fall', `${rand(140, 320).toFixed(0)}px`);
-      el.style.setProperty('--sway', `${rand(-50, 50).toFixed(0)}px`);
-      el.style.setProperty('--duration', `${rand(2.4, 3.6).toFixed(2)}s`);
+      el.style.setProperty('--duration', `${rand(3.2, 4.6).toFixed(2)}s`);
+      el.style.setProperty('--delay', `${rand(0, 0.18).toFixed(2)}s`); // leave as a stream, not a clump
 
       el.addEventListener('animationend', () => el.remove());
       layer.appendChild(el);

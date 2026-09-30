@@ -1,15 +1,20 @@
 /* ══════════════════════════════════════════
-   CONFETTI BURST
-   Sparkles that shoot out of the dock's Confetti tile when it's clicked.
+   SPARKLE BURST
+   Sparkles that shoot out of the dock's Sparkles tile when it's clicked,
+   hit the nav bar, scatter across the screen and float back down.
+   They sit behind the intro content and the dock.
    js/sparkles.js creates the .sparkle elements at the tile and sets, on each one:
-     --dx, --dy, --spin           how far it flies and how much it turns
-     --fall, --sway               how far it floats down, and drifts sideways
-     --size, --colour, --duration how big, which colour, how long it lasts
+     --ux, --uy                   the shot: up to the nav, with a slight wobble
+     --dx, --dy                   where it scatters to, measured from the tile
+     --fall, --sway, --spin       how far it floats down, drifts sideways and turns
+     --size, --colour             how big, which colour
+     --duration, --delay          how long it lasts, and how late it leaves
 ══════════════════════════════════════════ */
 .home-sparkles {
   position: absolute;
   inset: 0;
-  z-index: 5; /* in front of the intro and dock */
+  z-index: -1; /* behind the intro and dock */
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -19,7 +24,7 @@
   height: var(--size);
   margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); /* centre on its start point */
   background: var(--colour);
-  animation: sparkle-burst var(--duration) linear forwards;
+  animation: sparkle-burst var(--duration) linear var(--delay) both;
 }
 
 /* Shapes */
@@ -61,20 +66,25 @@
   scale: 0.5;
 }
 
-/* Bursts out fast, scatters, then floats down with a sway as it fades */
+/* Shoots straight up, hits the nav, scatters sideways, then floats down with a sway */
 @keyframes sparkle-burst {
   0% {
-    transform: translate(0, 0) scale(0.3) rotate(0deg);
+    transform: translate(0, 0) scale(0.5) rotate(0deg);
     opacity: 1;
-    animation-timing-function: cubic-bezier(0.05, 0.9, 0.2, 1); /* explosive start */
+    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1); /* fast shot */
   }
-  18% {
+  10% {
+    transform: translate(var(--ux), var(--uy)) scale(1) rotate(0deg);
+    opacity: 1;
+    animation-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1); /* scatter */
+  }
+  38% {
     transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--spin));
     opacity: 1;
     animation-timing-function: ease-in-out;
   }
-  55% {
-    transform: translate(calc(var(--dx) + var(--sway)), calc(var(--dy) + var(--fall) * 0.4))
+  70% {
+    transform: translate(calc(var(--dx) + var(--sway)), calc(var(--dy) + var(--fall) * 0.5))
       scale(1) rotate(calc(var(--spin) * 1.6));
     opacity: 1;
     animation-timing-function: ease-in-out;
@@ -86,7 +96,7 @@
   }
 }
 
-/* The Confetti icon kicks back as it fires */
+/* The Sparkles icon kicks back as it fires */
 .dock-btn.is-popping .dock-icon {
   animation: party-pop 0.4s ease-out;
 }
@@ -99,11 +109,11 @@
   }
 }
 
-/* Reduced motion: no flying. A small cluster fades in above the tile and out again */
+/* Reduced motion: no flying. The scatter fades in where it would land, then out again */
 @media (prefers-reduced-motion: reduce) {
   .sparkle {
-    transform: translate(calc(var(--dx) * 0.4), calc(var(--dy) * 0.4));
-    animation: sparkle-fade 1.4s ease forwards;
+    transform: translate(var(--dx), calc(var(--dy) + var(--fall) * 0.5));
+    animation: sparkle-fade 1.6s ease both;
   }
   .dock-btn.is-popping .dock-icon {
     animation: none;

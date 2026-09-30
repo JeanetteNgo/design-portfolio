@@ -1,9 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#4a2e25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
   <!-- Placeholder: party popper -->
-  <path d="M7 58 19 29l17 17z" fill="#ff8b84"/>
-  <path d="M15.5 38 27 50M11.5 48l7 6.5" stroke-linecap="butt"/>
-  <circle cx="30" cy="13" r="5" fill="#8ec5e8"/>
-  <circle cx="53" cy="42" r="5" fill="#ffd36e"/>
-  <rect x="36" y="25" width="9" height="9" rx="2" fill="#ff8b84" transform="rotate(20 40.5 29.5)"/>
-  <path d="m50 4 3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="#ffd36e"/>
+  <path d="M9 57 22 23l21 21z" fill="#ff8b84"/>
+  <path d="M18.5 33 33.5 48M14.5 43l9.5 9" stroke-linecap="butt"/>
+  <path d="M35 21c1-4 4-5 5-9M45 31c4-1 6 2 10 1"/>
+  <circle cx="51" cy="14" r="4" fill="#ffd36e"/>
+  <circle cx="28" cy="12" r="4" fill="#8ec5e8"/>
+  <rect x="49" y="40" width="7" height="7" rx="1.5" fill="#8ec5e8" transform="rotate(20 52.5 43.5)"/>
 </svg>
