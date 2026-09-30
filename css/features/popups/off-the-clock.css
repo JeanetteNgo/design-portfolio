@@ -154,12 +154,29 @@
 }
 
 /* ── Memory of a finished quest ── */
-/* The popup's title is for the list; the memory has "back to the list" in its place */
+/* The popup's title is for the list; the memory has a "Quest complete" stamp in its place */
 .popup[data-popup='off-the-clock']:has(.quest-memory:not([hidden])) .popup-title {
   display: none;
 }
+/* Rubber stamp: red outline, tilted, no fill */
+.quest-stamp {
+  width: fit-content;
+  margin: 0 0 0 -2px;
+  padding: 4px 10px;
+  border: 2px solid var(--ink-red);
+  border-radius: 6px;
+  font: 700 11px var(--font-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-red);
+  opacity: 0.85; /* slightly faded, like ink */
+  rotate: -3deg;
+}
+.quest-memory .paper-btn {
+  margin-top: 20px;
+}
 .quest-memory-date {
-  margin: 20px 0 0;
+  margin: 18px 0 0;
   font: 700 12px var(--font-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -178,8 +195,11 @@
   margin: 16px 0 0;
   padding: 8px;
   background: var(--surface);
+  border: 1px solid var(--border-neutral); /* keeps the white frame visible on the paper */
   border-radius: 4px;
-  box-shadow: var(--shadow-card);
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-rgb) / 10%),
+    0 6px 14px rgb(var(--shadow-rgb) / 12%);
 }
 .quest-polaroid img {
   display: block;

@@ -48,12 +48,8 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   function _showMemory(quest, button) {
     const { date, description, image, alt, caption } = quest.memory || {};
 
-    // The back button sits at the top, where the popup's title is on the list
-    const back = popupEl('button', 'back to the list', 'paper-btn');
-    back.type = 'button';
-    back.addEventListener('click', _showList);
-
-    const parts = [back];
+    // A "Quest complete" stamp sits at the top, where the popup's title is on the list
+    const parts = [popupEl('p', '✓ Quest complete', 'quest-stamp')];
     if (date) parts.push(popupEl('p', date, 'quest-memory-date'));
     parts.push(popupEl('h3', quest.title, 'quest-memory-title'));
     if (description) parts.push(popupEl('p', description));
@@ -67,6 +63,11 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
       if (caption) polaroid.appendChild(popupEl('figcaption', caption));
       parts.push(polaroid);
     }
+
+    const back = popupEl('button', 'back to the list', 'paper-btn');
+    back.type = 'button';
+    back.addEventListener('click', _showList);
+    parts.push(back);
 
     lastButton = button;
     memoryView.replaceChildren(...parts);
