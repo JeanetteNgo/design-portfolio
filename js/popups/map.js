@@ -10,10 +10,6 @@
    Looks live in css/features/popups/map.css.
 ────────────────────────────────────────────── */
 
-// How the stamps look: 'ink' (rubber-stamp outlines) or 'postage' (perforated stamps). Both are
-// in css/features/popups/map.css.
-const MAP_STAMP_STYLE = 'ink';
-
 POPUP_RENDERERS.map = function (popup) {
   const STATUS = {
     home: ['Home base', 'Based in'],
@@ -508,7 +504,6 @@ POPUP_RENDERERS.map = function (popup) {
     const places = PLACES.filter((p) => p.status === status);
     if (!places.length) return;
     const list = popupEl('ul', '', 'map-stamps');
-    list.dataset.stampStyle = MAP_STAMP_STYLE;
     places.forEach((place) => {
       const stamp = popupEl('button', '', `map-stamp map-stamp--${status}`);
       stamp.type = 'button';

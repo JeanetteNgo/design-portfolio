@@ -219,8 +219,8 @@
   margin: 0; /* reset the global li spacing */
 }
 /* Every stamp is the same size (the button fills its grid cell, and the cells in a row match).
-   The look comes from data-stamp-style on the list: 'ink' or 'postage' (set in js/popups/map.js).
-   No white fill: the map paper shows through. */
+   Inked rubber stamps: an outer and an inner ink line and no fill, so the map paper shows
+   through. Next stops are faint dashed outlines: not stamped yet. */
 .map-stamp {
   --ink: var(--ink-brown);
   position: relative;
@@ -234,7 +234,9 @@
   min-height: 96px;
   box-sizing: border-box;
   padding: 12px 14px;
-  border: 0;
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  opacity: 0.92; /* a little faded, like ink */
   background: none;
   font: inherit;
   text-align: left;
@@ -247,11 +249,16 @@
 .map-stamps li:nth-child(even) .map-stamp {
   rotate: 1deg;
 }
-.map-stamps li:nth-child(3n + 2) .map-stamp {
+/* Four inks in turn. With 2 or 3 stamps to a row, neighbours (across and down) never match, and
+   the colours don't line up in columns. */
+.map-stamps li:nth-child(4n + 2) .map-stamp {
   --ink: var(--ink-red);
 }
-.map-stamps li:nth-child(3n + 3) .map-stamp {
+.map-stamps li:nth-child(4n + 3) .map-stamp {
   --ink: var(--ink-green);
+}
+.map-stamps li:nth-child(4n + 4) .map-stamp {
+  --ink: var(--text-body);
 }
 .map-stamp-name {
   font: 700 14px/1.25 var(--font-secondary);
@@ -276,7 +283,7 @@
   outline: 3px solid var(--accent-500);
   outline-offset: 3px;
 }
-/* The inner line of the stamp (both looks) */
+/* The inner line of the stamp */
 .map-stamp::before {
   content: '';
   position: absolute;
@@ -287,69 +294,17 @@
   pointer-events: none;
 }
 
-/* ── Look 1: inked rubber stamps. An outer and an inner ink line, and no fill. Next stops are
-   faint dashed outlines: not stamped yet. ── */
-.map-stamps[data-stamp-style='ink'] .map-stamp {
-  border: 2px solid var(--ink);
-  border-radius: 6px;
-  opacity: 0.92; /* a little faded, like ink */
-}
-.map-stamps[data-stamp-style='ink'] .map-stamp:hover {
+.map-stamp:hover {
   background: var(--accent-a8);
 }
-.map-stamps[data-stamp-style='ink'] .map-stamp--next {
-  --ink: var(--sticker-ring-brown);
+.map-stamp--next {
   border-style: dashed;
   opacity: 1;
 }
-.map-stamps[data-stamp-style='ink'] .map-stamp--next::before {
+.map-stamp--next::before {
   display: none;
 }
-.map-stamps[data-stamp-style='ink'] .map-stamp--next .map-stamp-when {
-  color: var(--text-muted);
-}
-
-/* ── Look 2: postage stamps. A see-through paper tint with a perforated edge (the holes are a
-   mask on ::after, so the focus ring on the button itself is never cut off). Next stops are
-   fainter, with a dashed inner line. ── */
-.map-stamps[data-stamp-style='postage'] .map-stamp {
-  align-items: center;
-  text-align: center;
-  padding: 14px 16px;
-}
-.map-stamps[data-stamp-style='postage'] .map-stamp::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  background: color-mix(in srgb, var(--accent-50) 80%, transparent);
-  /* four rows of half-circle notches (top, bottom, left, right) cut out of the tint */
-  -webkit-mask:
-    radial-gradient(circle 4.5px at 7px 0, #0000 97%, #000) 0 0 / 14px 100% repeat-x,
-    radial-gradient(circle 4.5px at 7px 100%, #0000 97%, #000) 0 0 / 14px 100% repeat-x,
-    radial-gradient(circle 4.5px at 0 7px, #0000 97%, #000) 0 0 / 100% 14px repeat-y,
-    radial-gradient(circle 4.5px at 100% 7px, #0000 97%, #000) 0 0 / 100% 14px repeat-y;
-  -webkit-mask-composite: source-in;
-  mask:
-    radial-gradient(circle 4.5px at 7px 0, #0000 97%, #000) 0 0 / 14px 100% repeat-x,
-    radial-gradient(circle 4.5px at 7px 100%, #0000 97%, #000) 0 0 / 14px 100% repeat-x,
-    radial-gradient(circle 4.5px at 0 7px, #0000 97%, #000) 0 0 / 100% 14px repeat-y,
-    radial-gradient(circle 4.5px at 100% 7px, #0000 97%, #000) 0 0 / 100% 14px repeat-y;
-  mask-composite: intersect;
-}
-.map-stamps[data-stamp-style='postage'] .map-stamp::before {
-  inset: 8px;
-  border-radius: 2px;
-  opacity: 0.7;
-}
-.map-stamps[data-stamp-style='postage'] .map-stamp--next::after {
-  background: color-mix(in srgb, var(--accent-50) 28%, transparent);
-}
-.map-stamps[data-stamp-style='postage'] .map-stamp--next::before {
-  border-style: dashed;
-  --ink: var(--sticker-ring-brown);
-}
-.map-stamps[data-stamp-style='postage'] .map-stamp--next .map-stamp-when {
+.map-stamp--next .map-stamp-when {
   color: var(--text-muted);
 }
 
