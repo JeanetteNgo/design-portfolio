@@ -6,22 +6,27 @@
 /* ══════════════════════════════════════════
    NAV BAR
 ══════════════════════════════════════════ */
+/* nav is an invisible sticky wrapper; .nav-container is the floating pill */
 nav {
   position: sticky;
-  top: 0;
+  top: 12px;
   left: 0;
   z-index: 1000;
-  background-color: var(--nav-bg);
-  backdrop-filter: blur(40px);
-  border-bottom: 1px solid var(--accent-a8);
+  padding: 12px 12px 0;
 }
 .nav-container {
-  max-width: 1080px;
+  box-sizing: border-box;
+  max-width: 720px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 0 8px;
+  padding: 8px 28px 4px 24px;
   margin: 0 auto;
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(40px);
+  border: 1px solid var(--accent-a8);
+  border-radius: 999px;
+  box-shadow: var(--shadow-accent-hover);
 }
 .nav-container img {
   width: 48px;
@@ -124,9 +129,6 @@ footer .copyright {
 }
 
 @media (max-width: 1024px) {
-  .nav-container {
-    max-width: 94%;
-  }
   .nav-links {
     gap: 20px;
   }
