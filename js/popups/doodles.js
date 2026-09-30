@@ -1,9 +1,9 @@
 /* ─────────────────────────────────────────────
    DOODLES POPUP
-   An app-style window: a title bar, All / Drawings / Animated filters, and a masonry grid (every
-   doodle keeps its own shape) of doodles from DOODLES in data/doodles.js. Clicking a doodle opens it larger, with its
-   caption; ← (or the back tag) returns to the grid. Looks live in
-   css/features/popups/doodles.css.
+   A small gallery: an exhibition heading, All / Drawings / Animated filters, and a masonry wall
+   (every doodle keeps its own shape) of framed doodles from DOODLES in data/doodles.js, each with a
+   wall label. Clicking one opens it larger, with its caption; ← (or the back tag) returns to the
+   wall. Looks live in css/features/popups/doodles.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS.doodles = function (popup) {
@@ -62,6 +62,17 @@ POPUP_RENDERERS.doodles = function (popup) {
     return blank;
   }
 
+  // The wall label under a piece: title, what kind it is, and (when opened) the caption
+  function _label(doodle, withCaption) {
+    const label = popupEl('span', '', 'doodle-label');
+    label.append(
+      popupEl('span', doodle.title, 'doodle-title'),
+      popupEl('span', doodle.type === 'animated' ? 'Animated' : 'Drawing', 'doodle-type')
+    );
+    if (withCaption && doodle.caption) label.appendChild(popupEl('span', doodle.caption, 'doodle-caption'));
+    return label;
+  }
+
   /* ── Opened view ── */
 
   const detailView = popupEl('div', '', 'doodle-view doodle-detail');
@@ -70,8 +81,9 @@ POPUP_RENDERERS.doodles = function (popup) {
 
   function _open(doodle, tile) {
     const scroll = popupEl('div', '', 'popup-scroll');
-    scroll.append(_media(doodle, true), popupEl('h3', doodle.title, 'doodle-title'));
-    if (doodle.caption) scroll.appendChild(popupEl('p', doodle.caption, 'doodle-caption'));
+    const frame = popupEl('div', '', 'doodle-frame');
+    frame.appendChild(_media(doodle, true));
+    scroll.append(frame, _label(doodle, true));
 
     const back = popupBackTag('back to all doodles', _close);
     const footer = popupEl('div', '', 'doodle-footer');
@@ -107,9 +119,8 @@ POPUP_RENDERERS.doodles = function (popup) {
     );
     const frame = popupEl('span', '', 'doodle-frame');
     frame.appendChild(_media(doodle, false));
-    if (doodle.type === 'animated') frame.appendChild(popupEl('span', 'animated', 'doodle-badge'));
-    tile.appendChild(frame);
-    if (doodle.caption) tile.appendChild(popupEl('span', doodle.caption, 'doodle-tile-caption'));
+    if (doodle.type === 'animated') frame.appendChild(popupEl('span', '▶', 'doodle-play'));
+    tile.append(frame, _label(doodle, false));
     tile.addEventListener('click', () => _open(doodle, tile));
 
     item.appendChild(tile);
@@ -145,17 +156,18 @@ POPUP_RENDERERS.doodles = function (popup) {
   scroll.appendChild(grid);
   gridView.append(filters, status, scroll);
 
-  /* ── Window title bar ── */
+  /* ── Exhibition heading ── */
 
-  // Decoration only: the dialog's own (hidden) title names it for screen readers
-  const bar = popupEl('div', '', 'doodles-bar');
-  bar.setAttribute('aria-hidden', 'true');
-  const dots = popupEl('span', '', 'doodles-dots');
-  dots.append(popupEl('span'), popupEl('span'), popupEl('span'));
-  bar.append(dots, popupEl('span', popup.title, 'doodles-bar-title'));
+  // The title is decoration (the dialog's own hidden title names it for screen readers);
+  // the intro line is real text
+  const head = popupEl('header', '', 'doodles-head');
+  const headTitle = popupEl('span', popup.title, 'doodles-head-title');
+  headTitle.setAttribute('aria-hidden', 'true');
+  head.appendChild(headTitle);
+  if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'doodles-head-intro'));
 
   popupOnLeftKey(() => !detailView.hidden, _close);
   popupOnClose(() => detailView.querySelector('video')?.pause());
 
-  return [bar, gridView, detailView];
+  return [head, gridView, detailView];
 };

@@ -122,6 +122,10 @@
   --pouch: var(--accent-200);
   --pouch-back: var(--accent-300); /* the inside back of the pouch */
 
+  /* Gallery (the Doodles popup) */
+  --gallery-wall: #fbf7f3; /* the wall */
+  --frame: var(--ink-brown); /* picture frames */
+
   /* Sparkles (fired by the dock's Sparkles tile) */
   --sparkle-a: var(--accent-300);
   --sparkle-b: #ffd98a;

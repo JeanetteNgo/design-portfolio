@@ -25,6 +25,7 @@ const POPUPS = {
   },
   doodles: {
     title: 'Doodles',
+    intro: 'A small exhibition of drawings and animations.',
   },
   gallery: {
     title: 'Gallery',
