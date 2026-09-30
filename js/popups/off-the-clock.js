@@ -98,9 +98,11 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     list.appendChild(item);
   });
 
-  const close = popupEl('button', 'pin it back up', 'paper-btn');
+  // "Esc to close" tag: shows the keyboard shortcut, and closes on click for touch screens
+  const close = popupEl('button', '', 'esc-tag');
   close.type = 'button';
   close.dataset.popupClose = '';
+  close.append(popupEl('kbd', 'Esc', 'esc-key'), ' to close');
 
   if (popup.intro) listView.appendChild(popupEl('p', popup.intro, 'popup-intro'));
   listView.append(list, popupEl('p', 'tap a quest', 'quest-hint'), close);

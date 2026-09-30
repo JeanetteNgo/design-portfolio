@@ -37,7 +37,7 @@
   background: none;
 }
 .popup[data-popup='off-the-clock'] .popup-close:hover {
-  background: var(--accent-a14);
+  background: var(--surface-neutral-strong);
 }
 
 /* ── Checklist ── */
@@ -63,7 +63,7 @@
   cursor: pointer;
 }
 .quest-btn:hover {
-  background: var(--accent-a8);
+  background: var(--surface-neutral-strong);
 }
 .quest-btn:focus-visible {
   outline: 3px solid var(--accent-500);
@@ -93,8 +93,7 @@
   rotate: 40deg;
 }
 .quest--done .quest-title {
-  color: var(--ink-red);
-  text-decoration: line-through;
+  text-decoration: line-through var(--ink-red) 2px;
 }
 /* In progress: dashed box, half filled */
 .quest--wip .quest-box {
@@ -132,7 +131,7 @@
 }
 
 .quest-hint {
-  margin: 12px 0 20px;
+  margin: 12px 0 16px;
   font-size: 13px;
   font-style: italic;
   color: var(--text-muted);
@@ -162,7 +161,36 @@
   box-shadow: var(--shadow-card);
 }
 
-/* Dashed paper button ("pin it back up", "back to the list") */
+/* "Esc to close" tag at the foot of the sheet */
+.esc-tag {
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: 400 13px var(--font-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.esc-key {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-neutral);
+  border-bottom-width: 3px; /* reads as a keyboard key */
+  border-radius: 6px;
+  background: var(--surface);
+  font: 700 12px var(--font-secondary);
+  color: var(--text-strong);
+}
+.esc-tag:hover {
+  background: var(--surface-neutral-strong);
+}
+.esc-tag:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+
+/* Dashed paper button ("back to the list") */
 .paper-btn {
   padding: 8px 16px;
   border: 2px dashed var(--text-strong);
@@ -173,7 +201,7 @@
   cursor: pointer;
 }
 .paper-btn:hover {
-  background: var(--accent-25);
+  background: var(--surface-neutral-strong);
 }
 .paper-btn:focus-visible {
   outline: 3px solid var(--accent-500);

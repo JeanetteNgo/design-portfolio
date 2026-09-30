@@ -64,7 +64,7 @@ function popupEl(tag, text, className) {
     if (button) open(button.dataset.popup);
   });
 
-  // Close: any [data-popup-close] button (the ×, "pin it back up"), or a click on the dimmed area outside the card
+  // Close: any [data-popup-close] button (the ×, the Esc tag), or a click on the dimmed area outside the card
   dialog.addEventListener('click', (e) => {
     if (e.target === dialog || e.target.closest('[data-popup-close]')) dialog.close();
   });
