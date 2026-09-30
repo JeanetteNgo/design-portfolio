@@ -56,6 +56,7 @@
 }
 
 .dock-list {
+  --dock-tile: 54px; /* tile size; smaller on phones (below) */
   display: flex;
   justify-content: center;
   gap: clamp(14px, 3vw, 28px);
@@ -74,7 +75,7 @@
 
 .dock-btn {
   display: block;
-  width: 54px;
+  width: var(--dock-tile);
   padding: 0;
   border: 0;
   background: none;
@@ -159,10 +160,8 @@
     padding-inline: 10px;
   }
   .dock-list {
+    --dock-tile: 48px;
     gap: clamp(6px, 2vw, 14px);
-  }
-  .dock-btn {
-    width: 48px;
   }
 }
 
@@ -176,9 +175,52 @@
   }
 }
 
-/* Touch screens: labels always visible */
+/* Small phones: seven tiles only fit at 360px if they're a little smaller */
+@media (max-width: 420px) {
+  .dock-list {
+    --dock-tile: 42px;
+    gap: 6px;
+  }
+}
+
+/* Touch screens: labels always visible, on one line under each tile. Every icon
+   gets a slot as wide as the longest label, so the tiles are evenly spaced, and
+   the row scrolls sideways when the slots don't fit on screen. */
 @media (hover: none) {
-  .dock-label {
+  .dock-list {
+    --dock-slot: 72px;
+    gap: 0;
+    justify-content: flex-start; /* centring would hide the first icon when scrolling */
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* room for the icon's hover lift and outline, which overflow clips otherwise */
+    margin: -10px -6px;
+    padding: 10px 6px;
+  }
+  .dock-list::-webkit-scrollbar {
+    display: none;
+  }
+  .dock-item {
+    flex: none;
+    width: var(--dock-slot);
+  }
+  /* Auto margins centre the row when it fits, and let it scroll from the left when not */
+  .dock-item:first-child {
+    margin-left: auto;
+  }
+  .dock-item:last-child {
+    margin-right: auto;
+  }
+  .dock-btn {
+    width: 100%;
+  }
+  .dock-tile {
+    width: var(--dock-tile);
+    margin-inline: auto;
+  }
+  /* Listing the hover state too, so a tap doesn't nudge the label sideways */
+  .dock-label,
+  .dock-btn:is(:hover, :focus-visible) .dock-label {
     display: block;
     position: static;
     opacity: 1;
@@ -186,28 +228,10 @@
     background: none;
     color: var(--text-body);
     padding: 6px 0 0;
-    width: 60px;
-    margin-left: calc((100% - 60px) / 2); /* centre under the tile */
     text-align: center;
-    white-space: normal;
+    white-space: nowrap;
     font-size: 11px;
     line-height: 1.2;
-  }
-}
-
-/* Small phones: seven tiles only fit at 360px if they're a little smaller */
-@media (max-width: 420px) {
-  .dock-list {
-    gap: 6px;
-  }
-  .dock-btn {
-    width: 42px;
-  }
-}
-@media (hover: none) and (max-width: 420px) {
-  .dock-label {
-    width: 48px;
-    margin-left: calc((100% - 48px) / 2);
   }
 }
 
