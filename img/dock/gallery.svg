@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#4a2e25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Placeholder: photo frame -->
+  <path d="M25 13l7-7 7 7"/>
+  <rect x="9" y="13" width="46" height="41" rx="4" fill="#ffd36e"/>
+  <rect x="16" y="20" width="32" height="27" rx="2" fill="#8ec5e8"/>
+  <path d="M16 47v-6l9-9 7 7 5-5 11 11v2z" fill="#9fd49a"/>
+  <circle cx="40" cy="27" r="3" fill="#ffffff"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#4a2e25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Placeholder: pen pouch with pencils -->
+  <path d="M17 32V17l4-8 4 8v15" fill="#ffd36e"/>
+  <path d="M17 17h8"/>
+  <path d="M28 32V13l4-8 4 8v19" fill="#8ec5e8"/>
+  <path d="M28 13h8"/>
+  <path d="M40 32V19h7v13" fill="#ff8b84"/>
+  <path d="M41 19l2.5-7 2.5 7"/>
+  <path d="M11 30h42v17a8 8 0 0 1-8 8H19a8 8 0 0 1-8-8z" fill="#ffa8a3"/>
+  <path d="M16 37h32" stroke-width="2" stroke-dasharray="3 4"/>
+</svg>

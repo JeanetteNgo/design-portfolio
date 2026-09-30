@@ -89,6 +89,12 @@
   --shadow-card-hover: 0px 8px 24px 0 rgb(var(--shadow-rgb) / 12%);
   --shadow-accent-hover: 0 6px 24px rgb(var(--accent-rgb) / 10%);
 
+  /* My Dock */
+  --dock-tile-a: var(--accent-50);
+  --dock-tile-b: #fff3d6;
+  --dock-tile-highlight: rgb(255 255 255 / 70%); /* inner rim on tiles */
+  --dock-outline: var(--neutral-0); /* white outline on hovered icon */
+
   /* Legacy names (kept so nothing else that uses them breaks) */
   --text-color-primary: var(--text-heading);
   --text-color-secondary: var(--text-body);

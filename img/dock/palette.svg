@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#4a2e25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Placeholder: fanned paint-chip cards -->
+  <g transform="rotate(-28 32 50)">
+    <rect x="26" y="8" width="12" height="44" rx="3" fill="#8ec5e8"/>
+    <path d="M26 20h12M26 31h12"/>
+  </g>
+  <g transform="rotate(28 32 50)">
+    <rect x="26" y="8" width="12" height="44" rx="3" fill="#ffd36e"/>
+    <path d="M26 20h12M26 31h12"/>
+  </g>
+  <rect x="26" y="8" width="12" height="44" rx="3" fill="#ff8b84"/>
+  <path d="M26 20h12M26 31h12"/>
+  <circle cx="32" cy="45" r="2.5" fill="#ffffff"/>
+</svg>

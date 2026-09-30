@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#4a2e25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Placeholder: spiral pad with a smiley -->
+  <rect x="13" y="12" width="38" height="44" rx="5" fill="#ffffff"/>
+  <path d="M22 7v10M32 7v10M42 7v10"/>
+  <circle cx="32" cy="36" r="10" fill="#ffd36e"/>
+  <path d="M28.5 33v1M35.5 33v1"/>
+  <path d="M27.5 38.5q4.5 4 9 0"/>
+</svg>
