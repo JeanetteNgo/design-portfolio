@@ -12,7 +12,7 @@
   const button = document.querySelector('[data-action="party"]');
   if (!layer || !button) return;
 
-  const SHAPES = ['sparkle', 'sparkle', 'star', 'plus', 'dot']; // sparkle listed twice = twice as likely
+  const SHAPES = ['sparkle', 'sparkle', 'star', 'heart', 'dot']; // sparkle listed twice = twice as likely
   const COLOURS = ['var(--sparkle-a)', 'var(--sparkle-b)'];
   const MAX_ON_SCREEN = 120; // fast repeat clicks can't pile up more than this
 
@@ -33,9 +33,9 @@
       const el = document.createElement('span');
       el.className = `sparkle sparkle--${pick(SHAPES)}`;
 
-      // Fan out upwards: 0° is straight up, ±65° either side
-      const angle = (rand(-65, 65) * Math.PI) / 180;
-      const distance = rand(90, narrow ? 240 : 380);
+      // Fan out upwards: 0° is straight up, ±80° either side, reaching up to half the screen
+      const angle = (rand(-80, 80) * Math.PI) / 180;
+      const distance = rand(120, Math.max(260, Math.min(window.innerWidth * 0.5, 640)));
 
       el.style.left = `${x.toFixed(0)}px`;
       el.style.top = `${y.toFixed(0)}px`;
@@ -44,7 +44,9 @@
       el.style.setProperty('--spin', `${rand(-240, 240).toFixed(0)}deg`);
       el.style.setProperty('--size', `${Math.round(rand(12, 26))}px`);
       el.style.setProperty('--colour', pick(COLOURS));
-      el.style.setProperty('--duration', `${rand(1, 1.6).toFixed(2)}s`);
+      el.style.setProperty('--fall', `${rand(140, 320).toFixed(0)}px`);
+      el.style.setProperty('--sway', `${rand(-50, 50).toFixed(0)}px`);
+      el.style.setProperty('--duration', `${rand(2.4, 3.6).toFixed(2)}s`);
 
       el.addEventListener('animationend', () => el.remove());
       layer.appendChild(el);
