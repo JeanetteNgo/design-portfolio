@@ -4,7 +4,7 @@
    data/quests.js. Looks live in css/features/popups/off-the-clock.css.
 
    Clicking a quest:
-     done         swaps the list for that quest's memory (date, story, photo)
+     done         swaps the list for that quest's memory (date, story, photo, caption)
      wip / todo   jiggles it and shows a short reply from QUEST_REPLIES
    Visitors can't tick anything; the state comes from the data.
 ────────────────────────────────────────────── */
@@ -46,21 +46,27 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   /* ── Memory for finished quests ── */
 
   function _showMemory(quest, button) {
-    const { date, description, image, alt } = quest.memory || {};
-    const parts = [];
+    const { date, description, image, alt, caption } = quest.memory || {};
+
+    // The back button sits at the top, where the popup's title is on the list
+    const back = popupEl('button', 'back to the list', 'paper-btn');
+    back.type = 'button';
+    back.addEventListener('click', _showList);
+
+    const parts = [back];
     if (date) parts.push(popupEl('p', date, 'quest-memory-date'));
     parts.push(popupEl('h3', quest.title, 'quest-memory-title'));
     if (description) parts.push(popupEl('p', description));
     if (image) {
-      const img = popupEl('img', '', 'quest-memory-photo');
+      // Polaroid: the photo, with an optional scribbled caption underneath
+      const polaroid = popupEl('figure', '', 'quest-polaroid');
+      const img = popupEl('img');
       img.src = image;
       img.alt = alt || '';
-      parts.push(img);
+      polaroid.appendChild(img);
+      if (caption) polaroid.appendChild(popupEl('figcaption', caption));
+      parts.push(polaroid);
     }
-    const back = popupEl('button', 'back to the list', 'paper-btn');
-    back.type = 'button';
-    back.addEventListener('click', _showList);
-    parts.push(back);
 
     lastButton = button;
     memoryView.replaceChildren(...parts);

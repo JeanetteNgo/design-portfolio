@@ -12,6 +12,7 @@
   /* Font family */
   --font-primary: 'Nunito', sans-serif;
   --font-secondary: 'Lexend', sans-serif;
+  --font-hand: 'Caveat', cursive; /* handwriting, for scribbled notes (loaded on the home page) */
 
   /* ── LAYER 1: PALETTE ── */
   --neutral-0: #ffffff;

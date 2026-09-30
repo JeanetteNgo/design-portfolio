@@ -139,8 +139,12 @@
 }
 
 /* ── Memory of a finished quest ── */
+/* The popup's title is for the list; the memory has "back to the list" in its place */
+.popup[data-popup='off-the-clock']:has(.quest-memory:not([hidden])) .popup-title {
+  display: none;
+}
 .quest-memory-date {
-  margin: 8px 0 0;
+  margin: 20px 0 0;
   font: 700 12px var(--font-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -151,15 +155,27 @@
   font-size: 22px;
   color: var(--text-strong);
 }
-.quest-memory-photo {
-  display: block;
-  box-sizing: border-box;
+/* Polaroid: white frame, photo, optional scribbled caption */
+.quest-polaroid {
+  width: fit-content;
   max-width: 100%;
-  margin-bottom: 20px;
-  padding: 6px;
+  box-sizing: border-box;
+  margin: 16px 0 0;
+  padding: 8px;
   background: var(--surface);
-  border-radius: 6px;
+  border-radius: 4px;
   box-shadow: var(--shadow-card);
+}
+.quest-polaroid img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+.quest-polaroid figcaption {
+  padding: 8px 4px 2px;
+  font: 600 22px/1.1 var(--font-hand);
+  color: var(--text-strong);
+  text-align: center;
 }
 
 /* "Esc to close" tag at the foot of the sheet */
