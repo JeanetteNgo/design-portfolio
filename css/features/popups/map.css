@@ -1,23 +1,34 @@
 /* ══════════════════════════════════════════
    MAP POPUP
-   A folded paper sheet with an interactive globe (drawn on a canvas by js/popups/map.js) beside
-   the selected place's note and the same places as chips. Places come from data/places.js.
+   A nautical-chart sheet with an interactive globe (drawn on a canvas by js/popups/map.js)
+   beside the selected place's card and the same places as chips. Places come from data/places.js.
    The globe's colours are read from the tokens in css/tokens.css when it is drawn.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='map'] .popup-card {
   width: min(100%, 720px);
   border-radius: 6px;
-  /* A textured map sheet: soft terrain-like bands and paper grain over warm paper, with the
-     edges a touch darker like an old map (the textures are in css/tokens.css) */
+  /* A nautical chart: faint grid, compass rose and route (img/map/chart.svg) over paper grain
+     and warm paper, with the edges a touch darker like an old map */
+  isolation: isolate;
   background:
-    var(--map-texture) 0 0 / 420px 420px,
+    url('../../../img/map/chart.svg') center / cover,
     var(--paper-texture),
     var(--paper-bg);
   box-shadow:
     inset 0 0 70px var(--accent-a14),
     0 2px 4px rgb(var(--shadow-rgb) / 12%),
     0 18px 40px rgb(var(--shadow-rgb) / 24%);
+}
+/* The chart's frame: a thin rule inset from the sheet's edge, behind the content */
+.popup[data-popup='map'] .popup-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 12px;
+  border: 1.5px solid var(--accent-a33);
+  border-radius: 3px;
+  pointer-events: none;
 }
 /* Whitespace: more room around the content than the other popups */
 @media (min-width: 720px) {
@@ -48,7 +59,7 @@
 }
 @media (min-width: 720px) {
   .popup[data-popup='map'] .popup-card {
-    width: min(100%, 900px);
+    width: min(100%, 980px);
   }
   .map-layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -59,25 +70,18 @@
   margin-bottom: 16px;
 }
 
-/* ── The globe: a square canvas drawn by js/popups/map.js, with its zoom buttons beside it
-   (below it on phones) ── */
+/* ── The globe: a square canvas drawn by js/popups/map.js, with its zoom buttons below ── */
 .map-globe-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
-@media (min-width: 720px) {
-  .map-globe-wrap {
-    flex-direction: row;
-    gap: 20px;
-  }
-}
 .map-globe-frame {
   position: relative;
   flex: 1;
   width: 100%;
-  max-width: 340px;
+  max-width: 400px;
 }
 /* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
 .map-globe-frame::after {
@@ -96,6 +100,9 @@
   cursor: grab;
   border-radius: 50%;
 }
+.map-globe.is-over-pin {
+  cursor: pointer; /* over a pin: tap to select it */
+}
 .map-globe:active {
   cursor: grabbing;
 }
@@ -108,11 +115,6 @@
   display: flex;
   flex-direction: row;
   gap: 8px;
-}
-@media (min-width: 720px) {
-  .map-zoom {
-    flex-direction: column;
-  }
 }
 .map-zoom-btn {
   width: 44px;
@@ -137,10 +139,19 @@
   outline-offset: 2px;
 }
 
-/* ── Note for the selected place ── */
+/* ── Card for the selected place ── */
 .map-note {
   margin-top: 16px;
-  min-height: 84px; /* stops the page below jumping between short and long notes */
+}
+@media (min-width: 720px) {
+  .map-note {
+    min-height: 190px; /* so the chips below don't jump between short and long cards */
+  }
+}
+.map-note::after {
+  content: '';
+  display: block;
+  clear: both; /* holds the card open around a floated photo */
 }
 .map-note-status {
   margin: 0;
@@ -154,10 +165,55 @@
   font-size: 22px;
   color: var(--text-strong);
 }
+.map-note-when {
+  margin: 6px 0 0;
+  font: 600 13px var(--font-secondary);
+  color: var(--text-body);
+}
+.map-note-when span {
+  margin-right: 6px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+.map-cities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.map-cities li {
+  margin: 0; /* reset the global li spacing */
+  padding: 3px 10px;
+  border: 1.5px solid var(--accent-a50);
+  border-radius: 999px;
+  background: var(--paper-bg);
+  font: 400 12px var(--font-secondary);
+  color: var(--text-body);
+}
 .map-note-text {
-  margin: 4px 0 0;
+  margin: 10px 0 0;
   font: 400 16px/1.5 var(--font-hand);
   color: var(--text-body);
+}
+/* Optional photo: a small polaroid, tilted, at the card's right */
+.map-note-photo {
+  float: right;
+  width: 120px;
+  margin: 4px 0 8px 16px;
+  padding: 6px;
+  background: var(--surface);
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-rgb) / 12%),
+    0 6px 12px rgb(var(--shadow-rgb) / 16%);
+  rotate: 3deg;
+}
+.map-note-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ── Legend and chips ── */

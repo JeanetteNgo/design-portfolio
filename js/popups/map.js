@@ -52,6 +52,7 @@ POPUP_RENDERERS.map = function (popup) {
   let velocity = [0, 0]; // degrees a second, after a flick
   let turn = null; // an eased turn to a place: { from, to, start }
   let hits = []; // where each pin was drawn, for tapping
+  let pointerAt = null; // where the pointer is over the globe, for the pointer cursor
   let alive = true;
   let frame = 0;
   let last = 0;
@@ -119,6 +120,19 @@ POPUP_RENDERERS.map = function (popup) {
         _pin(place, x, y, place === selected);
         hits.push({ place, x, y: y - 14 });
       });
+    _hover();
+  }
+
+  // The pointer cursor while over a pin, the grab hand elsewhere (rechecked on every draw, since
+  // pins move under a still pointer while the globe turns)
+  function _pinAt(x, y) {
+    return hits
+      .map((h) => ({ place: h.place, d: Math.hypot(h.x - x, h.y - y) }))
+      .filter((h) => h.d < 24)
+      .sort((a, b) => a.d - b.d)[0];
+  }
+  function _hover() {
+    canvas.classList.toggle('is-over-pin', Boolean(pointerAt && !drag && _pinAt(pointerAt.x, pointerAt.y)));
   }
 
   // A teardrop pin whose point sits on (x, y)
@@ -236,14 +250,39 @@ POPUP_RENDERERS.map = function (popup) {
   const note = popupEl('div', '', 'map-note');
   note.setAttribute('aria-live', 'polite');
 
+  // The card next to the globe: status, name, when, cities, note and (optional) photo.
+  // Anything the place doesn't have is skipped.
+  function _card(place) {
+    const parts = [];
+    if (place.photo) {
+      const photo = popupEl('div', '', 'map-note-photo');
+      const img = popupEl('img');
+      img.src = place.photo;
+      img.alt = place.alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      photo.appendChild(img);
+      parts.push(photo);
+    }
+    parts.push(popupEl('p', STATUS[place.status][0], 'map-note-status'), popupEl('h3', place.name, 'map-note-name'));
+    if (place.when) {
+      const when = popupEl('p', place.when, 'map-note-when');
+      when.prepend(popupEl('span', place.status === 'next' ? 'Planned' : 'Visited'));
+      parts.push(when);
+    }
+    if (place.cities?.length) {
+      const cities = popupEl('ul', '', 'map-cities');
+      place.cities.forEach((city) => cities.appendChild(popupEl('li', city)));
+      parts.push(cities);
+    }
+    if (place.note) parts.push(popupEl('p', place.note, 'map-note-text'));
+    note.replaceChildren(...parts);
+  }
+
   function _select(place, turnGlobe) {
     selected = place;
     chips.forEach(([el, p]) => el.setAttribute('aria-pressed', String(p === place)));
-    note.replaceChildren(
-      popupEl('p', STATUS[place.status][0], 'map-note-status'),
-      popupEl('h3', place.name, 'map-note-name'),
-      popupEl('p', place.note || '', 'map-note-text')
-    );
+    _card(place);
     if (!calmMotion) note.animate([{ opacity: 0, translate: '0 4px' }, { opacity: 1, translate: '0' }], 180);
     if (turnGlobe) _turnTo(place);
     _draw();
@@ -273,6 +312,11 @@ POPUP_RENDERERS.map = function (popup) {
   });
   canvas.addEventListener('pointermove', (e) => {
     if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (e.pointerType === 'mouse') {
+      const rect = canvas.getBoundingClientRect();
+      pointerAt = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      _hover();
+    }
     if (pinch && pointers.size === 2) return _zoomTo((pinch.zoom * _fingerGap()) / pinch.gap, true);
     if (!drag) return;
     const perPx = 0.3 / zoom; // degrees of turn per pixel dragged
@@ -298,10 +342,7 @@ POPUP_RENDERERS.map = function (popup) {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      const hit = hits
-        .map((h) => ({ place: h.place, d: Math.hypot(h.x - x, h.y - y) }))
-        .filter((h) => h.d < 24)
-        .sort((a, b) => a.d - b.d)[0];
+      const hit = _pinAt(x, y);
       if (hit) _select(hit.place, true);
     } else {
       last = performance.now();
@@ -312,6 +353,10 @@ POPUP_RENDERERS.map = function (popup) {
   canvas.addEventListener('pointercancel', (e) => {
     pointers.delete(e.pointerId);
     pinch = drag = null;
+  });
+  canvas.addEventListener('pointerleave', () => {
+    pointerAt = null;
+    _hover();
   });
   canvas.addEventListener('dblclick', () => _zoomTo(MIN_ZOOM));
 
