@@ -120,7 +120,9 @@ html:has(.popup[open]) {
 
 @media (max-width: 640px) {
   .popup-card {
-    padding: 24px 20px 28px;
+    --pad-top: 24px;
+    --pad-x: 20px;
+    --pad-bottom: 28px;
   }
 }
 

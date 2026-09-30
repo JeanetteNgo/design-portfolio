@@ -8,7 +8,8 @@
    inside it, and focus returns to the icon when it closes.
 
    The dialog gets data-popup="tools" (etc.) while open, so each popup
-   can be styled differently in css/features/popups/.
+   can be styled differently in css/features/popups/. Popups with paper: true in
+   the data also get data-paper, which switches on the shared notebook-paper look.
 
    A popup that needs more than the default layout (intro + lists) adds
    its own builder in js/popups/, e.g.
@@ -53,6 +54,7 @@ function popupEl(tag, text, className) {
     if (!popup) return;
 
     dialog.dataset.popup = id;
+    dialog.toggleAttribute('data-paper', Boolean(popup.paper));
     title.textContent = popup.title;
     body.replaceChildren(...(POPUP_RENDERERS[id] || _render)(popup));
     dialog.showModal();

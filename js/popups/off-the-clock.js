@@ -96,7 +96,7 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     back.addEventListener('click', _showList);
 
     // The stamp (with the ×) stays at the top and the back tag at the bottom; the story scrolls
-    const scroll = popupEl('div', '', 'quest-scroll');
+    const scroll = popupEl('div', '', 'paper-scroll');
     scroll.append(...parts);
     const footer = popupEl('div', '', 'quest-footer');
     footer.appendChild(back);
@@ -159,7 +159,7 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   head.appendChild(headTitle);
   if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
   // Only the list scrolls; the header above and the Esc tag below stay put
-  const scroll = popupEl('div', '', 'quest-scroll');
+  const scroll = popupEl('div', '', 'paper-scroll');
   scroll.appendChild(list);
   const footer = popupEl('div', '', 'quest-footer');
   footer.appendChild(close);

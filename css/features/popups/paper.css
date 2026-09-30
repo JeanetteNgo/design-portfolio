@@ -1,0 +1,111 @@
+/* ══════════════════════════════════════════
+   PAPER POPUPS
+   The notebook-paper look shared by popups that set paper: true in data/popups.js
+   (the dialog then carries data-paper): the sheet with its ruled lines and texture,
+   the sticker-style × and a scrolling area. Each popup adds its own touches in its own
+   file (Side Quests: the torn top; Tools: the tape and pen holder).
+
+   Never taller than the screen, so the sheet's top and bottom always show. The content
+   scrolls inside it (.paper-scroll) instead.
+══════════════════════════════════════════ */
+
+.popup[data-paper] .popup-card {
+  isolation: isolate;
+  width: min(100%, 460px);
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh; /* fallback for browsers without dvh */
+  max-height: calc(100dvh - 32px); /* minus the popup's 16px edge gap */
+  --pad-top: 44px;
+  --pad-x: 32px;
+  --pad-bottom: 28px;
+  --close-top: 24px;
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  filter: drop-shadow(0 8px 18px rgb(var(--shadow-rgb) / 18%)); /* follows the sheet's edge */
+  rotate: -0.8deg;
+}
+/* The paper: texture, faint ruled lines, and its colour */
+.popup[data-paper] .popup-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    var(--paper-texture),
+    repeating-linear-gradient(transparent 0 31px, var(--paper-rule) 31px 32px) 0 22px,
+    var(--paper-bg);
+}
+.popup[data-paper] .popup-title {
+  color: var(--text-strong);
+}
+.popup[data-paper] .popup-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0; /* lets a flex child shrink and scroll instead of growing past the sheet */
+}
+/* The scrolling middle. It reaches out to the sheet's edges so the scrollbar sits on the
+   paper's edge, then gets its side padding back inside. */
+.paper-scroll {
+  flex: 1;
+  min-height: 0;
+  position: relative; /* keeps screen-reader-only text inside the scroll area, not the popup */
+  margin-inline: calc(var(--pad-x) * -1);
+  padding: 4px var(--pad-x) 12px; /* the vertical room stops focus rings and shadows being clipped */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-a20) transparent;
+}
+
+/* The × is a paper sticker with a dashed edge and a pen-drawn cross, so it stays
+   readable when the content scrolls underneath it. The cross is two rounded strokes
+   (the × character itself is hidden; the button's aria-label still names it). */
+.popup[data-paper] .popup-close {
+  z-index: 2; /* above anything that scrolls or sticks */
+  border: 2px dashed var(--accent-a50);
+  background: var(--paper-bg);
+  font-size: 0;
+}
+.popup[data-paper] .popup-close::before,
+.popup[data-paper] .popup-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 18px;
+  height: 2.5px;
+  margin: -1.25px 0 0 -9px;
+  border-radius: 2px;
+  background: var(--text-body);
+  rotate: 45deg;
+  transition: background-color 0.15s ease;
+}
+.popup[data-paper] .popup-close::after {
+  rotate: -45deg;
+}
+.popup[data-paper] .popup-close:hover {
+  border-color: var(--ink-red);
+  background: linear-gradient(var(--accent-a8), var(--accent-a8)), var(--paper-bg);
+}
+.popup[data-paper] .popup-close:hover::before,
+.popup[data-paper] .popup-close:hover::after {
+  background: var(--ink-red);
+}
+
+@media (max-width: 640px) {
+  .popup[data-paper] .popup-card {
+    --pad-top: 40px;
+    --pad-x: 20px;
+    --pad-bottom: 24px;
+    --close-top: 30px; /* keeps the × clear of the sheet's top edge */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popup[data-paper] .popup-close::before,
+  .popup[data-paper] .popup-close::after {
+    transition: none;
+  }
+}
