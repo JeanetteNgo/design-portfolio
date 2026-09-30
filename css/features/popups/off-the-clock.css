@@ -6,15 +6,15 @@
 ══════════════════════════════════════════ */
 
 /* ── The sheet of paper ── */
-/* The screen-edge gap is on the sheet, not the popup, so the sticky header can pin flush to
-   the top instead of leaving a strip where the list shows through */
-.popup[data-popup='off-the-clock'] {
-  padding-block: 0;
-}
 .popup[data-popup='off-the-clock'] .popup-card {
   isolation: isolate;
   width: min(100%, 460px);
-  margin-block: 16px;
+  display: flex;
+  flex-direction: column;
+  /* Never taller than the screen (minus the popup's 16px edge gap), so the torn top and the
+     bottom of the sheet always show. The content scrolls inside it instead. */
+  max-height: 100vh; /* fallback for browsers without dvh */
+  max-height: calc(100dvh - 32px);
   --pad-top: 32px; /* the sticky header and the memory add 16px of their own */
   --pad-x: 32px;
   --pad-bottom: 28px;
@@ -83,10 +83,23 @@
   background: var(--ink-red);
 }
 
+/* The content scrolls inside the sheet. It reaches out to the sheet's edges so the scrollbar
+   sits on the paper's edge, and gets its side padding back inside. */
+.popup[data-popup='off-the-clock'] .popup-body {
+  flex: 1;
+  min-height: 0; /* lets a flex child shrink and scroll instead of growing past the sheet */
+  position: relative; /* keeps the screen-reader-only text inside the scroll area, not the popup */
+  margin-inline: calc(var(--pad-x) * -1);
+  padding-inline: var(--pad-x);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-a33) transparent;
+}
+
 /* ── Sticky header: title and intro stay put while the list scrolls ── */
 .quest-head {
   position: sticky;
-  top: -8px; /* pins a little above the screen edge, so the sheet's slight tilt can't show a sliver */
+  top: 0;
   z-index: 1;
   padding: 16px 44px 10px 0; /* the right gap leaves room for the × */
   background: var(--paper-texture), var(--paper-bg); /* hides the list scrolling underneath */
