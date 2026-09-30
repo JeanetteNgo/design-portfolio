@@ -150,6 +150,34 @@
   color: var(--accent-a50);
 }
 
+/* ── PAPER TAG (pinned section label: dock, Selected Works) ── */
+.paper-tag {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  margin: 0;
+  padding: 5px 14px 5px 24px;
+  font: 600 12px var(--font-secondary);
+  color: var(--text-strong);
+  background: var(--surface-faint);
+  border-radius: 4px;
+  box-shadow:
+    0 2px 0 var(--accent-a14),
+    0 4px 10px var(--accent-a14);
+  transform: rotate(-2.5deg);
+}
+.paper-tag::before {
+  content: '';
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 @media (max-width: 1024px) {
   .feature-container a {
     flex-direction: column;

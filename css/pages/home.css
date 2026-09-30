@@ -95,13 +95,10 @@
   align-items: center;
   z-index: 2;
 }
-/* Quiet section label, styled like the nav links */
-.featured-projects .section-label {
-  margin: 0 0 8px;
-  font: 900 13px var(--font-primary);
-  color: var(--text-body);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+/* "Selected Works" tag, pinned to the first card's top-left corner */
+.featured-projects .paper-tag {
+  align-self: flex-start;
+  margin: 0 0 -22px max(8px, 4% - 16px);
 }
 
 .featured-projects .feature-container {
