@@ -2,7 +2,7 @@
    MY DOCK
    Strip of app-style icons on the home page, sitting on two layered
    washi tapes: a straight gingham tape over an angled striped one.
-   Each icon is a button[data-popup] that will open a popup, except the
+   Each icon is a button[data-popup] that opens a popup (js/dock.js), except the
    Sparkles tile (data-action="party"), which fires js/sparkles.js.
    Never put overflow: hidden on an ancestor of .dock-strip,
    or the hover pop-out gets clipped.

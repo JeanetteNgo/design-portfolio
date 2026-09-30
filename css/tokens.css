@@ -98,7 +98,10 @@
   --dock-tile-highlight: rgb(255 255 255 / 70%); /* inner rim on tiles */
   --dock-outline: var(--neutral-0); /* white outline on hovered icon */
 
-  /* Floating sparkles (home intro) */
+  /* Popups */
+  --popup-backdrop: rgb(var(--shadow-rgb) / 35%); /* dimmed page behind a popup */
+
+  /* Sparkles (fired by the dock's Sparkles tile) */
   --sparkle-a: var(--accent-300);
   --sparkle-b: #ffd98a;
 
