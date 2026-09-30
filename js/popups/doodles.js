@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────
    DOODLES POPUP
-   An app-style window: a title bar, All / Drawings / Animated filters, and a grid of
-   doodles from DOODLES in data/doodles.js. Clicking a doodle opens it larger, with its
+   An app-style window: a title bar, All / Drawings / Animated filters, and a masonry grid (every
+   doodle keeps its own shape) of doodles from DOODLES in data/doodles.js. Clicking a doodle opens it larger, with its
    caption; ← (or the back tag) returns to the grid. Looks live in
    css/features/popups/doodles.css.
 ────────────────────────────────────────────── */
@@ -18,6 +18,13 @@ POPUP_RENDERERS.doodles = function (popup) {
 
   /* ── Pictures ── */
 
+  // The shape to reserve for a doodle before its picture has loaded (width / height from the
+  // data, or 4 / 3 if not given). Once the real picture arrives its own shape takes over.
+  function _reserve(el, doodle, loadedEvent) {
+    el.style.aspectRatio = doodle.width && doodle.height ? `${doodle.width} / ${doodle.height}` : '4 / 3';
+    if (loadedEvent) el.addEventListener(loadedEvent, () => (el.style.aspectRatio = ''), { once: true });
+  }
+
   // The picture, video or placeholder for a doodle. `big` is the opened view.
   function _media(doodle, big) {
     if (doodle.video) {
@@ -27,6 +34,7 @@ POPUP_RENDERERS.doodles = function (popup) {
       video.playsInline = true;
       video.poster = doodle.image || '';
       if (doodle.alt) video.setAttribute('aria-label', doodle.alt);
+      _reserve(video, doodle, 'loadedmetadata');
       if (big) {
         // Opened: plays by itself (unless motion is reduced) and can be paused
         video.src = doodle.video;
@@ -45,10 +53,12 @@ POPUP_RENDERERS.doodles = function (popup) {
       img.alt = doodle.alt || '';
       img.loading = 'lazy'; // only downloaded when it scrolls near view
       img.decoding = 'async';
+      _reserve(img, doodle, 'load');
       return img;
     }
     const blank = popupEl('div', 'coming soon', 'doodle-blank');
     blank.setAttribute('aria-hidden', 'true');
+    _reserve(blank, doodle); // a placeholder keeps its shape, so the empty grid looks like the real one
     return blank;
   }
 

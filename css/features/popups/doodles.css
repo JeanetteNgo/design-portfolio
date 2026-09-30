@@ -3,7 +3,7 @@
    An app-style window: title bar, filter pills, and a grid of doodle cards.
    Built by js/popups/doodles.js from data/doodles.js.
    The card's edge padding is zero so the title bar and grid can reach the edges, and the
-   grid gets its own spacing below.
+   grid gets its own spacing below. Doodles keep their own shapes (see the masonry grid).
 ══════════════════════════════════════════ */
 
 .popup[data-popup='doodles'] .popup-card {
@@ -95,17 +95,19 @@
   outline-offset: 2px;
 }
 
-/* ── Grid: 3 columns, then 2, then 1 ── */
+/* ── Masonry grid: 3 columns, then 2, then 1 ──
+   Every doodle keeps its own shape and the columns fill top to bottom, so tall and wide
+   pieces sit together without gaps. */
 .doodle-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  column-count: 3;
+  column-gap: 20px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .doodle-grid li {
-  margin: 0; /* reset the global li spacing */
+  break-inside: avoid; /* a card never splits across two columns */
+  margin: 0 0 20px; /* also resets the global li spacing */
 }
 .doodle-grid li:nth-child(4n + 1) {
   --pencil: var(--pencil-a);
@@ -121,12 +123,12 @@
 }
 @media (max-width: 720px) {
   .doodle-grid {
-    grid-template-columns: repeat(2, 1fr);
+    column-count: 2;
   }
 }
 @media (max-width: 440px) {
   .doodle-grid {
-    grid-template-columns: 1fr;
+    column-count: 1;
   }
 }
 
@@ -160,7 +162,6 @@
 .doodle-frame {
   position: relative;
   display: block;
-  aspect-ratio: 4 / 3;
   border-radius: 10px;
   background: var(--surface-soft);
   overflow: hidden;
@@ -168,8 +169,7 @@
 .doodle-frame > .doodle-media,
 .doodle-frame > .doodle-blank {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto; /* the picture's own shape, not a crop */
 }
 .doodle-media {
   display: block;
@@ -208,16 +208,17 @@
 /* ── An opened doodle ── */
 .doodle-detail .doodle-media,
 .doodle-detail .doodle-blank {
-  display: block;
   max-width: 100%;
   max-height: min(58vh, 520px);
   margin-inline: auto;
   border-radius: 12px;
   background: var(--surface-soft);
 }
+.doodle-detail .doodle-media {
+  display: block;
+}
 .doodle-detail .doodle-blank {
-  aspect-ratio: 4 / 3;
-  width: 100%;
+  width: min(100%, 420px); /* the shape comes from the data, set inline */
 }
 .doodle-title {
   margin: 16px 0 4px;
