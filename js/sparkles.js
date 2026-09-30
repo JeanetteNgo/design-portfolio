@@ -1,39 +1,60 @@
 /* ─────────────────────────────────────────────
-   FLOATING SPARKLES
-   Fills .home-sparkles (home page intro) with decorative shapes.
-   The look and the float-up animation live in css/features/sparkles.css;
+   CONFETTI BURST
+   Clicking the dock's Confetti tile (button[data-action="party"]) shoots
+   sparkles out of it like a party popper. They're added to .home-sparkles
+   and removed again once they've faded.
+   The look and the animation live in css/features/sparkles.css;
    this file only creates the elements and gives each one random values.
 ────────────────────────────────────────────── */
 
 (function () {
   const layer = document.querySelector('.home-sparkles');
-  if (!layer) return;
+  const button = document.querySelector('[data-action="party"]');
+  if (!layer || !button) return;
 
   const SHAPES = ['sparkle', 'sparkle', 'star', 'plus', 'dot']; // sparkle listed twice = twice as likely
   const COLOURS = ['var(--sparkle-a)', 'var(--sparkle-b)'];
-  const COUNT = window.innerWidth < 640 ? 10 : 22;
+  const MAX_ON_SCREEN = 120; // fast repeat clicks can't pile up more than this
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const pick = (list) => list[Math.floor(Math.random() * list.length)];
 
-  for (let i = 0; i < COUNT; i++) {
-    const el = document.createElement('span');
-    el.className = `sparkle sparkle--${pick(SHAPES)}`;
+  function burst() {
+    const narrow = window.innerWidth < 640;
+    const count = Math.min(narrow ? 20 : 36, MAX_ON_SCREEN - layer.childElementCount);
 
-    // One per column (with a little jitter) so they spread out instead of clumping
-    const x = ((i + rand(0.15, 0.85)) / COUNT) * 100;
-    const duration = rand(9, 16);
-    const height = rand(0.18, 0.85); // static position for reduced motion (0 = dock, 1 = top)
+    // Start point: the middle of the tile, measured inside the sparkle layer
+    const from = button.querySelector('.dock-tile').getBoundingClientRect();
+    const box = layer.getBoundingClientRect();
+    const x = from.left + from.width / 2 - box.left;
+    const y = from.top + from.height / 2 - box.top;
 
-    el.style.setProperty('--x', `${x.toFixed(1)}%`);
-    el.style.setProperty('--size', `${Math.round(rand(14, 28))}px`);
-    el.style.setProperty('--colour', pick(COLOURS));
-    el.style.setProperty('--duration', `${duration.toFixed(1)}s`);
-    el.style.setProperty('--delay', `${(-rand(0, duration)).toFixed(1)}s`); // negative = already mid-flight
-    el.style.setProperty('--y', `${(height * 100).toFixed(0)}%`);
-    el.style.setProperty('--scale', (1 - 0.7 * height).toFixed(2));
-    el.style.setProperty('--opacity', (0.75 * (1 - height)).toFixed(2));
+    for (let i = 0; i < count; i++) {
+      const el = document.createElement('span');
+      el.className = `sparkle sparkle--${pick(SHAPES)}`;
 
-    layer.appendChild(el);
+      // Fan out upwards: 0° is straight up, ±65° either side
+      const angle = (rand(-65, 65) * Math.PI) / 180;
+      const distance = rand(90, narrow ? 240 : 380);
+
+      el.style.left = `${x.toFixed(0)}px`;
+      el.style.top = `${y.toFixed(0)}px`;
+      el.style.setProperty('--dx', `${(Math.sin(angle) * distance).toFixed(0)}px`);
+      el.style.setProperty('--dy', `${(-Math.cos(angle) * distance).toFixed(0)}px`);
+      el.style.setProperty('--spin', `${rand(-240, 240).toFixed(0)}deg`);
+      el.style.setProperty('--size', `${Math.round(rand(12, 26))}px`);
+      el.style.setProperty('--colour', pick(COLOURS));
+      el.style.setProperty('--duration', `${rand(1, 1.6).toFixed(2)}s`);
+
+      el.addEventListener('animationend', () => el.remove());
+      layer.appendChild(el);
+    }
+
+    // Restart the icon's little "pop" wiggle
+    button.classList.remove('is-popping');
+    void button.offsetWidth;
+    button.classList.add('is-popping');
   }
+
+  button.addEventListener('click', burst);
 })();

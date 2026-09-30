@@ -2,11 +2,11 @@
    HOME PAGE
 ══════════════════════════════════════════ */
 
-/* Top section (intro + dock). Sparkles float up behind it (css/features/sparkles.css).
-   Pulled up behind the nav so the sparkle layer has no seam under it. */
+/* Top section (intro + dock). Pulled up behind the nav so the two read as one.
+   Also holds the confetti layer (css/features/sparkles.css). */
 .home-top {
   position: relative;
-  isolation: isolate; /* keeps the sparkle layer's negative z-index inside */
+  isolation: isolate; /* keeps the confetti layer's z-index inside */
   margin: calc(var(--nav-height) * -1) 0 80px;
   padding-top: var(--nav-height);
   overflow-x: clip; /* the dock's angled tape is wider than the screen */

@@ -2,7 +2,8 @@
    MY DOCK
    Strip of app-style icons on the home page, sitting on two layered
    washi tapes: a straight gingham tape over an angled striped one.
-   Each icon is a button[data-popup] that will open a popup.
+   Each icon is a button[data-popup] that will open a popup, except the
+   Confetti tile (data-action="party"), which fires js/sparkles.js.
    Never put overflow: hidden on an ancestor of .dock-strip,
    or the hover pop-out gets clipped.
 ══════════════════════════════════════════ */
@@ -152,7 +153,7 @@
   border-radius: 16px;
 }
 
-/* Touch screens and phones: smaller tiles and tighter spacing so all six fit (down to 360px) */
+/* Touch screens and phones: smaller tiles and tighter spacing so the row fits */
 @media (hover: none), (max-width: 640px) {
   .dock-strip {
     padding-inline: 10px;
@@ -191,6 +192,22 @@
     white-space: normal;
     font-size: 11px;
     line-height: 1.2;
+  }
+}
+
+/* Small phones: seven tiles only fit at 360px if they're a little smaller */
+@media (max-width: 420px) {
+  .dock-list {
+    gap: 6px;
+  }
+  .dock-btn {
+    width: 42px;
+  }
+}
+@media (hover: none) and (max-width: 420px) {
+  .dock-label {
+    width: 48px;
+    margin-left: calc((100% - 48px) / 2);
   }
 }
 
