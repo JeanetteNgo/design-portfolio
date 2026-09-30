@@ -1,8 +1,7 @@
 /* ══════════════════════════════════════════
    GALLERY POPUP
-   A corkboard with polaroids and postcards pinned on it, and an opened view showing one print
-   larger with its story. Built by js/popups/gallery.js from data/gallery.js.
-   The card's edge padding is zero so the board can reach the wooden frame.
+   A corkboard of pinned prints. Built by js/popups/gallery.js from data/gallery.js.
+   Card padding is zero so the board reaches the frame.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='gallery'] .popup-card {

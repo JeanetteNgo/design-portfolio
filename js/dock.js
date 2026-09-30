@@ -1,19 +1,11 @@
 /* ─────────────────────────────────────────────
    DOCK POPUPS
-   Clicking a dock icon (button[data-popup="tools"]) opens the one
-   <dialog id="popup"> in index.html, filled with that popup's words
-   from POPUPS in data/popups.js.
+   A dock icon (button[data-popup="tools"]) opens the one <dialog id="popup">,
+   filled from POPUPS in data/popups.js. The dialog gets data-popup="<id>" while
+   open (for per-popup CSS), plus data-paper when the data says paper: true.
 
-   <dialog> gives us for free: Esc closes it, keyboard focus stays
-   inside it, and focus returns to the icon when it closes.
-
-   The dialog gets data-popup="tools" (etc.) while open, so each popup
-   can be styled differently in css/features/popups/. Popups with paper: true in
-   the data also get data-paper, which switches on the shared notebook-paper look.
-
-   A popup that needs more than the default layout (intro + lists) adds
-   its own builder in js/popups/, e.g.
-     POPUP_RENDERERS['off-the-clock'] = function (popup) { return [elements]; };
+   A popup with its own layout adds a builder in js/popups/:
+     POPUP_RENDERERS['<id>'] = function (popup) { return [elements]; };
    Any button with data-popup-close closes the popup.
 ────────────────────────────────────────────── */
 
@@ -28,11 +20,11 @@ function popupEl(tag, text, className) {
   return el;
 }
 
-/** Reserve room for a picture before it loads: sets its shape from item.width / item.height
-    (or 4 / 3 if not given), and lets its own shape take over once loadedEvent fires. */
+/** Reserve a picture's shape (item.width / item.height, else 4 / 3) until loadedEvent fires. */
 function popupReserveShape(el, item, loadedEvent) {
   el.style.aspectRatio = item.width && item.height ? `${item.width} / ${item.height}` : '4 / 3';
-  if (loadedEvent) el.addEventListener(loadedEvent, () => (el.style.aspectRatio = ''), { once: true });
+  if (loadedEvent)
+    el.addEventListener(loadedEvent, () => (el.style.aspectRatio = ''), { once: true });
 }
 
 /** A key-hint tag button: "← back to the list". Clicking it calls onBack. */
@@ -49,8 +41,7 @@ function popupOnClose(fn) {
   document.getElementById('popup').addEventListener('close', fn, { once: true });
 }
 
-/** Call onBack when ← is pressed while isActive() says so, until the popup closes. Ignored
-    while a video's own controls have focus, where ← rewinds it. */
+/** Call onBack on ← while isActive() is true, until the popup closes. Skipped on video controls. */
 function popupOnLeftKey(isActive, onBack) {
   const dialog = document.getElementById('popup');
   const onKey = (e) => {
@@ -108,8 +99,7 @@ function popupOnLeftKey(isActive, onBack) {
     if (e.target.closest('[data-popup-close]')) dialog.close();
   });
 
-  // Close: a click on the dimmed area outside the card. The press and the release must both
-  // be outside, so dragging out of the card (e.g. while selecting text) doesn't close it
+  // Close: click outside the card (press and release both outside, so text selection is safe)
   let pressedOutside = false;
   dialog.addEventListener('pointerdown', (e) => (pressedOutside = e.target === dialog));
   dialog.addEventListener('pointerup', (e) => {

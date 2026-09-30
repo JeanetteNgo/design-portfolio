@@ -1,10 +1,7 @@
 /* ══════════════════════════════════════════
    PAPER POPUPS
-   The notebook-paper look shared by popups that set paper: true in data/popups.js
-   (the dialog then carries data-paper): the sheet with its ruled lines and texture,
-   and the sticker-style ×. Each popup adds its own touches in its own file (Side Quests:
-   the torn top; Tools: the pen holder). The card's height cap and scrolling area are in
-   popup.css.
+   The notebook-paper look for popups with paper: true (the dialog gets data-paper):
+   ruled, textured sheet and the sticker ×. Each popup adds its own touches.
 ══════════════════════════════════════════ */
 
 .popup[data-paper] .popup-card {
@@ -34,9 +31,7 @@
 .popup[data-paper] .popup-title {
   color: var(--text-strong);
 }
-/* The × is a paper sticker with a dashed edge and a pen-drawn cross, so it stays
-   readable when the content scrolls underneath it. The cross is two rounded strokes
-   (the × character itself is hidden; the button's aria-label still names it).
+/* The × is a paper sticker with a pen-drawn cross (the character is hidden; aria-label names it).
    The same sticker is reusable on other buttons inside a paper popup: add class
    paper-sticker, plus paper-sticker--plus or paper-sticker--minus for a pen-drawn + or −
    (a button with plain text, like "1×", keeps its text). A popup can tint the dashed ring

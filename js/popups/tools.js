@@ -1,9 +1,8 @@
 /* ─────────────────────────────────────────────
    TOOLS POPUP
-   A paper note listing the tools in groups, beside a pen holder with one
-   pencil per group. Built from POPUPS.tools in data/popups.js, so adding a
-   group there adds its pencil too. Looks live in css/features/popups/tools.css.
-   (The pencils are decoration: the note has every word, so screen readers skip them.)
+   A paper note of tool groups beside a pen holder with one pencil per group, from
+   POPUPS.tools (data/popups.js). The pencils are decoration, hidden from screen readers.
+   Styles: css/features/popups/tools.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS.tools = function (popup) {

@@ -1,9 +1,7 @@
 /* ══════════════════════════════════════════
    DOODLES POPUP
-   A gallery wall: exhibition heading, section filters, and framed works with wall labels.
-   Built by js/popups/doodles.js from data/doodles.js.
-   The card's edge padding is zero so the scroll area can reach the edges, and the wall
-   gets its own spacing. Doodles keep their own shapes (see the masonry grid).
+   A gallery wall of framed doodles. Built by js/popups/doodles.js from data/doodles.js.
+   Card padding is zero so the scroll area reaches the edges.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='doodles'] .popup-card {
@@ -85,9 +83,7 @@
   outline-offset: 2px;
 }
 
-/* ── Masonry grid: 3 columns, then 2, then 1 ──
-   Every doodle keeps its own shape and the columns fill top to bottom, so tall and wide
-   pieces sit together without gaps. */
+/* ── Masonry grid: 3 columns, then 2, then 1 (each doodle keeps its shape) ── */
 .doodle-grid {
   column-count: 3;
   column-gap: 20px;

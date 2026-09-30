@@ -1,15 +1,13 @@
 /* ─────────────────────────────────────────────
    GALLERY POPUP
-   A corkboard with polaroids and postcards pinned on it, from GALLERY in data/gallery.js.
-   Clicking a print opens it larger with the story behind it; ← (or the back tag) returns to
-   the board. Looks live in css/features/popups/gallery.css.
+   A corkboard of polaroids and postcards from GALLERY (data/gallery.js). Click one to open
+   it with its story; ← or the back tag returns. Styles: css/features/popups/gallery.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS.gallery = function (popup) {
   let lastPrint = null; // so focus can return to the print after it closes
 
-  // A print: white polaroid or airmail postcard around the picture, with the caption on it.
-  // `big` is the opened view (a plain block instead of a button).
+  // A polaroid or postcard print. `big` is the opened view (a block, not a button).
   function _print(photo, big) {
     const print = popupEl(big ? 'div' : 'button', '', `print print--${photo.kind}`);
     if (!big) {
@@ -81,7 +79,7 @@ POPUP_RENDERERS.gallery = function (popup) {
   scroll.appendChild(board);
   boardView.appendChild(scroll);
 
-  // The title is a pinned paper label; the dialog's own hidden title names it for screen readers
+  // The title is a pinned label; the dialog's hidden title names it for screen readers
   const head = popupEl('header', '', 'gallery-head');
   const label = popupEl('span', popup.title, 'paper-tag gallery-tag');
   label.setAttribute('aria-hidden', 'true');

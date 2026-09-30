@@ -1,13 +1,10 @@
 /* ─────────────────────────────────────────────
    MAP POPUP
-   An interactive globe with a pin for each place in PLACES (data/places.js), beside a
-   "Based in" banner and a page of passport stamps (been = solid, next stops = dashed).
-   Drag (or use the arrow keys) to turn the globe; zoom with the +/- buttons, a trackpad pinch
-   or scroll, or two fingers (0 or the 1× button goes back to 100%). Tapping a stamp or a pin
-   turns the globe to that place and opens its details; ← (or the back tag) returns to the stamps.
-   The world outline is data/land.json (Natural Earth, public domain; land plus ice caps) and the globe maths is
-   js/vendor/d3-geo.min.js; both are fetched only when the Map opens.
-   Looks live in css/features/popups/map.css.
+   An interactive globe with a pin per place in PLACES (data/places.js), beside a "Based in"
+   banner and passport stamps. A stamp or pin opens that place as a postcard; ← or the back
+   tag returns. Drag, arrow keys, pinch, scroll and +/- turn and zoom (0 or 1× resets).
+   data/land.json (Natural Earth) and js/vendor/d3-geo.min.js load only when the Map opens.
+   Styles: css/features/popups/map.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS.map = function (popup) {
@@ -67,7 +64,8 @@ POPUP_RENDERERS.map = function (popup) {
     const size = canvas.clientWidth;
     if (!size || !window.d3geo) return;
     const dpr = window.devicePixelRatio || 1;
-    if (canvas.width !== Math.round(size * dpr)) canvas.width = canvas.height = Math.round(size * dpr);
+    if (canvas.width !== Math.round(size * dpr))
+      canvas.width = canvas.height = Math.round(size * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size, size);
 
@@ -130,8 +128,7 @@ POPUP_RENDERERS.map = function (popup) {
     _hover();
   }
 
-  // The pointer cursor while over a pin, the grab hand elsewhere (rechecked on every draw, since
-  // pins move under a still pointer while the globe turns)
+  // Pointer cursor over a pin, grab hand elsewhere (rechecked each draw, as pins move)
   function _pinAt(x, y) {
     return hits
       .map((h) => ({ place: h.place, d: Math.hypot(h.x - x, h.y - y) }))
@@ -139,7 +136,10 @@ POPUP_RENDERERS.map = function (popup) {
       .sort((a, b) => a.d - b.d)[0];
   }
   function _hover() {
-    canvas.classList.toggle('is-over-pin', Boolean(pointerAt && !drag && _pinAt(pointerAt.x, pointerAt.y)));
+    canvas.classList.toggle(
+      'is-over-pin',
+      Boolean(pointerAt && !drag && _pinAt(pointerAt.x, pointerAt.y))
+    );
   }
 
   // A teardrop pin whose point sits on (x, y)
@@ -153,7 +153,11 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.lineTo(x, y - lift); // ...down to the point
     ctx.closePath();
     ctx.fillStyle =
-      place.status === 'home' ? css('--pencil-a') : place.status === 'next' ? css('--paper-bg') : css('--accent-300');
+      place.status === 'home'
+        ? css('--pencil-a')
+        : place.status === 'next'
+          ? css('--paper-bg')
+          : css('--accent-300');
     ctx.fill();
     ctx.strokeStyle = css('--ink-brown');
     ctx.lineWidth = 2.5;
@@ -183,9 +187,7 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.restore();
   }
 
-  /* ── Moving ──
-     The loop only runs while something is moving (auto-spin, a flick, an eased turn, a zoom),
-     so a still globe costs nothing. */
+  /* ── Moving ── (the loop only runs while something moves) */
 
   function _tick(now) {
     frame = 0;
@@ -221,8 +223,7 @@ POPUP_RENDERERS.map = function (popup) {
   function _wake() {
     if (alive && !frame) frame = requestAnimationFrame(_tick);
   }
-  // Touching the globe stops the spin. After a quiet pause it starts again, unless she is mid-drag,
-  // has a place open, or is zoomed in looking closely (zooming back out restarts the wait).
+  // Touching the globe stops the spin; it resumes after a pause unless dragging, zoomed in or a place is open.
   const IDLE_MS = 6000;
   let idleTimer = 0;
   function _stopSpin() {
@@ -253,8 +254,7 @@ POPUP_RENDERERS.map = function (popup) {
     _wake();
   }
 
-  // Zoom to a level (kept between MIN_ZOOM and MAX_ZOOM). `instant` skips the easing, for
-  // pinch and scroll, which already move smoothly by themselves.
+  // Zoom to a level within MIN_ZOOM..MAX_ZOOM. `instant` skips easing (pinch and scroll).
   function _zoomTo(level, instant) {
     _stopSpin();
     zoomTo = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, level));
@@ -266,15 +266,15 @@ POPUP_RENDERERS.map = function (popup) {
   }
   const _zoomBy = (step) => _zoomTo(zoomTo + step);
 
-  /* ── Selecting ──
-     The right-hand side has two views: the stamps (under the "Based in" banner), and one place's
-     postcard (with a back tag), which hides the banner while it is open. */
+  /* ── Selecting ── (stamps under the banner, or one place's postcard) */
 
-  // "2024, 2025" -> { latest: 2025, earlier: 1 }. With no years in it (e.g. "Someday"), `latest`
-  // is the text as written. A stamp has a fixed size, so it shows only the latest year.
+  // "2024, 2025" -> { latest: 2025, earlier: 1 }; with no years, `latest` is the text as written
   function _years(place) {
     const years = (place.when || '').match(/\b\d{4}\b/g) || [];
-    return { latest: years.length ? Math.max(...years) : place.when || '', earlier: Math.max(years.length - 1, 0) };
+    return {
+      latest: years.length ? Math.max(...years) : place.when || '',
+      earlier: Math.max(years.length - 1, 0),
+    };
   }
 
   const listView = popupEl('div', '', 'map-stamps-view');
@@ -282,9 +282,7 @@ POPUP_RENDERERS.map = function (popup) {
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
 
-  // The details of one place, as the back of a postcard: the message on the left (greeting, note,
-  // when, and an optional photo) and the address side on the right (a stamp in the same ink as
-  // the stamp that was clicked, a postmark, and the cities as the address lines).
+  // One place as a postcard: message on the left, address side (stamp, postmark, cities) on the right
   function _detail(place) {
     const card = popupEl('article', '', 'map-postcard');
     const stampButton = stamps.get(place);
@@ -361,7 +359,14 @@ POPUP_RENDERERS.map = function (popup) {
       listView.hidden = true;
       banner.hidden = true; // a place is open: the postcard gets the room
       detailView.hidden = false;
-      if (!calmMotion) detailView.animate([{ opacity: 0, translate: '0 4px' }, { opacity: 1, translate: '0' }], 180);
+      if (!calmMotion)
+        detailView.animate(
+          [
+            { opacity: 0, translate: '0 4px' },
+            { opacity: 1, translate: '0' },
+          ],
+          180
+        );
       back.focus({ preventScroll: true });
     }
     if (place.status === 'home') selected = home;
@@ -389,7 +394,14 @@ POPUP_RENDERERS.map = function (popup) {
       drag = null;
       return;
     }
-    drag = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, t: performance.now(), moved: false };
+    drag = {
+      x: e.clientX,
+      y: e.clientY,
+      sx: e.clientX,
+      sy: e.clientY,
+      t: performance.now(),
+      moved: false,
+    };
   });
   canvas.addEventListener('pointermove', (e) => {
     if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -417,7 +429,7 @@ POPUP_RENDERERS.map = function (popup) {
     if (pointers.size < 2) pinch = null;
     if (!drag) return;
     const wasTap = !drag.moved;
-    if (performance.now() - drag.t > 80) velocity = [0, 0]; // held still before letting go: no flick
+    if (performance.now() - drag.t > 80) velocity = [0, 0]; // held still: no flick
     drag = null;
     if (wasTap) {
       const rect = canvas.getBoundingClientRect();
@@ -441,14 +453,16 @@ POPUP_RENDERERS.map = function (popup) {
   });
   canvas.addEventListener('dblclick', () => _zoomTo(MIN_ZOOM));
 
-  // Trackpad: pinch (which arrives as a scroll with Ctrl held) or two-finger scroll zooms.
-  // At the zoom limit a plain scroll is left alone, so the popup can still scroll past the globe.
+  // Trackpad pinch (Ctrl-scroll) or two-finger scroll zooms; at a limit, plain scroll passes through
   canvas.addEventListener(
     'wheel',
     (e) => {
       const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
-      const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomTo * Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0025))));
-      if (e.ctrlKey || next !== zoomTo) e.preventDefault(); // Ctrl-scroll would otherwise zoom the whole page
+      const next = Math.max(
+        MIN_ZOOM,
+        Math.min(MAX_ZOOM, zoomTo * Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0025)))
+      );
+      if (e.ctrlKey || next !== zoomTo) e.preventDefault(); // else the page zooms
       if (next !== zoomTo) _zoomTo(next, true);
     },
     { passive: false }
@@ -466,12 +480,20 @@ POPUP_RENDERERS.map = function (popup) {
 
   canvas.tabIndex = 0;
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', 'Globe. Use the arrow keys to turn it, plus and minus to zoom, zero for 100%.');
+  canvas.setAttribute(
+    'aria-label',
+    'Globe. Use the arrow keys to turn it, plus and minus to zoom, zero for 100%.'
+  );
   canvas.addEventListener('keydown', (e) => {
-    const keys = { ArrowLeft: [-15, 0], ArrowRight: [15, 0], ArrowUp: [0, 10], ArrowDown: [0, -10] };
-    if (e.key === '+' || e.key === '=') return _zoomBy(0.5), e.preventDefault();
-    if (e.key === '-') return _zoomBy(-0.5), e.preventDefault();
-    if (e.key === '0') return _zoomTo(MIN_ZOOM), e.preventDefault();
+    const keys = {
+      ArrowLeft: [-15, 0],
+      ArrowRight: [15, 0],
+      ArrowUp: [0, 10],
+      ArrowDown: [0, -10],
+    };
+    if (e.key === '+' || e.key === '=') return (_zoomBy(0.5), e.preventDefault());
+    if (e.key === '-') return (_zoomBy(-0.5), e.preventDefault());
+    if (e.key === '0') return (_zoomTo(MIN_ZOOM), e.preventDefault());
     if (!keys[e.key] || e.altKey || e.ctrlKey || e.metaKey) return;
     e.preventDefault();
     e.stopPropagation(); // ← would otherwise go back / close things
@@ -485,7 +507,7 @@ POPUP_RENDERERS.map = function (popup) {
   const zoomButtons = popupEl('div', '', 'map-zoom');
   [
     ['−', 'Zoom out', 'paper-sticker--minus', () => _zoomBy(-0.5)],
-    ['1×', 'Zoom 1×', '', () => _zoomTo(MIN_ZOOM)], // shows the current zoom; clicking it goes back to 1×
+    ['1×', 'Zoom 1×', '', () => _zoomTo(MIN_ZOOM)], // shows the zoom; resets to 1×
     ['+', 'Zoom in', 'paper-sticker--plus', () => _zoomBy(0.5)],
   ].forEach(([text, label, glyph, onClick]) => {
     const b = popupEl('button', text, `map-zoom-btn paper-sticker ${glyph}`.trim());
@@ -495,22 +517,23 @@ POPUP_RENDERERS.map = function (popup) {
     zoomButtons.appendChild(b);
   });
 
-  // The middle button shows the current zoom (1×, 1.5×, 2×...) and is the shortcut back to 1×.
-  // − is switched off at the smallest zoom and + at the largest. aria-disabled (not disabled)
-  // so a button keeps keyboard focus when it switches off.
+  // Middle button shows the zoom and resets to 1×. aria-disabled (not disabled) keeps focus at the limits.
   function _syncZoomButtons() {
     const [minus, level, plus] = zoomButtons.children;
     if (level) {
       const text = `${Number(zoomTo.toFixed(1))}×`;
       level.textContent = text;
-      level.setAttribute('aria-label', zoomTo > MIN_ZOOM ? `Zoom ${text}. Reset to 1×` : `Zoom ${text}`);
+      level.setAttribute(
+        'aria-label',
+        zoomTo > MIN_ZOOM ? `Zoom ${text}. Reset to 1×` : `Zoom ${text}`
+      );
     }
     minus?.setAttribute('aria-disabled', String(zoomTo <= MIN_ZOOM));
     plus?.setAttribute('aria-disabled', String(zoomTo >= MAX_ZOOM));
   }
   _syncZoomButtons();
 
-  const globeFrame = popupEl('div', '', 'map-globe-frame'); // holds the outline ring around the canvas
+  const globeFrame = popupEl('div', '', 'map-globe-frame'); // outline ring around the canvas
   globeFrame.appendChild(canvas);
   const globeWrap = popupEl('div', '', 'map-globe-wrap');
   globeWrap.append(globeFrame, zoomButtons);
@@ -521,7 +544,10 @@ POPUP_RENDERERS.map = function (popup) {
   banner.type = 'button';
   banner.setAttribute('aria-label', `Based in ${home.name}. Show it on the globe.`);
   const bannerText = popupEl('span', '', 'map-home-text');
-  bannerText.append(popupEl('span', 'Based in', 'map-home-label'), popupEl('span', home.name, 'map-home-name'));
+  bannerText.append(
+    popupEl('span', 'Based in', 'map-home-label'),
+    popupEl('span', home.name, 'map-home-name')
+  );
   if (home.note) bannerText.appendChild(popupEl('span', home.note, 'map-home-note'));
   banner.append(popupEl('span', '', 'map-home-pin'), bannerText);
   banner.addEventListener('click', () => _select(home, true));
@@ -553,7 +579,10 @@ POPUP_RENDERERS.map = function (popup) {
   const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(layout);
 
-  popupOnLeftKey(() => !detailView.hidden, () => _close(true));
+  popupOnLeftKey(
+    () => !detailView.hidden,
+    () => _close(true)
+  );
 
   /* ── Start and stop ── */
 

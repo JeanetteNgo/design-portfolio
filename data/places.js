@@ -4,7 +4,7 @@
    Add a place by adding a block to the list. Keep to city level, no exact addresses.
 
    Each place has:
-     name     shown on its pin and chip, e.g. 'Singapore'
+     name     shown on its pin and stamp, e.g. 'Singapore'
      status   'home'  where I am based (one is enough)
               'been'  a solid pin, somewhere I have been
               'next'  a dashed pin, somewhere I want to go
@@ -17,8 +17,8 @@
      note     optional. A line in handwriting, shown when the pin is tapped
      photo    optional. A small photo, e.g. 'img/map/tokyo.webp' (WebP, around 400px wide)
      alt      describes the photo for screen readers
-   All of these show in the card next to the globe when a pin or chip is selected; any you
-   leave out are simply skipped. Pins are placed on each country's capital city, so they are consistent.
+   These show on the postcard when a pin or stamp is chosen; leave out any you don't need.
+   Pins sit on each country's capital.
 ────────────────────────────────────────────── */
 
 const PLACES = [

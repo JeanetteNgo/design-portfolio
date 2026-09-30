@@ -1,13 +1,10 @@
 /* ══════════════════════════════════════════
    POPUP
-   The one <dialog id="popup"> opened by the dock icons (js/dock.js).
-   This file is the shared shell: dimmed backdrop, card, title, close button.
-   Looks that belong to a single popup go in css/features/popups/,
-   scoped with .popup[data-popup='tools'] etc.
+   The shared shell for the dock's <dialog id="popup"> (js/dock.js): backdrop, card, title, ×.
+   Per-popup styles go in css/features/popups/, scoped with .popup[data-popup='<id>'].
 ══════════════════════════════════════════ */
 
-/* The dialog itself fills the screen and is the dimmed backdrop;
-   the visible box is .popup-card inside it */
+/* The dialog is the dimmed backdrop; the visible box is .popup-card */
 .popup {
   box-sizing: border-box;
   width: 100%;
@@ -37,15 +34,13 @@ html:has(.popup[open]) {
   box-sizing: border-box;
   position: relative;
   width: min(100%, 520px);
-  /* Card padding and where the × sits are variables so the × can stay pinned
-     (below) and a popup can restyle its sheet by changing them */
+  /* Variables so a popup can restyle its sheet and the × stays pinned */
   --pad-top: 28px;
   --pad-x: 28px;
   --pad-bottom: 32px;
   --close-top: 16px;
   padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
-  /* Never taller than the screen (minus the popup's 16px edge gap), so the card's top and
-     bottom always show. Content scrolls inside it (.popup-scroll) instead. */
+  /* Never taller than the screen; content scrolls inside (.popup-scroll) */
   display: flex;
   flex-direction: column;
   max-height: 100vh; /* fallback for browsers without dvh */
@@ -95,30 +90,28 @@ html:has(.popup[open]) {
   flex: 1;
   min-height: 0; /* lets a flex child shrink and scroll instead of growing past the card */
 }
-/* One screen of a popup that has several (a grid and an opened item). Only the visible one
-   is laid out, so [hidden] still hides it. */
+/* One screen of a multi-screen popup (grid or opened item) */
 .popup-view:not([hidden]) {
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
 }
-/* The scrolling part of a popup. It reaches out to the card's edges so the scrollbar sits
-   on the edge, then gets its side padding back inside. */
+/* The scrolling part; reaches the card's edges so the scrollbar sits there */
 .popup-scroll {
   flex: 1;
   min-height: 0;
   position: relative; /* keeps screen-reader-only text inside the scroll area, not the popup */
   margin-inline: calc(var(--pad-x) * -1);
-  padding: 4px var(--pad-x) 12px; /* the vertical room stops focus rings and shadows being clipped */
+  padding: 4px var(--pad-x) 12px; /* room so focus rings and shadows aren't clipped */
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--accent-a20) transparent;
 }
 
-/* Popups that draw their own title (in a header or title bar) keep the real one for screen
-   readers only: it still names the dialog */
-.popup:is([data-popup='off-the-clock'], [data-popup='doodles'], [data-popup='gallery']) .popup-title {
+/* Popups with their own visible title keep the real one for screen readers only */
+.popup:is([data-popup='off-the-clock'], [data-popup='doodles'], [data-popup='gallery'])
+  .popup-title {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -127,7 +120,7 @@ html:has(.popup[open]) {
   clip-path: inset(50%);
 }
 
-/* Key-hint tags: "Esc to close" and "← back". They close or go back on click, for touch screens. */
+/* Key-hint tags ("Esc to close", "← back"); clickable for touch */
 .esc-tag {
   min-height: 44px; /* comfortable tap target */
   padding: 6px 8px;

@@ -1,26 +1,25 @@
 /* ══════════════════════════════════════════
    MAP POPUP
-   A sea-chart sheet with an interactive globe (drawn on a canvas by js/popups/map.js) beside a
-   "Based in" banner and passport stamps, which open a place's details. Places come from
-   data/places.js.
-   The globe's colours are read from the tokens in css/tokens.css when it is drawn.
+   A worn-chart sheet: globe (canvas, js/popups/map.js) beside a banner and passport stamps.
+   Places come from data/places.js; globe colours are read from css/tokens.css.
 ══════════════════════════════════════════ */
 
-/* The Map is a paper popup like Side Quests (paper: true in data/popups.js), so the sheet, its
-   drop-shadow and the sticker buttons come from paper.css. This file only adds what is the
-   map's own: its width, its brownish sticker ring, and the worn-chart layers on the sheet. */
+/* A paper popup (paper.css); this adds width, a brown sticker ring and the chart layers */
 .popup[data-popup='map'] .popup-card {
   width: min(100%, 720px);
   rotate: none; /* the sheet lies flat, so the globe stays crisp and pin taps stay exact */
   --sticker-ring: var(--sticker-ring-brown);
 }
-/* The sheet, top layer first: soft stains and a ring-shaped one, crumple shading, one faint
-   compass rose (img/map/chart.svg) and paper grain over warm paper; the edges are a little
-   darker, like an old map (colours and crumple texture are in css/tokens.css) */
+/* The sheet, top layer first: stains, crumple, faint compass rose, paper grain, paper colour */
 .popup[data-popup='map'] .popup-card::before {
   background:
     radial-gradient(ellipse 170px 120px at 84% 16%, var(--map-stain), transparent 72%),
-    radial-gradient(circle 64px at 22% 82%, transparent 54%, var(--map-stain-ring) 60%, transparent 70%),
+    radial-gradient(
+      circle 64px at 22% 82%,
+      transparent 54%,
+      var(--map-stain-ring) 60%,
+      transparent 70%
+    ),
     radial-gradient(ellipse 210px 150px at 70% 92%, var(--map-stain), transparent 70%),
     var(--map-crinkle) 0 0 / 520px 520px,
     url('../../../img/map/chart.svg') center / cover,
@@ -44,7 +43,7 @@
     --pad-x: 52px;
     --pad-bottom: 36px;
     --close-top: 28px;
-    height: min(580px, calc(100dvh - 32px)); /* a fixed size, so the popup never jumps between views */
+    height: min(580px, calc(100dvh - 32px)); /* fixed, so it doesn't jump between views */
   }
   /* Nothing scrolls as a whole: the globe stays put and the right-hand side scrolls on its own */
   .popup[data-popup='map'] .popup-scroll {
@@ -99,7 +98,7 @@
   }
 }
 
-/* ── The globe: a square canvas drawn by js/popups/map.js, with its zoom buttons below ── */
+/* ── The globe and its zoom buttons ── */
 .map-globe-wrap {
   display: flex;
   flex-direction: column;
@@ -249,9 +248,7 @@
 .map-stamps li {
   margin: 0; /* reset the global li spacing */
 }
-/* Every stamp is the same size (the button fills its grid cell, and the cells in a row match).
-   Inked rubber stamps: an outer and an inner ink line and no fill, so the map paper shows
-   through. Next stops are faint dashed outlines: not stamped yet. */
+/* Equal-size inked stamps with no fill; next stops are dashed (not stamped yet) */
 .map-stamp {
   --ink: var(--stamp-ink-brown);
   position: relative;
@@ -280,8 +277,7 @@
 .map-stamps li:nth-child(even) .map-stamp {
   rotate: 1deg;
 }
-/* Six inks, each used twice in a run of 12 so that stamps beside and below each other never match
-   (with 2 or 3 stamps to a row) and the colours don't settle into columns. Brown is the default. */
+/* Six inks, each twice per 12, so neighbours and columns never match. Brown is the default. */
 .map-stamps li:is(:nth-child(12n + 1), :nth-child(12n + 8)) .map-stamp {
   --ink: var(--stamp-ink-brown);
 }
@@ -364,9 +360,7 @@
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   margin-top: auto; /* with the footer's margin-bottom: centres the postcard in the column */
   padding: 20px 18px 18px;
-  background:
-    var(--paper-texture),
-    var(--paper-bg);
+  background: var(--paper-texture), var(--paper-bg);
   border: 1px solid var(--accent-a33);
   border-radius: 3px;
   box-shadow:
@@ -472,8 +466,10 @@
   width: 56px;
   height: 22px;
   background: var(--ink);
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
+    center / 100% 100% no-repeat;
 }
 .postcard-lines {
   margin: 84px 0 0;

@@ -1,12 +1,8 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK POPUP
-   A side-quest checklist on notebook paper, built from QUESTS in
-   data/quests.js. Looks live in css/features/popups/off-the-clock.css.
-
-   Clicking a quest:
-     done         swaps the list for that quest's memory (date, story, photo, caption)
-     wip / todo   jiggles it and shows a short reply from QUEST_REPLIES
-   Visitors can't tick anything; the state comes from the data.
+   A side-quest checklist from QUESTS (data/quests.js). Done quests open their memory;
+   wip/todo jiggle and show a reply from QUEST_REPLIES. State comes from the data.
+   Styles: css/features/popups/off-the-clock.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS['off-the-clock'] = function (popup) {
@@ -25,7 +21,8 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   function _reply(item, status) {
     const lines = QUEST_REPLIES[status];
     let line = lines[Math.floor(Math.random() * lines.length)];
-    if (lines.length > 1 && line === lastReply) line = lines[(lines.indexOf(line) + 1) % lines.length];
+    if (lines.length > 1 && line === lastReply)
+      line = lines[(lines.indexOf(line) + 1) % lines.length];
     lastReply = line;
 
     const bubble = item.querySelector('.quest-reply');
@@ -60,11 +57,7 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
       const polaroid = popupEl('figure', '', 'quest-polaroid');
       let media;
       if (video) {
-        // By default it plays on tap: preload "none" means the file only downloads when
-        // someone presses play, and until then the poster frame (or the photo) shows.
-        // With loop: true it plays by itself, silently and on repeat, like a GIF. The controls
-        // stay so it can be paused or unmuted, and visitors who prefer reduced motion get
-        // the tap-to-play version instead.
+        // Tap to play (preload none, poster shows); loop: true autoplays silently, unless motion is reduced
         const silentLoop = loop && !matchMedia('(prefers-reduced-motion: reduce)').matches;
         media = popupEl('video');
         media.src = video;

@@ -1,8 +1,7 @@
 /* ══════════════════════════════════════════
    TOOLS POPUP
-   A paper note (the shared look is in paper.css), beside a pen holder with one pencil
-   per group. Built by js/popups/tools.js.
-   Pencil colours cycle through --pencil-a to --pencil-d, so a fifth group starts over.
+   A paper note beside a pen holder, one pencil per group. Built by js/popups/tools.js.
+   Pencil colours cycle --pencil-a to --pencil-d.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='tools'] .popup-card {
@@ -166,9 +165,7 @@
   content: '';
   position: absolute;
   inset: 5px 4px 0;
-  background:
-    linear-gradient(var(--ink-brown) 0 36%, transparent 36%),
-    var(--pencil-wood);
+  background: linear-gradient(var(--ink-brown) 0 36%, transparent 36%), var(--pencil-wood);
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 .pencil-body {
@@ -182,12 +179,7 @@
   border-radius: 2px 2px 0 0;
   /* a lit stripe on one side and a shaded one on the other, so it reads as six-sided */
   background:
-    linear-gradient(
-      90deg,
-      var(--pencil-light) 0 24%,
-      transparent 24% 68%,
-      var(--pencil-shade) 68%
-    ),
+    linear-gradient(90deg, var(--pencil-light) 0 24%, transparent 24% 68%, var(--pencil-shade) 68%),
     var(--pencil);
 }
 .pencil-label {

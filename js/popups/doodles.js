@@ -1,9 +1,8 @@
 /* ─────────────────────────────────────────────
    DOODLES POPUP
-   A small gallery: an exhibition heading, All / Drawings / Animated filters, and a masonry wall
-   (every doodle keeps its own shape) of framed doodles from DOODLES in data/doodles.js, each with a
-   wall label. Clicking one opens it larger, with its caption; ← (or the back tag) returns to the
-   wall. Looks live in css/features/popups/doodles.css.
+   A gallery wall of framed doodles from DOODLES (data/doodles.js) with All / Drawings /
+   Animated filters. Click one to open it larger; ← or the back tag returns.
+   Styles: css/features/popups/doodles.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS.doodles = function (popup) {
@@ -51,7 +50,7 @@ POPUP_RENDERERS.doodles = function (popup) {
     }
     const blank = popupEl('div', 'coming soon', 'doodle-blank');
     blank.setAttribute('aria-hidden', 'true');
-    popupReserveShape(blank, doodle); // a placeholder keeps its shape, so the empty grid looks like the real one
+    popupReserveShape(blank, doodle); // keeps its shape like a real doodle
     return blank;
   }
 
@@ -62,7 +61,8 @@ POPUP_RENDERERS.doodles = function (popup) {
       popupEl('span', doodle.title, 'doodle-title'),
       popupEl('span', doodle.type === 'animated' ? 'Animated' : 'Drawing', 'doodle-type')
     );
-    if (withCaption && doodle.caption) label.appendChild(popupEl('span', doodle.caption, 'doodle-caption'));
+    if (withCaption && doodle.caption)
+      label.appendChild(popupEl('span', doodle.caption, 'doodle-caption'));
     return label;
   }
 
@@ -134,7 +134,9 @@ POPUP_RENDERERS.doodles = function (popup) {
     button.type = 'button';
     button.setAttribute('aria-pressed', String(type === 'all'));
     button.addEventListener('click', () => {
-      filters.querySelectorAll('.doodle-filter').forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+      filters
+        .querySelectorAll('.doodle-filter')
+        .forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
       let shown = 0;
       tiles.forEach((item) => {
         item.hidden = type !== 'all' && item.dataset.type !== type;
@@ -151,8 +153,7 @@ POPUP_RENDERERS.doodles = function (popup) {
 
   /* ── Exhibition heading ── */
 
-  // The title is decoration (the dialog's own hidden title names it for screen readers);
-  // the intro line is real text
+  // The title is decoration; the dialog's hidden title names it for screen readers
   const head = popupEl('header', '', 'doodles-head');
   const headTitle = popupEl('span', popup.title, 'doodles-head-title');
   headTitle.setAttribute('aria-hidden', 'true');

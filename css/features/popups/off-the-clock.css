@@ -1,13 +1,10 @@
 /* ══════════════════════════════════════════
    OFF THE CLOCK POPUP
-   A side-quest checklist on a sheet torn from a notebook.
-   Built by js/popups/off-the-clock.js from data/quests.js.
-   Everything is scoped to this popup; the shared shell is css/features/popup.css.
+   A side-quest checklist on torn notebook paper. Built by js/popups/off-the-clock.js
+   from data/quests.js.
 ══════════════════════════════════════════ */
 
-/* ── The sheet of paper ──
-   The paper itself (card, ruled lines, × sticker, scroll area) is shared with the other
-   paper popups in paper.css. This sheet adds its torn top edge and its own spacing. */
+/* ── The sheet (shared paper look in paper.css; this adds the torn top) ── */
 .popup[data-popup='off-the-clock'] .popup-card {
   --pad-top: 32px; /* the header and the memory add 16px of their own */
 }
@@ -15,9 +12,7 @@
   -webkit-mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
   mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
 }
-/* ── Layout inside the sheet: header on top, footer at the bottom, only the middle scrolls ──
-   Header and footer are ordinary parts of the sheet (no separate background to match), and
-   the scrolling middle (.popup-scroll) is simply clipped where it ends. */
+/* ── Layout: header on top, footer at the bottom, only the middle scrolls ── */
 .quest-view:not([hidden]),
 .quest-memory:not([hidden]) {
   display: flex;
@@ -148,8 +143,6 @@
 }
 
 /* ── Memory of a finished quest ── */
-/* The list's title lives in its header, so the memory has a "Quest complete" stamp
-   in its header instead (same .quest-head, so the top spacing matches) */
 /* Rubber stamp: green outline, tilted, no fill (green so it doesn't fight the red date) */
 .quest-stamp {
   width: fit-content;
