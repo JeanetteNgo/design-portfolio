@@ -51,7 +51,7 @@
 /* Where the paper tag is pinned (its look comes from .paper-tag in components.css) */
 .dock-tag {
   position: absolute;
-  top: -40px;
+  top: -36px;
   left: -50px;
 }
 
