@@ -92,18 +92,21 @@
   border-width: 0 3px 3px 0;
   rotate: 40deg;
 }
-/* Strike line: thin, slightly see-through and a little below the middle of the text,
-   so it passes under the crossbars of letters and they stay readable.
-   Drawn as a background so it can be positioned; it repeats on each line if the text wraps */
+/* Strike line: thin, slightly see-through, rising from bottom left to top right.
+   Drawn as a background (a diagonal across a short band) so it can be angled and positioned;
+   it repeats on each line if the text wraps */
 .quest--done .quest-text {
   --strike: color-mix(in srgb, var(--ink-red) 75%, transparent);
-  --strike-at: 64%; /* 50% = dead centre; higher = lower down */
+  --strike-rise: 7px; /* how much higher the right end is than the left; 1.5px = flat */
+  --strike-at: 60%; /* 50% = centred on the text; higher = lower down */
   padding-inline: 2px;
   background: linear-gradient(
-    transparent calc(var(--strike-at) - 0.75px),
-    var(--strike) calc(var(--strike-at) - 0.75px) calc(var(--strike-at) + 0.75px),
-    transparent calc(var(--strike-at) + 0.75px)
-  );
+      to bottom right,
+      transparent calc(50% - 0.75px),
+      var(--strike) calc(50% - 0.75px) calc(50% + 0.75px),
+      transparent calc(50% + 0.75px)
+    )
+    0 var(--strike-at) / 100% var(--strike-rise) no-repeat;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
