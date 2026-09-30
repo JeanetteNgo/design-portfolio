@@ -37,7 +37,7 @@
   background: none;
 }
 .popup[data-popup='off-the-clock'] .popup-close:hover {
-  background: var(--surface-neutral-strong);
+  background: var(--accent-a14);
 }
 
 /* ── Checklist ── */
@@ -63,7 +63,7 @@
   cursor: pointer;
 }
 .quest-btn:hover {
-  background: var(--surface-neutral-strong);
+  background: var(--accent-a14);
 }
 .quest-btn:focus-visible {
   outline: 3px solid var(--accent-500);
@@ -93,7 +93,8 @@
   rotate: 40deg;
 }
 .quest--done .quest-title {
-  text-decoration: line-through var(--ink-red) 2px;
+  /* thin and slightly see-through, so the letters stay readable under it */
+  text-decoration: line-through color-mix(in srgb, var(--ink-red) 75%, transparent) 1.5px;
 }
 /* In progress: dashed box, half filled */
 .quest--wip .quest-box {
@@ -183,7 +184,7 @@
   color: var(--text-strong);
 }
 .esc-tag:hover {
-  background: var(--surface-neutral-strong);
+  background: var(--accent-a14);
 }
 .esc-tag:focus-visible {
   outline: 3px solid var(--accent-500);
@@ -201,7 +202,7 @@
   cursor: pointer;
 }
 .paper-btn:hover {
-  background: var(--surface-neutral-strong);
+  background: var(--accent-a14);
 }
 .paper-btn:focus-visible {
   outline: 3px solid var(--accent-500);
