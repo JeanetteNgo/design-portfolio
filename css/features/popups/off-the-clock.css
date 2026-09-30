@@ -188,9 +188,9 @@
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
-  font: 400 16px/1.25 var(--font-hand);
+  font: 400 14px/1.5 var(--font-hand);
   text-wrap: balance; /* if it wraps, split into even lines, not one stray word */
-  color: var(--text-muted); /* paler, so the thick strokes look lighter */
+  color: var(--text-body);
   text-align: center;
 }
 
