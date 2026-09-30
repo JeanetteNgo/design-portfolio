@@ -251,7 +251,7 @@
   border-radius: 8px;
   background: none;
   font: 600 14px/1.5 var(--font-secondary);
-  color: var(--text-strong);
+  color: var(--text-body);
   cursor: pointer;
 }
 .paper-btn::before {

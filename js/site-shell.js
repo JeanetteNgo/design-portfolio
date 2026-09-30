@@ -94,4 +94,15 @@
   // before the first paint. The footer is further down, so wait for it to exist.
   _renderNav();
   document.addEventListener('DOMContentLoaded', _renderFooter);
+
+  /* ── Focus rings ───────────────────────────── */
+
+  // Focus rings show only while someone is using the Tab key. A mouse or touch
+  // press hides them, and pressing Tab brings them back. CSS (css/base.css) looks
+  // for [data-input='mouse'] on <html>. Without JS the rings always show.
+  const html = document.documentElement;
+  document.addEventListener('pointerdown', () => (html.dataset.input = 'mouse'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') delete html.dataset.input;
+  });
 })();
