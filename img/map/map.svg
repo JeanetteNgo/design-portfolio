@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- An illustrated map, not real geography: soft landmasses on a warm sea, waves, a compass -->
+  <rect width="600" height="400" fill="#fdeee9"/>
+  <g stroke="#f4cfc6" stroke-width="2.5" opacity=".9">
+    <path d="M60 350q10-8 20 0t20 0"/>
+    <path d="M200 30q10-8 20 0t20 0"/>
+    <path d="M520 60q10-8 20 0t20 0"/>
+    <path d="M330 370q10-8 20 0t20 0"/>
+    <path d="M100 195q10-8 20 0t20 0"/>
+    <path d="M555 350q10-8 20 0t20 0"/>
+  </g>
+  <g stroke="#4a2e25" stroke-width="3">
+    <path d="M40 90C70 40 160 30 210 70c40 30 30 80-10 110-30 25-10 70-50 100-40 30-90-10-100-60C40 170 20 130 40 90z" fill="#cfe3c4"/>
+    <path d="M300 60c50-30 130-10 150 40 20 50-30 70-50 110-20 40-80 30-100-10-20-40-40-110 0-140z" fill="#f3e3c3"/>
+    <path d="M480 180c40-30 100-10 95 50-5 60-55 100-105 80-40-20-30-100 10-130z" fill="#cfe3c4"/>
+    <path d="M250 300c30-20 80-10 85 20 5 30-45 45-75 30-25-15-30-35-10-50z" fill="#f3e3c3"/>
+    <path d="M365 335c12-8 30-2 30 10s-20 20-32 12-8-16 2-22z" fill="#cfe3c4"/>
+  </g>
+  <!-- A dotted route wandering between them -->
+  <path d="M290 322C230 250 170 300 130 240S60 180 100 140M290 322C340 280 360 220 340 170S390 90 400 60" stroke="#e6635b" stroke-width="2.5" stroke-dasharray="2 8" opacity=".7"/>
+  <!-- Compass -->
+  <g transform="translate(548 60)" stroke="#4a2e25" stroke-width="2.5">
+    <circle r="22" fill="#fffdf8"/>
+    <path d="M0-16l5 16-5 16-5-16z" fill="#ff8b84"/>
+    <path d="M-16 0l16-5 16 5-16 5z" fill="#fff3d6"/>
+  </g>
+</svg>
