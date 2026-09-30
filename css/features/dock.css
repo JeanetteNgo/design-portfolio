@@ -26,7 +26,7 @@
 .dock-tag {
   position: absolute;
   top: -34px;
-  left: -8px;
+  left: -48px;
   z-index: 2;
   margin: 0;
   padding: 5px 14px 5px 24px;
@@ -70,7 +70,7 @@
 
 .dock-btn {
   display: block;
-  width: 48px;
+  width: 56px;
   padding: 0;
   border: 0;
   background: none;
@@ -149,7 +149,17 @@
   border-radius: 16px;
 }
 
-/* Touch screens: labels always visible; row fits phones down to 360px */
+/* Phones: smaller tiles so all six fit; tag tucks in so it stays on screen */
+@media (max-width: 640px) {
+  .dock-btn {
+    width: 48px;
+  }
+  .dock-tag {
+    left: -8px;
+  }
+}
+
+/* Touch screens: labels always visible */
 @media (hover: none) {
   .dock-strip {
     padding-inline: 12px;
@@ -166,7 +176,7 @@
     color: var(--text-body);
     padding: 6px 0 0;
     width: 60px;
-    margin-left: -6px; /* centre the 60px label under the 48px tile */
+    margin-left: calc((100% - 60px) / 2); /* centre under the tile */
     text-align: center;
     white-space: normal;
     font-size: 11px;
