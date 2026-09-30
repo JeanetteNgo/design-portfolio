@@ -115,14 +115,30 @@
   filter: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)
     drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent);
 }
-.dock-btn:is(:hover, :focus-visible) .dock-tile {
-  transform: translateY(-1.5px);
-}
-.dock-btn:is(:hover, :focus-visible) .dock-icon {
-  transform: translateY(-4%) rotate(-8deg) scale(1.3);
-  filter: drop-shadow(2px 0 0 var(--dock-outline)) drop-shadow(-2px 0 0 var(--dock-outline))
+/* The "picked up" look, shared by keyboard focus and mouse hover. Hover is limited to
+   devices that really hover: on a phone a tap leaves :hover stuck on until the next tap. */
+.dock-list {
+  --tile-lift: translateY(-1.5px);
+  --icon-pop: translateY(-4%) rotate(-8deg) scale(1.3);
+  --icon-outline: drop-shadow(2px 0 0 var(--dock-outline)) drop-shadow(-2px 0 0 var(--dock-outline))
     drop-shadow(0 2px 0 var(--dock-outline)) drop-shadow(0 -2px 0 var(--dock-outline))
     drop-shadow(0 5px 4px rgb(var(--shadow-rgb) / 30%));
+}
+.dock-btn:focus-visible .dock-tile {
+  transform: var(--tile-lift);
+}
+.dock-btn:focus-visible .dock-icon {
+  transform: var(--icon-pop);
+  filter: var(--icon-outline);
+}
+@media (hover: hover) {
+  .dock-btn:hover .dock-tile {
+    transform: var(--tile-lift);
+  }
+  .dock-btn:hover .dock-icon {
+    transform: var(--icon-pop);
+    filter: var(--icon-outline);
+  }
 }
 
 /* Label floats up on hover / keyboard focus */
@@ -168,10 +184,12 @@
 /* Phones: tag tucks in so it stays on screen; steeper tape so it still peeks out */
 @media (max-width: 640px) {
   .dock-tag {
-    left: -10px;
+    top: -30px;
+    left: 6px; /* a little space from the screen edge */
   }
   .dock-strip::before {
-    transform: rotate(5deg);
+    inset: -6px -8%; /* taller than the gingham, so a band shows along the top and bottom */
+    transform: rotate(4deg);
   }
 }
 
