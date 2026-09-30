@@ -1,14 +1,9 @@
 /* ══════════════════════════════════════════
    SPARKLE BURST
-   Sparkles that shoot out of the dock's Sparkles tile when it's clicked,
-   hit the nav bar, scatter across the screen and float back down.
-   They sit behind the intro content and the dock.
-   js/sparkles.js creates the .sparkle elements at the tile and sets, on each one:
-     --ux, --uy                   the shot: up to the nav, with a slight wobble
-     --dx, --dy                   where it scatters to, measured from the tile
-     --fall, --sway, --spin       how far it floats down, drifts sideways and turns
-     --size, --colour             how big, which colour
-     --duration, --delay          how long it lasts, and how late it leaves
+   Sparkles fired by the dock's Sparkles tile. They sit behind the intro
+   content and the dock. js/sparkles.js creates the .sparkle elements,
+   sets --size and --colour on each, and moves them frame by frame
+   (shoot up, bounce off the nav, float down, fade at the washi tape).
 ══════════════════════════════════════════ */
 .home-sparkles {
   position: absolute;
@@ -20,11 +15,14 @@
 
 .sparkle {
   position: absolute;
+  left: 0;
+  top: 0;
   width: var(--size);
   height: var(--size);
-  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); /* centre on its start point */
+  margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2); /* centre on its position */
   background: var(--colour);
-  animation: sparkle-burst var(--duration) linear var(--delay) both;
+  opacity: 0; /* js/sparkles.js sets position and opacity each frame */
+  will-change: transform, opacity;
 }
 
 /* Shapes */
@@ -63,37 +61,6 @@
 }
 .sparkle--dot {
   border-radius: 50%;
-  scale: 0.5;
-}
-
-/* Shoots straight up, hits the nav, scatters sideways, then floats down with a sway */
-@keyframes sparkle-burst {
-  0% {
-    transform: translate(0, 0) scale(0.5) rotate(0deg);
-    opacity: 1;
-    animation-timing-function: cubic-bezier(0.2, 0.7, 0.4, 1); /* fast shot */
-  }
-  10% {
-    transform: translate(var(--ux), var(--uy)) scale(1) rotate(0deg);
-    opacity: 1;
-    animation-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1); /* scatter */
-  }
-  38% {
-    transform: translate(var(--dx), var(--dy)) scale(1) rotate(var(--spin));
-    opacity: 1;
-    animation-timing-function: ease-in-out;
-  }
-  70% {
-    transform: translate(calc(var(--dx) + var(--sway)), calc(var(--dy) + var(--fall) * 0.5))
-      scale(1) rotate(calc(var(--spin) * 1.6));
-    opacity: 1;
-    animation-timing-function: ease-in-out;
-  }
-  100% {
-    transform: translate(calc(var(--dx) - var(--sway) * 0.5), calc(var(--dy) + var(--fall)))
-      scale(0.8) rotate(calc(var(--spin) * 2.2));
-    opacity: 0;
-  }
 }
 
 /* The Sparkles icon kicks back as it fires */
@@ -109,15 +76,9 @@
   }
 }
 
-/* Reduced motion: no flying. The scatter fades in where it would land, then out again */
-@media (prefers-reduced-motion: reduce) {
-  .sparkle {
-    transform: translate(var(--dx), calc(var(--dy) + var(--fall) * 0.5));
-    animation: sparkle-fade 1.6s ease both;
-  }
-  .dock-btn.is-popping .dock-icon {
-    animation: none;
-  }
+/* Reduced motion: no flying. js/sparkles.js places a static scatter that fades in and out */
+.sparkle--still {
+  animation: sparkle-fade 1.8s ease both;
 }
 @keyframes sparkle-fade {
   0%,
@@ -126,6 +87,11 @@
   }
   30%,
   60% {
-    opacity: 0.8;
+    opacity: var(--opacity);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dock-btn.is-popping .dock-icon {
+    animation: none;
   }
 }
