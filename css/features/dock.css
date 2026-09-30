@@ -7,8 +7,8 @@
 ══════════════════════════════════════════ */
 .dock-strip {
   box-sizing: border-box; /* keep padding inside the global section width: 100% */
-  margin: 40px 0 64px;
-  padding: 16px 20px;
+  margin: 40px 0 104px;
+  padding: 28px 20px 16px; /* extra room on top for the tag */
   background:
     radial-gradient(var(--accent-a20) 1.2px, transparent 1.8px) 0 0 / 10px 10px,
     var(--surface-band);
@@ -25,8 +25,8 @@
 /* Paper tag pinned to the top-left edge */
 .dock-tag {
   position: absolute;
-  top: -34px;
-  left: -48px;
+  top: -46px;
+  left: -80px;
   z-index: 2;
   margin: 0;
   padding: 5px 14px 5px 24px;
@@ -70,7 +70,7 @@
 
 .dock-btn {
   display: block;
-  width: 56px;
+  width: 54px;
   padding: 0;
   border: 0;
   background: none;
@@ -149,11 +149,15 @@
   border-radius: 16px;
 }
 
-/* Phones: smaller tiles so all six fit; tag tucks in so it stays on screen */
-@media (max-width: 640px) {
+/* Touch screens and phones: smaller tiles so all six fit */
+@media (hover: none), (max-width: 640px) {
   .dock-btn {
     width: 48px;
   }
+}
+
+/* Phones: tag tucks in so it stays on screen */
+@media (max-width: 640px) {
   .dock-tag {
     left: -8px;
   }
