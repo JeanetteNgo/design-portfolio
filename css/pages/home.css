@@ -13,6 +13,8 @@
 }
 
 .home-page-header {
+  position: relative;
+  z-index: 2; /* keeps the photo and text in front of the sparkles */
   padding: 60px 20px 16px;
   display: flex;
   flex-direction: column;

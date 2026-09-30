@@ -1,14 +1,14 @@
 /* ══════════════════════════════════════════
    SPARKLE BURST
-   Sparkles fired by the dock's Sparkles tile. They sit behind the intro
-   content and the dock. js/sparkles.js creates the .sparkle elements,
+   Sparkles fired by the dock's Sparkles tile. They fly in front of the
+   dock (so you see them leave the icon) but behind the intro content. js/sparkles.js creates the .sparkle elements,
    sets --size and --colour on each, and moves them frame by frame
    (shoot up, bounce off the nav, float down, fade at the washi tape).
 ══════════════════════════════════════════ */
 .home-sparkles {
   position: absolute;
   inset: 0;
-  z-index: -1; /* behind the intro and dock */
+  z-index: 1; /* in front of the dock, behind the intro (z-index 2 in home.css) */
   overflow: hidden;
   pointer-events: none;
 }

@@ -1,9 +1,9 @@
 /* ─────────────────────────────────────────────
    SPARKLE BURST
    Clicking the dock's Sparkles tile (button[data-action="party"]) fires
-   sparkles like a party popper: they shoot up, fanning out a little,
-   bounce off the nav bar, scatter, then float down and fade out when
-   they touch the dock's washi tape.
+   a stream of sparkles out of the icon like a party popper: they shoot up,
+   fanning out a little, glance off the nav bar in random directions, then
+   flutter down and fade out when they touch the dock's washi tape.
    The shapes and colours live in css/features/sparkles.css; this file
    creates the elements and moves them with a small physics loop.
 ────────────────────────────────────────────── */
@@ -18,11 +18,14 @@
   const MAX_ON_SCREEN = 120; // fast repeat clicks can't pile up more than this
 
   // Feel of the motion
-  const FAN = 14; // degrees either side of straight up as they shoot
-  const DRAG = 2.2; // air resistance: higher = they slow down sooner
-  const GRAVITY = 190; // higher = they float down faster
-  const BOUNCE = 0.35; // how much speed survives the bounce off the nav
-  const FADE = 0.35; // seconds to fade out once they touch the tape
+  const FAN = 20; // degrees either side of straight up as they shoot
+  const DRAG = 3; // air resistance: higher = they slow down sooner
+  const GRAVITY = 140; // higher = they float down faster
+  const BOUNCE = 0.55; // how much speed survives the bounce off the nav
+  const FADE = 0.5; // seconds to fade out once they touch the tape
+  const STREAM = 0.7; // seconds the icon keeps firing for
+  const SCATTER = 1.3; // how hard they glance sideways off the nav
+  const FLUTTER = 160; // how much they waft side to side on the way down
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const pick = (list) => list[Math.floor(Math.random() * list.length)];
@@ -34,9 +37,9 @@
   /** A mix of sizes: mostly small and medium, a few big ones. */
   function _size() {
     const roll = Math.random();
-    if (roll < 0.4) return rand(8, 12);
-    if (roll < 0.8) return rand(14, 20);
-    return rand(24, 34);
+    if (roll < 0.4) return rand(6, 10);
+    if (roll < 0.8) return rand(8, 14);
+    return rand(20, 28);
   }
 
   /** Where things are right now, measured inside the sparkle layer. */
@@ -47,8 +50,8 @@
     const strip = document.querySelector('.dock-strip');
     return {
       width: box.width,
-      startX: tile.left + tile.width / 2 - box.left,
-      startY: tile.top + tile.height / 2 - box.top,
+      startX: tile.left + tile.width * 0.6 - box.left, // the popper's mouth
+      startY: tile.top + tile.height * 0.35 - box.top,
       ceiling: (nav ? nav.getBoundingClientRect().bottom : 0) - box.top - 24, // just inside the nav bar
       floor: strip.getBoundingClientRect().top - box.top, // top edge of the washi tape
     };
@@ -81,11 +84,13 @@
       return;
     }
 
+    // Queue them up; _tick releases them one after another over STREAM seconds
     const climb = b.startY - b.ceiling;
     for (let i = 0; i < count; i++) {
       const size = _size();
-      const angle = (rand(-FAN, FAN) * Math.PI) / 180;
-      const speed = climb * DRAG * rand(1.6, 2.4); // enough to reach the nav
+      // Adding two random numbers keeps most of the stream near the middle of the fan
+      const angle = ((rand(-FAN, FAN) + rand(-FAN, FAN)) / 2) * (Math.PI / 180);
+      const speed = climb * DRAG * rand(1.6, 2.6); // enough to reach the nav
       sparkles.push({
         el: _create(size),
         b,
@@ -93,15 +98,14 @@
         y: b.startY,
         vx: Math.sin(angle) * speed,
         vy: -Math.cos(angle) * speed,
-        // After the bounce, each one drifts towards its own column so they cover the width
-        landX: ((i + rand(0.1, 0.9)) / count) * b.width,
         bounced: false,
         weight: rand(0.7, 1.3) * (0.7 + size / 40), // bigger ones fall a little faster
         opacity: rand(0.45, 1),
         angle: rand(0, 360),
         spin: rand(-360, 360),
-        swayPhase: rand(0, 6.28),
-        age: -rand(0, 0.12), // negative = leaves a moment later, so it's a stream not a clump
+        flutterSpeed: rand(1.5, 3),
+        flutterPhase: rand(0, 6.28),
+        age: -(i / count) * STREAM, // negative = still waiting its turn to leave
         fading: 0,
       });
     }
@@ -128,18 +132,21 @@
       // Air resistance slows it; gravity pulls it down
       s.vx -= s.vx * DRAG * dt;
       s.vy += (GRAVITY * s.weight - s.vy * DRAG) * dt;
+      // Once it's falling it wafts from side to side like a scrap of paper
+      if (s.bounced) s.vx += Math.sin(s.age * s.flutterSpeed + s.flutterPhase) * FLUTTER * dt;
       s.x += s.vx * dt;
       s.y += s.vy * dt;
       s.angle += s.spin * dt;
 
-      // Bounce off the nav bar, picking up a sideways kick that scatters them
-      // (one that runs out of steam just short of it scatters from where it stalls)
+      // Glance off the nav bar: lose some speed and deflect sideways by a random amount
+      // (one that runs out of steam just short of it simply starts falling)
       if (!s.bounced && (s.y <= s.b.ceiling || s.vy > 0)) {
+        const impact = Math.abs(s.vy);
         s.bounced = true;
         s.y = Math.max(s.y, s.b.ceiling);
-        s.vy = Math.abs(s.vy) * BOUNCE;
-        s.vx = (s.landX - s.x) * DRAG;
-        s.spin *= 0.5;
+        s.vy = impact * BOUNCE;
+        s.vx += rand(-1, 1) * impact * SCATTER;
+        s.spin = rand(-180, 180);
       }
       // Soft bounce off the sides of the screen
       if ((s.x < 0 && s.vx < 0) || (s.x > s.b.width && s.vx > 0)) s.vx = -s.vx * 0.5;
@@ -151,9 +158,8 @@
         return false;
       }
 
-      const sway = s.bounced ? Math.sin(s.age * 2 + s.swayPhase) * 10 : 0; // gentle side-to-side float
       const grow = Math.min(1, 0.4 + s.age * 6); // pops up to full size as it leaves
-      s.el.style.transform = `translate(${(s.x + sway).toFixed(1)}px, ${s.y.toFixed(1)}px) rotate(${s.angle.toFixed(0)}deg) scale(${grow.toFixed(2)})`;
+      s.el.style.transform = `translate(${s.x.toFixed(1)}px, ${s.y.toFixed(1)}px) rotate(${s.angle.toFixed(0)}deg) scale(${grow.toFixed(2)})`;
       s.el.style.opacity = (s.opacity * (1 - s.fading / FADE)).toFixed(2);
       return true;
     });
