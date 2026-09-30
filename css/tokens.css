@@ -93,7 +93,7 @@
   --nav-height: 75px; /* height of the sticky nav bar */
 
   /* My Dock */
-  --dock-tile-a: var(--accent-100);
+  --dock-tile-a: var(--accent-25);
   --dock-tile-b: #fff3d6;
   --dock-tile-highlight: rgb(255 255 255 / 70%); /* inner rim on tiles */
   --dock-outline: var(--neutral-0); /* white outline on hovered icon */
