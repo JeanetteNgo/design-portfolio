@@ -9,15 +9,20 @@
 .popup[data-popup='map'] .popup-card {
   width: min(100%, 720px);
   border-radius: 6px;
-  /* A sea chart: one faint compass rose (img/map/chart.svg) and a double frame line, over paper
-     grain and warm paper, with the edges a touch darker like an old map */
+  /* A worn sea chart, top layer first: two soft stains and a ring-shaped one, crumple shading,
+     one faint compass rose (img/map/chart.svg) and paper grain over warm paper; the edges are
+     darker, like an old map (colours and crumple texture are in css/tokens.css) */
   isolation: isolate;
   background:
+    radial-gradient(ellipse 170px 120px at 84% 16%, var(--map-stain), transparent 72%),
+    radial-gradient(circle 64px at 22% 82%, transparent 54%, var(--map-stain-ring) 60%, transparent 70%),
+    radial-gradient(ellipse 210px 150px at 70% 92%, var(--map-stain), transparent 70%),
+    var(--map-crinkle) 0 0 / 520px 520px,
     url('../../../img/map/chart.svg') center / cover,
     var(--paper-texture),
     var(--paper-bg);
   box-shadow:
-    inset 0 0 70px var(--accent-a14),
+    inset 0 0 90px var(--map-edge),
     0 2px 4px rgb(var(--shadow-rgb) / 12%),
     0 18px 40px rgb(var(--shadow-rgb) / 24%);
 }
@@ -121,21 +126,38 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 2px solid var(--ink-brown);
-  border-radius: 50%;
-  background: var(--surface);
   font: 700 20px/1 var(--font-primary);
-  color: var(--text-strong);
   cursor: pointer;
-  transition: background-color 0.15s ease;
 }
 .map-zoom-btn:nth-child(2) {
   font-size: 14px; /* the "1×" reset */
 }
-.map-zoom-btn:hover {
-  background: var(--accent-a14);
+
+/* The zoom buttons and the × share one look: a round parchment coin with a double ring in
+   ink, and the × in red, like the X that marks the spot on a treasure map */
+.popup[data-popup='map'] :is(.popup-close, .map-zoom-btn) {
+  --coin: var(--paper-bg);
+  border: 2px solid var(--ink-brown);
+  border-radius: 50%;
+  background: var(--coin);
+  box-shadow:
+    inset 0 0 0 3px var(--coin),
+    inset 0 0 0 4.5px var(--ink-brown),
+    0 2px 0 rgb(var(--shadow-rgb) / 16%);
+  color: var(--ink-brown);
+  transition: rotate 0.2s ease;
 }
-.map-zoom-btn:focus-visible {
+.popup[data-popup='map'] .popup-close {
+  font-size: 26px;
+  color: var(--ink-red);
+}
+.popup[data-popup='map'] :is(.popup-close, .map-zoom-btn):hover {
+  --coin: var(--accent-100);
+}
+.popup[data-popup='map'] .popup-close:hover {
+  rotate: 90deg;
+}
+.popup[data-popup='map'] :is(.popup-close, .map-zoom-btn):focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }
@@ -345,8 +367,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .map-zoom-btn,
-  .map-stamp {
+  .map-stamp,
+  .popup[data-popup='map'] :is(.popup-close, .map-zoom-btn) {
     transition: none;
+  }
+  .popup[data-popup='map'] .popup-close:hover {
+    rotate: none;
   }
   .map-stamp:hover {
     rotate: -1.5deg;
