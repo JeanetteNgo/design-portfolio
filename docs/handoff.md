@@ -3,6 +3,17 @@
 Paste or save this in the repo (e.g. `HANDOFF.md`) and tell Claude Code:
 "Read HANDOFF.md. Start with Step 1 (the dock strip). Work in small steps, explain what you change, and don't touch anything outside the listed files."
 
+## 0. Where things stand (updated 2026-09-30)
+
+Sections 2 and 3 below describe the original plan. What is actually built differs in places:
+
+- **Folders:** root holds pages only. `css/` (tokens, base, layout, components, `pages/`, `features/`), `js/`, `data/` (registries), `img/` (`profile/`, `dock/`), `docs/`.
+- **Nav and footer:** edit `data/site.js`; `js/site-shell.js` renders them on every page.
+- **Step 1, dock strip: done** (`css/features/dock.css`). Differences from section 3: the tag reads "What's on my Dock"; tiles are 54px (48px on touch, 42px under 420px wide); the band is two layered washi tapes (gingham over angled stripes), not dots; the photo is pinned like the tag; the nav is transparent at the top of the home page.
+- **Seventh tile, Sparkles:** `button[data-action="party"]` fires a sparkle stream (`js/sparkles.js`, `css/features/sparkles.css`). It has no popup.
+- **Step 4.1, popup system: done.** `<dialog id="popup">` in `index.html`, `js/dock.js`, `css/features/popup.css`, words in `data/popups.js`. All six popups currently use the default layout (intro plus headed lists) with placeholder words.
+- **Next:** step 4.2, the six individual popups. Per-popup styles go in `css/features/popups/<name>.css`, scoped with `.popup[data-popup='<name>']`. Real icons still to be exported from Figma into `img/dock/` (same file names).
+
 ## 1. About me and how to work with me
 
 - Jeanette, UI/UX designer in Singapore. Little coding knowledge, so explain changes plainly and keep steps small.
