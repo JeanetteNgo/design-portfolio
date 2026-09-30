@@ -1,10 +1,11 @@
 /* ─────────────────────────────────────────────
    MAP POPUP
-   An interactive globe with a pin for each place in PLACES (data/places.js), beside the same
-   places as chips. Drag (or use the arrow keys) to turn it; zoom with the +/- buttons, a
-   trackpad pinch or scroll, or two fingers (0 or the 1× button goes back to 100%). Tapping a
-   pin or a chip selects it, shows its note and turns the globe to face it.
-   The world outline is data/land.json (Natural Earth, public domain) and the globe maths is
+   An interactive globe with a pin for each place in PLACES (data/places.js), beside a
+   "Based in" banner and a page of passport stamps (been = solid, next stops = dashed).
+   Drag (or use the arrow keys) to turn the globe; zoom with the +/- buttons, a trackpad pinch
+   or scroll, or two fingers (0 or the 1× button goes back to 100%). Tapping a stamp or a pin
+   turns the globe to that place and opens its details; ← (or the back tag) returns to the stamps.
+   The world outline is data/land.json (Natural Earth, public domain; land plus ice caps) and the globe maths is
    js/vendor/d3-geo.min.js; both are fetched only when the Map opens.
    Looks live in css/features/popups/map.css.
 ────────────────────────────────────────────── */
@@ -18,7 +19,7 @@ POPUP_RENDERERS.map = function (popup) {
   const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const MIN_ZOOM = 1;
   const MAX_ZOOM = 3;
-  const chips = []; // [button, place], so selecting a place can update them all
+  const stamps = new Map(); // place -> its stamp button, so focus can return to it
 
   /* ── Loading the globe (once; later opens reuse it) ── */
 
@@ -42,7 +43,7 @@ POPUP_RENDERERS.map = function (popup) {
   const canvas = popupEl('canvas', '', 'map-globe');
   const ctx = canvas.getContext('2d');
   const home = PLACES.find((p) => p.status === 'home') || PLACES[0];
-  let land = null;
+  let world = null; // { land, ice } outlines, once loaded
   let selected = home;
   let lng = home.lng - 25; // start a little to one side, so the globe isn't dead-on
   let lat = Math.max(-45, Math.min(45, home.lat)) + 10;
@@ -82,25 +83,30 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.save();
     ctx.beginPath();
     path({ type: 'Sphere' });
-    ctx.fillStyle = css('--accent-25');
+    ctx.fillStyle = css('--globe-water');
     ctx.fill();
     ctx.clip(); // land and grid stay inside the globe
 
     ctx.beginPath();
     path(d3geo.geoGraticule10());
-    ctx.strokeStyle = css('--accent-a33');
+    ctx.strokeStyle = css('--globe-grid');
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    if (land) {
-      ctx.beginPath();
-      path(land);
-      ctx.fillStyle = css('--pencil-d');
-      ctx.fill();
-      ctx.strokeStyle = ink;
-      ctx.lineWidth = 1.5;
-      ctx.lineJoin = 'round';
-      ctx.stroke();
+    if (world) {
+      [
+        [world.land, '--pencil-d'],
+        [world.ice, '--globe-ice'], // Antarctica and Greenland
+      ].forEach(([outline, colour]) => {
+        ctx.beginPath();
+        path(outline);
+        ctx.fillStyle = css(colour);
+        ctx.fill();
+        ctx.strokeStyle = ink;
+        ctx.lineWidth = 1.5;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+      });
     }
     ctx.restore();
 
@@ -245,17 +251,20 @@ POPUP_RENDERERS.map = function (popup) {
   }
   const _zoomBy = (step) => _zoomTo(zoomTo + step);
 
-  /* ── Selecting ── */
+  /* ── Selecting ──
+     The right-hand side has two views: the stamps, and one place's details (with a back tag).
+     The "Based in" banner above them is always there. */
 
-  const note = popupEl('div', '', 'map-note');
-  note.setAttribute('aria-live', 'polite');
+  const listView = popupEl('div', '', 'map-stamps-view');
+  const detailView = popupEl('div', '', 'map-detail');
+  detailView.hidden = true;
+  let openPlace = null; // the place whose details are showing
 
-  // The card next to the globe: status, name, when, cities, note and (optional) photo.
-  // Anything the place doesn't have is skipped.
-  function _card(place) {
+  // The details of one place: status, name, when, cities, note and (optional) photo
+  function _detail(place) {
     const parts = [];
     if (place.photo) {
-      const photo = popupEl('div', '', 'map-note-photo');
+      const photo = popupEl('div', '', 'map-detail-photo');
       const img = popupEl('img');
       img.src = place.photo;
       img.alt = place.alt || '';
@@ -264,9 +273,9 @@ POPUP_RENDERERS.map = function (popup) {
       photo.appendChild(img);
       parts.push(photo);
     }
-    parts.push(popupEl('p', STATUS[place.status][0], 'map-note-status'), popupEl('h3', place.name, 'map-note-name'));
+    parts.push(popupEl('p', STATUS[place.status][0], 'map-detail-status'), popupEl('h3', place.name, 'map-detail-name'));
     if (place.when) {
-      const when = popupEl('p', place.when, 'map-note-when');
+      const when = popupEl('p', place.when, 'map-detail-when');
       when.prepend(popupEl('span', place.status === 'next' ? 'Planned' : 'Visited'));
       parts.push(when);
     }
@@ -275,15 +284,39 @@ POPUP_RENDERERS.map = function (popup) {
       place.cities.forEach((city) => cities.appendChild(popupEl('li', city)));
       parts.push(cities);
     }
-    if (place.note) parts.push(popupEl('p', place.note, 'map-note-text'));
-    note.replaceChildren(...parts);
+    if (place.note) parts.push(popupEl('p', place.note, 'map-detail-text'));
+    const back = popupBackTag('back to all places', () => _close(true));
+    const footer = popupEl('div', '', 'map-detail-footer');
+    footer.appendChild(back);
+    detailView.replaceChildren(...parts, footer);
+    return back;
   }
 
+  // Shows the stamps again. `refocus` puts keyboard focus back on the stamp that was open.
+  function _close(refocus) {
+    if (!openPlace) return;
+    const place = openPlace;
+    openPlace = null;
+    selected = home;
+    detailView.hidden = true;
+    listView.hidden = false;
+    if (refocus) stamps.get(place)?.focus();
+    _draw();
+  }
+
+  // Turns the globe to a place and opens its details (home only turns the globe)
   function _select(place, turnGlobe) {
-    selected = place;
-    chips.forEach(([el, p]) => el.setAttribute('aria-pressed', String(p === place)));
-    _card(place);
-    if (!calmMotion) note.animate([{ opacity: 0, translate: '0 4px' }, { opacity: 1, translate: '0' }], 180);
+    if (place.status === 'home') _close(false);
+    else {
+      selected = place;
+      openPlace = place;
+      const back = _detail(place);
+      listView.hidden = true;
+      detailView.hidden = false;
+      if (!calmMotion) detailView.animate([{ opacity: 0, translate: '0 4px' }, { opacity: 1, translate: '0' }], 180);
+      back.focus({ preventScroll: true });
+    }
+    if (place.status === 'home') selected = home;
     if (turnGlobe) _turnTo(place);
     _draw();
   }
@@ -419,39 +452,43 @@ POPUP_RENDERERS.map = function (popup) {
   const globeWrap = popupEl('div', '', 'map-globe-wrap');
   globeWrap.append(globeFrame, zoomButtons);
 
-  /* ── Legend and chips ── */
+  /* ── "Based in" banner and stamps ── */
 
-  const legend = popupEl('p', '', 'map-legend');
-  legend.append(
-    popupEl('span', 'been', 'map-key map-key--been'),
-    popupEl('span', 'next stop', 'map-key map-key--next')
-  );
+  const banner = popupEl('button', '', 'map-home');
+  banner.type = 'button';
+  banner.setAttribute('aria-label', `Based in ${home.name}. Show it on the globe.`);
+  const bannerText = popupEl('span', '', 'map-home-text');
+  bannerText.append(popupEl('span', 'Based in', 'map-home-label'), popupEl('span', home.name, 'map-home-name'));
+  if (home.note) bannerText.appendChild(popupEl('span', home.note, 'map-home-note'));
+  banner.append(popupEl('span', '', 'map-home-pin'), bannerText);
+  banner.addEventListener('click', () => _select(home, true));
 
-  const lists = popupEl('div', '', 'map-lists');
   Object.entries(STATUS).forEach(([status, [, heading]]) => {
+    if (status === 'home') return;
     const places = PLACES.filter((p) => p.status === status);
     if (!places.length) return;
-    const list = popupEl('ul', '', 'map-chips');
+    const list = popupEl('ul', '', 'map-stamps');
     places.forEach((place) => {
-      const chip = popupEl('button', place.name, `map-chip map-chip--${status}`);
-      chip.type = 'button';
-      chip.addEventListener('click', () => _select(place, true));
-      list.appendChild(popupEl('li')).appendChild(chip);
-      chips.push([chip, place]);
+      const stamp = popupEl('button', '', `map-stamp map-stamp--${status}`);
+      stamp.type = 'button';
+      stamp.append(popupEl('span', place.name, 'map-stamp-name'));
+      if (place.when) stamp.appendChild(popupEl('span', place.when, 'map-stamp-when'));
+      stamp.addEventListener('click', () => _select(place, true));
+      list.appendChild(popupEl('li')).appendChild(stamp);
+      stamps.set(place, stamp);
     });
-    lists.append(popupEl('h3', heading, 'map-heading'), list);
+    listView.append(popupEl('h3', heading, 'map-heading'), list);
   });
 
   const side = popupEl('div', '', 'map-side');
-  if (popup.intro) side.appendChild(popupEl('p', popup.intro, 'popup-intro'));
-  side.append(note, legend, lists);
+  side.append(banner, listView, detailView);
 
   const layout = popupEl('div', '', 'map-layout');
   layout.append(globeWrap, side);
   const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(layout);
 
-  _select(home, false);
+  popupOnLeftKey(() => !detailView.hidden, () => _close(true));
 
   /* ── Start and stop ── */
 
@@ -459,12 +496,12 @@ POPUP_RENDERERS.map = function (popup) {
   resizer.observe(canvas);
   loading
     .then((data) => {
-      land = data;
+      world = data;
       last = performance.now();
       _draw();
       _wake();
     })
-    .catch(() => {}); // no outline? the pins and chips still work
+    .catch(() => {}); // no outline? the pins and stamps still work
   popupOnClose(() => {
     alive = false;
     resizer.disconnect();

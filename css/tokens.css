@@ -132,6 +132,11 @@
   --cork-frame: #8a5a3b;
   --pin: var(--accent-500);
 
+  /* Globe (Map popup): water, ice caps and the grid lines over them. Land uses --pencil-d */
+  --globe-water: #e3f1f8;
+  --globe-ice: #fbfdfe;
+  --globe-grid: rgb(70 130 170 / 20%);
+
   /* Sparkles (fired by the dock's Sparkles tile) */
   --sparkle-a: var(--accent-300);
   --sparkle-b: #ffd98a;

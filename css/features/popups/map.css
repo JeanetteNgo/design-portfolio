@@ -1,15 +1,16 @@
 /* ══════════════════════════════════════════
    MAP POPUP
-   A nautical-chart sheet with an interactive globe (drawn on a canvas by js/popups/map.js)
-   beside the selected place's card and the same places as chips. Places come from data/places.js.
+   A sea-chart sheet with an interactive globe (drawn on a canvas by js/popups/map.js) beside a
+   "Based in" banner and passport stamps, which open a place's details. Places come from
+   data/places.js.
    The globe's colours are read from the tokens in css/tokens.css when it is drawn.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='map'] .popup-card {
   width: min(100%, 720px);
   border-radius: 6px;
-  /* A nautical chart: faint grid, compass rose and route (img/map/chart.svg) over paper grain
-     and warm paper, with the edges a touch darker like an old map */
+  /* A sea chart: one faint compass rose (img/map/chart.svg) and a double frame line, over paper
+     grain and warm paper, with the edges a touch darker like an old map */
   isolation: isolate;
   background:
     url('../../../img/map/chart.svg') center / cover,
@@ -20,15 +21,18 @@
     0 2px 4px rgb(var(--shadow-rgb) / 12%),
     0 18px 40px rgb(var(--shadow-rgb) / 24%);
 }
-/* The chart's frame: a thin rule inset from the sheet's edge, behind the content */
-.popup[data-popup='map'] .popup-card::before {
+/* The chart's double frame line (a "neatline"), inset from the sheet's edge, behind the content */
+.popup[data-popup='map'] .popup-card::before,
+.popup[data-popup='map'] .popup-card::after {
   content: '';
   position: absolute;
   z-index: -1;
   inset: 12px;
-  border: 1.5px solid var(--accent-a33);
-  border-radius: 3px;
+  border: 1px solid var(--accent-a25);
   pointer-events: none;
+}
+.popup[data-popup='map'] .popup-card::after {
+  inset: 17px;
 }
 /* Whitespace: more room around the content than the other popups */
 @media (min-width: 720px) {
@@ -65,9 +69,6 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 64px; /* space between the globe and the words */
   }
-}
-.map-side .popup-intro {
-  margin-bottom: 16px;
 }
 
 /* ── The globe: a square canvas drawn by js/popups/map.js, with its zoom buttons below ── */
@@ -139,38 +140,161 @@
   outline-offset: 2px;
 }
 
-/* ── Card for the selected place ── */
-.map-note {
-  margin-top: 16px;
+/* ── "Based in" banner: always shown above the stamps ── */
+.map-home {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 0 0 20px;
+  border: 0;
+  border-bottom: 1.5px solid var(--accent-a33);
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
 }
-@media (min-width: 720px) {
-  .map-note {
-    min-height: 190px; /* so the chips below don't jump between short and long cards */
+.map-home:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 4px;
+}
+/* The same yellow teardrop as the home pin on the globe */
+.map-home-pin {
+  flex: none;
+  position: relative;
+  width: 26px;
+  height: 26px;
+  box-sizing: border-box;
+  margin: 0 4px 0 2px;
+  border: 3px solid var(--ink-brown);
+  border-radius: 50% 50% 50% 0;
+  rotate: -45deg;
+  background: var(--pencil-a);
+}
+.map-home-pin::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--paper-bg);
+}
+.map-home-text {
+  display: flex;
+  flex-direction: column;
+}
+.map-home-label {
+  font: 700 12px var(--font-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-red);
+}
+.map-home-name {
+  font: 900 30px/1.1 var(--font-primary);
+  color: var(--text-strong);
+}
+.map-home-note {
+  margin-top: 2px;
+  font: 400 16px/1.4 var(--font-hand);
+  color: var(--text-body);
+}
+
+/* ── Passport stamps ── */
+.map-heading {
+  margin: 20px 0 12px;
+  font: 700 12px var(--font-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-body);
+}
+.map-stamps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.map-stamps li {
+  margin: 0; /* reset the global li spacing */
+}
+.map-stamp {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: 84px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 2px solid var(--ink-brown);
+  border-radius: 6px;
+  background: var(--surface);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  rotate: -1.5deg;
+  transition:
+    rotate 0.2s ease,
+    translate 0.2s ease,
+    background-color 0.15s ease;
+}
+.map-stamps li:nth-child(even) .map-stamp {
+  rotate: 1deg;
+}
+/* Been: stamped in (solid). Next stop: still empty (dashed, no fill). */
+.map-stamp--next {
+  border-style: dashed;
+  background: none;
+}
+.map-stamp-name {
+  font: 700 14px/1.25 var(--font-secondary);
+  color: var(--text-strong);
+}
+.map-stamp-when {
+  font: 400 15px var(--font-hand);
+  color: var(--ink-red);
+}
+.map-stamp:hover {
+  background: var(--accent-a14);
+}
+@media (hover: hover) {
+  .map-stamp:hover {
+    rotate: 0deg;
+    translate: 0 -2px;
   }
 }
-.map-note::after {
+.map-stamp:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 3px;
+}
+
+/* ── One place's details (replaces the stamps until you go back) ── */
+.map-detail {
+  padding-top: 20px;
+}
+.map-detail::after {
   content: '';
   display: block;
-  clear: both; /* holds the card open around a floated photo */
+  clear: both; /* holds the view open around a floated photo */
 }
-.map-note-status {
+.map-detail-status {
   margin: 0;
   font: 700 12px var(--font-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-red);
 }
-.map-note-name {
+.map-detail-name {
   margin: 4px 0 0;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--text-strong);
 }
-.map-note-when {
+.map-detail-when {
   margin: 6px 0 0;
   font: 600 13px var(--font-secondary);
   color: var(--text-body);
 }
-.map-note-when span {
+.map-detail-when span {
   margin-right: 6px;
   font-weight: 400;
   color: var(--text-muted);
@@ -179,7 +303,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 10px 0 0;
+  margin: 12px 0 0;
   padding: 0;
   list-style: none;
 }
@@ -192,13 +316,13 @@
   font: 400 12px var(--font-secondary);
   color: var(--text-body);
 }
-.map-note-text {
-  margin: 10px 0 0;
+.map-detail-text {
+  margin: 12px 0 0;
   font: 400 16px/1.5 var(--font-hand);
   color: var(--text-body);
 }
-/* Optional photo: a small polaroid, tilted, at the card's right */
-.map-note-photo {
+/* Optional photo: a small polaroid, tilted, at the right */
+.map-detail-photo {
   float: right;
   width: 120px;
   margin: 4px 0 8px 16px;
@@ -210,85 +334,22 @@
     0 6px 12px rgb(var(--shadow-rgb) / 16%);
   rotate: 3deg;
 }
-.map-note-photo img {
+.map-detail-photo img {
   display: block;
   width: 100%;
   height: auto;
 }
-
-/* ── Legend and chips ── */
-.map-legend {
-  display: flex;
-  gap: 16px;
-  margin: 8px 0 0;
-  font: 400 12px var(--font-secondary);
-  color: var(--text-muted);
-}
-.map-key::before {
-  content: '';
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin-right: 6px;
-  border: 2px solid var(--ink-brown);
-  border-radius: 50%;
-  background: var(--accent-300);
-  vertical-align: -1px;
-}
-.map-key--next::before {
-  border-style: dashed;
-  background: none;
-}
-.map-heading {
-  margin: 16px 0 8px;
-  font: 700 12px var(--font-secondary);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-body);
-}
-.map-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.map-chips li {
-  margin: 0; /* reset the global li spacing */
-}
-.map-chip {
-  min-height: 44px;
-  padding: 0 16px;
-  border: 2px solid var(--ink-brown);
-  border-radius: 999px;
-  background: var(--surface);
-  font: 600 14px var(--font-secondary);
-  color: var(--text-strong);
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-}
-.map-chip--next {
-  border-style: dashed;
-  background: none;
-}
-.map-chip--home {
-  background: var(--pencil-a);
-}
-.map-chip:hover {
-  background: var(--accent-a14);
-}
-.map-chip[aria-pressed='true'] {
-  background: var(--accent-100);
-}
-.map-chip:focus-visible {
-  outline: 3px solid var(--accent-500);
-  outline-offset: 2px;
+.map-detail-footer {
+  margin-top: 16px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .map-zoom-btn,
-  .map-chip {
+  .map-stamp {
     transition: none;
+  }
+  .map-stamp:hover {
+    rotate: -1.5deg;
+    translate: none;
   }
 }

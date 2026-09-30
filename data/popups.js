@@ -33,7 +33,7 @@ const POPUPS = {
   },
   map: {
     title: 'Map',
-    intro: 'Based in Singapore. Places I have been, and where I am headed next.', // the pins are in data/places.js
+    // the pins are in data/places.js
   },
   'off-the-clock': {
     paper: true,
