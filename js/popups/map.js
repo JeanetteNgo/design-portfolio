@@ -10,6 +10,10 @@
    Looks live in css/features/popups/map.css.
 ────────────────────────────────────────────── */
 
+// How the stamps look: 'ink' (rubber-stamp outlines) or 'postage' (perforated stamps). Both are
+// in css/features/popups/map.css.
+const MAP_STAMP_STYLE = 'ink';
+
 POPUP_RENDERERS.map = function (popup) {
   const STATUS = {
     home: ['Home base', 'Based in'],
@@ -221,8 +225,21 @@ POPUP_RENDERERS.map = function (popup) {
   function _wake() {
     if (alive && !frame) frame = requestAnimationFrame(_tick);
   }
+  // Touching the globe stops the spin. After a quiet pause it starts again, unless she is mid-drag,
+  // has a place open, or is zoomed in looking closely (zooming back out restarts the wait).
+  const IDLE_MS = 6000;
+  let idleTimer = 0;
   function _stopSpin() {
     spin = 0;
+    clearTimeout(idleTimer);
+    if (SPIN && alive) idleTimer = setTimeout(_resumeSpin, IDLE_MS);
+  }
+  function _resumeSpin() {
+    if (!alive || spin || openPlace || zoomTo > MIN_ZOOM) return;
+    if (drag || pinch || turn) return _stopSpin(); // still busy: wait another pause
+    spin = SPIN;
+    last = performance.now();
+    _wake();
   }
 
   function _turnTo(place) {
@@ -304,6 +321,7 @@ POPUP_RENDERERS.map = function (popup) {
     listView.hidden = false;
     if (refocus) {
       stamps.get(place)?.focus();
+      clearTimeout(idleTimer);
       spin = SPIN; // back on the stamps: the globe drifts again
       last = performance.now();
       _wake();
@@ -490,11 +508,18 @@ POPUP_RENDERERS.map = function (popup) {
     const places = PLACES.filter((p) => p.status === status);
     if (!places.length) return;
     const list = popupEl('ul', '', 'map-stamps');
+    list.dataset.stampStyle = MAP_STAMP_STYLE;
     places.forEach((place) => {
       const stamp = popupEl('button', '', `map-stamp map-stamp--${status}`);
       stamp.type = 'button';
       stamp.append(popupEl('span', place.name, 'map-stamp-name'));
-      if (place.when) stamp.appendChild(popupEl('span', place.when, 'map-stamp-when'));
+      // A stamp has a fixed size, so it shows only the latest year (the details show them all).
+      // If `when` has no years in it (e.g. "Someday"), it is shown as written.
+      const years = (place.when || '').match(/\b\d{4}\b/g) || [];
+      if (place.when) {
+        stamp.appendChild(popupEl('span', years.length ? Math.max(...years) : place.when, 'map-stamp-when'));
+      }
+      if (years.length > 1) stamp.appendChild(popupEl('span', `+${years.length - 1} earlier`, 'map-stamp-earlier'));
       stamp.addEventListener('click', () => _select(place, true));
       list.appendChild(popupEl('li')).appendChild(stamp);
       stamps.set(place, stamp);
@@ -526,6 +551,7 @@ POPUP_RENDERERS.map = function (popup) {
     .catch(() => {}); // no outline? the pins and stamps still work
   popupOnClose(() => {
     alive = false;
+    clearTimeout(idleTimer);
     resizer.disconnect();
     cancelAnimationFrame(frame);
   });
