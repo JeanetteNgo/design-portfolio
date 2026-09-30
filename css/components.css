@@ -150,7 +150,7 @@
   color: var(--accent-a50);
 }
 
-/* ── PAPER TAG (pinned section label, used by the dock) ── */
+/* ── PAPER TAG (pinned section label: dock, Selected Works) ── */
 .paper-tag {
   position: relative;
   z-index: 2;

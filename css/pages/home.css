@@ -95,8 +95,10 @@
   align-items: center;
   z-index: 2;
 }
-.featured-projects h3 {
-  margin-bottom: 20px;
+/* "Selected Works" tag, pinned to the first card's top-left corner */
+.featured-projects .paper-tag {
+  align-self: flex-start;
+  margin: 0 0 -22px max(8px, 4% - 16px);
 }
 
 .featured-projects .feature-container {
