@@ -1,8 +1,9 @@
 /* ─────────────────────────────────────────────
    MAP POPUP
    An interactive globe with a pin for each place in PLACES (data/places.js), beside the same
-   places as chips. Drag (or use the arrow keys) to turn it, +/- to zoom; tapping a pin or a
-   chip selects it, shows its note and turns the globe to face it.
+   places as chips. Drag (or use the arrow keys) to turn it; zoom with the +/- buttons, a
+   trackpad pinch or scroll, or two fingers (0 or the 1× button goes back to 100%). Tapping a
+   pin or a chip selects it, shows its note and turns the globe to face it.
    The world outline is data/land.json (Natural Earth, public domain) and the globe maths is
    js/vendor/d3-geo.min.js; both are fetched only when the Map opens.
    Looks live in css/features/popups/map.css.
@@ -218,14 +219,17 @@ POPUP_RENDERERS.map = function (popup) {
     _wake();
   }
 
-  function _zoomBy(step) {
+  // Zoom to a level (kept between MIN_ZOOM and MAX_ZOOM). `instant` skips the easing, for
+  // pinch and scroll, which already move smoothly by themselves.
+  function _zoomTo(level, instant) {
     _stopSpin();
-    zoomTo = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomTo + step));
+    zoomTo = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, level));
     last = performance.now();
-    if (calmMotion) zoom = zoomTo;
+    if (instant || calmMotion) zoom = zoomTo;
     _wake();
     _draw();
   }
+  const _zoomBy = (step) => _zoomTo(zoomTo + step);
 
   /* ── Selecting ── */
 
@@ -248,14 +252,28 @@ POPUP_RENDERERS.map = function (popup) {
   /* ── Touch, mouse and keyboard on the globe ── */
 
   let drag = null;
+  const pointers = new Map(); // fingers currently down, for two-finger pinch
+  let pinch = null;
+  const _fingerGap = () => {
+    const [a, b] = [...pointers.values()];
+    return Math.hypot(a.x - b.x, a.y - b.y) || 1;
+  };
   canvas.addEventListener('pointerdown', (e) => {
     canvas.setPointerCapture(e.pointerId);
     _stopSpin();
     turn = null;
     velocity = [0, 0];
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointers.size === 2) {
+      pinch = { gap: _fingerGap(), zoom: zoomTo };
+      drag = null;
+      return;
+    }
     drag = { x: e.clientX, y: e.clientY, sx: e.clientX, sy: e.clientY, t: performance.now(), moved: false };
   });
   canvas.addEventListener('pointermove', (e) => {
+    if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pinch && pointers.size === 2) return _zoomTo((pinch.zoom * _fingerGap()) / pinch.gap, true);
     if (!drag) return;
     const perPx = 0.3 / zoom; // degrees of turn per pixel dragged
     const dx = e.clientX - drag.x;
@@ -270,6 +288,8 @@ POPUP_RENDERERS.map = function (popup) {
     _draw();
   });
   const _release = (e) => {
+    pointers.delete(e.pointerId);
+    if (pointers.size < 2) pinch = null;
     if (!drag) return;
     const wasTap = !drag.moved;
     if (performance.now() - drag.t > 80) velocity = [0, 0]; // held still before letting go: no flick
@@ -289,15 +309,43 @@ POPUP_RENDERERS.map = function (popup) {
     }
   };
   canvas.addEventListener('pointerup', _release);
-  canvas.addEventListener('pointercancel', () => (drag = null));
+  canvas.addEventListener('pointercancel', (e) => {
+    pointers.delete(e.pointerId);
+    pinch = drag = null;
+  });
+  canvas.addEventListener('dblclick', () => _zoomTo(MIN_ZOOM));
+
+  // Trackpad: pinch (which arrives as a scroll with Ctrl held) or two-finger scroll zooms.
+  // At the zoom limit a plain scroll is left alone, so the popup can still scroll past the globe.
+  canvas.addEventListener(
+    'wheel',
+    (e) => {
+      const dy = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+      const next = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, zoomTo * Math.exp(-dy * (e.ctrlKey ? 0.01 : 0.0025))));
+      if (e.ctrlKey || next !== zoomTo) e.preventDefault(); // Ctrl-scroll would otherwise zoom the whole page
+      if (next !== zoomTo) _zoomTo(next, true);
+    },
+    { passive: false }
+  );
+  // Safari sends trackpad pinches as its own gesture events
+  let gestureStart = 1;
+  canvas.addEventListener('gesturestart', (e) => {
+    e.preventDefault();
+    gestureStart = zoomTo;
+  });
+  canvas.addEventListener('gesturechange', (e) => {
+    e.preventDefault();
+    _zoomTo(gestureStart * e.scale, true);
+  });
 
   canvas.tabIndex = 0;
   canvas.setAttribute('role', 'img');
-  canvas.setAttribute('aria-label', 'Globe. Use the arrow keys to turn it, plus and minus to zoom.');
+  canvas.setAttribute('aria-label', 'Globe. Use the arrow keys to turn it, plus and minus to zoom, zero for 100%.');
   canvas.addEventListener('keydown', (e) => {
     const keys = { ArrowLeft: [-15, 0], ArrowRight: [15, 0], ArrowUp: [0, 10], ArrowDown: [0, -10] };
     if (e.key === '+' || e.key === '=') return _zoomBy(0.5), e.preventDefault();
     if (e.key === '-') return _zoomBy(-0.5), e.preventDefault();
+    if (e.key === '0') return _zoomTo(MIN_ZOOM), e.preventDefault();
     if (!keys[e.key] || e.altKey || e.ctrlKey || e.metaKey) return;
     e.preventDefault();
     e.stopPropagation(); // ← would otherwise go back / close things
@@ -310,18 +358,21 @@ POPUP_RENDERERS.map = function (popup) {
 
   const zoomButtons = popupEl('div', '', 'map-zoom');
   [
-    ['+', 'Zoom in', 0.5],
-    ['−', 'Zoom out', -0.5],
-  ].forEach(([sign, label, step]) => {
-    const b = popupEl('button', sign, 'map-zoom-btn');
+    ['+', 'Zoom in', () => _zoomBy(0.5)],
+    ['1×', 'Reset zoom to 100%', () => _zoomTo(MIN_ZOOM)],
+    ['−', 'Zoom out', () => _zoomBy(-0.5)],
+  ].forEach(([text, label, onClick]) => {
+    const b = popupEl('button', text, 'map-zoom-btn');
     b.type = 'button';
     b.setAttribute('aria-label', label);
-    b.addEventListener('click', () => _zoomBy(step));
+    b.addEventListener('click', onClick);
     zoomButtons.appendChild(b);
   });
 
+  const globeFrame = popupEl('div', '', 'map-globe-frame'); // holds the outline ring around the canvas
+  globeFrame.appendChild(canvas);
   const globeWrap = popupEl('div', '', 'map-globe-wrap');
-  globeWrap.append(canvas, zoomButtons);
+  globeWrap.append(globeFrame, zoomButtons);
 
   /* ── Legend and chips ── */
 

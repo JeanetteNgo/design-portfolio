@@ -8,43 +8,34 @@
 .popup[data-popup='map'] .popup-card {
   width: min(100%, 720px);
   border-radius: 6px;
-  background: var(--paper-bg);
+  /* A textured map sheet: soft terrain-like bands and paper grain over warm paper, with the
+     edges a touch darker like an old map (the textures are in css/tokens.css) */
+  background:
+    var(--map-texture) 0 0 / 420px 420px,
+    var(--paper-texture),
+    var(--paper-bg);
   box-shadow:
+    inset 0 0 70px var(--accent-a14),
     0 2px 4px rgb(var(--shadow-rgb) / 12%),
     0 18px 40px rgb(var(--shadow-rgb) / 24%);
 }
-/* Fold creases: two upright and one across, each a thin shadow beside a thin highlight.
-   Drawn over everything, but clicks pass through. */
-.popup[data-popup='map'] .popup-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    linear-gradient(
-      90deg,
-      transparent calc(33.33% - 1px),
-      rgb(var(--shadow-rgb) / 9%) calc(33.33% - 1px) 33.33%,
-      var(--pencil-light) 33.33% calc(33.33% + 1px),
-      transparent calc(33.33% + 1px)
-    ),
-    linear-gradient(
-      90deg,
-      transparent calc(66.66% - 1px),
-      rgb(var(--shadow-rgb) / 9%) calc(66.66% - 1px) 66.66%,
-      var(--pencil-light) 66.66% calc(66.66% + 1px),
-      transparent calc(66.66% + 1px)
-    ),
-    linear-gradient(
-      transparent calc(50% - 1px),
-      rgb(var(--shadow-rgb) / 9%) calc(50% - 1px) 50%,
-      var(--pencil-light) 50% calc(50% + 1px),
-      transparent calc(50% + 1px)
-    );
+/* Whitespace: more room around the content than the other popups */
+@media (min-width: 720px) {
+  .popup[data-popup='map'] .popup-card {
+    --pad-top: 40px;
+    --pad-x: 52px;
+    --pad-bottom: 52px;
+    --close-top: 28px;
+  }
+}
+@media (max-width: 719px) {
+  .popup[data-popup='map'] .popup-card {
+    --pad-x: 24px;
+    --pad-bottom: 36px;
+  }
 }
 .popup[data-popup='map'] .popup-title {
+  margin-bottom: 24px;
   font-weight: 900;
   color: var(--text-strong);
 }
@@ -61,21 +52,35 @@
   }
   .map-layout {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 32px;
+    gap: 64px; /* space between the globe and the words */
   }
 }
 .map-side .popup-intro {
   margin-bottom: 16px;
 }
 
-/* ── The globe: a square canvas drawn by js/popups/map.js ── */
+/* ── The globe: a square canvas drawn by js/popups/map.js, with its zoom buttons beside it
+   (below it on phones) ── */
 .map-globe-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .map-globe-wrap {
+    flex-direction: row;
+    gap: 20px;
+  }
+}
+.map-globe-frame {
   position: relative;
-  width: min(100%, 420px);
-  margin-inline: auto;
+  flex: 1;
+  width: 100%;
+  max-width: 340px;
 }
 /* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
-.map-globe-wrap::after {
+.map-globe-frame::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -99,13 +104,15 @@
   outline-offset: 4px;
 }
 .map-zoom {
-  position: absolute;
-  z-index: 1;
-  right: 0;
-  bottom: 0;
+  flex: none;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  gap: 8px;
+}
+@media (min-width: 720px) {
+  .map-zoom {
+    flex-direction: column;
+  }
 }
 .map-zoom-btn {
   width: 44px;
@@ -114,10 +121,13 @@
   border: 2px solid var(--ink-brown);
   border-radius: 50%;
   background: var(--surface);
-  font: 700 22px/1 var(--font-primary);
+  font: 700 20px/1 var(--font-primary);
   color: var(--text-strong);
   cursor: pointer;
   transition: background-color 0.15s ease;
+}
+.map-zoom-btn:nth-child(2) {
+  font-size: 14px; /* the "1×" reset */
 }
 .map-zoom-btn:hover {
   background: var(--accent-a14);
