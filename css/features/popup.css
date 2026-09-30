@@ -61,6 +61,7 @@ html:has(.popup[open]) {
   top: 0; /* the popup's own 16px padding keeps it off the screen edge */
   z-index: 1;
   display: block;
+  flex: none; /* never squashed when a popup's card is a height-capped column */
   margin: calc(var(--close-top) - var(--pad-top)) calc(16px - var(--pad-x))
     calc(var(--pad-top) - var(--close-top) - 44px) auto;
   width: 44px;
