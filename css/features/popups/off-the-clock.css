@@ -104,7 +104,7 @@
   padding: 4px var(--pad-x) 12px; /* the vertical room stops focus rings and shadows being clipped */
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-a14) transparent;
+  scrollbar-color: var(--accent-a20) transparent;
 }
 .quest-footer {
   padding-top: 8px;
