@@ -9,7 +9,23 @@
 
    The dialog gets data-popup="tools" (etc.) while open, so each popup
    can be styled differently in css/features/popups/.
+
+   A popup that needs more than the default layout (intro + lists) adds
+   its own builder in js/popups/, e.g.
+     POPUP_RENDERERS['off-the-clock'] = function (popup) { return [elements]; };
+   Any button with data-popup-close closes the popup.
 ────────────────────────────────────────────── */
+
+/** Custom builders, keyed by popup id. Filled in by the files in js/popups/. */
+const POPUP_RENDERERS = {};
+
+/** Make an element with text, e.g. popupEl('h3', 'Design', 'popup-heading'). */
+function popupEl(tag, text, className) {
+  const el = document.createElement(tag);
+  if (text) el.textContent = text;
+  if (className) el.className = className;
+  return el;
+}
 
 (function () {
   const dialog = document.getElementById('popup');
@@ -18,23 +34,15 @@
   const title = dialog.querySelector('.popup-title');
   const body = dialog.querySelector('.popup-body');
 
-  /** Make an element with text, e.g. _el('h3', 'Design'). */
-  function _el(tag, text, className) {
-    const el = document.createElement(tag);
-    if (text) el.textContent = text;
-    if (className) el.className = className;
-    return el;
-  }
-
-  /** Build the inside of a popup from its entry in POPUPS. */
+  /** Default layout: build the inside of a popup from its entry in POPUPS. */
   function _render(popup) {
     const parts = [];
-    if (popup.intro) parts.push(_el('p', popup.intro, 'popup-intro'));
+    if (popup.intro) parts.push(popupEl('p', popup.intro, 'popup-intro'));
 
     (popup.groups || []).forEach((group) => {
-      parts.push(_el('h3', group.heading, 'popup-heading'));
-      const list = _el('ul', '', 'popup-list');
-      group.items.forEach((item) => list.appendChild(_el('li', item)));
+      parts.push(popupEl('h3', group.heading, 'popup-heading'));
+      const list = popupEl('ul', '', 'popup-list');
+      group.items.forEach((item) => list.appendChild(popupEl('li', item)));
       parts.push(list);
     });
     return parts;
@@ -46,7 +54,7 @@
 
     dialog.dataset.popup = id;
     title.textContent = popup.title;
-    body.replaceChildren(..._render(popup));
+    body.replaceChildren(...(POPUP_RENDERERS[id] || _render)(popup));
     dialog.showModal();
   }
 
@@ -56,8 +64,8 @@
     if (button) open(button.dataset.popup);
   });
 
-  // Close: the × button, or a click on the dimmed area outside the card
+  // Close: any [data-popup-close] button (the ×, "pin it back up"), or a click on the dimmed area outside the card
   dialog.addEventListener('click', (e) => {
-    if (e.target === dialog || e.target.closest('.popup-close')) dialog.close();
+    if (e.target === dialog || e.target.closest('[data-popup-close]')) dialog.close();
   });
 })();
