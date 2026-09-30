@@ -1,0 +1,92 @@
+/* ══════════════════════════════════════════
+   FLOATING SPARKLES
+   Decorative shapes that drift up behind the home intro, starting
+   behind the dock tape and shrinking and fading towards the nav.
+   js/sparkles.js creates the .sparkle elements and sets, on each one:
+     --x, --size, --colour        where, how big, which colour
+     --duration, --delay          how fast, and where in the loop it starts
+     --y, --scale, --opacity      static placement for reduced motion
+══════════════════════════════════════════ */
+.home-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  container-type: size; /* lets the animation rise by the layer's height (cqh) */
+}
+
+.sparkle {
+  position: absolute;
+  bottom: 0;
+  left: var(--x);
+  width: var(--size);
+  height: var(--size);
+  background: var(--colour);
+  opacity: 0;
+  animation: sparkle-rise var(--duration) linear var(--delay) infinite;
+}
+
+/* Shapes */
+.sparkle--sparkle {
+  clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+.sparkle--star {
+  clip-path: polygon(
+    50% 0,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+}
+.sparkle--plus {
+  clip-path: polygon(
+    38% 0,
+    62% 0,
+    62% 38%,
+    100% 38%,
+    100% 62%,
+    62% 62%,
+    62% 100%,
+    38% 100%,
+    38% 62%,
+    0 62%,
+    0 38%,
+    38% 38%
+  );
+}
+.sparkle--dot {
+  border-radius: 50%;
+  scale: 0.5;
+}
+
+/* Starts hidden behind the dock tape, then rises, shrinks and fades out below the nav */
+@keyframes sparkle-rise {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateY(-88cqh) scale(0.35) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+/* Reduced motion: a faint static scatter, bigger near the dock, smaller near the top */
+@media (prefers-reduced-motion: reduce) {
+  .sparkle {
+    bottom: var(--y);
+    transform: scale(var(--scale));
+    opacity: var(--opacity);
+    animation: none;
+  }
+}

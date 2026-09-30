@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/components.css" />
     <link rel="stylesheet" href="css/pages/home.css" />
     <link rel="stylesheet" href="css/features/dock.css" />
+    <link rel="stylesheet" href="css/features/sparkles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800;900&display=swap"
       rel="stylesheet"
@@ -27,6 +28,9 @@
     <script src="js/site-shell.js"></script>
 
     <div class="home-top">
+      <!-- Floating sparkles are added here by js/sparkles.js -->
+      <div class="home-sparkles" aria-hidden="true"></div>
+
       <header class="home-page-header">
         <span class="pinned-photo"><img src="img/profile/dp_2.jpeg" alt="Jeanette's photo" /></span>
         <h1>Hi! I am Jeanette.</h1>
@@ -101,6 +105,7 @@
 
     <footer id="site-footer"></footer>
 
+    <script src="js/sparkles.js"></script>
     <script src="data/projects.js"></script>
     <script src="js/render-projects.js"></script>
     <script>

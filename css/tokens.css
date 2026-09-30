@@ -98,6 +98,10 @@
   --dock-tile-highlight: rgb(255 255 255 / 70%); /* inner rim on tiles */
   --dock-outline: var(--neutral-0); /* white outline on hovered icon */
 
+  /* Floating sparkles (home intro) */
+  --sparkle-a: var(--accent-300);
+  --sparkle-b: #ffd98a;
+
   /* Legacy names (kept so nothing else that uses them breaks) */
   --text-color-primary: var(--text-heading);
   --text-color-secondary: var(--text-body);
