@@ -9,18 +9,18 @@
      intro    a sentence under the heading (optional)
      groups   lists, each with a heading and items (optional)
      paper    true = show it on a sheet of notebook paper (optional)
+     pencil   (in a Tools group) shorter name to print on that group's pencil (optional)
 ────────────────────────────────────────────── */
 
 const POPUPS = {
   tools: {
     paper: true, // paper-note look (css/features/popups/paper.css)
     title: 'Tools',
-    intro: 'What I reach for.',
     groups: [
-      { heading: 'Design', items: ['Figma', 'Design systems', 'Tokens'] },
-      { heading: 'AI workflow', items: ['Claude', 'Claude Code', 'Figma MCP'] },
-      { heading: 'Build', items: ['HTML', 'CSS', 'JavaScript', 'VS Code'] },
-      { heading: 'Versioning', items: ['Git', 'GitHub Desktop'] },
+      { heading: 'Design', items: ['Figma', 'Adobe Creative Suite'] },
+      { heading: 'AI workflow', pencil: 'AI', items: ['Claude', 'Claude Code', 'Figma MCP'] },
+      { heading: 'Skills', items: ['Wireframing', 'Prototyping', 'Usability Testing'] },
+      { heading: 'Other tools', items: ['Jira', 'GitHub'] },
     ],
   },
   doodles: {

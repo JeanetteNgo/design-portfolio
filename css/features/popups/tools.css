@@ -103,7 +103,8 @@
 .tools-items li {
   margin: 0; /* reset the global li spacing */
 }
-.tools-items li + li::before {
+/* The dot goes after each item, so a wrapped line never starts with one */
+.tools-items li:not(:last-child)::after {
   content: '·';
   margin-inline: 8px;
   color: var(--text-muted);
@@ -114,14 +115,14 @@
 .pen-holder {
   --s: 1;
   justify-self: center;
-  width: calc(var(--s) * 190px);
+  width: calc(var(--s) * 168px);
 }
 .pencils {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: calc(var(--s) * 6px);
-  margin-bottom: calc(var(--s) * -64px); /* the pouch covers the pencils' feet */
+  gap: 0;
+  margin-bottom: calc(var(--s) * -100px); /* the pouch covers most of the pencils */
 }
 .pencil {
   --wood-h: calc(var(--s) * 28px);
@@ -144,7 +145,7 @@
   rotate: 3deg;
 }
 .pencil:nth-child(4n + 4) {
-  height: calc(var(--s) * 200px);
+  height: calc(var(--s) * 238px);
   rotate: 7deg;
 }
 /* Sharpened end: a brown outline triangle with a wood-coloured one inside */
@@ -183,7 +184,7 @@
 }
 .pouch {
   position: relative;
-  height: calc(var(--s) * 84px);
+  height: calc(var(--s) * 120px);
   border: 3px solid var(--ink-brown);
   border-radius: 12px 12px 22px 22px;
   background: var(--pouch);
@@ -192,7 +193,7 @@
 .pouch::after {
   content: '';
   position: absolute;
-  inset: calc(var(--s) * 20px) 10px auto;
+  inset: calc(var(--s) * 30px) 10px auto;
   border-top: 2px dashed var(--ink-brown);
 }
 

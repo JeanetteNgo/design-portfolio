@@ -15,7 +15,7 @@ POPUP_RENDERERS.tools = function (popup) {
   groups.forEach((group) => {
     const pencil = popupEl('div', '', 'pencil');
     const body = popupEl('span', '', 'pencil-body');
-    body.appendChild(popupEl('span', group.heading, 'pencil-label'));
+    body.appendChild(popupEl('span', group.pencil || group.heading, 'pencil-label'));
     pencil.append(popupEl('span', '', 'pencil-tip'), body);
     pencils.appendChild(pencil);
   });
