@@ -49,7 +49,9 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     const { date, description, image, video, poster, loop, alt, caption } = quest.memory || {};
 
     // A "Quest complete" stamp sits at the top, where the popup's title is on the list
-    const parts = [popupEl('p', '✓ Quest complete', 'quest-stamp')];
+    const head = popupEl('div', '', 'quest-head');
+    head.appendChild(popupEl('p', '✓ Quest complete', 'quest-stamp'));
+    const parts = [];
     if (date) parts.push(popupEl('p', date, 'quest-memory-date'));
     parts.push(popupEl('h3', quest.title, 'quest-memory-title'));
     if (description) parts.push(popupEl('p', description));
@@ -93,14 +95,14 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     back.append(popupEl('kbd', '←', 'esc-key'), ' back to the list');
     back.addEventListener('click', _showList);
 
-    // The story scrolls; the back tag stays pinned in the footer
+    // The stamp (with the ×) stays at the top and the back tag at the bottom; the story scrolls
     const scroll = popupEl('div', '', 'quest-scroll');
     scroll.append(...parts);
     const footer = popupEl('div', '', 'quest-footer');
     footer.appendChild(back);
 
     lastButton = button;
-    memoryView.replaceChildren(scroll, footer);
+    memoryView.replaceChildren(head, scroll, footer);
     listView.hidden = true;
     memoryView.hidden = false;
     back.focus();

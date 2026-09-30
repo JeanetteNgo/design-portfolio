@@ -104,7 +104,7 @@
   padding: 4px var(--pad-x) 12px; /* the vertical room stops focus rings and shadows being clipped */
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-a50) transparent;
+  scrollbar-color: var(--accent-a25) transparent;
 }
 .quest-footer {
   padding-top: 8px;
@@ -230,10 +230,7 @@
 
 /* ── Memory of a finished quest ── */
 /* The list's title lives in its header, so the memory has a "Quest complete" stamp
-   at the top instead. It adds the same 16px of top space the header has. */
-.quest-memory {
-  padding-top: 16px;
-}
+   in its header instead (same .quest-head, so the top spacing matches) */
 /* Rubber stamp: green outline, tilted, no fill (green so it doesn't fight the red date) */
 .quest-stamp {
   width: fit-content;
