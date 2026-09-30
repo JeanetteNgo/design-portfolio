@@ -42,9 +42,9 @@
   /** A mix of sizes: mostly small and medium, a few big ones. */
   function _size() {
     const roll = Math.random();
-    if (roll < 0.4) return rand(6, 12);
-    if (roll < 0.8) return rand(10, 16);
-    return rand(20, 28);
+    if (roll < 0.4) return rand(6, 8);
+    if (roll < 0.8) return rand(8, 14);
+    return rand(18, 24);
   }
 
   /** Where things are right now, measured inside the sparkle layer. */
@@ -73,7 +73,10 @@
 
   function burst() {
     const narrow = window.innerWidth < 640;
-    const count = Math.min(narrow ? 32 : 60, MAX_ON_SCREEN - document.querySelectorAll('.sparkle').length);
+    const count = Math.min(
+      narrow ? 32 : 60,
+      MAX_ON_SCREEN - document.querySelectorAll('.sparkle').length
+    );
     const b = _bounds();
 
     if (reducedMotion.matches) {
@@ -81,7 +84,7 @@
       for (let i = 0; i < count; i++) {
         const el = _create(_size());
         el.classList.add('sparkle--still');
-        el.style.setProperty('--opacity', rand(0.4, 0.9).toFixed(2));
+        el.style.setProperty('--opacity', rand(0.3, 0.6).toFixed(2));
         el.style.left = `${(((i + rand(0.1, 0.9)) / count) * b.width).toFixed(0)}px`;
         el.style.top = `${rand(b.ceiling + 30, b.floor - 20).toFixed(0)}px`;
         el.addEventListener('animationend', () => el.remove());
