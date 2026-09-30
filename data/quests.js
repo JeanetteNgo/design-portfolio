@@ -130,7 +130,7 @@ const QUESTS = [
     status: 'done',
     memory: {
       date: '[27 Jan 2025]',
-      description: 'Have you seen a Maccas housed under a plane? I think not!',
+      description: 'Have you seen a Maccas housed under a plane? Probably not!',
       image: 'img/quests/250127-macs.webp',
       alt: "Me at the world's coolest McDonald's",
       caption: 'Taupo, New Zealand',
