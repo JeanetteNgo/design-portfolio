@@ -1,16 +1,43 @@
 /* ══════════════════════════════════════════
    MY DOCK
-   Patterned strip of app-style icons on the home page.
+   Strip of app-style icons on the home page, sitting on two layered
+   washi tapes: a straight gingham tape over an angled striped one.
    Each icon is a button[data-popup] that will open a popup.
    Never put overflow: hidden on an ancestor of .dock-strip,
    or the hover pop-out gets clipped.
 ══════════════════════════════════════════ */
 .dock-strip {
   box-sizing: border-box; /* keep padding inside the global section width: 100% */
+  position: relative;
+  isolation: isolate; /* keeps the tapes' negative z-index inside the strip */
   margin: 40px 0 0;
   padding: 28px 20px 16px; /* extra room on top for the tag */
-  background: var(--accent-a8); /* tint only: the dots come from .home-top behind it */
-  border-block: 1px solid var(--accent-a8);
+}
+.dock-strip::before,
+.dock-strip::after {
+  content: '';
+  position: absolute;
+  box-shadow: 0 2px 6px var(--accent-a14);
+}
+/* Striped tape underneath: angled, so it peeks out above-left and below-right */
+.dock-strip::before {
+  z-index: -2;
+  inset: 4px -5%;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--dock-tile-b) 0 10px,
+    var(--surface-faint) 10px 20px
+  );
+  transform: rotate(2.5deg);
+}
+/* Gingham tape on top: fills the strip and holds the icons */
+.dock-strip::after {
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--accent-a14) 50%, transparent 50%) 0 0 / 16px 16px,
+    linear-gradient(var(--accent-a14) 50%, transparent 50%) 0 0 / 16px 16px,
+    var(--surface-band);
 }
 /* Shrink-wraps the icon row so the tag sits right by the first icon */
 .dock-inner {
@@ -138,10 +165,13 @@
   }
 }
 
-/* Phones: tag tucks in so it stays on screen */
+/* Phones: tag tucks in so it stays on screen; steeper tape so it still peeks out */
 @media (max-width: 640px) {
   .dock-tag {
     left: -10px;
+  }
+  .dock-strip::before {
+    transform: rotate(5deg);
   }
 }
 

@@ -2,11 +2,12 @@
    HOME PAGE
 ══════════════════════════════════════════ */
 
-/* Top section (intro + dock): the dock's dots run behind it, fading in towards
-   the dock band. Pulled up behind the nav so there's no seam under it. */
+/* Top section (intro + dock): dots run behind it, fading in towards the dock.
+   Pulled up behind the nav so there's no seam under it. */
 .home-top {
   margin: calc(var(--nav-height) * -1) 0 80px;
   padding-top: var(--nav-height);
+  overflow-x: clip; /* the dock's angled tape is wider than the screen */
   background:
     linear-gradient(to bottom, var(--bg-top) 20%, transparent 85%),
     radial-gradient(var(--accent-a20) 1.2px, transparent 1.8px) 0 0 / 10px 10px;

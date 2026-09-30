@@ -6,7 +6,6 @@
 /* ══════════════════════════════════════════
    NAV BAR
 ══════════════════════════════════════════ */
-/* Blends into the page at the top; js/site-shell.js adds .is-scrolled once you scroll */
 nav {
   position: sticky;
   top: 0;
@@ -14,15 +13,19 @@ nav {
   z-index: 1000;
   box-sizing: border-box;
   min-height: var(--nav-height);
-  border-bottom: 1px solid transparent;
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(40px);
+  border-bottom: 1px solid var(--accent-a8);
   transition:
     background-color 200ms ease,
     border-color 200ms ease;
 }
-nav.is-scrolled {
-  background-color: var(--nav-bg);
-  backdrop-filter: blur(40px);
-  border-bottom-color: var(--accent-a8);
+/* Home only: the nav blends into the page at the top, and gets its background
+   and line once you scroll (js/site-shell.js adds .is-scrolled) */
+body[data-page='home'] nav:not(.is-scrolled) {
+  background-color: transparent;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
 }
 .nav-container {
   max-width: 1080px;
