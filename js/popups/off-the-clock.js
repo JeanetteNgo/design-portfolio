@@ -87,8 +87,10 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
       parts.push(polaroid);
     }
 
-    const back = popupEl('button', 'back to the list', 'paper-btn');
+    // Same key-hint tag as "Esc to close"; the ← key does the same thing
+    const back = popupEl('button', '', 'esc-tag');
     back.type = 'button';
+    back.append(popupEl('kbd', '←', 'esc-key'), ' back to the list');
     back.addEventListener('click', _showList);
     parts.push(back);
 
@@ -142,11 +144,33 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   close.dataset.popupClose = '';
   close.append(popupEl('kbd', 'Esc', 'esc-key'), ' to close');
 
-  if (popup.intro) listView.appendChild(popupEl('p', popup.intro, 'popup-intro'));
-  listView.append(list, popupEl('p', 'tap a quest', 'quest-hint'), close);
+  // Title and intro sit in a header that stays pinned while the list scrolls. The title is
+  // repeated here for the eye; the dialog's own (hidden) title still names it for screen readers.
+  const head = popupEl('div', '', 'quest-head');
+  const headTitle = popupEl('p', popup.title, 'quest-head-title');
+  headTitle.setAttribute('aria-hidden', 'true');
+  head.appendChild(headTitle);
+  if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
+  listView.append(head, list, close);
 
-  // Closing the popup (Esc, ×, tapping outside) stops a playing video too
-  document.getElementById('popup').addEventListener('close', _stopVideo, { once: true });
+  // ← goes back from a memory to the list (not while a video's own controls have focus,
+  // where ← rewinds it), and closing the popup (Esc, ×, tapping outside) stops a video
+  const dialog = document.getElementById('popup');
+  const onKey = (e) => {
+    if (e.key !== 'ArrowLeft' || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (memoryView.hidden || e.target.closest('video')) return;
+    e.preventDefault();
+    _showList();
+  };
+  dialog.addEventListener('keydown', onKey);
+  dialog.addEventListener(
+    'close',
+    () => {
+      _stopVideo();
+      dialog.removeEventListener('keydown', onKey);
+    },
+    { once: true }
+  );
 
   return [listView, memoryView];
 };

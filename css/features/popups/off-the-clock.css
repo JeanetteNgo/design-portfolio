@@ -6,10 +6,16 @@
 ══════════════════════════════════════════ */
 
 /* ── The sheet of paper ── */
+/* The screen-edge gap is on the sheet, not the popup, so the sticky header can pin flush to
+   the top instead of leaving a strip where the list shows through */
+.popup[data-popup='off-the-clock'] {
+  padding-block: 0;
+}
 .popup[data-popup='off-the-clock'] .popup-card {
   isolation: isolate;
   width: min(100%, 460px);
-  --pad-top: 44px;
+  margin-block: 16px;
+  --pad-top: 32px; /* the sticky header and the memory add 16px of their own */
   --pad-x: 32px;
   --pad-bottom: 28px;
   --close-top: 24px;
@@ -32,13 +38,21 @@
   -webkit-mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
   mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
 }
+/* The sticky header below shows the title, so the shell's own h2 is kept for screen
+   readers only (it still names the dialog) */
 .popup[data-popup='off-the-clock'] .popup-title {
-  color: var(--text-strong);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 /* The × is a paper sticker with a dashed edge and a pen-drawn cross, so it stays
    readable when the list scrolls underneath it. The cross is two rounded strokes
    (the × character itself is hidden; the button's aria-label still names it). */
 .popup[data-popup='off-the-clock'] .popup-close {
+  z-index: 2; /* above the sticky header */
   border: 2px dashed var(--accent-a50);
   background: var(--paper-bg);
   font-size: 0;
@@ -69,9 +83,27 @@
   background: var(--ink-red);
 }
 
+/* ── Sticky header: title and intro stay put while the list scrolls ── */
+.quest-head {
+  position: sticky;
+  top: -8px; /* pins a little above the screen edge, so the sheet's slight tilt can't show a sliver */
+  z-index: 1;
+  padding: 16px 44px 10px 0; /* the right gap leaves room for the × */
+  background: var(--paper-texture), var(--paper-bg); /* hides the list scrolling underneath */
+  border-bottom: 1px solid var(--paper-rule);
+}
+.quest-head-title {
+  margin: 0 0 12px;
+  font: 900 26px/1 var(--font-primary);
+  color: var(--text-strong);
+}
+.quest-head .popup-intro {
+  margin: 0;
+}
+
 /* ── Checklist ── */
 .quest-list {
-  margin: 20px 0 0;
+  margin: 12px 0 0;
   list-style: none;
 }
 .quest {
@@ -175,17 +207,11 @@
   }
 }
 
-.quest-hint {
-  margin: 12px 0 16px;
-  font-size: 13px;
-  font-style: italic;
-  color: var(--text-muted);
-}
-
 /* ── Memory of a finished quest ── */
-/* The popup's title is for the list; the memory has a "Quest complete" stamp in its place */
-.popup[data-popup='off-the-clock']:has(.quest-memory:not([hidden])) .popup-title {
-  display: none;
+/* The list's title lives in its sticky header, so the memory has a "Quest complete" stamp
+   at the top instead. It adds the same 16px of top space the header has. */
+.quest-memory {
+  padding-top: 16px;
 }
 /* Rubber stamp: green outline, tilted, no fill (green so it doesn't fight the red date) */
 .quest-stamp {
@@ -201,7 +227,7 @@
   opacity: 0.85; /* slightly faded, like ink */
   rotate: -3deg;
 }
-.quest-memory .paper-btn {
+.quest-memory .esc-tag {
   margin-top: 20px;
 }
 .quest-memory-date {
@@ -248,8 +274,9 @@
   text-align: center;
 }
 
-/* "Esc to close" tag at the foot of the sheet */
+/* Key-hint tags ("Esc to close" on the list, "← back to the list" on a memory) */
 .esc-tag {
+  min-height: 44px; /* comfortable tap target */
   padding: 6px 8px;
   border: 0;
   border-radius: 8px;
@@ -270,49 +297,19 @@
   color: var(--text-strong);
 }
 .esc-tag:hover {
-  background: var(--accent-a14);
+  background: var(--accent-a8);
 }
 .esc-tag:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }
 
-/* Note link ("back to the list"): plain text with a red arrow */
-.paper-btn {
-  min-height: 44px; /* comfortable tap target */
-  margin-left: -8px; /* lines the text up with the content above */
-  padding: 6px 8px;
-  border: 0;
-  border-radius: 8px;
-  background: none;
-  font: 600 14px/1.5 var(--font-secondary);
-  color: var(--text-body);
-  cursor: pointer;
-}
-.paper-btn::before {
-  content: '\2190' / ''; /* left arrow, skipped by screen readers */
-  display: inline-block;
-  margin-right: 6px;
-  color: var(--ink-red);
-  transition: translate 0.2s ease;
-}
-.paper-btn:hover {
-  background: var(--accent-a8);
-}
-.paper-btn:hover::before {
-  translate: -3px 0;
-}
-.paper-btn:focus-visible {
-  outline: 3px solid var(--accent-500);
-  outline-offset: 2px;
-}
-
 @media (max-width: 640px) {
   .popup[data-popup='off-the-clock'] .popup-card {
-    --pad-top: 40px;
+    --pad-top: 28px;
     --pad-x: 20px;
     --pad-bottom: 24px;
-    --close-top: 20px;
+    --close-top: 30px; /* keeps the × clear of the torn top edge */
   }
 }
 
@@ -320,8 +317,5 @@
   .quest.is-jiggling .quest-btn,
   .quest-reply:not(:empty) {
     animation: none;
-  }
-  .paper-btn::before {
-    transition: none;
   }
 }
