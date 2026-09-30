@@ -34,8 +34,8 @@ const POPUPS = {
     intro: 'Based in Singapore. Places I have been and next stops are coming soon.',
   },
   'off-the-clock': {
-    title: 'Side quests',
-    intro: 'Things I am ticking off outside of work.', // the checklist itself is in data/quests.js
+    title: 'Side Quests',
+    intro: 'I occasionally touch grass.', // the checklist itself is in data/quests.js
   },
   palette: {
     title: 'Palette',
