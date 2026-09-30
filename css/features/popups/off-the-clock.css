@@ -92,13 +92,11 @@
   border-width: 0 3px 3px 0;
   rotate: 40deg;
 }
-/* Strike line: thin, slightly see-through, rising from bottom left to top right.
-   Drawn as a background (a diagonal across a short band) so it can be angled and positioned;
-   it repeats on each line if the text wraps */
+/* Strike line */
 .quest--done .quest-text {
-  color: var(--text-body); /* a step lighter than unfinished quests */
+  color: var(--text-body);
   --strike: color-mix(in srgb, var(--ink-red) 80%, transparent);
-  --strike-width: 2.5px; /* thickness of the line */
+  --strike-width: 2px; /* thickness of the line */
   --strike-rise: 1.5px; /* how much higher the right end is than the left; 0px = flat */
   --strike-at: 55%; /* 50% = centred on the text; higher = lower down */
   --strike-half: calc(var(--strike-width) / 2); /* worked out from the width; no need to edit */
@@ -190,7 +188,7 @@
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
-  font: 400 18px/1.2 var(--font-hand);
+  font: 400 16px/1.25 var(--font-hand);
   color: var(--text-body);
   text-align: center;
 }
