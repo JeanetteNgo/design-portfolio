@@ -46,7 +46,7 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   /* ── Memory for finished quests ── */
 
   function _showMemory(quest, button) {
-    const { date, description, image, video, poster, alt, caption } = quest.memory || {};
+    const { date, description, image, video, poster, loop, alt, caption } = quest.memory || {};
 
     // A "Quest complete" stamp sits at the top, where the popup's title is on the list
     const parts = [popupEl('p', '✓ Quest complete', 'quest-stamp')];
@@ -58,14 +58,24 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
       const polaroid = popupEl('figure', '', 'quest-polaroid');
       let media;
       if (video) {
-        // Plays on tap, never on its own. preload "none" means the file only downloads
-        // when someone presses play; until then the poster frame (or the photo) shows.
+        // By default it plays on tap: preload "none" means the file only downloads when
+        // someone presses play, and until then the poster frame (or the photo) shows.
+        // With loop: true it plays by itself, silently and on repeat, like a GIF. The controls
+        // stay so it can be paused or unmuted, and visitors who prefer reduced motion get
+        // the tap-to-play version instead.
+        const silentLoop = loop && !matchMedia('(prefers-reduced-motion: reduce)').matches;
         media = popupEl('video');
         media.src = video;
         media.poster = poster || image || '';
         media.controls = true;
         media.playsInline = true; // plays in the polaroid on iPhones, not full screen
-        media.preload = 'none';
+        if (silentLoop) {
+          media.muted = true; // browsers only autoplay silent video
+          media.loop = true;
+          media.autoplay = true;
+        } else {
+          media.preload = 'none';
+        }
         if (alt) media.setAttribute('aria-label', alt);
       } else {
         media = popupEl('img');
