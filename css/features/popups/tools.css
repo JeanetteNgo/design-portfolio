@@ -6,7 +6,16 @@
 ══════════════════════════════════════════ */
 
 .popup[data-popup='tools'] .popup-card {
-  width: min(100%, 640px);
+  width: min(100%, 740px);
+}
+/* More breathing room around the note on larger screens (phones keep paper.css's spacing) */
+@media (min-width: 641px) {
+  .popup[data-popup='tools'] .popup-card {
+    --pad-top: 52px;
+    --pad-x: 48px;
+    --pad-bottom: 44px;
+    --close-top: 28px;
+  }
 }
 
 /* ── Layout: pen holder above the note on phones, beside it on wider screens ── */
@@ -18,6 +27,7 @@
 @media (min-width: 560px) {
   .tools {
     grid-template-columns: 1fr auto;
+    column-gap: 56px; /* space between the note and the pen holder */
     align-items: end;
   }
   .pen-holder {
@@ -98,11 +108,6 @@
   isolation: isolate;
   justify-self: center;
   width: calc(var(--s) * 196px); /* wide enough that no pencil pokes out of the sides */
-}
-@media (min-width: 560px) {
-  .pen-holder {
-    margin-right: 20px; /* keeps it off the sheet's right edge */
-  }
 }
 /* The inside back of the pouch, just visible behind the pencils above the front */
 .pen-holder::before {
