@@ -267,43 +267,68 @@ POPUP_RENDERERS.map = function (popup) {
   const _zoomBy = (step) => _zoomTo(zoomTo + step);
 
   /* ── Selecting ──
-     The right-hand side has two views: the stamps, and one place's details (with a back tag).
-     The "Based in" banner above them is always there. */
+     The right-hand side has two views: the stamps (under the "Based in" banner), and one place's
+     postcard (with a back tag), which hides the banner while it is open. */
+
+  // "2024, 2025" -> { latest: 2025, earlier: 1 }. With no years in it (e.g. "Someday"), `latest`
+  // is the text as written. A stamp has a fixed size, so it shows only the latest year.
+  function _years(place) {
+    const years = (place.when || '').match(/\b\d{4}\b/g) || [];
+    return { latest: years.length ? Math.max(...years) : place.when || '', earlier: Math.max(years.length - 1, 0) };
+  }
 
   const listView = popupEl('div', '', 'map-stamps-view');
   const detailView = popupEl('div', '', 'map-detail');
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
 
-  // The details of one place: status, name, when, cities, note and (optional) photo
+  // The details of one place, as the back of a postcard: the message on the left (greeting, note,
+  // when, and an optional photo) and the address side on the right (a stamp in the same ink as
+  // the stamp that was clicked, a postmark, and the cities as the address lines).
   function _detail(place) {
-    const parts = [];
+    const card = popupEl('article', '', 'map-postcard');
+    const stampButton = stamps.get(place);
+    const ink = stampButton && getComputedStyle(stampButton).getPropertyValue('--ink').trim();
+    if (ink) card.style.setProperty('--ink', ink);
+
+    const message = popupEl('div', '', 'postcard-message');
+    message.append(
+      popupEl('p', STATUS[place.status][0], 'postcard-status'),
+      popupEl('h3', `Greetings from ${place.name}`, 'postcard-greeting')
+    );
     if (place.photo) {
-      const photo = popupEl('div', '', 'map-detail-photo');
+      const photo = popupEl('div', '', 'postcard-photo');
       const img = popupEl('img');
       img.src = place.photo;
       img.alt = place.alt || '';
       img.loading = 'lazy';
       img.decoding = 'async';
       photo.appendChild(img);
-      parts.push(photo);
+      message.appendChild(photo);
     }
-    parts.push(popupEl('p', STATUS[place.status][0], 'map-detail-status'), popupEl('h3', place.name, 'map-detail-name'));
+    if (place.note) message.appendChild(popupEl('p', place.note, 'postcard-note'));
     if (place.when) {
-      const when = popupEl('p', place.when, 'map-detail-when');
+      const when = popupEl('p', place.when, 'postcard-when');
       when.prepend(popupEl('span', place.status === 'next' ? 'Planned' : 'Visited'));
-      parts.push(when);
+      message.appendChild(when);
     }
-    if (place.cities?.length) {
-      const cities = popupEl('ul', '', 'map-cities');
-      place.cities.forEach((city) => cities.appendChild(popupEl('li', city)));
-      parts.push(cities);
-    }
-    if (place.note) parts.push(popupEl('p', place.note, 'map-detail-text'));
+
+    // The stamp and postmark are decoration; the year is already in the message
+    const { latest } = _years(place);
+    const address = popupEl('div', '', 'postcard-address');
+    const stampArt = popupEl('div', latest, 'postcard-stamp');
+    stampArt.setAttribute('aria-hidden', 'true');
+    const postmark = popupEl('div', '', 'postcard-postmark');
+    postmark.setAttribute('aria-hidden', 'true');
+    const lines = popupEl('ul', '', 'postcard-lines');
+    (place.cities || []).forEach((city) => lines.appendChild(popupEl('li', city)));
+    address.append(postmark, stampArt, lines);
+
+    card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
     const footer = popupEl('div', '', 'map-detail-footer');
     footer.appendChild(back);
-    detailView.replaceChildren(...parts, footer);
+    detailView.replaceChildren(card, footer);
     return back;
   }
 
@@ -315,6 +340,7 @@ POPUP_RENDERERS.map = function (popup) {
     selected = home;
     detailView.hidden = true;
     listView.hidden = false;
+    banner.hidden = false;
     if (refocus) {
       stamps.get(place)?.focus();
       clearTimeout(idleTimer);
@@ -333,6 +359,7 @@ POPUP_RENDERERS.map = function (popup) {
       openPlace = place;
       const back = _detail(place);
       listView.hidden = true;
+      banner.hidden = true; // a place is open: the postcard gets the room
       detailView.hidden = false;
       if (!calmMotion) detailView.animate([{ opacity: 0, translate: '0 4px' }, { opacity: 1, translate: '0' }], 180);
       back.focus({ preventScroll: true });
@@ -508,13 +535,9 @@ POPUP_RENDERERS.map = function (popup) {
       const stamp = popupEl('button', '', `map-stamp map-stamp--${status}`);
       stamp.type = 'button';
       stamp.append(popupEl('span', place.name, 'map-stamp-name'));
-      // A stamp has a fixed size, so it shows only the latest year (the details show them all).
-      // If `when` has no years in it (e.g. "Someday"), it is shown as written.
-      const years = (place.when || '').match(/\b\d{4}\b/g) || [];
-      if (place.when) {
-        stamp.appendChild(popupEl('span', years.length ? Math.max(...years) : place.when, 'map-stamp-when'));
-      }
-      if (years.length > 1) stamp.appendChild(popupEl('span', `+${years.length - 1} earlier`, 'map-stamp-earlier'));
+      const { latest, earlier } = _years(place);
+      if (place.when) stamp.appendChild(popupEl('span', latest, 'map-stamp-when'));
+      if (earlier) stamp.appendChild(popupEl('span', `+${earlier} earlier`, 'map-stamp-earlier'));
       stamp.addEventListener('click', () => _select(place, true));
       list.appendChild(popupEl('li')).appendChild(stamp);
       stamps.set(place, stamp);

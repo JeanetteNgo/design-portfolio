@@ -42,8 +42,13 @@
   .popup[data-popup='map'] .popup-card {
     --pad-top: 40px;
     --pad-x: 52px;
-    --pad-bottom: 52px;
+    --pad-bottom: 36px;
     --close-top: 28px;
+    height: min(580px, calc(100dvh - 32px)); /* a fixed size, so the popup never jumps between views */
+  }
+  /* Nothing scrolls as a whole: the globe stays put and the right-hand side scrolls on its own */
+  .popup[data-popup='map'] .popup-scroll {
+    overflow: hidden;
   }
 }
 @media (max-width: 719px) {
@@ -53,7 +58,7 @@
   }
 }
 .popup[data-popup='map'] .popup-title {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   font-weight: 900;
   color: var(--text-strong);
 }
@@ -69,8 +74,28 @@
     width: min(100%, 980px);
   }
   .map-layout {
+    height: 100%;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
     gap: 64px; /* space between the globe and the words */
+  }
+  .map-globe-wrap {
+    align-self: center;
+  }
+  /* The banner stays at the top; the stamps (or the postcard) below it scroll if they are long */
+  .map-side {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .map-stamps-view:not([hidden]),
+  .map-detail:not([hidden]) {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-a20) transparent;
   }
 }
 
@@ -85,7 +110,7 @@
   position: relative;
   flex: 1;
   width: 100%;
-  max-width: 400px;
+  max-width: min(376px, calc(100dvh - 300px)); /* shrinks on short windows so nothing is clipped */
 }
 /* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
 .map-globe-frame::after {
@@ -141,7 +166,10 @@
   background: var(--text-body);
 }
 
-/* ── "Based in" banner: always shown above the stamps ── */
+/* ── "Based in" banner: shown above the stamps (hidden while a postcard is open) ── */
+.map-home[hidden] {
+  display: none;
+}
 .map-home {
   display: flex;
   align-items: center;
@@ -207,9 +235,12 @@
   text-transform: uppercase;
   color: var(--text-body);
 }
+.map-stamps-view {
+  padding: 4px 8px 8px 6px; /* room for the tilted, lifted stamps inside the scrolling area */
+}
 .map-stamps {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(118px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: 14px;
   margin: 0;
   padding: 0;
@@ -317,79 +348,176 @@
   color: var(--text-muted);
 }
 
-/* ── One place's details (replaces the stamps until you go back) ── */
+/* ── One place, as the back of a postcard (replaces the stamps until you go back) ── */
 .map-detail {
-  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px 8px 8px 6px;
 }
-.map-detail::after {
-  content: '';
-  display: block;
-  clear: both; /* holds the view open around a floated photo */
+.map-detail[hidden] {
+  display: none;
 }
-.map-detail-status {
+.map-postcard {
+  --ink: var(--stamp-ink-brown); /* set per place from the stamp that was clicked */
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  margin-top: auto; /* with the footer's margin-bottom: centres the postcard in the column */
+  padding: 20px 18px 18px;
+  background:
+    var(--paper-texture),
+    var(--paper-bg);
+  border: 1px solid var(--accent-a33);
+  border-radius: 3px;
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-rgb) / 14%),
+    0 10px 22px rgb(var(--shadow-rgb) / 18%);
+  rotate: -1deg;
+}
+.postcard-message {
+  padding-right: 14px;
+}
+.postcard-status {
   margin: 0;
-  font: 700 12px var(--font-secondary);
+  font: 700 11px var(--font-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ink-red);
+  color: var(--ink);
 }
-.map-detail-name {
+.postcard-greeting {
   margin: 4px 0 0;
-  font-size: 24px;
+  font: 400 22px/1.15 var(--font-hand);
   color: var(--text-strong);
 }
-.map-detail-when {
-  margin: 6px 0 0;
-  font: 600 13px var(--font-secondary);
+.postcard-note {
+  margin: 12px 0 0;
+  font: 400 16px/1.45 var(--font-hand);
   color: var(--text-body);
 }
-.map-detail-when span {
+.postcard-when {
+  margin: 12px 0 0;
+  font: 600 12px var(--font-secondary);
+  color: var(--text-body);
+}
+.postcard-when span {
   margin-right: 6px;
   font-weight: 400;
   color: var(--text-muted);
 }
-.map-cities {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+/* Optional photo: a small tilted polaroid tucked into the message side */
+.postcard-photo {
+  width: 96px;
   margin: 12px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.map-cities li {
-  margin: 0; /* reset the global li spacing */
-  padding: 3px 10px;
-  border: 1.5px solid var(--accent-a50);
-  border-radius: 999px;
-  background: var(--paper-bg);
-  font: 400 12px var(--font-secondary);
-  color: var(--text-body);
-}
-.map-detail-text {
-  margin: 12px 0 0;
-  font: 400 16px/1.5 var(--font-hand);
-  color: var(--text-body);
-}
-/* Optional photo: a small polaroid, tilted, at the right */
-.map-detail-photo {
-  float: right;
-  width: 120px;
-  margin: 4px 0 8px 16px;
-  padding: 6px;
+  padding: 5px;
   background: var(--surface);
-  border-radius: 3px;
+  border-radius: 2px;
   box-shadow:
     0 1px 2px rgb(var(--shadow-rgb) / 12%),
-    0 6px 12px rgb(var(--shadow-rgb) / 16%);
+    0 5px 10px rgb(var(--shadow-rgb) / 16%);
   rotate: 3deg;
 }
-.map-detail-photo img {
+.postcard-photo img {
   display: block;
   width: 100%;
   height: auto;
 }
+
+/* The address side: a stamp, a postmark, and the cities on ruled lines */
+.postcard-address {
+  position: relative;
+  padding-left: 14px;
+  border-left: 1.5px solid var(--accent-a33);
+}
+.postcard-stamp {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: 62px;
+  height: 72px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  font: 400 17px var(--font-hand);
+  color: var(--ink);
+  rotate: 3deg;
+  opacity: 0.92;
+}
+.postcard-stamp::before {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+}
+/* The postmark: a ring overlapping the stamp, with wavy cancelling lines running off to the left */
+.postcard-postmark {
+  position: absolute;
+  top: 12px;
+  right: 40px;
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  opacity: 0.35;
+}
+.postcard-postmark::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  right: 46px;
+  width: 56px;
+  height: 22px;
+  background: var(--ink);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.postcard-lines {
+  margin: 84px 0 0;
+  padding: 0;
+  min-height: 112px; /* always a few lines, like a blank address block */
+  list-style: none;
+  background: repeating-linear-gradient(transparent 0 27px, var(--accent-a25) 27px 28px);
+}
+.postcard-lines li {
+  margin: 0; /* reset the global li spacing */
+  overflow: hidden;
+  font: 400 16px/28px var(--font-hand);
+  color: var(--text-strong);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .map-detail-footer {
   margin-top: 16px;
+  margin-bottom: auto;
+}
+
+/* On narrow screens the two halves stack, like a postcard turned upright */
+@media (max-width: 560px) {
+  .map-postcard {
+    grid-template-columns: 1fr;
+  }
+  .postcard-message {
+    padding-right: 0;
+  }
+  .postcard-address {
+    margin-top: 16px;
+    padding: 12px 0 0;
+    border-left: 0;
+    border-top: 1.5px solid var(--accent-a33);
+  }
+  .postcard-stamp {
+    top: 12px;
+  }
+  .postcard-postmark {
+    top: 24px;
+  }
+  .postcard-lines {
+    margin-top: 76px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
