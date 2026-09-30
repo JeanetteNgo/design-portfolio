@@ -44,6 +44,12 @@ html:has(.popup[open]) {
   --pad-bottom: 32px;
   --close-top: 16px;
   padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  /* Never taller than the screen (minus the popup's 16px edge gap), so the card's top and
+     bottom always show. Content scrolls inside it (.popup-scroll) instead. */
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh; /* fallback for browsers without dvh */
+  max-height: calc(100dvh - 32px);
   background: var(--surface);
   border-radius: 24px;
   box-shadow: var(--shadow-card-hover);
@@ -79,6 +85,66 @@ html:has(.popup[open]) {
   background: var(--accent-50);
 }
 .popup-close:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+
+.popup-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0; /* lets a flex child shrink and scroll instead of growing past the card */
+}
+/* The scrolling part of a popup. It reaches out to the card's edges so the scrollbar sits
+   on the edge, then gets its side padding back inside. */
+.popup-scroll {
+  flex: 1;
+  min-height: 0;
+  position: relative; /* keeps screen-reader-only text inside the scroll area, not the popup */
+  margin-inline: calc(var(--pad-x) * -1);
+  padding: 4px var(--pad-x) 12px; /* the vertical room stops focus rings and shadows being clipped */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-a20) transparent;
+}
+
+/* Popups that draw their own title (in a header or title bar) keep the real one for screen
+   readers only: it still names the dialog */
+.popup:is([data-popup='off-the-clock'], [data-popup='doodles']) .popup-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+/* Key-hint tags: "Esc to close" and "← back". They close or go back on click, for touch screens. */
+.esc-tag {
+  min-height: 44px; /* comfortable tap target */
+  padding: 6px 8px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  font: 400 13px var(--font-secondary);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.esc-key {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--border-neutral);
+  border-bottom-width: 3px; /* reads as a keyboard key */
+  border-radius: 6px;
+  background: var(--surface);
+  font: 700 12px var(--font-secondary);
+  color: var(--text-strong);
+}
+.esc-tag:hover {
+  background: var(--accent-a8);
+}
+.esc-tag:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }

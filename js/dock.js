@@ -28,6 +28,34 @@ function popupEl(tag, text, className) {
   return el;
 }
 
+/** A key-hint tag button: "← back to the list". Clicking it calls onBack. */
+function popupBackTag(label, onBack) {
+  const tag = popupEl('button', '', 'esc-tag');
+  tag.type = 'button';
+  tag.append(popupEl('kbd', '←', 'esc-key'), ` ${label}`);
+  tag.addEventListener('click', onBack);
+  return tag;
+}
+
+/** Call fn once, the next time the popup closes (Esc, ×, tapping outside). */
+function popupOnClose(fn) {
+  document.getElementById('popup').addEventListener('close', fn, { once: true });
+}
+
+/** Call onBack when ← is pressed while isActive() says so, until the popup closes. Ignored
+    while a video's own controls have focus, where ← rewinds it. */
+function popupOnLeftKey(isActive, onBack) {
+  const dialog = document.getElementById('popup');
+  const onKey = (e) => {
+    if (e.key !== 'ArrowLeft' || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if (!isActive() || e.target.closest('video')) return;
+    e.preventDefault();
+    onBack();
+  };
+  dialog.addEventListener('keydown', onKey);
+  popupOnClose(() => dialog.removeEventListener('keydown', onKey));
+}
+
 (function () {
   const dialog = document.getElementById('popup');
   if (!dialog || typeof POPUPS === 'undefined') return;
@@ -46,7 +74,9 @@ function popupEl(tag, text, className) {
       group.items.forEach((item) => list.appendChild(popupEl('li', item)));
       parts.push(list);
     });
-    return parts;
+    const scroll = popupEl('div', '', 'popup-scroll');
+    scroll.append(...parts);
+    return [scroll];
   }
 
   function open(id) {

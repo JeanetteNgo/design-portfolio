@@ -90,13 +90,10 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     }
 
     // Same key-hint tag as "Esc to close"; the ← key does the same thing
-    const back = popupEl('button', '', 'esc-tag');
-    back.type = 'button';
-    back.append(popupEl('kbd', '←', 'esc-key'), ' back to the list');
-    back.addEventListener('click', _showList);
+    const back = popupBackTag('back to the list', _showList);
 
     // The stamp (with the ×) stays at the top and the back tag at the bottom; the story scrolls
-    const scroll = popupEl('div', '', 'paper-scroll');
+    const scroll = popupEl('div', '', 'popup-scroll');
     scroll.append(...parts);
     const footer = popupEl('div', '', 'quest-footer');
     footer.appendChild(back);
@@ -159,30 +156,15 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   head.appendChild(headTitle);
   if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
   // Only the list scrolls; the header above and the Esc tag below stay put
-  const scroll = popupEl('div', '', 'paper-scroll');
+  const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(list);
   const footer = popupEl('div', '', 'quest-footer');
   footer.appendChild(close);
   listView.append(head, scroll, footer);
 
-  // ← goes back from a memory to the list (not while a video's own controls have focus,
-  // where ← rewinds it), and closing the popup (Esc, ×, tapping outside) stops a video
-  const dialog = document.getElementById('popup');
-  const onKey = (e) => {
-    if (e.key !== 'ArrowLeft' || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-    if (memoryView.hidden || e.target.closest('video')) return;
-    e.preventDefault();
-    _showList();
-  };
-  dialog.addEventListener('keydown', onKey);
-  dialog.addEventListener(
-    'close',
-    () => {
-      _stopVideo();
-      dialog.removeEventListener('keydown', onKey);
-    },
-    { once: true }
-  );
+  // ← goes back from a memory to the list, and closing the popup stops a playing video
+  popupOnLeftKey(() => !memoryView.hidden, _showList);
+  popupOnClose(_stopVideo);
 
   return [listView, memoryView];
 };

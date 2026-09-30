@@ -42,7 +42,7 @@ POPUP_RENDERERS.tools = function (popup) {
   const layout = popupEl('div', '', 'tools');
   layout.append(holder, note); // the holder comes first, so it sits above the note on phones
 
-  const scroll = popupEl('div', '', 'paper-scroll');
+  const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(layout);
   return [scroll];
 };

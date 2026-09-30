@@ -15,20 +15,9 @@
   -webkit-mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
   mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
 }
-/* The header below shows the title, so the shell's own h2 is kept for screen readers only
-   (it still names the dialog) */
-.popup[data-popup='off-the-clock'] .popup-title {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-}
-
 /* ── Layout inside the sheet: header on top, footer at the bottom, only the middle scrolls ──
    Header and footer are ordinary parts of the sheet (no separate background to match), and
-   the scrolling middle (.paper-scroll) is simply clipped where it ends. */
+   the scrolling middle (.popup-scroll) is simply clipped where it ends. */
 .quest-view:not([hidden]),
 .quest-memory:not([hidden]) {
   display: flex;
@@ -217,36 +206,6 @@
   text-wrap: balance; /* if it wraps, split into even lines, not one stray word */
   color: var(--text-body);
   text-align: center;
-}
-
-/* Key-hint tags ("Esc to close" on the list, "← back to the list" on a memory) */
-.esc-tag {
-  min-height: 44px; /* comfortable tap target */
-  padding: 6px 8px;
-  border: 0;
-  border-radius: 8px;
-  background: none;
-  font: 400 13px var(--font-secondary);
-  color: var(--text-muted);
-  cursor: pointer;
-}
-.esc-key {
-  display: inline-block;
-  margin-right: 4px;
-  padding: 3px 8px;
-  border: 1px solid var(--border-neutral);
-  border-bottom-width: 3px; /* reads as a keyboard key */
-  border-radius: 6px;
-  background: var(--surface);
-  font: 700 12px var(--font-secondary);
-  color: var(--text-strong);
-}
-.esc-tag:hover {
-  background: var(--accent-a8);
-}
-.esc-tag:focus-visible {
-  outline: 3px solid var(--accent-500);
-  outline-offset: 2px;
 }
 
 @media (max-width: 640px) {
