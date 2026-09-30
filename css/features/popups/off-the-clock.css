@@ -188,7 +188,7 @@
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
-  font: 400 16px/1.25 var(--font-hand);
+  font: 300 15px/1.3 var(--font-hand);
   color: var(--text-body);
   text-align: center;
 }
