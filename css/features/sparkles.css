@@ -3,7 +3,7 @@
    Sparkles fired by the dock's Sparkles tile. They fly in front of the
    dock (so you see them leave the icon) but behind the intro content. js/sparkles.js creates the .sparkle elements,
    sets --size and --colour on each, and moves them frame by frame
-   (shoot up, bounce off the nav, float down, fade at the washi tape).
+   (shoot up, bounce off the nav, float down, slip behind the washi tape).
 ══════════════════════════════════════════ */
 .home-sparkles {
   position: absolute;
@@ -11,6 +11,11 @@
   z-index: 1; /* in front of the dock, behind the intro (z-index 2 in home.css) */
   overflow: hidden;
   pointer-events: none;
+}
+
+/* Copy of the layer that js/sparkles.js adds behind the dock, for the fall */
+.home-sparkles--back {
+  z-index: -1;
 }
 
 .sparkle {

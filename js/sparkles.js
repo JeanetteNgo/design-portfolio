@@ -3,7 +3,7 @@
    Clicking the dock's Sparkles tile (button[data-action="party"]) fires
    a stream of sparkles out of the icon like a party popper: they shoot up,
    fanning out a little, glance off the nav bar in random directions, then
-   flutter down and fade out when they touch the dock's washi tape.
+   flutter down and slip behind the dock's washi tape.
    The shapes and colours live in css/features/sparkles.css; this file
    creates the elements and moves them with a small physics loop.
 ────────────────────────────────────────────── */
@@ -18,18 +18,23 @@
   const MAX_ON_SCREEN = 120; // fast repeat clicks can't pile up more than this
 
   // Feel of the motion
-  const FAN = 20; // degrees either side of straight up as they shoot
+  const FAN = 30; // degrees either side of straight up as they shoot
   const DRAG = 3; // air resistance: higher = they slow down sooner
-  const GRAVITY = 140; // higher = they float down faster
-  const BOUNCE = 0.55; // how much speed survives the bounce off the nav
-  const FADE = 0.5; // seconds to fade out once they touch the tape
-  const STREAM = 0.7; // seconds the icon keeps firing for
-  const SCATTER = 1.3; // how hard they glance sideways off the nav
-  const FLUTTER = 160; // how much they waft side to side on the way down
+  const GRAVITY = 160; // higher = they float down faster
+  const BOUNCE = 0.25; // how much speed survives the bounce off the nav
+  const STREAM = 0.8; // seconds the icon keeps firing for
+  const SCATTER = 1.5; // how hard they glance sideways off the nav
+  const FLUTTER = 240; // how much they waft side to side on the way down
 
   const rand = (min, max) => min + Math.random() * (max - min);
   const pick = (list) => list[Math.floor(Math.random() * list.length)];
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // A second layer behind the dock: sparkles move here after the bounce,
+  // so they fly out in front of the tape but fall behind it
+  const backLayer = layer.cloneNode(false);
+  backLayer.classList.add('home-sparkles--back');
+  layer.before(backLayer);
 
   let sparkles = []; // the ones currently flying
   let lastTime = 0;
@@ -37,8 +42,8 @@
   /** A mix of sizes: mostly small and medium, a few big ones. */
   function _size() {
     const roll = Math.random();
-    if (roll < 0.4) return rand(6, 10);
-    if (roll < 0.8) return rand(8, 14);
+    if (roll < 0.4) return rand(6, 12);
+    if (roll < 0.8) return rand(10, 16);
     return rand(20, 28);
   }
 
@@ -68,7 +73,7 @@
 
   function burst() {
     const narrow = window.innerWidth < 640;
-    const count = Math.min(narrow ? 20 : 36, MAX_ON_SCREEN - layer.childElementCount);
+    const count = Math.min(narrow ? 32 : 60, MAX_ON_SCREEN - document.querySelectorAll('.sparkle').length);
     const b = _bounds();
 
     if (reducedMotion.matches) {
@@ -106,7 +111,6 @@
         flutterSpeed: rand(1.5, 3),
         flutterPhase: rand(0, 6.28),
         age: -(i / count) * STREAM, // negative = still waiting its turn to leave
-        fading: 0,
       });
     }
 
@@ -147,20 +151,20 @@
         s.vy = impact * BOUNCE;
         s.vx += rand(-1, 1) * impact * SCATTER;
         s.spin = rand(-180, 180);
+        backLayer.appendChild(s.el);
       }
       // Soft bounce off the sides of the screen
       if ((s.x < 0 && s.vx < 0) || (s.x > s.b.width && s.vx > 0)) s.vx = -s.vx * 0.5;
 
-      // Touching the washi tape: start fading
-      if (s.bounced && s.y >= s.b.floor) s.fading += dt;
-      if (s.fading >= FADE) {
+      // Gone once it's fully hidden behind the washi tape
+      if (s.bounced && s.y >= s.b.floor + 40) {
         s.el.remove();
         return false;
       }
 
-      const grow = Math.min(1, 0.4 + s.age * 6); // pops up to full size as it leaves
+      const grow = Math.min(1, 0.6 + s.age * 2); // pops up to full size as it leaves
       s.el.style.transform = `translate(${s.x.toFixed(1)}px, ${s.y.toFixed(1)}px) rotate(${s.angle.toFixed(0)}deg) scale(${grow.toFixed(2)})`;
-      s.el.style.opacity = (s.opacity * (1 - s.fading / FADE)).toFixed(2);
+      s.el.style.opacity = s.opacity.toFixed(2);
       return true;
     });
 
