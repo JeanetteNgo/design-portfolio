@@ -11,8 +11,9 @@ Sections 2 and 3 below describe the original plan. What is actually built differ
 - **Nav and footer:** edit `data/site.js`; `js/site-shell.js` renders them on every page.
 - **Step 1, dock strip: done** (`css/features/dock.css`). Differences from section 3: the tag reads "What's on my Dock"; tiles are 54px (48px on touch, 42px under 420px wide); the band is two layered washi tapes (gingham over angled stripes), not dots; the photo is pinned like the tag; the nav is transparent at the top of the home page.
 - **Seventh tile, Sparkles:** `button[data-action="party"]` fires a sparkle stream (`js/sparkles.js`, `css/features/sparkles.css`). It has no popup.
-- **Step 4.1, popup system: done.** `<dialog id="popup">` in `index.html`, `js/dock.js`, `css/features/popup.css`, words in `data/popups.js`. All six popups currently use the default layout (intro plus headed lists) with placeholder words.
-- **Next:** step 4.2, the six individual popups. Per-popup styles go in `css/features/popups/<name>.css`, scoped with `.popup[data-popup='<name>']`. Real icons still to be exported from Figma into `img/dock/` (same file names).
+- **Step 4.1, popup system: done.** `<dialog id="popup">` in `index.html`, `js/dock.js`, `css/features/popup.css`, words in `data/popups.js`. A popup without its own builder uses the default layout (intro plus headed lists).
+- **Step 4.2, popups built so far:** **Off the clock / Side Quests** (`js/popups/off-the-clock.js`, `css/features/popups/off-the-clock.css`, `data/quests.js`; photos and one video in `img/quests/`) and **Tools** (`js/popups/tools.js`, `css/features/popups/tools.css`; words are `POPUPS.tools` in `data/popups.js`, one pencil per group). Both use the shared notebook-paper look in `css/features/popups/paper.css`, switched on by `paper: true` in `data/popups.js`. Doodles, Gallery and Map still use the default layout; Palette waits for the theme system.
+- **Next:** the remaining popups (Doodles, Gallery, Map). Per-popup styles go in `css/features/popups/<name>.css`, scoped with `.popup[data-popup='<name>']`. Real icons still to be exported from Figma into `img/dock/` (same file names).
 
 ## 1. About me and how to work with me
 

@@ -1,0 +1,203 @@
+/* ══════════════════════════════════════════
+   TOOLS POPUP
+   A paper note (the shared look is in paper.css) held up with a strip of washi tape,
+   beside a pen holder with one pencil per group. Built by js/popups/tools.js.
+   Pencil colours cycle through --pencil-a to --pencil-d, so a fifth group starts over.
+══════════════════════════════════════════ */
+
+.popup[data-popup='tools'] .popup-card {
+  width: min(100%, 640px);
+}
+
+/* Washi tape across the top edge, in the dock's gingham */
+.popup[data-popup='tools'] .popup-card::after {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  z-index: 1;
+  width: 120px;
+  height: 28px;
+  translate: -50% 0;
+  rotate: 2deg;
+  background:
+    linear-gradient(90deg, var(--accent-a25) 50%, transparent 50%) 0 0 / 10px 10px,
+    linear-gradient(var(--accent-a25) 50%, transparent 50%) 0 0 / 10px 10px,
+    var(--surface-band);
+  box-shadow: 0 1px 3px var(--accent-a25);
+  opacity: 0.92;
+  pointer-events: none;
+}
+
+/* ── Layout: pen holder above the note on phones, beside it on wider screens ── */
+.tools {
+  display: grid;
+  gap: 20px;
+  justify-items: stretch;
+}
+@media (min-width: 560px) {
+  .tools {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+  .pen-holder {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .tools-note {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+  }
+}
+
+/* A pencil and its group in the note share a colour (the fifth group starts over) */
+:is(.pencil, .tools-group):nth-child(4n + 1) {
+  --pencil: var(--pencil-a);
+}
+:is(.pencil, .tools-group):nth-child(4n + 2) {
+  --pencil: var(--pencil-b);
+}
+:is(.pencil, .tools-group):nth-child(4n + 3) {
+  --pencil: var(--pencil-c);
+}
+:is(.pencil, .tools-group):nth-child(4n + 4) {
+  --pencil: var(--pencil-d);
+}
+
+/* ── The note ── */
+.tools-groups {
+  margin-top: 4px;
+}
+.tools-group {
+  margin-top: 18px;
+}
+.tools-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  font: 700 12px var(--font-secondary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-body);
+}
+/* A small pencil-coloured dot ties each heading to its pencil */
+.tools-heading::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--ink-brown);
+  border-radius: 50%;
+  background: var(--pencil);
+}
+.tools-items {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 15px;
+  color: var(--text-strong);
+}
+.tools-items li {
+  margin: 0; /* reset the global li spacing */
+}
+.tools-items li + li::before {
+  content: '·';
+  margin-inline: 8px;
+  color: var(--text-muted);
+}
+
+/* ── Pen holder: pencils standing in a stitched pouch ──
+   --s scales the whole thing, so it can be smaller on phones */
+.pen-holder {
+  --s: 1;
+  justify-self: center;
+  width: calc(var(--s) * 190px);
+}
+.pencils {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: calc(var(--s) * 6px);
+  margin-bottom: calc(var(--s) * -64px); /* the pouch covers the pencils' feet */
+}
+.pencil {
+  --wood-h: calc(var(--s) * 28px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: calc(var(--s) * 36px);
+  transform-origin: 50% 100%;
+}
+.pencil:nth-child(4n + 1) {
+  height: calc(var(--s) * 214px);
+  rotate: -6deg;
+}
+.pencil:nth-child(4n + 2) {
+  height: calc(var(--s) * 208px);
+  rotate: -1deg;
+}
+.pencil:nth-child(4n + 3) {
+  height: calc(var(--s) * 230px);
+  rotate: 3deg;
+}
+.pencil:nth-child(4n + 4) {
+  height: calc(var(--s) * 200px);
+  rotate: 7deg;
+}
+/* Sharpened end: a brown outline triangle with a wood-coloured one inside */
+.pencil-tip {
+  position: relative;
+  flex: none;
+  height: var(--wood-h);
+  background: var(--ink-brown);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.pencil-tip::after {
+  content: '';
+  position: absolute;
+  inset: 5px 4px 0;
+  background: var(--pencil-wood);
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+.pencil-body {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* the label sits at the top, not stretched down behind the pouch */
+  padding-top: 8px;
+  border: 3px solid var(--ink-brown);
+  border-top: 0;
+  border-radius: 2px 2px 0 0;
+  background: var(--pencil);
+}
+.pencil-label {
+  font: 700 11px var(--font-secondary);
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  color: var(--ink-brown);
+  writing-mode: vertical-rl;
+  rotate: 180deg; /* reads from the bottom up, like print on a real pencil */
+}
+.pouch {
+  position: relative;
+  height: calc(var(--s) * 84px);
+  border: 3px solid var(--ink-brown);
+  border-radius: 12px 12px 22px 22px;
+  background: var(--pouch);
+}
+/* The stitched line, as on the dock icon */
+.pouch::after {
+  content: '';
+  position: absolute;
+  inset: calc(var(--s) * 20px) 10px auto;
+  border-top: 2px dashed var(--ink-brown);
+}
+
+@media (max-width: 559px) {
+  .pen-holder {
+    --s: 0.8;
+  }
+}

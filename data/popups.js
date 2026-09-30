@@ -8,10 +8,12 @@
      title    heading at the top of the popup
      intro    a sentence under the heading (optional)
      groups   lists, each with a heading and items (optional)
+     paper    true = show it on a sheet of notebook paper (optional)
 ────────────────────────────────────────────── */
 
 const POPUPS = {
   tools: {
+    paper: true, // paper-note look (css/features/popups/paper.css)
     title: 'Tools',
     intro: 'What I reach for.',
     groups: [
@@ -34,6 +36,7 @@ const POPUPS = {
     intro: 'Based in Singapore. Places I have been and next stops are coming soon.',
   },
   'off-the-clock': {
+    paper: true,
     title: 'Side Quests',
     intro: 'I occasionally touch grass.', // the checklist itself is in data/quests.js
   },
