@@ -1,8 +1,8 @@
 /* ══════════════════════════════════════════
    MAP POPUP
-   A folded paper map: an illustrated picture (img/map/map.svg) with a pin for each place,
-   the selected place's note, and the same places as chips. Built by js/popups/map.js from
-   data/places.js. Pin positions come from the data (inline left/top in percent).
+   A folded paper sheet with an interactive globe (drawn on a canvas by js/popups/map.js) beside
+   the selected place's note and the same places as chips. Places come from data/places.js.
+   The globe's colours are read from the tokens in css/tokens.css when it is drawn.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='map'] .popup-card {
@@ -48,92 +48,83 @@
   font-weight: 900;
   color: var(--text-strong);
 }
-.popup[data-popup='map'] .popup-intro {
+
+/* ── Layout: globe beside the words on wider screens, above them on phones ── */
+.map-layout {
+  display: grid;
+  gap: 20px;
+  align-items: center;
+}
+@media (min-width: 720px) {
+  .popup[data-popup='map'] .popup-card {
+    width: min(100%, 900px);
+  }
+  .map-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 32px;
+  }
+}
+.map-side .popup-intro {
   margin-bottom: 16px;
 }
 
-/* ── The picture, with pins on it ── */
-.map-art {
+/* ── The globe: a square canvas drawn by js/popups/map.js ── */
+.map-globe-wrap {
   position: relative;
-  aspect-ratio: 3 / 2;
-  border: 3px solid var(--ink-brown);
-  border-radius: 8px;
-  background: url('../../../img/map/map.svg') center / cover;
+  width: min(100%, 420px);
+  margin-inline: auto;
 }
-
-/* A pin: the button is a comfortable 44px tap area; the drawn pin sits on its point */
-.map-pin {
-  position: absolute;
-  width: 44px;
-  height: 44px;
-  margin: -44px 0 0 -22px; /* the point of the pin lands on the place */
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  transition: translate 0.15s ease;
-}
-.map-pin-head {
-  position: absolute;
-  left: 50%;
-  bottom: 4px;
-  width: 22px;
-  height: 22px;
-  box-sizing: border-box;
-  margin-left: -11px;
-  border: 3px solid var(--ink-brown);
-  border-radius: 50% 50% 50% 0; /* a teardrop, pointing down */
-  rotate: -45deg;
-  background: var(--accent-300);
-}
-/* the hole in the pin */
-.map-pin-head::after {
+/* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
+.map-globe-wrap::after {
   content: '';
   position: absolute;
-  inset: 3px;
+  inset: 0;
+  border: 3px solid var(--ink-brown);
   border-radius: 50%;
-  background: var(--paper-bg);
-}
-.map-pin--home .map-pin-head {
-  scale: 1.3;
-  background: var(--pencil-a);
-}
-.map-pin--next .map-pin-head {
-  border-style: dashed;
-  background: var(--paper-bg); /* a pin not visited yet: empty */
-}
-/* The name shows only on the selected pin, so a crowded map stays readable */
-.map-pin-name {
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  translate: -50% 2px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--paper-bg);
-  box-shadow: 0 2px 6px rgb(var(--shadow-rgb) / 25%);
-  font: 400 14px var(--font-hand);
-  white-space: nowrap;
-  color: var(--text-strong);
   pointer-events: none;
-  opacity: 0;
 }
-.map-pin[aria-pressed='true'] {
-  z-index: 1;
-  translate: 0 -4px;
+.map-globe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  touch-action: none; /* dragging turns the globe instead of scrolling the popup */
+  cursor: grab;
+  border-radius: 50%;
 }
-.map-pin[aria-pressed='true'] .map-pin-name {
-  opacity: 1;
+.map-globe:active {
+  cursor: grabbing;
 }
-@media (hover: hover) {
-  .map-pin:hover {
-    translate: 0 -3px;
-  }
-}
-.map-pin:focus-visible {
+.map-globe:focus-visible {
   outline: 3px solid var(--accent-500);
-  outline-offset: -4px;
-  border-radius: 8px;
+  outline-offset: 4px;
+}
+.map-zoom {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.map-zoom-btn {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--ink-brown);
+  border-radius: 50%;
+  background: var(--surface);
+  font: 700 22px/1 var(--font-primary);
+  color: var(--text-strong);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+.map-zoom-btn:hover {
+  background: var(--accent-a14);
+}
+.map-zoom-btn:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
 }
 
 /* ── Note for the selected place ── */
@@ -230,7 +221,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .map-pin,
+  .map-zoom-btn,
   .map-chip {
     transition: none;
   }
