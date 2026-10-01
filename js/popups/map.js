@@ -303,7 +303,7 @@ POPUP_RENDERERS.map = function (popup) {
         'postcard-greeting'
       )
     );
-    // The photo, framed like a stamp and keeping its 3:4 or 4:3 shape
+    // The photo, glued on with two lifted corners, keeping its 3:4 or 4:3 shape
     if (place.photo) {
       const slot = popupEl('div', '', 'postcard-slot');
       const print = popupEl('div', '', 'postcard-print');
@@ -316,7 +316,9 @@ POPUP_RENDERERS.map = function (popup) {
       img.addEventListener('load', () => {
         print.style.setProperty('--ratio', img.naturalHeight > img.naturalWidth ? '0.75' : '1.333');
       });
-      photo.appendChild(img);
+      const art = popupEl('div', '', 'postcard-art');
+      art.append(img, popupEl('span', '', 'postcard-gloss'));
+      photo.appendChild(art);
       print.appendChild(photo);
       slot.appendChild(print);
       message.appendChild(slot);
