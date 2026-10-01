@@ -187,19 +187,34 @@
   background: transparent;
   font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
-.popup[data-popup='map'] .map-zoom .map-zoom-btn + .map-zoom-btn {
-  border-left: 2px solid color-mix(in srgb, var(--ink-brown) 22%, transparent);
-}
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
   background: var(--accent-a20);
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:focus-visible {
   outline-offset: -3px;
 }
-.popup[data-popup='map'] .map-zoom-btn::before,
-.popup[data-popup='map'] .map-zoom-btn::after {
+/* + and − are drawn bars: whole-pixel size and offsets keep them crisp */
+.popup[data-popup='map'] .map-zoom :is(.paper-sticker--plus, .paper-sticker--minus)::before,
+.popup[data-popup='map'] .map-zoom :is(.paper-sticker--plus, .paper-sticker--minus)::after {
   width: 14px;
-  margin-left: -7px;
+  height: 2px;
+  margin: -1px 0 0 -7px;
+}
+/* The 1× button draws the two short, faint dividers beside it */
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:not(.paper-sticker--plus, .paper-sticker--minus)::before,
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:not(.paper-sticker--plus, .paper-sticker--minus)::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: color-mix(in srgb, var(--ink-brown) 18%, transparent);
+}
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:not(.paper-sticker--plus, .paper-sticker--minus)::before {
+  left: 0;
+}
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:not(.paper-sticker--plus, .paper-sticker--minus)::after {
+  right: 0;
 }
 
 /* At the smallest or largest zoom the − or + is switched off: faded, and no hover reaction */
