@@ -78,15 +78,7 @@
     align-self: stretch;
     align-items: flex-start; /* zoom buttons share the Esc tag's left edge */
     justify-content: flex-end; /* sits low, with a fixed gap above the Esc tag in the corner */
-    position: relative;
-    padding-bottom: 41px;
-  }
-  /* The zoom buttons stand in a column at the globe's empty bottom-right corner (+ on top) */
-  .popup[data-popup='map'] .map-zoom {
-    position: absolute;
-    right: -16px; /* just clear of the globe, into the gap */
-    bottom: 41px;
-    flex-direction: column-reverse;
+    padding-bottom: 59px; /* leaves 20px between the zoom capsule and the Esc tag */
   }
   .popup[data-popup='map'] .map-globe-frame {
     align-self: flex-start; /* globe, zoom buttons and Esc tag share one left edge */
@@ -140,6 +132,9 @@
     flex: none;
     width: 100%;
   }
+  .map-globe-wrap {
+    padding-bottom: 20px; /* room for the zoom capsule hanging below the globe */
+  }
 }
 /* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
 .map-globe-frame::after {
@@ -170,21 +165,41 @@
   outline-offset: 4px;
 }
 .map-zoom {
-  flex: none;
+  position: absolute;
+  left: 50%;
+  bottom: -18px; /* straddles the globe's bottom edge */
+  z-index: 2;
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  overflow: hidden;
+  border: 2px solid var(--ink-brown);
+  border-radius: 999px;
+  background: var(--paper-bg);
+  transform: translateX(-50%);
+}
+/* One capsule in the globe's solid-ink style (the paper-sticker dashes are overridden) */
+.popup[data-popup='map'] .map-zoom .map-zoom-btn {
+  width: 40px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
+}
+.popup[data-popup='map'] .map-zoom .map-zoom-btn + .map-zoom-btn {
+  border-left: 1.5px solid var(--accent-a33);
+}
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
+  background: var(--accent-a20);
+}
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:focus-visible {
+  outline-offset: -3px;
 }
 .popup[data-popup='map'] .map-zoom-btn::before,
 .popup[data-popup='map'] .map-zoom-btn::after {
   width: 14px;
   margin-left: -7px;
-}
-.map-zoom-btn {
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
 
 /* At the smallest or largest zoom the − or + is switched off: faded, and no hover reaction */
@@ -192,13 +207,8 @@
   opacity: 0.4;
   cursor: default;
 }
-.popup[data-paper] .map-zoom-btn[aria-disabled='true']:hover {
-  border-color: var(--sticker-ring);
-  background: var(--paper-bg);
-}
-.popup[data-paper] .map-zoom-btn[aria-disabled='true']:hover::before,
-.popup[data-paper] .map-zoom-btn[aria-disabled='true']:hover::after {
-  background: var(--text-body);
+.popup[data-popup='map'] .map-zoom .map-zoom-btn[aria-disabled='true']:hover {
+  background: transparent;
 }
 
 /* ── "Based in" banner: shown above the stamps (hidden while a postcard is open) ── */

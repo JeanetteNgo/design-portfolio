@@ -592,9 +592,9 @@ POPUP_RENDERERS.map = function (popup) {
   _syncZoomButtons();
 
   const globeFrame = popupEl('div', '', 'map-globe-frame'); // outline ring around the canvas
-  globeFrame.appendChild(canvas);
+  globeFrame.append(canvas, zoomButtons); // the zoom capsule overlaps the globe's bottom edge
   const globeWrap = popupEl('div', '', 'map-globe-wrap');
-  globeWrap.append(globeFrame, zoomButtons);
+  globeWrap.appendChild(globeFrame);
 
   /* ── "Based in" banner and stamps ── */
 
