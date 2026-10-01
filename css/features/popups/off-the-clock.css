@@ -48,7 +48,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px 12px;
-  padding: 10px 6px 16px; /* room for the tilted corners and shadows */
+  padding: 24px 6px 16px; /* space under the intro, and room for the tilted corners and shadows */
 }
 .otc-tab {
   position: relative;
