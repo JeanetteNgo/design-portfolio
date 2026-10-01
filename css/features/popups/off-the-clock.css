@@ -211,14 +211,14 @@
 /* ── The page: prints in 3, 2 or 1 columns, each at its own angle ── */
 .interests-board {
   column-count: 3;
-  column-gap: 48px;
+  column-gap: 24px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .interests-board li {
   break-inside: avoid;
-  margin: 0 0 48px;
+  margin: 0 0 28px;
 }
 .interests-board li:nth-child(4n + 1) {
   --tilt: -2.5deg;
@@ -235,7 +235,7 @@
 @media (max-width: 720px) {
   .interests-board {
     column-count: 2;
-    column-gap: 20px;
+    column-gap: 16px;
   }
 }
 @media (max-width: 440px) {
