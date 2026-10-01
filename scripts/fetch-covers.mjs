@@ -57,10 +57,15 @@ async function findMusic(item) {
   const kind = item.kind === 'album' ? 'album' : 'song';
   const term = encodeURIComponent(`${item.title} ${item.artist}`);
   const { results } = await getJson(
-    `https://itunes.apple.com/search?term=${term}&entity=${kind}&limit=5`
+    `https://itunes.apple.com/search?term=${term}&entity=${kind}&limit=15`
   );
   const wanted = plain(item.artist);
-  const hit = results.find((r) => r.artistName && plain(r.artistName).includes(wanted));
+  const byArtist = results.filter((r) => r.artistName && plain(r.artistName).includes(wanted));
+  // An optional `album` picks the release (and so the cover) when a song is on several
+  const onAlbum = item.album
+    ? byArtist.filter((r) => plain(r.collectionName || '').includes(plain(item.album)))
+    : byArtist;
+  const hit = onAlbum[0] || (item.album ? undefined : byArtist[0]);
   if (!hit?.artworkUrl100) return null;
 
   let preview = hit.previewUrl;
@@ -185,7 +190,7 @@ console.log('\nMusic');
 await fillCovers({
   file: 'data/music.js',
   name: 'MUSIC',
-  keys: ['kind', 'title', 'artist', 'image', 'alt', 'preview', 'note'],
+  keys: ['kind', 'title', 'artist', 'album', 'image', 'alt', 'preview', 'note'],
   folder: 'music',
   find: findMusic,
   label: (item) => item.artist,
