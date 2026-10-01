@@ -33,7 +33,7 @@ OFF_CLOCK_SECTIONS.push({
       playing = { button, item, title: record.title };
       button.setAttribute('aria-pressed', 'true');
       button.setAttribute('aria-label', `Pause ${record.title}`);
-      item.classList.add('is-playing');
+      item.classList.add('is-playing', 'has-played');
     }
 
     const shelf = popupEl('ul', '', 'record-shelf');
@@ -60,6 +60,7 @@ OFF_CLOCK_SECTIONS.push({
         play.setAttribute('aria-label', `Play ${record.title}`);
         play.setAttribute('aria-pressed', 'false');
         play.addEventListener('click', () => _toggle(record, play, item));
+        play.appendChild(popupEl('span', '', 'record-play-icon'));
         art.appendChild(play);
       }
       item.append(
