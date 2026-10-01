@@ -76,7 +76,7 @@
   }
   .map-globe-wrap {
     align-self: stretch;
-    padding-bottom: 12px; /* the Esc tag sits in the corner beside it */
+    padding-bottom: 44px; /* keeps the zoom buttons clear of the Esc tag in the corner */
   }
   /* "Esc to close" (or "back") sits in the bottom left corner, beside the right column */
   .popup[data-popup='map'] .popup-footer {
