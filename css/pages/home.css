@@ -21,7 +21,7 @@
   justify-content: center;
   align-items: center;
 }
-/* Photo as a pinned snapshot, in the same paper-and-pin style as .paper-tag */
+/* Photo as a paper snapshot */
 .pinned-photo {
   position: relative;
   padding: 6px;
@@ -32,17 +32,6 @@
     0 2px 0 var(--accent-a14),
     0 4px 10px var(--accent-a14);
   transform: rotate(2.5deg);
-}
-.pinned-photo::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  margin-left: -5px;
-  border-radius: 50%;
-  background: var(--accent);
 }
 .home-page-header img {
   width: 100px;
