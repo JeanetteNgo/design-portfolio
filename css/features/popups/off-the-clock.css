@@ -41,8 +41,8 @@
   margin: 0;
 }
 
-/* ── Tabs: small salmon paper labels stuck on the page, like the dock's label; the chosen one
-   is the strongest salmon, straightens and lifts ── */
+/* ── Tabs: small paper labels stuck on the page, like the dock's label; the chosen one turns
+   white, straightens and lifts ── */
 .otc-tabs {
   flex: none;
   display: flex;
@@ -56,7 +56,7 @@
   padding: 0 16px 0 28px;
   border: 0;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--paper-bg) 70%, var(--accent-200));
+  background: color-mix(in srgb, var(--paper-bg) 66%, var(--pencil-wood));
   box-shadow:
     0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
     1px 2px 3px rgb(var(--shadow-rgb) / 16%);
@@ -96,7 +96,7 @@
   transition: background-color 0.25s ease;
 }
 .otc-tab[aria-selected='true'] {
-  background: color-mix(in srgb, var(--paper-bg) 22%, var(--accent-200));
+  background: var(--surface-faint);
   box-shadow:
     0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
     2px 4px 8px rgb(var(--shadow-rgb) / 20%);
@@ -105,11 +105,11 @@
   translate: 0 -2px;
 }
 .otc-tab[aria-selected='true']::before {
-  background: var(--paper-bg);
+  background: var(--ink-red);
 }
 @media (hover: hover) {
   .otc-tab[aria-selected='false']:hover {
-    background: color-mix(in srgb, var(--paper-bg) 55%, var(--accent-200));
+    background: color-mix(in srgb, var(--paper-bg) 80%, var(--pencil-wood));
     rotate: calc(var(--tilt) / 2);
     translate: 0 -1px;
   }
