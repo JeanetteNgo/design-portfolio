@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid slice" fill="none" stroke="#a87a52" stroke-linecap="round" stroke-linejoin="round">
   <!-- Background for the Map popup: one small compass rose, as on a sea chart. Very faint on purpose. -->
-  <g transform="translate(105 590)" opacity=".12" stroke-width="1.4">
+  <g transform="translate(110 160)" opacity=".12" stroke-width="1.4">
     <circle r="70"/>
     <circle r="60"/>
     <path d="M0-92L7-7 92 0 7 7 0 92-7 7-92 0-7-7z" fill="#a87a52" fill-opacity=".12"/>

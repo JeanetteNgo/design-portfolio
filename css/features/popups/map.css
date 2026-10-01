@@ -43,6 +43,7 @@
     --pad-x: 52px;
     --pad-bottom: 20px;
     --close-top: 28px;
+    --close-right: 28px; /* as far from the right edge as from the top */
     height: min(580px, calc(100dvh - 32px)); /* fixed, so it doesn't jump between views */
   }
   /* Nothing scrolls as a whole: the globe stays put and the right-hand side scrolls on its own */
@@ -87,6 +88,11 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
+  }
+  /* The stamps fade out at the bottom instead of being cut off */
+  .map-stamps-view:not([hidden]) {
+    padding-bottom: 28px;
+    mask-image: linear-gradient(to bottom, #000 calc(100% - 32px), transparent);
   }
   .map-stamps-view:not([hidden]),
   .map-detail:not([hidden]) {

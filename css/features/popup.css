@@ -39,6 +39,7 @@ html:has(.popup[open]) {
   --pad-x: 28px;
   --pad-bottom: 32px;
   --close-top: 16px;
+  --close-right: 16px;
   padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
   /* Never taller than the screen; content scrolls inside (.popup-scroll) */
   display: flex;
@@ -63,7 +64,7 @@ html:has(.popup[open]) {
   z-index: 1;
   display: block;
   flex: none; /* never squashed when a popup's card is a height-capped column */
-  margin: calc(var(--close-top) - var(--pad-top)) calc(16px - var(--pad-x))
+  margin: calc(var(--close-top) - var(--pad-top)) calc(var(--close-right) - var(--pad-x))
     calc(var(--pad-top) - var(--close-top) - 44px) auto;
   width: 44px;
   height: 44px;

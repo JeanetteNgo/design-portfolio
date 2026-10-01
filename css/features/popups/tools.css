@@ -17,6 +17,11 @@
   }
 }
 
+/* A little room above the "Esc to close" tag */
+.popup[data-popup='tools'] .popup-footer {
+  padding-top: 12px;
+}
+
 /* ── Layout: pen holder above the note on phones, beside it on wider screens ── */
 .tools {
   display: grid;
