@@ -30,13 +30,11 @@ const _externalBadge = `
  * Handles all three types: case-study, external, disabled.
  */
 function _buildCard(project) {
-  // Modifier classes
   const modifiers = [];
   if (project.type === 'external')  modifiers.push('feature-container--external');
   if (project.type === 'disabled')  modifiers.push('feature-container--disabled');
   const classAttr = ['feature-container', ...modifiers].join(' ');
 
-  // Link attributes
   const isDisabled = project.type === 'disabled';
   const isExternal = project.type === 'external';
   const linkAttrs  = [
@@ -45,11 +43,9 @@ function _buildCard(project) {
     isExternal ? 'target="_blank" rel="noopener noreferrer"' : '',
   ].filter(Boolean).join(' ');
 
-  // Optional note + external badge
   const noteHTML    = project.note ? `<span class="note" style="margin-top:10px;">${project.note}</span>` : '';
   const badgeHTML   = isExternal   ? _externalBadge : '';
 
-  // If there's both a note and a badge, wrap them in a tag-row
   const extras = (noteHTML && badgeHTML)
     ? `<div class="tag-row" style="margin-top:10px;">${noteHTML}${badgeHTML}</div>`
     : noteHTML + badgeHTML;
@@ -102,7 +98,6 @@ function renderTimeline(selector) {
     grouped[p.year].push(p);
   });
 
-  // Sort years descending (newest first)
   const years = Object.keys(grouped).sort((a, b) => Number(b) - Number(a));
 
   const html = years.map((year, i) => {

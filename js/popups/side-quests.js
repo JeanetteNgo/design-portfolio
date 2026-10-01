@@ -6,7 +6,7 @@
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS['side-quests'] = function (popup) {
-  const REPLY_TIME = 2200; // ms a reply stays up
+  const REPLY_TIME = 2200;
   const STATUS_TEXT = { done: 'Done', wip: 'In progress', todo: 'Not started' }; // for screen readers
 
   const listView = popupEl('div', '', 'quest-view');
@@ -82,7 +82,6 @@ POPUP_RENDERERS['side-quests'] = function (popup) {
       parts.push(polaroid);
     }
 
-    // Same key-hint tag as "Esc to close"; the ← key does the same thing
     const back = popupBackTag('back to the list', _showList);
 
     // The stamp (with the ×) stays at the top and the back tag at the bottom; the story scrolls
@@ -129,23 +128,20 @@ POPUP_RENDERERS['side-quests'] = function (popup) {
     );
 
     const bubble = popupEl('span', '', 'quest-reply');
-    bubble.setAttribute('role', 'status'); // read out by screen readers when it appears
+    bubble.setAttribute('role', 'status');
 
     item.append(button, bubble);
     list.appendChild(item);
   });
 
-  // "Esc to close" tag: shows the keyboard shortcut, and closes on click for touch screens
   const close = popupCloseTag();
 
-  // Title and intro sit in a header above the scrolling list. The title is repeated here
-  // for the eye; the dialog's own (hidden) title still names it for screen readers.
+  // Title and intro in a header above the scrolling list (the dialog's hidden title names it for screen readers)
   const head = popupEl('div', '', 'quest-head');
   const headTitle = popupEl('p', popup.title, 'quest-head-title');
   headTitle.setAttribute('aria-hidden', 'true');
   head.appendChild(headTitle);
   if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
-  // Only the list scrolls; the header above and the Esc tag below stay put
   const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(list);
   const footer = popupEl('div', '', 'quest-footer');

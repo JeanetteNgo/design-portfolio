@@ -42,7 +42,7 @@
   list-style: none;
 }
 .quest {
-  margin: 0; /* reset the global li spacing */
+  margin: 0;
 }
 .quest-btn {
   display: flex;
@@ -116,7 +116,7 @@
 /* What an unfinished quest says back when clicked */
 .quest-reply {
   display: block;
-  margin-left: 40px; /* lines up with the quest text */
+  margin-left: 40px;
   font: italic 600 14px/1.3 var(--font-secondary);
   color: var(--ink-red);
 }
@@ -154,7 +154,7 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-green);
-  opacity: 0.85; /* slightly faded, like ink */
+  opacity: 0.85;
   rotate: -3deg;
 }
 .quest-memory-date {
@@ -191,12 +191,12 @@
 .quest-polaroid video {
   max-height: min(60vh, 480px);
   margin-inline: auto;
-  background: var(--text-strong); /* fills any bars if the shape doesn't match */
+  background: var(--text-strong);
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
   font: 400 14px/1.5 var(--font-hand);
-  text-wrap: balance; /* if it wraps, split into even lines, not one stray word */
+  text-wrap: balance;
   color: var(--text-body);
   text-align: center;
 }

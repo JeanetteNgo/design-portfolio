@@ -31,7 +31,7 @@
 @media (min-width: 560px) {
   .tools {
     grid-template-columns: 1fr auto;
-    column-gap: 56px; /* space between the note and the pen holder */
+    column-gap: 56px;
     align-items: end;
   }
   .pen-holder {
@@ -95,7 +95,7 @@
   color: var(--text-strong);
 }
 .tools-items li {
-  margin: 0; /* reset the global li spacing */
+  margin: 0;
 }
 /* The dot goes after each item, so a wrapped line never starts with one */
 .tools-items li:not(:last-child)::after {
@@ -111,7 +111,7 @@
   position: relative;
   isolation: isolate;
   justify-self: center;
-  width: calc(var(--s) * 196px); /* wide enough that no pencil pokes out of the sides */
+  width: calc(var(--s) * 196px);
 }
 /* The inside back of the pouch, just visible behind the pencils above the front */
 .pen-holder::before {
@@ -130,8 +130,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  gap: calc(var(--s) * -3px); /* a little overlap, so they sit snugly together */
-  margin-bottom: calc(var(--s) * -108px); /* the pouch covers most of the pencils */
+  gap: calc(var(--s) * -3px);
+  margin-bottom: calc(var(--s) * -108px);
 }
 .pencil {
   --wood-h: calc(var(--s) * 28px);

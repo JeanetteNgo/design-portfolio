@@ -14,8 +14,7 @@
 ────────────────────────────────────────────── */
 
 (function () {
-  // Site root, worked out from this script's own address (…/js/site-shell.js),
-  // so page links resolve correctly from any folder depth.
+  // Site root, from this script's own address, so links resolve from any folder depth
   const ROOT = new URL('../', document.currentScript.src);
 
   /* ── Helpers ───────────────────────────────── */
@@ -90,16 +89,13 @@
       </div>`;
   }
 
-  // Nav renders straight away (this script sits right after it), so it's there
-  // before the first paint. The footer is further down, so wait for it to exist.
+  // The nav is already in the page; the footer is further down, so wait for it
   _renderNav();
   document.addEventListener('DOMContentLoaded', _renderFooter);
 
   /* ── Focus rings ───────────────────────────── */
 
-  // Focus rings show only while someone is using the Tab key. A mouse or touch
-  // press hides them, and pressing Tab brings them back. CSS (css/base.css) looks
-  // for [data-input='mouse'] on <html>. Without JS the rings always show.
+  // Focus rings show only while Tab is in use (css/base.css reads [data-input='mouse'] on <html>)
   const html = document.documentElement;
   document.addEventListener('pointerdown', () => (html.dataset.input = 'mouse'));
   document.addEventListener('keydown', (e) => {

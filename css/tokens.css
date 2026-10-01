@@ -12,8 +12,7 @@
   /* Font family */
   --font-primary: 'Nunito', sans-serif;
   --font-secondary: 'Lexend', sans-serif;
-  --font-hand:
-    'Gloria Hallelujah', cursive; /* handwriting, for scribbled notes (loaded on the home page) */
+  --font-hand: 'Gloria Hallelujah', cursive;
 
   /* ── LAYER 1: PALETTE ── */
   --neutral-0: #ffffff;
@@ -57,20 +56,20 @@
 
   /* Text */
   --text-heading: var(--accent-400);
-  --text-accent: var(--accent-400); /* coloured links, labels, tags */
+  --text-accent: var(--accent-400);
   --text-body: var(--neutral-400);
   --text-muted: var(--neutral-300);
   --text-strong: var(--neutral-500);
   --text-faint: #8a808090;
   --text-band: #6e6666; /* home info strip */
-  --text-on-accent: var(--neutral-0); /* text sitting on an accent fill */
+  --text-on-accent: var(--neutral-0);
   --nav-link: var(--accent-200);
 
   /* Surfaces */
   --bg-top: #fff4f4;
   --bg-bottom: #ffffff;
   --page-bg: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
-  --surface: var(--neutral-0); /* cards */
+  --surface: var(--neutral-0);
   --surface-soft: #fff4f4;
   --surface-faint: #fffcfc;
   --surface-band: #ffeeed; /* home info strip */
@@ -92,22 +91,22 @@
   --shadow-accent-hover: 0 6px 24px rgb(var(--accent-rgb) / 10%);
 
   /* Layout */
-  --nav-height: 75px; /* height of the sticky nav bar */
+  --nav-height: 75px;
 
   /* My Dock */
   --dock-tile-a: var(--accent-25);
   --dock-tile-b: #fff3d6;
-  --dock-tile-highlight: rgb(255 255 255 / 70%); /* inner rim on tiles */
-  --dock-outline: var(--neutral-0); /* white outline on hovered icon */
+  --dock-tile-highlight: rgb(255 255 255 / 70%);
+  --dock-outline: var(--neutral-0);
 
   /* Popups */
-  --popup-backdrop: rgb(var(--shadow-rgb) / 35%); /* dimmed page behind a popup */
+  --popup-backdrop: rgb(var(--shadow-rgb) / 35%);
 
   /* Paper (notebook-style popups). Stays light paper with dark ink in every theme */
   --paper-bg: #fffdf8;
-  --paper-rule: var(--accent-a14); /* ruled lines */
-  --ink-red: var(--accent-500); /* ticks, crossings-out, handwritten notes */
-  --ink-green: #4e8c63; /* "Quest complete" stamp */
+  --paper-rule: var(--accent-a14);
+  --ink-red: var(--accent-500);
+  --ink-green: #4e8c63;
   /* Stamp inks (Map popup): six muted, vintage-looking inks with similar weight so they sit well
      together. Each reads clearly on the cream paper. */
   --stamp-ink-brown: #81584a;
@@ -123,20 +122,20 @@
      turned into soft brown shadows), plus stain and edge colours */
   --map-crinkle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='c' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018 .026' numOctaves='4' seed='11' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='2.2' diffuseConstant='1'%3E%3CfeDistantLight azimuth='225' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .27 0 0 0 0 .15 -0.6 0 0 0 .5'/%3E%3C/filter%3E%3Crect width='520' height='520' filter='url(%23c)'/%3E%3C/svg%3E");
   --map-stain: rgb(165 115 70 / 14%);
-  --map-edge: rgb(150 100 60 / 16%); /* the darker, worn edge */
+  --map-edge: rgb(150 100 60 / 16%);
 
   /* Pencils (the Tools popup's pen holder) */
-  --ink-brown: #4a2e25; /* outline, same as the dock icons */
-  --sticker-ring-brown: rgba(166, 129, 100, 0.5); /* a warm paper-brown for dashed rings (Map) */
+  --ink-brown: #4a2e25;
+  --sticker-ring-brown: rgba(166, 129, 100, 0.5);
   --pencil-wood: #f3d9b1;
   --pencil-a: #ffd36e;
   --pencil-b: #8ec5e8;
   --pencil-c: var(--accent-300);
   --pencil-d: #a9d6a0;
-  --pencil-light: rgb(255 255 255 / 35%); /* highlight along a pencil's side */
-  --pencil-shade: rgb(var(--shadow-rgb) / 10%); /* shaded side and the pouch's underside */
+  --pencil-light: rgb(255 255 255 / 35%);
+  --pencil-shade: rgb(var(--shadow-rgb) / 10%);
   --pouch: var(--accent-200);
-  --pouch-back: var(--accent-300); /* the inside back of the pouch */
+  --pouch-back: var(--accent-300);
 
   /* Red pin head (record labels in the Off the clock popup) */
   --pin: var(--accent-500);

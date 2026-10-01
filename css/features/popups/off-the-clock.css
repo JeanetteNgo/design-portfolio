@@ -27,7 +27,7 @@
   mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
 }
 .popup[data-popup='off-the-clock'] .popup-scroll {
-  padding: 36px var(--pad-x) 72px; /* space around the content, and below the last row */
+  padding: 36px var(--pad-x) 72px;
 }
 
 /* ── Heading ── */
@@ -45,14 +45,13 @@
   margin: 0;
 }
 
-/* ── Tabs: small paper labels stuck on the page, like the dock's label; the chosen one turns
-   white, straightens and lifts ── */
+/* ── Tabs: paper labels; the chosen one turns white, straightens and lifts ── */
 .otc-tabs {
   flex: none;
   display: flex;
   flex-wrap: wrap;
   gap: 8px 12px;
-  padding: 24px 6px 16px; /* space under the intro, and room for the tilted corners and shadows */
+  padding: 24px 6px 16px;
 }
 .otc-tab {
   position: relative;
@@ -86,7 +85,6 @@
 .otc-tab:nth-child(4n + 4) {
   --tilt: 1.5deg;
 }
-/* the small salmon dot, as on the dock label */
 .otc-tab::before {
   content: '';
   position: absolute;
@@ -122,7 +120,7 @@
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }
-/* A tab that isn't ready: dimmed, no hover movement, with a small "Coming Soon!" tag above it */
+/* Disabled tab with a "Coming Soon!" tag */
 .otc-tab.is-soon {
   background: color-mix(in srgb, var(--paper-bg) 80%, var(--pencil-wood));
   color: var(--text-muted);
@@ -168,7 +166,7 @@
     width: 0; /* with min-width, keeps the row's width from stretching the sheet */
     min-width: 100%;
     flex-wrap: nowrap;
-    overflow-x: auto; /* one row that scrolls sideways instead of wrapping */
+    overflow-x: auto;
     scrollbar-width: none;
   }
   .otc-tab {
@@ -178,7 +176,7 @@
   .otc-tab::before {
     left: 9px;
   }
-  /* the row scrolls and clips, so the tag lines up with the tab's right edge */
+  /* Keeps the tag inside the clipped row */
   .otc-tab-tip,
   .otc-tab.is-soon:hover .otc-tab-tip,
   .otc-tab.is-soon:focus-visible .otc-tab-tip {
@@ -188,7 +186,7 @@
   }
 }
 
-/* ── The page: prints stuck on at slightly different angles in 3, 2 or 1 columns, each at its own angle ── */
+/* ── The page: prints in 3, 2 or 1 columns, each at its own angle ── */
 .interests-board {
   column-count: 3;
   column-gap: 48px;
@@ -197,8 +195,8 @@
   list-style: none;
 }
 .interests-board li {
-  break-inside: avoid; /* a print never splits across two columns */
-  margin: 0 0 48px; /* also resets the global li spacing */
+  break-inside: avoid;
+  margin: 0 0 48px;
 }
 .interests-board li:nth-child(4n + 1) {
   --tilt: -2.5deg;
@@ -235,7 +233,7 @@
   background: var(--surface);
   text-align: center;
   rotate: var(--tilt, 0deg);
-  /* Stuck flat on the page: a thin edge and a short soft shadow, as on the Map postcards */
+  /* Thin edge and a short soft shadow, as on the Map postcards */
   box-shadow:
     0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
     1px 1.5px 1.5px rgb(var(--shadow-rgb) / 28%),
@@ -244,7 +242,7 @@
 .print-photo {
   display: block;
   width: 100%;
-  height: auto; /* the picture's own shape, not a crop */
+  height: auto;
 }
 .print-caption {
   display: block;
@@ -253,7 +251,6 @@
   text-wrap: balance;
   color: var(--text-body);
 }
-/* Empty print until a real photo is added */
 .print-blank {
   display: grid;
   place-items: center;
@@ -263,7 +260,6 @@
   font: 400 15px var(--font-hand);
   color: var(--text-muted);
 }
-/* Postcard: cream card with a striped airmail edge */
 .print--postcard {
   padding: 8px 8px 6px;
   border: 6px solid transparent;
@@ -281,7 +277,7 @@
   font-size: 15px;
 }
 
-/* ── An opened sketch: a small paper note under it ── */
+/* ── An opened sketch ── */
 .otc-note {
   width: fit-content;
   max-width: min(100%, 460px);
@@ -306,7 +302,7 @@
   padding-top: 12px;
 }
 .otc-footer .esc-tag {
-  margin-left: -8px; /* the key lines up with the content's left edge */
+  margin-left: -8px;
 }
 
 /* ── Playlist and Books: sleeves and covers laid out on the page ── */
@@ -333,7 +329,7 @@
 .book {
   display: flex;
   flex-direction: column;
-  margin: 0; /* resets the global li spacing */
+  margin: 0;
 }
 .record-title {
   margin-top: 10px;
@@ -351,7 +347,7 @@
   color: var(--ink-brown);
 }
 
-/* A sleeve with its vinyl peeking out of the right edge */
+/* A sleeve with its vinyl peeking out */
 .record-art {
   position: relative;
   display: block;
@@ -366,7 +362,7 @@
   width: 90%;
   aspect-ratio: 1;
   border-radius: 50%;
-  /* a red label, fine grooves, and two sheen wedges that show the disc turning */
+  /* red label, grooves, and two sheen wedges that show the disc turning */
   background:
     radial-gradient(circle, var(--pin) 0 11%, transparent 12%),
     conic-gradient(
@@ -380,8 +376,7 @@
     var(--ink-brown);
   box-shadow: 0 4px 8px rgb(var(--shadow-rgb) / 25%);
 }
-/* The whole sleeve is the play/pause button. On hover or focus a light overlay fades in with a
-   small cream button in the middle. */
+/* The whole sleeve is the play/pause button: a light overlay with a cream button fades in on hover or focus */
 .record-play {
   position: absolute;
   z-index: 1;
@@ -398,7 +393,7 @@
 .record-play::before {
   content: '';
   position: absolute;
-  inset: 6px; /* over the cover, not the paper border */
+  inset: 6px;
   background: rgb(var(--shadow-rgb) / 22%);
   opacity: 0;
   transition: opacity 0.45s ease;
@@ -451,9 +446,8 @@
   --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='5' height='16' rx='1.5'/%3E%3Crect x='14' y='4' width='5' height='16' rx='1.5'/%3E%3C/svg%3E");
 }
 
-/* Playing: the vinyl slides out and turns, the sleeve gets a red outline, the title turns red,
-   and a small "now playing" badge with moving bars appears. Paused: the vinyl stops where it
-   is and slides back in. */
+/* Playing: the vinyl slides out and turns, the sleeve gets a red outline and the title turns red.
+   Paused: the vinyl stops and slides back in. */
 .record-disc {
   transition: translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -537,8 +531,7 @@
     1px 1.5px 1.5px rgb(var(--shadow-rgb) / 24%),
     2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
 }
-/* Covers look like matte prints: a thin paper border and slightly softened colour, which
-   return to full colour on hover and while playing. Strength is --fade-*. */
+/* Matte-print covers: paper border and softened colour, full colour on hover and while playing (--fade-*) */
 .record-sleeve {
   --fade-sepia: 0.12;
   --fade-saturate: 0.88;
@@ -562,7 +555,6 @@
 .record.is-playing .record-cover {
   filter: none;
 }
-/* No cover yet: a dashed ring on the plain sleeve */
 .record-ring {
   position: absolute;
   inset: 18%;
@@ -620,8 +612,8 @@
   list-style: none;
 }
 .doodle-grid li {
-  break-inside: avoid; /* a doodle never splits across two columns */
-  margin: 0 0 40px; /* also resets the global li spacing */
+  break-inside: avoid;
+  margin: 0 0 40px;
 }
 @media (max-width: 720px) {
   .doodle-grid {
@@ -650,7 +642,7 @@
 .doodle-blank {
   display: block;
   width: 100%;
-  height: auto; /* the picture's own shape, not a crop */
+  height: auto;
 }
 @media (hover: hover) {
   .doodle {

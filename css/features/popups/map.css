@@ -37,7 +37,7 @@
     --pad-x: 52px;
     --pad-bottom: 32px;
     --close-top: 28px;
-    --close-right: 28px; /* as far from the right edge as from the top */
+    --close-right: 28px;
     height: min(580px, calc(100dvh - 32px)); /* fixed, so it doesn't jump between views */
   }
   /* Nothing scrolls as a whole: the globe stays put and the right-hand side scrolls on its own */
@@ -69,10 +69,10 @@
   }
   .map-layout {
     height: 100%;
-    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); /* globe at most 45%, words at least 55% */
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
     grid-template-rows: minmax(0, 1fr);
     align-items: stretch;
-    gap: 48px; /* space between the globe and the words */
+    gap: 48px;
   }
   .popup[data-popup='map'] .map-globe-wrap {
     align-self: stretch;
@@ -122,7 +122,7 @@
   position: relative;
   flex: 1 1 0;
   min-height: 0;
-  aspect-ratio: 1; /* the largest circle that fits the column, so it is never clipped */
+  aspect-ratio: 1;
   max-width: 376px;
   max-height: 376px;
 }
@@ -155,7 +155,7 @@
   border-radius: 50%;
 }
 .map-globe.is-over-pin {
-  cursor: pointer; /* over a pin: tap to select it */
+  cursor: pointer;
 }
 .map-globe:active {
   cursor: grabbing;
@@ -165,7 +165,7 @@
   outline-offset: 4px;
 }
 .popup[data-popup='map'] {
-  --zoom-w: 44px; /* each zoom button; bigger on touch screens */
+  --zoom-w: 44px;
   --zoom-h: 36px;
 }
 @media (pointer: coarse) {
@@ -191,7 +191,7 @@
 .popup[data-popup='map'] .map-zoom .map-zoom-btn {
   width: var(--zoom-w);
   height: var(--zoom-h);
-  padding: 3px; /* the hover fill is inset by this much from the border and dividers */
+  padding: 3px;
   border: 0;
   border-radius: 10px;
   background: transparent;
@@ -199,7 +199,7 @@
   font: 700 13px/1 var(--font-secondary); /* only the "1×" shows text; + and − are icons */
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:first-child {
-  border-top-left-radius: calc(var(--zoom-h) / 2); /* follows the capsule's curve */
+  border-top-left-radius: calc(var(--zoom-h) / 2);
   border-bottom-left-radius: calc(var(--zoom-h) / 2);
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:last-child {
@@ -358,7 +358,7 @@
   list-style: none;
 }
 .map-stamps li {
-  margin: 0; /* reset the global li spacing */
+  margin: 0;
 }
 /* Equal-size inked stamps with no fill; next stops are dashed (not stamped yet) */
 .map-stamp {
@@ -376,12 +376,8 @@
   padding: 12px 14px;
   border: 2px solid var(--ink);
   border-radius: 6px;
-  opacity: 0.92; /* a little faded, like ink */
-  background: color-mix(
-    in srgb,
-    var(--paper-bg) 78%,
-    transparent
-  ); /* footprints behind show faintly */
+  opacity: 0.92;
+  background: color-mix(in srgb, var(--paper-bg) 78%, transparent);
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -435,7 +431,6 @@
   outline: 3px solid var(--accent-500);
   outline-offset: 3px;
 }
-/* The inner line of the stamp */
 .map-stamp::before {
   content: '';
   position: absolute;
@@ -464,7 +459,7 @@
 .map-detail {
   display: flex;
   flex-direction: column;
-  perspective: 900px; /* so the postcard flip reads as a card turning over */
+  perspective: 900px;
   /* room inside the scroll box for the card's shadow; the negative margin cancels it out */
   padding: 26px 28px 34px 26px;
   margin: -20px -20px -26px;
@@ -474,7 +469,7 @@
 }
 /* A fixed landscape shape: long content scrolls inside the address side, the card never grows */
 .map-postcard {
-  --ink: var(--stamp-ink-brown); /* set per place from the stamp that was clicked */
+  --ink: var(--stamp-ink-brown);
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
@@ -482,7 +477,7 @@
   flex: none;
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin-block: auto; /* centred in the column */
+  margin-block: auto;
   padding: 16px 14px 14px 16px;
   background: var(--paper-texture), var(--paper-bg);
   border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
@@ -510,8 +505,7 @@
   font: 400 20px/1.15 var(--font-hand);
   color: var(--text-strong);
 }
-/* The photo's slot takes the leftover column height. The photo keeps its 3:4 or 4:3 shape
-   (--ratio, set when it loads): 90% of the column wide, or less if it is tall. */
+/* The photo keeps its 3:4 or 4:3 shape (--ratio, set on load): 90% of the column wide, less if tall */
 .postcard-slot {
   flex: 1 1 0;
   min-height: 0;
@@ -544,8 +538,7 @@
   position: relative;
   aspect-ratio: var(--ratio);
   rotate: var(--tilt);
-  /* A print lying on the card: a tight contact shadow and a short soft one, both falling the
-     same way (light from the top left) */
+  /* A print lying on the card: a contact shadow plus a soft one, light from the top left */
   box-shadow:
     0 0 0 0.5px rgb(var(--shadow-rgb) / var(--edge)),
     1px 1.5px 1.5px rgb(var(--shadow-rgb) / 28%),
@@ -563,8 +556,7 @@
   object-fit: cover;
   filter: sepia(var(--sepia)) saturate(0.95);
 }
-/* A glossy sheen across the print, like real photo paper. The top left and bottom right corners
-   curl up: a bright patch where the paper catches the light, then a soft shaded band past it */
+/* Glossy sheen; the top left and bottom right corners curl up (a bright patch, then a shaded band) */
 .postcard-gloss {
   position: absolute;
   inset: 0;
@@ -605,7 +597,7 @@
   transform-origin: left center;
 }
 
-/* The address side: stamp and postmark on top, then the note and cities (scrolling), then the years */
+/* The address side: stamp and postmark, then the note and cities (scrolling), then the years */
 .postcard-address {
   position: relative;
   display: flex;
@@ -669,7 +661,7 @@
 .postcard-body {
   flex: 1 1 0;
   min-height: 0;
-  margin-top: 66px; /* clears the stamp */
+  margin-top: 66px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: color-mix(in srgb, var(--ink) 20%, transparent) transparent;
@@ -682,7 +674,7 @@
 .postcard-lines {
   margin: 0;
   padding: 0;
-  min-height: 56px; /* always a couple of lines, like a blank address block */
+  min-height: 56px;
   list-style: none;
   background: repeating-linear-gradient(
     transparent 0 25px,
@@ -690,7 +682,7 @@
   );
 }
 .postcard-lines li {
-  margin: 0; /* reset the global li spacing */
+  margin: 0;
   overflow: hidden;
   font: 400 15px/26px var(--font-hand);
   color: var(--text-strong);

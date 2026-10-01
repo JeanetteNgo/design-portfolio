@@ -37,14 +37,14 @@ OFF_CLOCK_SECTIONS.push({
         const img = popupEl('img', '', 'doodle-media');
         img.src = doodle.image;
         img.alt = doodle.alt || '';
-        img.loading = 'lazy'; // only downloaded when it scrolls near view
+        img.loading = 'lazy';
         img.decoding = 'async';
         popupReserveShape(img, doodle, 'load');
         return img;
       }
       const blank = popupEl('div', 'coming soon', 'doodle-blank');
       blank.setAttribute('aria-hidden', 'true');
-      popupReserveShape(blank, doodle); // keeps its shape like a real doodle
+      popupReserveShape(blank, doodle);
       return blank;
     }
 

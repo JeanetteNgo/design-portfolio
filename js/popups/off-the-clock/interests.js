@@ -15,7 +15,7 @@ OFF_CLOCK_SECTIONS.push({
         picture = popupEl('img', '', 'print-photo');
         picture.src = item.image;
         picture.alt = item.alt || '';
-        picture.loading = 'lazy'; // only downloaded when it scrolls near view
+        picture.loading = 'lazy';
         picture.decoding = 'async';
         popupReserveShape(picture, item, 'load');
       } else {

@@ -69,7 +69,7 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size, size);
 
-    const radius = (size / 2 - 1.25) * zoom; // the outline just fits the canvas
+    const radius = (size / 2 - 1.25) * zoom;
     const projection = d3geo
       .geoOrthographic()
       .clipAngle(90)
@@ -84,7 +84,7 @@ POPUP_RENDERERS.map = function (popup) {
     path({ type: 'Sphere' });
     ctx.fillStyle = css('--globe-water');
     ctx.fill();
-    ctx.clip(); // land and grid stay inside the globe
+    ctx.clip();
 
     ctx.beginPath();
     path(d3geo.geoGraticule10());
@@ -146,11 +146,11 @@ POPUP_RENDERERS.map = function (popup) {
   function _pin(place, x, y, isSelected) {
     const r = place.status === 'home' ? 10 : 8;
     const lift = isSelected ? 4 : 0;
-    const cy = y - lift - r * 1.9; // centre of the round head
+    const cy = y - lift - r * 1.9;
     ctx.save();
     ctx.beginPath();
-    ctx.arc(x, cy, r, Math.PI * 0.8, Math.PI * 0.2); // the round head...
-    ctx.lineTo(x, y - lift); // ...down to the point
+    ctx.arc(x, cy, r, Math.PI * 0.8, Math.PI * 0.2);
+    ctx.lineTo(x, y - lift);
     ctx.closePath();
     ctx.fillStyle =
       place.status === 'home'
@@ -198,7 +198,7 @@ POPUP_RENDERERS.map = function (popup) {
 
     if (turn) {
       const t = Math.min((now - turn.start) / 700, 1);
-      const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; // ease in and out
+      const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
       lng = turn.from[0] + turn.delta * e;
       lat = turn.from[1] + (turn.to[1] - turn.from[1]) * e;
       if (t >= 1) turn = null;
@@ -206,7 +206,7 @@ POPUP_RENDERERS.map = function (popup) {
     } else if (velocity[0] || velocity[1]) {
       lng += velocity[0] * dt;
       lat = Math.max(-80, Math.min(80, lat + velocity[1] * dt));
-      velocity = velocity.map((v) => (Math.abs(v) < 2 ? 0 : v * Math.pow(0.04, dt))); // glides to a stop
+      velocity = velocity.map((v) => (Math.abs(v) < 2 ? 0 : v * Math.pow(0.04, dt)));
       moving = true;
     } else if (spin) {
       lng += spin * dt;
@@ -248,7 +248,7 @@ POPUP_RENDERERS.map = function (popup) {
       _draw();
       return;
     }
-    const delta = ((((to[0] - lng) % 360) + 540) % 360) - 180; // the short way round
+    const delta = ((((to[0] - lng) % 360) + 540) % 360) - 180;
     turn = { from: [lng, lat], to, delta, start: performance.now() };
     last = performance.now();
     _wake();
@@ -323,7 +323,7 @@ POPUP_RENDERERS.map = function (popup) {
       slot.appendChild(print);
       message.appendChild(slot);
     }
-    const sign = popupEl('span', '- J.N.', 'postcard-sign'); // my initials, as if signed
+    const sign = popupEl('span', '- J.N.', 'postcard-sign');
     sign.setAttribute('aria-hidden', 'true');
     message.appendChild(sign);
 
@@ -338,7 +338,7 @@ POPUP_RENDERERS.map = function (popup) {
     stampArt.setAttribute('aria-hidden', 'true');
     const postmark = popupEl('div', '', 'postcard-postmark');
     postmark.setAttribute('aria-hidden', 'true');
-    const body = popupEl('div', '', 'postcard-body'); // scrolls when it is long
+    const body = popupEl('div', '', 'postcard-body');
     if (place.note) body.appendChild(popupEl('p', place.note, 'postcard-note'));
     const lines = popupEl('ul', '', 'postcard-lines');
     (place.cities || []).forEach((city) => lines.appendChild(popupEl('li', city)));
@@ -415,9 +415,9 @@ POPUP_RENDERERS.map = function (popup) {
     selected = place;
     openPlace = place;
     const back = _detail(place);
-    footer.replaceChildren(back); // "← back" takes the Esc tag's place
+    footer.replaceChildren(back);
     listView.hidden = true;
-    banner.hidden = true; // a place is open: the postcard gets the room
+    banner.hidden = true;
     detailView.hidden = false;
     _alignCard();
     requestAnimationFrame(_alignCard); // again once the layout has settled
@@ -473,7 +473,7 @@ POPUP_RENDERERS.map = function (popup) {
     }
     if (pinch && pointers.size === 2) return _zoomTo((pinch.zoom * _fingerGap()) / pinch.gap, true);
     if (!drag) return;
-    const perPx = 0.3 / zoom; // degrees of turn per pixel dragged
+    const perPx = 0.3 / zoom;
     const dx = e.clientX - drag.x;
     const dy = e.clientY - drag.y;
     if (Math.hypot(e.clientX - drag.sx, e.clientY - drag.sy) > 5) drag.moved = true;
@@ -568,7 +568,7 @@ POPUP_RENDERERS.map = function (popup) {
   const zoomButtons = popupEl('div', '', 'map-zoom');
   [
     ['−', 'Zoom out', 'paper-sticker--minus', () => _zoomBy(-0.5)],
-    ['1×', 'Zoom 1×', '', () => _zoomTo(MIN_ZOOM)], // shows the zoom; resets to 1×
+    ['1×', 'Zoom 1×', '', () => _zoomTo(MIN_ZOOM)],
     ['+', 'Zoom in', 'paper-sticker--plus', () => _zoomBy(0.5)],
   ].forEach(([text, label, glyph, onClick]) => {
     const b = popupEl('button', text, `map-zoom-btn paper-sticker ${glyph}`.trim());
@@ -594,8 +594,8 @@ POPUP_RENDERERS.map = function (popup) {
   }
   _syncZoomButtons();
 
-  const globeFrame = popupEl('div', '', 'map-globe-frame'); // outline ring around the canvas
-  globeFrame.append(canvas, zoomButtons); // the zoom capsule overlaps the globe's bottom edge
+  const globeFrame = popupEl('div', '', 'map-globe-frame');
+  globeFrame.append(canvas, zoomButtons);
   const globeWrap = popupEl('div', '', 'map-globe-wrap');
   globeWrap.appendChild(globeFrame);
 
