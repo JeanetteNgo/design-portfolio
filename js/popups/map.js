@@ -282,26 +282,18 @@ POPUP_RENDERERS.map = function (popup) {
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
 
-  // One place as a portrait postcard: stamp strip, greeting, photo and note, cities, years at the foot
+  // One place as a landscape postcard: greeting and photo on the left; stamp, note, cities and years on the right
   function _detail(place) {
     const card = popupEl('article', '', 'map-postcard');
     const stampButton = stamps.get(place);
     const ink = stampButton && getComputedStyle(stampButton).getPropertyValue('--ink').trim();
     if (ink) card.style.setProperty('--ink', ink);
 
-    // The stamp and postmark are decoration; the years are in the footer
-    const strip = popupEl('div', '', 'postcard-strip');
-    const stampArt = popupEl(
-      'div',
-      place.status === 'home' ? 'Home' : _years(place).latest,
-      'postcard-stamp'
+    const message = popupEl('div', '', 'postcard-message');
+    message.append(
+      popupEl('p', STATUS[place.status][0], 'postcard-status'),
+      popupEl('h3', `Greetings from ${place.name}`, 'postcard-greeting')
     );
-    stampArt.setAttribute('aria-hidden', 'true');
-    const postmark = popupEl('div', '', 'postcard-postmark');
-    postmark.setAttribute('aria-hidden', 'true');
-    strip.append(popupEl('p', STATUS[place.status][0], 'postcard-status'), postmark, stampArt);
-
-    const middle = popupEl('div', '', 'postcard-middle');
     if (place.photo) {
       const photo = popupEl('div', '', 'postcard-photo');
       const img = popupEl('img');
@@ -314,27 +306,32 @@ POPUP_RENDERERS.map = function (popup) {
         img.style.aspectRatio = img.naturalHeight > img.naturalWidth ? '3 / 4' : '4 / 3';
       });
       photo.appendChild(img);
-      middle.appendChild(photo);
+      message.appendChild(photo);
     }
-    if (place.note) middle.appendChild(popupEl('p', place.note, 'postcard-note'));
 
-    const cities = place.cities || [];
-    const lines = popupEl('ul', '', 'postcard-lines');
-    lines.classList.toggle('is-wide', cities.length > 6); // two columns for long lists
-    cities.forEach((city) => lines.appendChild(popupEl('li', city)));
-
-    card.append(
-      strip,
-      popupEl('h3', `Greetings from ${place.name}`, 'postcard-greeting'),
-      middle,
-      lines
+    // The stamp and postmark are decoration; the years are in the footer
+    const address = popupEl('div', '', 'postcard-address');
+    const stampArt = popupEl(
+      'div',
+      place.status === 'home' ? 'Home' : _years(place).latest,
+      'postcard-stamp'
     );
+    stampArt.setAttribute('aria-hidden', 'true');
+    const postmark = popupEl('div', '', 'postcard-postmark');
+    postmark.setAttribute('aria-hidden', 'true');
+    const body = popupEl('div', '', 'postcard-body'); // scrolls when it is long
+    if (place.note) body.appendChild(popupEl('p', place.note, 'postcard-note'));
+    const lines = popupEl('ul', '', 'postcard-lines');
+    (place.cities || []).forEach((city) => lines.appendChild(popupEl('li', city)));
+    body.appendChild(lines);
+    address.append(postmark, stampArt, body);
     if (place.when) {
       const when = popupEl('p', place.when, 'postcard-when');
       when.prepend(popupEl('span', place.status === 'next' ? 'Planned' : 'Visited'));
-      card.appendChild(when);
+      address.appendChild(when);
     }
 
+    card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
     const footer = popupEl('div', '', 'map-detail-footer');
     footer.appendChild(back);
