@@ -84,12 +84,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d7/63/7d/d7637dec-cf2d-1455-3398-f1a6340359d0/mzaf_88927986796632454.plus.aac.p.m4a',
   },
   {
-    title: 'Home',
-    artist: 'Good Neighbours',
-    image: 'img/music/home-good-neighbours.jpg',
-    alt: 'Cover of Home by Good Neighbours',
+    title: 'Akuma no Ko',
+    artist: 'Ai Higuchi',
+    image: 'img/music/akuma-no-ko-ai-higuchi.jpg',
+    alt: 'Cover of Akuma no Ko by Ai Higuchi',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/3b/9f/ad3b9fda-3699-1b48-ac19-296897e5a73a/mzaf_7582822065161803606.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/4c/89/a6/4c89a6f6-89d7-957c-bee0-d4ff622a56ee/mzaf_15664807686809922181.plus.aac.p.m4a',
   },
   {
     title: 'Airplanes',
