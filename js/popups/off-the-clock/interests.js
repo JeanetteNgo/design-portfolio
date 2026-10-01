@@ -6,7 +6,7 @@
 
 OFF_CLOCK_SECTIONS.push({
   id: 'interests',
-  label: 'Interests',
+  label: 'Likes',
   build() {
     function _print(item) {
       const print = popupEl('figure', '', `print print--${item.kind}`);

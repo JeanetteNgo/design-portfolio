@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    INTERESTS
-   The prints stuck on the page in the "Off the clock" popup's Interests tab
+   The prints stuck on the page in the "Off the clock" popup's Likes tab
    (built by js/popups/off-the-clock/interests.js). Add one by adding a block to the list.
    The order here is the order on the page.
 
