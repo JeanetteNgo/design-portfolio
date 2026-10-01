@@ -61,6 +61,7 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     const tab = popupEl('button', section.label, 'otc-tab');
     tab.type = 'button';
     tab.id = `otc-tab-${section.id}`;
+    tab.dataset.section = section.id;
     tab.setAttribute('role', 'tab');
     tabs.appendChild(tab);
 
