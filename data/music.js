@@ -84,12 +84,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d7/63/7d/d7637dec-cf2d-1455-3398-f1a6340359d0/mzaf_88927986796632454.plus.aac.p.m4a',
   },
   {
-    title: 'Akuma no Ko',
-    artist: 'Ai Higuchi',
-    image: 'img/music/akuma-no-ko-ai-higuchi.jpg',
-    alt: 'Cover of Akuma no Ko by Ai Higuchi',
+    title: 'Setsuna Hanabi',
+    artist: 'TOMORROW X TOGETHER',
+    image: 'img/music/setsuna-hanabi-tomorrow-x-together.jpg',
+    alt: 'Cover of Setsuna Hanabi by TOMORROW X TOGETHER',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/4c/89/a6/4c89a6f6-89d7-957c-bee0-d4ff622a56ee/mzaf_15664807686809922181.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9f/ed/dd/9feddd7b-ffdb-040d-55de-13f91dfbee12/mzaf_6151754821591686790.plus.aac.p.m4a',
   },
   {
     title: 'Airplanes',
