@@ -6,7 +6,6 @@
 OFF_CLOCK_SECTIONS.push({
   id: 'reading',
   label: 'Books',
-  soon: true,
   build() {
     const STATUS_TEXT = { reading: 'Reading now', next: 'Up next' };
 

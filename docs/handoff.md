@@ -18,13 +18,14 @@ Sections 3 and 4 below describe the original plan. What is actually built differ
   - **Off the clock** (`js/popups/off-the-clock.js` is the shell; one file per tab in `js/popups/off-the-clock/`, each adding itself to `OFF_CLOCK_SECTIONS`; `css/features/popups/off-the-clock.css`). A section with `soon: true` shows a disabled tab with a "Coming Soon!" tooltip.
     - **Interests** (`data/interests.js`, photos in `img/gallery/`): polaroids and postcards with a short caption, no stories.
     - **Playlist** (`data/music.js`): record sleeves; a record with a `preview` link plays and pauses on click.
-    - **Books** (`data/books.js`) and **Doodles** (`data/doodles.js`, `img/doodles/`): built, currently disabled with `soon: true` in `reading.js` and `sketchbook.js`.
+    - **Books** (`data/books.js`): four books with covers in `img/books/`.
+    - **Doodles** (`data/doodles.js`, `img/doodles/`): built, currently disabled with `soon: true` in `sketchbook.js`.
     - **Covers:** list songs and books by title, run `node scripts/fetch-covers.mjs` (dry run), then `--yes`. It saves covers to `img/music/` and `img/books/` and fills in `image`, `alt` and `preview` (iTunes Search API for music, Open Library for books; the credited artist always replaces the typed one).
     - It replaced the separate Doodles and Gallery popups; their dock icons (`img/dock/doodles.svg`, `gallery.svg`) are kept unused.
   - **Map** (`js/popups/map.js`, `css/features/popups/map.css`, `data/places.js`): fixed-height (580px on desktop) worn-chart popup with an interactive canvas globe (drag, pinch, trackpad, keys, +/−, auto-spin that resumes after 6s idle) beside a "Based in" banner and passport stamps (six muted inks, latest year only). Choosing a place shows it as a postcard. Places use `lat`/`lng` on the capital, plus optional `when`, `cities`, `note`, `photo`. `img/map/chart.svg` is the faint compass rose; the world outline `data/land.json` and `js/vendor/d3-geo.min.js` load only when the Map opens.
   - **Palette:** waits for the theme system; not built.
 - **Tidy pass: done** (2026-10-01): `js/dock.js` renamed `js/popup.js`; comments across the code cut to short, necessary ones (only write comments that explain how something works, not small tweaks); `.DS_Store` untracked; `.prettierrc` has a narrow print width for `data/places.js` only. Don't run Prettier on `js/render-projects.js` or `data/doodles.js`.
-- **Next:** Palette (after the theme system); real photos for Interests; real books and doodles, then remove `soon: true`; push and tag `v4.1.0`. Real dock icons still to be exported from Figma into `img/dock/` (same file names).
+- **Next:** Palette (after the theme system); real photos for Interests; a one-line take for each book; real doodles, then remove `soon: true`; push and tag `v4.1.0`. Real dock icons still to be exported from Figma into `img/dock/` (same file names).
 
 ## 1. About me and how to work with me
 
