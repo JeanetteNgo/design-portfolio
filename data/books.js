@@ -44,6 +44,14 @@ const BOOKS = [
     take: '',
   },
   {
+    title: 'Atomic Habits',
+    author: 'James Clear',
+    status: 'read',
+    image: 'img/books/atomic-habits-james-clear.jpg',
+    alt: 'Cover of Atomic Habits by James Clear',
+    take: '',
+  },
+  {
     title: 'Designing Products People Love',
     author: 'Scott Hurff',
     status: 'next',
