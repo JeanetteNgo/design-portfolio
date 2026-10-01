@@ -10,16 +10,10 @@
   rotate: none; /* the sheet lies flat, so the globe stays crisp and pin taps stay exact */
   --sticker-ring: var(--sticker-ring-brown);
 }
-/* The sheet, top layer first: stains, crumple, faint compass rose, paper grain, paper colour */
+/* The sheet, top layer first: stains, crumple, faint footsteps, paper grain, paper colour */
 .popup[data-popup='map'] .popup-card::before {
   background:
     radial-gradient(ellipse 170px 120px at 84% 16%, var(--map-stain), transparent 72%),
-    radial-gradient(
-      circle 64px at 22% 82%,
-      transparent 54%,
-      var(--map-stain-ring) 60%,
-      transparent 70%
-    ),
     radial-gradient(ellipse 210px 150px at 70% 92%, var(--map-stain), transparent 70%),
     var(--map-crinkle) 0 0 / 520px 520px,
     url('../../../img/map/chart.svg') center / cover,
@@ -41,7 +35,7 @@
   .popup[data-popup='map'] .popup-card {
     --pad-top: 40px;
     --pad-x: 52px;
-    --pad-bottom: 20px;
+    --pad-bottom: 32px;
     --close-top: 28px;
     --close-right: 28px; /* as far from the right edge as from the top */
     height: min(580px, calc(100dvh - 32px)); /* fixed, so it doesn't jump between views */
@@ -54,7 +48,7 @@
 @media (max-width: 719px) {
   .popup[data-popup='map'] .popup-card {
     --pad-x: 24px;
-    --pad-bottom: 20px;
+    --pad-bottom: 32px;
   }
 }
 .popup[data-popup='map'] .popup-title {
@@ -81,7 +75,14 @@
     gap: 48px; /* space between the globe and the words */
   }
   .map-globe-wrap {
-    align-self: center;
+    align-self: stretch;
+    padding-bottom: 52px; /* room for the Esc tag */
+  }
+  /* "Esc to close" (or "back") sits in the bottom left corner, beside the right column */
+  .popup[data-popup='map'] .popup-footer {
+    position: absolute;
+    left: var(--pad-x);
+    bottom: 20px;
   }
   /* The banner stays at the top; the stamps (or the postcard) below it scroll if they are long */
   .map-side {
@@ -113,9 +114,18 @@
 }
 .map-globe-frame {
   position: relative;
-  flex: 1;
-  width: 100%;
-  max-width: min(376px, calc(100dvh - 340px)); /* shrinks on short windows so nothing is clipped */
+  flex: 1 1 0;
+  min-height: 0;
+  aspect-ratio: 1; /* the largest circle that fits the column, so it is never clipped */
+  max-width: 376px;
+  max-height: 376px;
+}
+/* Phones stack and scroll, so the frame simply fills the width (no fixed height to fit into) */
+@media (max-width: 719px) {
+  .map-globe-frame {
+    flex: none;
+    width: 100%;
+  }
 }
 /* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
 .map-globe-frame::after {
@@ -129,6 +139,7 @@
 .map-globe {
   display: block;
   width: 100%;
+  height: 100%;
   aspect-ratio: 1;
   touch-action: none; /* dragging turns the globe instead of scrolling the popup */
   cursor: grab;
@@ -199,7 +210,7 @@
   width: 26px;
   height: 26px;
   box-sizing: border-box;
-  margin: 0 12px 0 auto;
+  margin: 0 0 0 2px;
   translate: 0 -3px; /* the tip hangs below the head, so lift it to centre the whole drop */
   border: 3px solid var(--ink-brown);
   border-radius: 50% 50% 50% 0;
@@ -223,6 +234,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-red);
+}
+.map-home-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 .map-home-name {
   font: 900 30px/1.1 var(--font-primary);

@@ -564,11 +564,10 @@ POPUP_RENDERERS.map = function (popup) {
   banner.type = 'button';
   banner.setAttribute('aria-label', `Currently based in ${home.name}. Open its postcard.`);
   const bannerText = popupEl('span', '', 'map-home-text');
-  bannerText.append(
-    popupEl('span', 'Currently based in', 'map-home-label'),
-    popupEl('span', home.name, 'map-home-name')
-  );
-  banner.append(bannerText, popupEl('span', '', 'map-home-pin'));
+  const nameRow = popupEl('span', '', 'map-home-row');
+  nameRow.append(popupEl('span', home.name, 'map-home-name'), popupEl('span', '', 'map-home-pin'));
+  bannerText.append(popupEl('span', 'Currently based in', 'map-home-label'), nameRow);
+  banner.appendChild(bannerText);
   banner.addEventListener('click', () => _select(home, true));
 
   Object.entries(STATUS).forEach(([status, [, heading]]) => {
