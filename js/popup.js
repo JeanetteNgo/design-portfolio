@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────
-   DOCK POPUPS
+   POPUPS
    A dock icon (button[data-popup="tools"]) opens the one <dialog id="popup">,
    filled from POPUPS in data/popups.js. The dialog gets data-popup="<id>" while
    open (for per-popup CSS), plus data-paper when the data says paper: true.
@@ -27,21 +27,25 @@ function popupReserveShape(el, item, loadedEvent) {
     el.addEventListener(loadedEvent, () => (el.style.aspectRatio = ''), { once: true });
 }
 
-/** A key-hint tag button: "← back to the list". Clicking it calls onBack. */
-function popupBackTag(label, onBack) {
+/** A key-hint tag button such as "Esc to close". Returns it unattached, with no click handler. */
+function _popupKeyTag(key, label) {
   const tag = popupEl('button', '', 'esc-tag');
   tag.type = 'button';
-  tag.append(popupEl('kbd', '←', 'esc-key'), ` ${label}`);
+  tag.append(popupEl('kbd', key, 'esc-key'), ` ${label}`);
+  return tag;
+}
+
+/** A key-hint tag button: "← back to the list". Clicking it calls onBack. */
+function popupBackTag(label, onBack) {
+  const tag = _popupKeyTag('←', label);
   tag.addEventListener('click', onBack);
   return tag;
 }
 
 /** The "Esc to close" tag every popup shows on its main view. Clicking it closes (for touch). */
 function popupCloseTag() {
-  const tag = popupEl('button', '', 'esc-tag');
-  tag.type = 'button';
+  const tag = _popupKeyTag('Esc', 'to close');
   tag.dataset.popupClose = '';
-  tag.append(popupEl('kbd', 'Esc', 'esc-key'), ' to close');
   return tag;
 }
 

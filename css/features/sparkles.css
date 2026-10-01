@@ -1,9 +1,9 @@
 /* ══════════════════════════════════════════
    SPARKLE BURST
-   Sparkles fired by the dock's Sparkles tile. They fly in front of the
-   dock (so you see them leave the icon) but behind the intro content. js/sparkles.js creates the .sparkle elements,
-   sets --size and --colour on each, and moves them frame by frame
-   (shoot up, bounce off the nav, float down, slip behind the washi tape).
+   Sparkles fired by the dock's Make it Pop! tile. They fly in front of the dock
+   (so you see them leave the icon) but behind the intro content. js/sparkles.js
+   creates the .sparkle elements, sets --size and --colour on each, and moves them
+   frame by frame (shoot up, bounce off the nav, float down, slip behind the washi tape).
 ══════════════════════════════════════════ */
 .home-sparkles {
   position: absolute;
@@ -68,7 +68,7 @@
   border-radius: 50%;
 }
 
-/* The Sparkles icon kicks back as it fires */
+/* The Make it Pop! icon kicks back as it fires */
 .dock-btn.is-popping .dock-icon {
   animation: party-pop 0.4s ease-out;
 }

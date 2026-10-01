@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────
    DOCK POPUPS
    The words shown when a dock icon is clicked. Edit the text here;
-   js/dock.js puts it into the popup. The key (tools, doodles, …) must
+   js/popup.js puts it into the popup. The key (tools, doodles, …) must
    match the icon's data-popup="…" in index.html.
 
    Each popup has:

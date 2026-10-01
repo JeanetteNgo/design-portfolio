@@ -57,6 +57,11 @@
 
 .dock-list {
   --dock-tile: 54px; /* tile size; smaller on phones (below) */
+  --tile-lift: translateY(-1.5px); /* the picked-up look, used by .dock-btn below */
+  --icon-pop: translateY(-4%) rotate(-8deg) scale(1.3);
+  --icon-outline: drop-shadow(2px 0 0 var(--dock-outline)) drop-shadow(-2px 0 0 var(--dock-outline))
+    drop-shadow(0 2px 0 var(--dock-outline)) drop-shadow(0 -2px 0 var(--dock-outline))
+    drop-shadow(0 5px 4px rgb(var(--shadow-rgb) / 30%));
   display: flex;
   justify-content: center;
   gap: clamp(14px, 3vw, 28px);
@@ -117,13 +122,6 @@
 }
 /* The "picked up" look, shared by keyboard focus and mouse hover. Hover is limited to
    devices that really hover: on a phone a tap leaves :hover stuck on until the next tap. */
-.dock-list {
-  --tile-lift: translateY(-1.5px);
-  --icon-pop: translateY(-4%) rotate(-8deg) scale(1.3);
-  --icon-outline: drop-shadow(2px 0 0 var(--dock-outline)) drop-shadow(-2px 0 0 var(--dock-outline))
-    drop-shadow(0 2px 0 var(--dock-outline)) drop-shadow(0 -2px 0 var(--dock-outline))
-    drop-shadow(0 5px 4px rgb(var(--shadow-rgb) / 30%));
-}
 .dock-btn:focus-visible .dock-tile {
   transform: var(--tile-lift);
 }
@@ -193,7 +191,7 @@
   }
 }
 
-/* Small phones: seven tiles only fit at 360px if they're a little smaller */
+/* Small phones: six tiles only fit at 360px if they're a little smaller */
 @media (max-width: 420px) {
   .dock-list {
     --dock-tile: 42px;

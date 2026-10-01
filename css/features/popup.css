@@ -1,6 +1,6 @@
 /* ══════════════════════════════════════════
    POPUP
-   The shared shell for the dock's <dialog id="popup"> (js/dock.js): backdrop, card, title, ×.
+   The shared shell for the dock's <dialog id="popup"> (js/popup.js): backdrop, card, title, ×.
    Per-popup styles go in css/features/popups/, scoped with .popup[data-popup='<id>'].
 ══════════════════════════════════════════ */
 

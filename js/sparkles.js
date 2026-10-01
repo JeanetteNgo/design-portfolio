@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    SPARKLE BURST
-   Clicking the dock's Sparkles tile (button[data-action="party"]) fires
+   Clicking the dock's Make it Pop! tile (button[data-action="party"]) fires
    a stream of sparkles out of the icon like a party popper: they shoot up,
    fanning out a little, glance off the nav bar in random directions, then
    flutter down and slip behind the dock's washi tape.
