@@ -11,6 +11,10 @@
   --pad-top: 32px; /* the heading adds 16px of its own */
   --pad-x: 60px;
   --pad-bottom: 36px;
+  /* A plain shadow instead of paper.css's filter: a filter on the sheet stops the scroll area
+     from clipping clicks, so scrolled-out covers would sit over the tabs and block them. */
+  filter: none;
+  box-shadow: 0 8px 18px rgb(var(--shadow-rgb) / 18%);
 }
 @media (max-width: 640px) {
   .popup[data-popup='off-the-clock'] .popup-card {
