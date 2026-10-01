@@ -21,6 +21,7 @@
    Pins sit on each country's capital.
 ────────────────────────────────────────────── */
 
+// Placeholder photos and notes: replace with your own
 const PLACES = [
   {
     name: 'Singapore',
@@ -28,8 +29,10 @@ const PLACES = [
     lat: 1.35,
     lng: 103.82,
     note: 'Where I live and design.',
+    photo:
+      'img/map/placeholder/singapore.svg',
+    alt: 'Illustration of the Marina Bay towers at sunset',
   },
-
   {
     name: 'Malaysia',
     status: 'been',
@@ -40,7 +43,10 @@ const PLACES = [
       'Malacca',
       'Johor Bahru',
     ],
-    note: '[A line about this place.]',
+    note: 'Good food',
+    photo:
+      'img/quests/240913-bungy.webp',
+    alt: 'A photo of Malaysia',
   },
   {
     name: 'Thailand',
@@ -52,7 +58,10 @@ const PLACES = [
       'Bangkok',
       'Pattaya',
     ],
-    note: '[A line about this place.]',
+    note: 'Great beaches',
+    photo:
+      'img/map/placeholder/thailand.svg',
+    alt: 'Illustration of a palm tree and boat at a tropical sunset',
   },
   {
     name: 'China',
@@ -63,7 +72,10 @@ const PLACES = [
     cities: [
       'Hainan Island',
     ],
-    note: '[A line about this place.]',
+    note: 'Beautiful landscapes',
+    photo:
+      'img/map/placeholder/china.svg',
+    alt: 'Illustration of a wall winding over misty hills',
   },
   {
     name: 'Taiwan',
@@ -75,7 +87,10 @@ const PLACES = [
       'Taipei',
       'Kaohsiung',
     ],
-    note: '[A line about this place.]',
+    note: 'Good food',
+    photo:
+      'img/map/placeholder/taiwan.svg',
+    alt: 'Illustration of a tall tower against a blue sky',
   },
   {
     name: 'Italy',
@@ -87,7 +102,10 @@ const PLACES = [
       'Rome',
       'Venice',
     ],
-    note: '[A line about this place.]',
+    note: 'Pasta, gelato, repeat.',
+    photo:
+      'img/map/placeholder/italy.svg',
+    alt: 'Illustration of a stone arcade at golden hour',
   },
   {
     name: 'Switzerland',
@@ -99,7 +117,10 @@ const PLACES = [
       'Lucerne',
       'Interlaken',
     ],
-    note: '[A line about this place.]',
+    note: 'Trains with a view.',
+    photo:
+      'img/map/placeholder/switzerland.svg',
+    alt: 'Illustration of an alpine peak above a small chalet',
   },
   {
     name: 'The Netherlands',
@@ -111,7 +132,10 @@ const PLACES = [
       'Amsterdam',
       'Rotterdam',
     ],
-    note: '[A line about this place.]',
+    note: 'So many bikes.',
+    photo:
+      'img/map/placeholder/netherlands.svg',
+    alt: 'Illustration of a windmill in a flower field',
   },
   {
     name: 'France',
@@ -122,7 +146,10 @@ const PLACES = [
     cities: [
       'Paris',
     ],
-    note: '[A line about this place.]',
+    note: 'Croissants over museums.',
+    photo:
+      'img/map/placeholder/france.svg',
+    alt: 'Illustration of a tall iron tower at dusk',
   },
   {
     name: 'South Korea',
@@ -136,7 +163,10 @@ const PLACES = [
       'Gangneung',
       'Sokcho',
     ],
-    note: '[A line about this place.]',
+    note: 'Late-night food runs.',
+    photo:
+      'img/map/placeholder/korea.svg',
+    alt: 'Illustration of a pagoda at sunrise',
   },
   {
     name: 'New Zealand',
@@ -154,7 +184,10 @@ const PLACES = [
       'Rotorua',
       'Wellington',
     ],
-    note: '[A line about this place.]',
+    note: 'Hiking, huts and road trips.',
+    photo:
+      'img/map/placeholder/newzealand.svg',
+    alt: 'Illustration of green hills below snowy mountains',
   },
   {
     name: 'Japan',
@@ -168,28 +201,51 @@ const PLACES = [
       'Kawaguchiko',
       'Hakone',
     ],
-    note: '[A line about this place.]',
+    note: 'Vending machines for everything.',
+    photo:
+      'img/map/placeholder/japan.svg',
+    alt: 'Illustration of a snow-capped mountain at sunset',
+  },
+  {
+    name: 'Indonesia',
+    status: 'next',
+    lat: -6.21,
+    lng: 106.85,
+    when: 'Someday',
+    cities: [
+      'Ubud',
+    ],
+    note: 'Beaches and volcano sunrises.',
+    photo:
+      'img/map/placeholder/indonesia.svg',
+    alt: 'Illustration of a volcano over the sea at sunrise',
   },
   {
     name: 'Australia',
     status: 'next',
     lat: -35.28,
     lng: 149.13,
-    when: '[When]',
+    when: '2027',
     cities: [
-      '[City]',
+      'Sydney',
     ],
-    note: '[Why it is on the list.]',
+    note: 'Coastal drives and good coffee.',
+    photo:
+      'img/map/placeholder/australia.svg',
+    alt: 'Illustration of white sails on the harbour',
   },
   {
     name: 'Kyrgyzstan',
     status: 'next',
     lat: 42.87,
     lng: 74.59,
-    when: '[When]',
+    when: 'Someday',
     cities: [
-      '[City]',
+      'Bishkek',
     ],
-    note: '[Why it is on the list.]',
+    note: 'Mountain lakes and yurt stays.',
+    photo:
+      'img/map/placeholder/kyrgyzstan.svg',
+    alt: 'Illustration of a yurt below mountain peaks',
   },
 ];
