@@ -18,12 +18,12 @@
 
 const MUSIC = [
   {
-    title: 'Spring Day',
+    title: 'Fake Love (Rocking Vibe Mix)',
     artist: 'BTS',
-    image: 'img/music/spring-day-bts.jpg',
-    alt: 'Cover of Spring Day by BTS',
+    image: 'img/music/fake-love-rocking-vibe-mix-bts.jpg',
+    alt: 'Cover of Fake Love (Rocking Vibe Mix) by BTS',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ba/76/d5/ba76d586-0dac-c800-f08d-467aef7dc9c0/mzaf_12707603572181808804.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview126/v4/93/f3/11/93f31110-ecc3-33be-1b4c-7b8a366b0240/mzaf_13352112116270343259.plus.aac.p.m4a',
   },
   {
     title: 'Drunk-Dazed',
