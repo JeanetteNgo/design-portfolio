@@ -401,8 +401,9 @@ POPUP_RENDERERS.map = function (popup) {
     const d = detailView.getBoundingClientRect();
     const k = detailView.offsetHeight / d.height || 1; // undoes the popup's open-animation scale
     const globeMid = ((g.top + g.bottom) / 2 - d.top) * k;
+    const base = parseFloat(getComputedStyle(detailView).paddingTop) + 8; // the CSS bottom padding
     detailView.style.paddingBottom = wide
-      ? `${Math.max(8, 6 + detailView.offsetHeight - 2 * globeMid)}px`
+      ? `${Math.max(base, base - 8 + detailView.offsetHeight - 2 * globeMid)}px`
       : '';
   }
   addEventListener('resize', _alignCard);
