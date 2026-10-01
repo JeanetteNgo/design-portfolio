@@ -193,43 +193,86 @@
   margin-inline: auto;
   background: var(--text-strong);
 }
-/* The clip's own play/pause button, bottom left, in the cream style of the Playlist records */
+/* The clip's own play/pause button covers it: a light overlay with a cream button fades in on hover or focus */
 .quest-video {
   position: relative;
   width: fit-content;
   max-width: 100%;
   margin-inline: auto;
 }
-.quest-video video {
-  cursor: pointer;
-}
 .quest-video-toggle {
   position: absolute;
-  left: 10px;
-  bottom: 10px;
-  width: 44px;
-  height: 44px;
+  inset: 0;
   padding: 0;
   border: 0;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--paper-bg) 90%, transparent);
-  box-shadow: 0 2px 6px rgb(var(--shadow-rgb) / 30%);
+  background: none;
   cursor: pointer;
+}
+.quest-video-toggle:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 3px;
 }
 .quest-video-toggle::before {
   content: '';
   position: absolute;
-  inset: 13px;
-  background: var(--ink-brown);
-  mask: var(--toggle-icon) center / contain no-repeat;
-  --toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z'/%3E%3C/svg%3E");
+  inset: 0;
+  background: rgb(var(--shadow-rgb) / 22%);
+  opacity: 0;
+  transition: opacity 0.45s ease;
 }
-.quest-video-toggle.is-playing::before {
-  --toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='5' height='16' rx='1.5'/%3E%3Crect x='14' y='4' width='5' height='16' rx='1.5'/%3E%3C/svg%3E");
+.quest-video-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  scale: 0.88;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgb(255 253 248 / 85%);
+  box-shadow: 0 1px 6px rgb(var(--shadow-rgb) / 22%);
+  color: var(--ink-brown);
+  opacity: 0;
+  transition:
+    opacity 0.45s ease,
+    scale 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.quest-video-toggle:focus-visible {
-  outline: 3px solid var(--accent-500);
-  outline-offset: 2px;
+.quest-video-icon::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: var(--glyph) center / contain no-repeat;
+  mask: var(--glyph) center / contain no-repeat;
+  --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z'/%3E%3C/svg%3E");
+}
+.quest-video-toggle.is-playing .quest-video-icon::before {
+  --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='5' height='16' rx='1.5'/%3E%3Crect x='14' y='4' width='5' height='16' rx='1.5'/%3E%3C/svg%3E");
+}
+@media (hover: hover) {
+  .quest-video-toggle:hover::before,
+  .quest-video-toggle:hover .quest-video-icon {
+    opacity: 1;
+  }
+  .quest-video-toggle:hover .quest-video-icon {
+    scale: 1;
+  }
+}
+.quest-video-toggle:focus-visible::before,
+.quest-video-toggle:focus-visible .quest-video-icon {
+  opacity: 1;
+}
+.quest-video-toggle:focus-visible .quest-video-icon {
+  scale: 1;
+}
+/* No hover on touch screens, so a paused clip keeps its play button showing */
+@media (hover: none) {
+  .quest-video-toggle:not(.is-playing) .quest-video-icon {
+    opacity: 1;
+    scale: 1;
+  }
 }
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
@@ -246,6 +289,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .quest-video-toggle::before,
+  .quest-video-icon {
+    transition: none;
+  }
   .quest.is-jiggling .quest-btn,
   .quest-reply:not(:empty) {
     animation: none;

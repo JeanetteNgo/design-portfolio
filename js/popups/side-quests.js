@@ -75,13 +75,13 @@ POPUP_RENDERERS['side-quests'] = function (popup) {
         // Own play/pause button instead of the browser's controls
         const toggle = popupEl('button', '', 'quest-video-toggle');
         toggle.type = 'button';
+        toggle.appendChild(popupEl('span', '', 'quest-video-icon'));
         const syncToggle = () => {
           toggle.classList.toggle('is-playing', !clip.paused);
           toggle.setAttribute('aria-label', clip.paused ? 'Play video' : 'Pause video');
         };
         const playPause = () => (clip.paused ? clip.play().catch(() => {}) : clip.pause());
         toggle.addEventListener('click', playPause);
-        clip.addEventListener('click', playPause);
         clip.addEventListener('play', syncToggle);
         clip.addEventListener('pause', syncToggle);
         syncToggle();
