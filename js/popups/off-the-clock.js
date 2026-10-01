@@ -3,6 +3,7 @@
    What I'm into outside work, on a notebook page with tabs. This file is the shell (heading,
    tabs, the opened view); each tab is a section in js/popups/off-the-clock/ that adds itself:
      OFF_CLOCK_SECTIONS.push({ id, label, build(shell) { return element; } });
+   Add `soon: true` to show the tab greyed out with a "Coming Soon!" tooltip instead of opening.
    Tabs appear in the order the section scripts load. A section that opens an item calls
    shell.open(elements, backLabel, buttonToReturnTo); shell.close() brings the tabs back.
    Styles: css/features/popups/off-the-clock.css.
@@ -55,21 +56,31 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   tabs.setAttribute('role', 'tablist');
   tabs.setAttribute('aria-label', 'Off the clock');
   const panels = popupEl('div', '', 'otc-panels');
-  const parts = OFF_CLOCK_SECTIONS.map((section) => {
+  const parts = [];
+  OFF_CLOCK_SECTIONS.forEach((section) => {
     const tab = popupEl('button', section.label, 'otc-tab');
     tab.type = 'button';
     tab.id = `otc-tab-${section.id}`;
     tab.setAttribute('role', 'tab');
-    tab.setAttribute('aria-controls', `otc-panel-${section.id}`);
+    tabs.appendChild(tab);
 
+    if (section.soon) {
+      tab.classList.add('is-soon');
+      tab.setAttribute('aria-disabled', 'true');
+      tab.setAttribute('aria-label', `${section.label}, coming soon`);
+      tab.tabIndex = -1;
+      tab.appendChild(popupEl('span', 'Coming Soon!', 'otc-tab-tip'));
+      return;
+    }
+
+    tab.setAttribute('aria-controls', `otc-panel-${section.id}`);
     const panel = popupEl('div', '', 'otc-panel');
     panel.id = `otc-panel-${section.id}`;
     panel.setAttribute('role', 'tabpanel');
     panel.setAttribute('aria-labelledby', tab.id);
     panel.appendChild(section.build(shell));
-    tabs.appendChild(tab);
     panels.appendChild(panel);
-    return { tab, panel };
+    parts.push({ tab, panel });
   });
 
   function _select(chosen, focus) {

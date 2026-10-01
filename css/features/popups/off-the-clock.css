@@ -122,6 +122,35 @@
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }
+/* A tab that isn't ready: dimmed, no hover movement, with a small "Coming Soon!" tag above it */
+.otc-tab.is-soon {
+  background: color-mix(in srgb, var(--paper-bg) 80%, var(--pencil-wood));
+  color: var(--text-muted);
+  cursor: not-allowed;
+  box-shadow: 0 0 0 0.5px rgb(var(--shadow-rgb) / 10%);
+}
+.otc-tab-tip {
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  translate: -50% 4px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: var(--text-strong);
+  font: 700 12px/1.4 var(--font-secondary);
+  white-space: nowrap;
+  color: var(--paper-bg);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s ease,
+    translate 0.2s ease;
+}
+.otc-tab.is-soon:hover .otc-tab-tip,
+.otc-tab.is-soon:focus-visible .otc-tab-tip {
+  opacity: 1;
+  translate: -50% 0;
+}
 .otc-panels {
   display: flex;
   flex-direction: column;
@@ -148,6 +177,14 @@
   }
   .otc-tab::before {
     left: 9px;
+  }
+  /* the row scrolls and clips, so the tag lines up with the tab's right edge */
+  .otc-tab-tip,
+  .otc-tab.is-soon:hover .otc-tab-tip,
+  .otc-tab.is-soon:focus-visible .otc-tab-tip {
+    left: auto;
+    right: 0;
+    translate: 0;
   }
 }
 
@@ -690,6 +727,7 @@
   }
   .otc-tab,
   .otc-tab::before,
+  .otc-tab-tip,
   .record-cover,
   .record-play::before,
   .record-play-icon {

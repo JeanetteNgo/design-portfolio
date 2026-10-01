@@ -7,6 +7,7 @@
 OFF_CLOCK_SECTIONS.push({
   id: 'sketchbook',
   label: 'Doodles',
+  soon: true,
   build(shell) {
     const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
