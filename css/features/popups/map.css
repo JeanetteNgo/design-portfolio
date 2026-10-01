@@ -194,6 +194,7 @@
   height: 26px;
   box-sizing: border-box;
   margin: 0 4px 0 2px;
+  translate: 0 -3px; /* the tip hangs below the head, so lift it to centre the whole drop */
   border: 3px solid var(--ink-brown);
   border-radius: 50% 50% 50% 0;
   rotate: -45deg;
@@ -210,7 +211,29 @@
   display: flex;
   flex-direction: column;
 }
+/* A small chevron: the banner opens the postcard */
+.map-home::after {
+  content: '';
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin: 0 6px 0 auto;
+  border: solid var(--ink-brown);
+  border-width: 2.5px 2.5px 0 0;
+  rotate: 45deg;
+  opacity: 0.55;
+  transition:
+    translate 0.15s ease,
+    opacity 0.15s ease;
+}
+@media (hover: hover) {
+  .map-home:hover::after {
+    translate: 3px 0;
+    opacity: 1;
+  }
+}
 .map-home-label {
+  margin-bottom: 8px;
   font: 700 12px var(--font-secondary);
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -219,11 +242,6 @@
 .map-home-name {
   font: 900 30px/1.1 var(--font-primary);
   color: var(--text-strong);
-}
-.map-home-note {
-  margin-top: 2px;
-  font: 400 16px/1.4 var(--font-hand);
-  color: var(--text-body);
 }
 
 /* ── Passport stamps ── */

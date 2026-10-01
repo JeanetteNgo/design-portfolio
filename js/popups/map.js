@@ -314,7 +314,7 @@ POPUP_RENDERERS.map = function (popup) {
     // The stamp and postmark are decoration; the year is already in the message
     const { latest } = _years(place);
     const address = popupEl('div', '', 'postcard-address');
-    const stampArt = popupEl('div', latest, 'postcard-stamp');
+    const stampArt = popupEl('div', place.status === 'home' ? 'Home' : latest, 'postcard-stamp');
     stampArt.setAttribute('aria-hidden', 'true');
     const postmark = popupEl('div', '', 'postcard-postmark');
     postmark.setAttribute('aria-hidden', 'true');
@@ -340,7 +340,7 @@ POPUP_RENDERERS.map = function (popup) {
     listView.hidden = false;
     banner.hidden = false;
     if (refocus) {
-      stamps.get(place)?.focus();
+      (stamps.get(place) || banner).focus();
       clearTimeout(idleTimer);
       spin = SPIN; // back on the stamps: the globe drifts again
       last = performance.now();
@@ -349,27 +349,23 @@ POPUP_RENDERERS.map = function (popup) {
     _draw();
   }
 
-  // Turns the globe to a place and opens its details (home only turns the globe)
+  // Turns the globe to a place and opens its postcard
   function _select(place, turnGlobe) {
-    if (place.status === 'home') _close(false);
-    else {
-      selected = place;
-      openPlace = place;
-      const back = _detail(place);
-      listView.hidden = true;
-      banner.hidden = true; // a place is open: the postcard gets the room
-      detailView.hidden = false;
-      if (!calmMotion)
-        detailView.animate(
-          [
-            { opacity: 0, translate: '0 4px' },
-            { opacity: 1, translate: '0' },
-          ],
-          180
-        );
-      back.focus({ preventScroll: true });
-    }
-    if (place.status === 'home') selected = home;
+    selected = place;
+    openPlace = place;
+    const back = _detail(place);
+    listView.hidden = true;
+    banner.hidden = true; // a place is open: the postcard gets the room
+    detailView.hidden = false;
+    if (!calmMotion)
+      detailView.animate(
+        [
+          { opacity: 0, translate: '0 4px' },
+          { opacity: 1, translate: '0' },
+        ],
+        180
+      );
+    back.focus({ preventScroll: true });
     if (turnGlobe) _turnTo(place);
     _draw();
   }
@@ -542,13 +538,12 @@ POPUP_RENDERERS.map = function (popup) {
 
   const banner = popupEl('button', '', 'map-home');
   banner.type = 'button';
-  banner.setAttribute('aria-label', `Currently based in ${home.name}. Show it on the globe.`);
+  banner.setAttribute('aria-label', `Currently based in ${home.name}. Open its postcard.`);
   const bannerText = popupEl('span', '', 'map-home-text');
   bannerText.append(
     popupEl('span', 'Currently based in', 'map-home-label'),
     popupEl('span', home.name, 'map-home-name')
   );
-  if (home.note) bannerText.appendChild(popupEl('span', home.note, 'map-home-note'));
   banner.append(popupEl('span', '', 'map-home-pin'), bannerText);
   banner.addEventListener('click', () => _select(home, true));
 
