@@ -59,4 +59,12 @@ const BOOKS = [
     alt: 'Cover of Designing Products People Love by Scott Hurff',
     take: '',
   },
+  {
+    title: 'The Art of Spending Money',
+    author: 'Morgan Housel',
+    status: 'next',
+    image: 'img/books/the-art-of-spending-money-morgan-housel.jpg',
+    alt: 'Cover of The Art of Spending Money by Morgan Housel',
+    take: '',
+  },
 ];
