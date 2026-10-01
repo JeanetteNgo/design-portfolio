@@ -362,7 +362,7 @@
   color: var(--text-muted);
 }
 
-/* ── One place, as the back of a postcard (replaces the stamps until you go back) ── */
+/* ── One place, as a portrait postcard (replaces the stamps until you go back) ── */
 .map-detail {
   display: flex;
   flex-direction: column;
@@ -374,10 +374,16 @@
 .map-postcard {
   --ink: var(--stamp-ink-brown); /* set per place from the stamp that was clicked */
   position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  margin-top: auto; /* with the footer's margin-bottom: centres the postcard in the column */
-  padding: 20px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 460px;
+  aspect-ratio: 3 / 4; /* always portrait, however much it holds */
+  max-width: 100%;
+  margin: auto; /* centred in the column */
+  padding: 14px 18px 14px;
   background: var(--paper-texture), var(--paper-bg);
   border: 1px solid var(--accent-a33);
   border-radius: 3px;
@@ -386,10 +392,16 @@
     0 10px 22px rgb(var(--shadow-rgb) / 18%);
   rotate: -1deg;
 }
-.postcard-message {
-  padding-right: 14px;
+/* The top strip: status on the left, postmark and stamp on the right */
+.postcard-strip {
+  position: relative;
+  flex: none;
+  height: 68px;
 }
 .postcard-status {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   margin: 0;
   font: 700 11px var(--font-secondary);
   letter-spacing: 0.08em;
@@ -397,50 +409,10 @@
   color: var(--ink);
 }
 .postcard-greeting {
-  margin: 4px 0 0;
-  font: 400 22px/1.15 var(--font-hand);
+  flex: none;
+  margin: 6px 0 0;
+  font: 400 20px/1.15 var(--font-hand);
   color: var(--text-strong);
-}
-.postcard-note {
-  margin: 8px 0 0;
-  font: 400 16px/1.45 var(--font-hand);
-  color: var(--text-body);
-}
-.postcard-when {
-  margin: 0;
-  font: 600 12px var(--font-secondary);
-  color: var(--text-body);
-}
-.postcard-when span {
-  margin-right: 6px;
-  font-weight: 400;
-  color: var(--text-muted);
-}
-/* Optional photo: a small tilted polaroid tucked into the message side */
-.postcard-photo {
-  width: 104px;
-  margin: 12px 0 0;
-  padding: 5px;
-  background: var(--surface);
-  border-radius: 2px;
-  box-shadow:
-    0 1px 2px rgb(var(--shadow-rgb) / 12%),
-    0 5px 10px rgb(var(--shadow-rgb) / 16%);
-  rotate: 3deg;
-}
-.postcard-photo img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 3; /* until the real shape is known */
-  object-fit: cover;
-}
-
-/* The address side: a stamp and postmark, then the years, note and cities on ruled lines */
-.postcard-address {
-  position: relative;
-  padding-left: 14px;
-  border-left: 1.5px solid var(--accent-a33);
 }
 .postcard-stamp {
   position: absolute;
@@ -450,11 +422,11 @@
   box-sizing: border-box;
   display: grid;
   place-items: center;
-  width: 62px;
-  height: 72px;
+  width: 58px;
+  height: 68px;
   border: 2px solid var(--ink);
   border-radius: 4px;
-  font: 400 17px var(--font-hand);
+  font: 400 16px var(--font-hand);
   color: var(--ink);
   rotate: 3deg;
   opacity: 0.92;
@@ -469,10 +441,10 @@
 /* The postmark: a ring overlapping the stamp, with wavy cancelling lines running off to the left */
 .postcard-postmark {
   position: absolute;
-  top: 12px;
-  right: 40px;
-  width: 50px;
-  height: 50px;
+  top: 10px;
+  right: 38px;
+  width: 48px;
+  height: 48px;
   box-sizing: border-box;
   border: 2px solid var(--ink);
   border-radius: 50%;
@@ -482,7 +454,7 @@
   content: '';
   position: absolute;
   top: 8px;
-  right: 46px;
+  right: 44px;
   width: 56px;
   height: 22px;
   background: var(--ink);
@@ -491,51 +463,97 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
     center / 100% 100% no-repeat;
 }
-.postcard-body {
-  margin-top: 84px; /* clears the stamp */
+/* Optional photo (a small tilted polaroid) beside the note */
+.postcard-middle {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 8px;
 }
+.postcard-photo {
+  flex: none;
+  width: 72px;
+  padding: 4px;
+  background: var(--surface);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 2px rgb(var(--shadow-rgb) / 12%),
+    0 5px 10px rgb(var(--shadow-rgb) / 16%);
+  rotate: -3deg;
+}
+.postcard-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3; /* until the real shape is known */
+  object-fit: cover;
+}
+.postcard-note {
+  margin: 0;
+  font: 400 15px/1.4 var(--font-hand);
+  color: var(--text-body);
+}
+/* The address block: cities on ruled lines; it takes the leftover height and scrolls if needed */
 .postcard-lines {
-  margin: 12px 0 0;
+  flex: 1 1 0;
+  min-height: 56px;
+  margin: 10px 0 0;
   padding: 0;
-  min-height: 112px; /* always a few lines, like a blank address block */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-a20) transparent;
   list-style: none;
   background: repeating-linear-gradient(transparent 0 27px, var(--accent-a25) 27px 28px);
+  background-attachment: local;
+}
+.postcard-lines.is-wide {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 28px;
+  column-gap: 14px;
+  align-content: start;
 }
 .postcard-lines li {
   margin: 0; /* reset the global li spacing */
   overflow: hidden;
-  font: 400 16px/28px var(--font-hand);
+  font: 400 15px/28px var(--font-hand);
   color: var(--text-strong);
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+/* The years, pinned to the foot of the card */
+.postcard-when {
+  flex: none;
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1.5px solid var(--accent-a33);
+  font: 600 12px var(--font-secondary);
+  color: var(--text-body);
+}
+.postcard-when span {
+  margin-right: 6px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
 .map-detail-footer {
-  margin-top: 16px;
-  margin-bottom: auto;
+  flex: none;
+  margin-top: 12px;
 }
 
-/* On narrow screens the two halves stack, like a postcard turned upright */
-@media (max-width: 560px) {
+/* On phones the popup scrolls instead, so the card takes its natural height */
+@media (max-width: 719px) {
   .map-postcard {
-    grid-template-columns: 1fr;
+    flex: none;
+    width: min(100%, 340px);
+    max-height: none;
+    min-height: 440px;
+    aspect-ratio: auto;
   }
-  .postcard-message {
-    padding-right: 0;
-  }
-  .postcard-address {
-    margin-top: 16px;
-    padding: 12px 0 0;
-    border-left: 0;
-    border-top: 1.5px solid var(--accent-a33);
-  }
-  .postcard-stamp {
-    top: 12px;
-  }
-  .postcard-postmark {
-    top: 24px;
-  }
-  .postcard-body {
-    margin-top: 76px;
+  .postcard-lines {
+    flex: none;
+    min-height: 112px;
+    overflow: visible;
   }
 }
 
