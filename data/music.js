@@ -17,10 +17,100 @@
 ────────────────────────────────────────────── */
 
 const MUSIC = [
-  { kind: 'album', title: 'Arirang', artist: 'BTS' },
-  { kind: 'album', title: 'Romance: Untold', artist: 'ENHYPEN' },
-  { kind: 'album', title: 'Hit Me Hard and Soft', artist: 'Billie Eilish' },
-  { kind: 'album', title: 'Echo', artist: 'Jin' },
-  { kind: 'album', title: 'Born to Die', artist: 'Lana Del Rey' },
-  { kind: 'album', title: 'American Tragedy', artist: 'Hollywood Undead' },
+  {
+    title: 'Spring Day',
+    artist: 'BTS',
+    image: 'img/music/spring-day-bts.jpg',
+    alt: 'Cover of Spring Day by BTS',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ba/76/d5/ba76d586-0dac-c800-f08d-467aef7dc9c0/mzaf_12707603572181808804.plus.aac.p.m4a',
+  },
+  {
+    title: 'Drunk-Dazed',
+    artist: 'ENHYPEN',
+    image: 'img/music/drunk-dazed-enhypen.jpg',
+    alt: 'Cover of Drunk-Dazed by ENHYPEN',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/56/42/3c/56423c53-f9e5-6f2c-25b8-9d8432238815/mzaf_4569738009026504165.plus.aac.p.m4a',
+  },
+  {
+    title: 'Wildflower',
+    artist: 'Billie Eilish',
+    image: 'img/music/wildflower-billie-eilish.jpg',
+    alt: 'Cover of Wildflower by Billie Eilish',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/de/c3/e8/dec3e884-7237-9622-718a-12c5f48c5ca2/mzaf_3134455671785145822.plus.aac.p.m4a',
+  },
+  {
+    title: 'Chemtrails Over the Country Club',
+    artist: 'Lana Del Rey',
+    image: 'img/music/chemtrails-over-the-country-club-lana-del-rey.jpg',
+    alt: 'Cover of Chemtrails Over the Country Club by Lana Del Rey',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1d/59/86/1d598640-7656-604c-6318-2ae1ed53ab59/mzaf_4388248553281826308.plus.aac.p.m4a',
+  },
+  {
+    title: 'Background',
+    artist: 'Jin',
+    image: 'img/music/background-jin.jpg',
+    alt: 'Cover of Background by Jin',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a1/e1/a4/a1e1a4f3-c2d8-9eaf-cd7d-9dd7f60b4855/mzaf_16049331198487744650.plus.aac.p.m4a',
+  },
+  {
+    title: 'Past Lives',
+    artist: 'BORNS',
+    image: 'img/music/past-lives-borns.jpg',
+    alt: 'Cover of Past Lives by BORNS',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3b/50/a9/3b50a931-770e-50de-8903-bac4dba8ab75/mzaf_482579192048014415.plus.aac.p.m4a',
+  },
+  {
+    title: 'Sparkle',
+    artist: 'RADWIMPS',
+    image: 'img/music/sparkle-radwimps.jpg',
+    alt: 'Cover of Sparkle by RADWIMPS',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d8/fa/07/d8fa073d-c1ca-6928-b5ee-94a437af581f/mzaf_1898817050310855929.plus.aac.p.m4a',
+  },
+  {
+    title: 'All the Stars',
+    artist: 'Kendrick Lamar & SZA',
+    image: 'img/music/all-the-stars-kendrick-lamar-sza.jpg',
+    alt: 'Cover of All the Stars by Kendrick Lamar & SZA',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/8b/2c/ea8b2cf4-95f2-b0b3-ffc5-10f4611bf98f/mzaf_6758805407695014001.plus.aac.p.m4a',
+  },
+  {
+    title: 'Unethical',
+    artist: 'Faouzia',
+    image: 'img/music/unethical-faouzia.jpg',
+    alt: 'Cover of Unethical by Faouzia',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/1e/6a/ea1e6a4a-10fb-6cb9-ff1f-277417b14f62/mzaf_9942791211849297892.plus.aac.p.m4a',
+  },
+  {
+    title: 'Roslyn',
+    artist: 'Bon Iver & St. Vincent',
+    image: 'img/music/roslyn-bon-iver-st-vincent.jpg',
+    alt: 'Cover of Roslyn by Bon Iver & St. Vincent',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e6/3a/d2/e63ad227-ea29-267c-9d4c-9f4bc47e0754/mzaf_4636346321278107695.plus.aac.p.m4a',
+  },
+  {
+    title: 'Die for You',
+    artist: 'Starset',
+    image: 'img/music/die-for-you-starset.jpg',
+    alt: 'Cover of Die for You by Starset',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/20/74/ad2074d5-a737-100c-6c19-65aac02ebc42/mzaf_9706352191788642174.plus.aac.p.m4a',
+  },
+  {
+    title: 'I Wanna Be Yours',
+    artist: 'Arctic Monkeys',
+    image: 'img/music/i-wanna-be-yours-arctic-monkeys.jpg',
+    alt: 'Cover of I Wanna Be Yours by Arctic Monkeys',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/99/9a/21/999a2138-9398-ed91-d6bc-aede9d8d6c79/mzaf_7342524110072517987.plus.aac.p.m4a',
+  },
 ];
