@@ -7,7 +7,7 @@
 
 .popup[data-popup='off-the-clock'] .popup-card {
   width: min(100%, 800px);
-  height: min(640px, calc(100dvh - 32px)); /* same size on every tab */
+  height: min(max(640px, 75dvh), calc(100dvh - 32px)); /* same size on every tab */
   --pad-top: 32px; /* the heading adds 16px of its own */
   --pad-x: 60px;
   --pad-bottom: 36px;
@@ -18,6 +18,7 @@
 }
 @media (max-width: 640px) {
   .popup[data-popup='off-the-clock'] .popup-card {
+    height: min(max(640px, 90dvh), calc(100dvh - 32px));
     --pad-x: 28px;
     --pad-bottom: 28px;
   }
