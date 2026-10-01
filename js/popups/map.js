@@ -294,6 +294,9 @@ POPUP_RENDERERS.map = function (popup) {
       popupEl('p', STATUS[place.status][0], 'postcard-status'),
       popupEl('h3', `Greetings from ${place.name}`, 'postcard-greeting')
     );
+    // The photo (taped on, keeping its 3:4 or 4:3 shape) and the signature sit in one slot
+    const slot = popupEl('div', '', 'postcard-slot');
+    const print = popupEl('div', '', 'postcard-print');
     if (place.photo) {
       const photo = popupEl('div', '', 'postcard-photo');
       const img = popupEl('img');
@@ -301,9 +304,18 @@ POPUP_RENDERERS.map = function (popup) {
       img.alt = place.alt || '';
       img.loading = 'lazy';
       img.decoding = 'async';
+      img.addEventListener('load', () => {
+        print.style.setProperty('--ratio', img.naturalHeight > img.naturalWidth ? '0.75' : '1.333');
+      });
       photo.appendChild(img);
-      message.appendChild(photo);
+      print.appendChild(photo);
+      slot.classList.add('has-photo');
     }
+    const sign = popupEl('span', 'JN', 'postcard-sign'); // my initials, as if signed
+    sign.setAttribute('aria-hidden', 'true');
+    print.appendChild(sign);
+    slot.appendChild(print);
+    message.appendChild(slot);
 
     // The stamp and postmark are decoration; the years are in the footer
     const address = popupEl('div', '', 'postcard-address');
