@@ -1,160 +1,108 @@
 /* ─────────────────────────────────────────────
-   SIDE QUESTS POPUP
-   A side-quest checklist from QUESTS (data/quests.js). Done quests open their memory;
-   wip/todo jiggle and show a reply from QUEST_REPLIES. State comes from the data.
+   OFF THE CLOCK POPUP
+   What I'm into outside work, on a corkboard with tabs. This file is the shell (heading,
+   tabs, the opened view); each tab is a section in js/popups/off-the-clock/ that adds itself:
+     OFF_CLOCK_SECTIONS.push({ id, label, build(shell) { return element; } });
+   Tabs appear in the order the section scripts load. A section that opens an item calls
+   shell.open(elements, backLabel, buttonToReturnTo); shell.close() brings the tabs back.
    Styles: css/features/popups/off-the-clock.css.
 ────────────────────────────────────────────── */
 
+const OFF_CLOCK_SECTIONS = [];
+
 POPUP_RENDERERS['off-the-clock'] = function (popup) {
-  const REPLY_TIME = 2200; // ms a reply stays up
-  const STATUS_TEXT = { done: 'Done', wip: 'In progress', todo: 'Not started' }; // for screen readers
+  const mainView = popupEl('div', '', 'popup-view');
+  const detailView = popupEl('div', '', 'popup-view otc-detail');
+  detailView.hidden = true;
+  let lastButton = null; // so focus can return to the item after it closes
 
-  const listView = popupEl('div', '', 'quest-view');
-  const memoryView = popupEl('div', '', 'quest-memory');
-  memoryView.hidden = true;
+  /* ── Opened view ── */
 
-  let lastReply = '';
-  let lastButton = null; // so focus can return to the quest after its memory closes
+  const shell = {
+    open(content, backLabel, from) {
+      const scroll = popupEl('div', '', 'popup-scroll');
+      scroll.append(...content);
+      const back = popupBackTag(backLabel, shell.close);
+      const footer = popupEl('div', '', 'otc-footer');
+      footer.appendChild(back);
 
-  /* ── Replies for unfinished quests ── */
+      lastButton = from;
+      detailView.replaceChildren(scroll, footer);
+      mainView.hidden = true;
+      detailView.hidden = false;
+      back.focus();
+    },
+    close() {
+      detailView.querySelector('video')?.pause();
+      detailView.hidden = true;
+      mainView.hidden = false;
+      lastButton?.focus();
+    },
+  };
 
-  function _reply(item, status) {
-    const lines = QUEST_REPLIES[status];
-    let line = lines[Math.floor(Math.random() * lines.length)];
-    if (lines.length > 1 && line === lastReply)
-      line = lines[(lines.indexOf(line) + 1) % lines.length];
-    lastReply = line;
+  /* ── Heading ── */
 
-    const bubble = item.querySelector('.quest-reply');
-    bubble.textContent = line;
+  // The title is a pinned label; the dialog's hidden title names it for screen readers
+  const head = popupEl('header', '', 'otc-head');
+  const label = popupEl('span', popup.title, 'paper-tag otc-tag');
+  label.setAttribute('aria-hidden', 'true');
+  head.appendChild(label);
+  if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'otc-intro'));
 
-    // Restart the jiggle
-    item.classList.remove('is-jiggling');
-    void item.offsetWidth;
-    item.classList.add('is-jiggling');
+  /* ── Tabs ── */
 
-    clearTimeout(item.replyTimer);
-    item.replyTimer = setTimeout(() => {
-      bubble.textContent = '';
-      item.classList.remove('is-jiggling');
-    }, REPLY_TIME);
-  }
+  const tabs = popupEl('div', '', 'otc-tabs');
+  tabs.setAttribute('role', 'tablist');
+  tabs.setAttribute('aria-label', 'Off the clock');
+  const panels = popupEl('div', '', 'otc-panels');
+  const parts = OFF_CLOCK_SECTIONS.map((section) => {
+    const tab = popupEl('button', section.label, 'otc-tab');
+    tab.type = 'button';
+    tab.id = `otc-tab-${section.id}`;
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-controls', `otc-panel-${section.id}`);
 
-  /* ── Memory for finished quests ── */
-
-  function _showMemory(quest, button) {
-    const { date, description, image, video, poster, loop, alt, caption } = quest.memory || {};
-
-    // A "Quest complete" stamp sits at the top, where the popup's title is on the list
-    const head = popupEl('div', '', 'quest-head');
-    head.appendChild(popupEl('p', '✓ Quest complete', 'quest-stamp'));
-    const parts = [];
-    if (date) parts.push(popupEl('p', date, 'quest-memory-date'));
-    parts.push(popupEl('h3', quest.title, 'quest-memory-title'));
-    if (description) parts.push(popupEl('p', description));
-    if (image || video) {
-      // Polaroid: the photo or video, with an optional scribbled caption underneath
-      const polaroid = popupEl('figure', '', 'quest-polaroid');
-      let media;
-      if (video) {
-        // Tap to play (preload none, poster shows); loop: true autoplays silently, unless motion is reduced
-        const silentLoop = loop && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-        media = popupEl('video');
-        media.src = video;
-        media.poster = poster || image || '';
-        media.controls = true;
-        media.playsInline = true; // plays in the polaroid on iPhones, not full screen
-        if (silentLoop) {
-          media.muted = true; // browsers only autoplay silent video
-          media.loop = true;
-          media.autoplay = true;
-        } else {
-          media.preload = 'none';
-        }
-        if (alt) media.setAttribute('aria-label', alt);
-      } else {
-        media = popupEl('img');
-        media.src = image;
-        media.alt = alt || '';
-      }
-      polaroid.appendChild(media);
-      if (caption) polaroid.appendChild(popupEl('figcaption', caption));
-      parts.push(polaroid);
-    }
-
-    // Same key-hint tag as "Esc to close"; the ← key does the same thing
-    const back = popupBackTag('back to the list', _showList);
-
-    // The stamp (with the ×) stays at the top and the back tag at the bottom; the story scrolls
-    const scroll = popupEl('div', '', 'popup-scroll');
-    scroll.append(...parts);
-    const footer = popupEl('div', '', 'quest-footer');
-    footer.appendChild(back);
-
-    lastButton = button;
-    memoryView.replaceChildren(head, scroll, footer);
-    listView.hidden = true;
-    memoryView.hidden = false;
-    back.focus();
-  }
-
-  // A video mustn't keep playing (and talking) once its memory is out of sight
-  function _stopVideo() {
-    memoryView.querySelector('video')?.pause();
-  }
-
-  function _showList() {
-    _stopVideo();
-    memoryView.hidden = true;
-    listView.hidden = false;
-    if (lastButton) lastButton.focus();
-  }
-
-  /* ── The checklist ── */
-
-  const list = popupEl('ul', '', 'quest-list');
-  QUESTS.forEach((quest) => {
-    const item = popupEl('li', '', `quest quest--${quest.status}`);
-    const button = popupEl('button', '', 'quest-btn');
-    button.type = 'button';
-    const title = popupEl('span', '', 'quest-title');
-    title.appendChild(popupEl('span', quest.title, 'quest-text')); // inner span carries the strike line
-    button.append(
-      popupEl('span', '', 'quest-box'),
-      title,
-      popupEl('span', ` (${STATUS_TEXT[quest.status]})`, 'visually-hidden')
-    );
-    button.addEventListener('click', () =>
-      quest.status === 'done' ? _showMemory(quest, button) : _reply(item, quest.status)
-    );
-
-    const bubble = popupEl('span', '', 'quest-reply');
-    bubble.setAttribute('role', 'status'); // read out by screen readers when it appears
-
-    item.append(button, bubble);
-    list.appendChild(item);
+    const panel = popupEl('div', '', 'otc-panel');
+    panel.id = `otc-panel-${section.id}`;
+    panel.setAttribute('role', 'tabpanel');
+    panel.setAttribute('aria-labelledby', tab.id);
+    panel.appendChild(section.build(shell));
+    tabs.appendChild(tab);
+    panels.appendChild(panel);
+    return { tab, panel };
   });
 
-  // "Esc to close" tag: shows the keyboard shortcut, and closes on click for touch screens
-  const close = popupCloseTag();
+  function _select(chosen, focus) {
+    parts.forEach(({ tab, panel }) => {
+      const on = tab === chosen;
+      tab.setAttribute('aria-selected', String(on));
+      tab.tabIndex = on ? 0 : -1;
+      panel.hidden = !on;
+    });
+    if (focus) chosen.focus();
+  }
+  parts.forEach(({ tab }) => tab.addEventListener('click', () => _select(tab)));
+  tabs.addEventListener('keydown', (e) => {
+    const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+    const at = parts.findIndex(({ tab }) => tab === e.target);
+    if (!step || at < 0) {
+      if (e.key === 'Home' || e.key === 'End') {
+        e.preventDefault();
+        _select(parts[e.key === 'Home' ? 0 : parts.length - 1].tab, true);
+      }
+      return;
+    }
+    e.preventDefault();
+    _select(parts[(at + step + parts.length) % parts.length].tab, true);
+  });
+  _select(parts[0].tab);
 
-  // Title and intro sit in a header above the scrolling list. The title is repeated here
-  // for the eye; the dialog's own (hidden) title still names it for screen readers.
-  const head = popupEl('div', '', 'quest-head');
-  const headTitle = popupEl('p', popup.title, 'quest-head-title');
-  headTitle.setAttribute('aria-hidden', 'true');
-  head.appendChild(headTitle);
-  if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
-  // Only the list scrolls; the header above and the Esc tag below stay put
-  const scroll = popupEl('div', '', 'popup-scroll');
-  scroll.appendChild(list);
-  const footer = popupEl('div', '', 'quest-footer');
-  footer.appendChild(close);
-  listView.append(head, scroll, footer);
+  const footer = popupEl('div', '', 'otc-footer');
+  footer.appendChild(popupCloseTag());
+  mainView.append(head, tabs, panels, footer);
 
-  // ← goes back from a memory to the list, and closing the popup stops a playing video
-  popupOnLeftKey(() => !memoryView.hidden, _showList);
-  popupOnClose(_stopVideo);
+  popupOnLeftKey(() => !detailView.hidden, shell.close);
+  popupOnClose(() => detailView.querySelector('video')?.pause());
 
-  return [listView, memoryView];
+  return [mainView, detailView];
 };

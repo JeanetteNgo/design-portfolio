@@ -1,7 +1,7 @@
 /* ─────────────────────────────────────────────
    GALLERY
-   The photos pinned on the corkboard in the "Gallery" popup
-   (built by js/popups/gallery.js). Add one by adding a block to the list.
+   The photos pinned on the corkboard in the "Off the clock" popup's Hobbies tab
+   (built by js/popups/off-the-clock/hobbies.js). Add one by adding a block to the list.
    The order here is the order on the board.
 
    Each photo has:

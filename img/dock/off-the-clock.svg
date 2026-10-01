@@ -1,14 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#4a2e25" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-  <!-- Placeholder: sticky-note checklist -->
-  <g transform="rotate(-4 32 32)">
-    <rect x="12" y="10" width="40" height="45" rx="3" fill="#ffd36e"/>
-    <rect x="25" y="6" width="14" height="8" rx="1" fill="#ffffff" stroke-width="2"/>
-    <rect x="18" y="20" width="7" height="7" rx="1.5" fill="#ffffff" stroke-width="2.5"/>
-    <path d="M19.5 23.5l2 2 3.5-4.5" stroke="#e6635b"/>
-    <path d="M30 23.5h15"/>
-    <rect x="18" y="31" width="7" height="7" rx="1.5" fill="#ffffff" stroke-width="2.5"/>
-    <path d="M30 34.5h12"/>
-    <rect x="18" y="42" width="7" height="7" rx="1.5" fill="#ffffff" stroke-width="2.5"/>
-    <path d="M30 45.5h14"/>
+  <!-- Placeholder: record in a sleeve beside a book -->
+  <rect x="8" y="14" width="34" height="34" rx="3" fill="#8ec5e8"/>
+  <circle cx="25" cy="31" r="12" fill="#4a2e25"/>
+  <circle cx="25" cy="31" r="4.5" fill="#e6635b" stroke-width="2"/>
+  <g transform="rotate(6 46 38)">
+    <rect x="37" y="20" width="19" height="34" rx="2.5" fill="#ffd36e"/>
+    <path d="M42 20v34"/>
+    <path d="M46 29h6" stroke-width="2.5"/>
   </g>
 </svg>

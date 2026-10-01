@@ -23,20 +23,17 @@ const POPUPS = {
       { heading: 'Others', items: ['Jira', 'GitHub', 'VS Code'] },
     ],
   },
-  doodles: {
-    title: 'Doodles',
-    intro: 'A small exhibition of drawings and animations.',
-  },
-  gallery: {
-    title: 'Gallery', // the photos themselves are in data/gallery.js
-    intro: 'Snapshots and the stories behind them.',
+  'off-the-clock': {
+    title: 'Off the clock',
+    intro: 'What I get up to when the laptop is shut.',
+    // the tabs are in js/popups/off-the-clock/; their items are in data/gallery.js, music.js, books.js, doodles.js
   },
   map: {
     paper: true, // paper-note look (css/features/popups/paper.css)
     title: 'Map',
     // the pins are in data/places.js
   },
-  'off-the-clock': {
+  'side-quests': {
     paper: true,
     title: 'Side Quests',
     intro: 'I occasionally touch grass.', // the checklist itself is in data/quests.js
