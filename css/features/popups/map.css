@@ -78,9 +78,7 @@
     align-self: stretch;
     align-items: flex-start;
     justify-content: flex-end;
-    padding-bottom: calc(
-      41px + (var(--zoom-h) + 4px) / 2
-    );
+    padding-bottom: calc(41px + (var(--zoom-h) + 4px) / 2);
   }
   .popup[data-popup='map'] .map-globe-frame {
     align-self: flex-start;
@@ -536,8 +534,8 @@
    --edge        darkness of the thin outline around the photo (0% = none)
    --edge-light  brightness of the thin light line just inside the photo's edge (0% = none) */
 .postcard-photo {
-  --tilt: -1.5deg;
-  --sepia: 0.25;
+  --tilt: -1deg;
+  --sepia: 0.15;
   --sheen: 25%;
   --lift-light: 55%;
   --lift-shade: 4%;
