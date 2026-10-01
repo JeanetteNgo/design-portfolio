@@ -235,6 +235,21 @@
   text-transform: uppercase;
   color: var(--ink-red);
 }
+/* The back tag takes the banner's place while a postcard is open (same height and rule) */
+.map-detail-head {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: 78px;
+  padding-bottom: 20px;
+  border-bottom: 1.5px solid var(--accent-a33);
+}
+.map-detail-head[hidden] {
+  display: none;
+}
+.map-detail-head .esc-tag {
+  margin-left: -8px; /* the key lines up with the content's left edge */
+}
 .map-home-row {
   display: flex;
   align-items: center;
@@ -284,7 +299,11 @@
   border: 2px solid var(--ink);
   border-radius: 6px;
   opacity: 0.92; /* a little faded, like ink */
-  background: none;
+  background: color-mix(
+    in srgb,
+    var(--paper-bg) 78%,
+    transparent
+  ); /* footprints behind show faintly */
   font: inherit;
   text-align: left;
   cursor: pointer;

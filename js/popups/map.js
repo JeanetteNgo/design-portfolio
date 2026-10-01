@@ -281,6 +281,8 @@ POPUP_RENDERERS.map = function (popup) {
   const closeTag = popupCloseTag();
   const footer = popupEl('div', '', 'popup-footer'); // bottom left: "Esc to close", or "← back" on a postcard
   footer.appendChild(closeTag);
+  const detailHead = popupEl('div', '', 'map-detail-head'); // "← back", where the banner is on the list
+  detailHead.hidden = true;
   const detailView = popupEl('div', '', 'map-detail');
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
@@ -349,7 +351,7 @@ POPUP_RENDERERS.map = function (popup) {
     card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
     detailView.replaceChildren(card);
-    footer.replaceChildren(back);
+    detailHead.replaceChildren(back);
     return back;
   }
 
@@ -361,7 +363,7 @@ POPUP_RENDERERS.map = function (popup) {
     selected = home;
     detailView.hidden = true;
     listView.hidden = false;
-    footer.replaceChildren(closeTag);
+    detailHead.hidden = true;
     banner.hidden = false;
     if (refocus) {
       (stamps.get(place) || banner).focus();
@@ -379,7 +381,8 @@ POPUP_RENDERERS.map = function (popup) {
     openPlace = place;
     const back = _detail(place);
     listView.hidden = true;
-    banner.hidden = true; // a place is open: the postcard gets the room
+    banner.hidden = true; // a place is open: the back tag takes the banner's place
+    detailHead.hidden = false;
     detailView.hidden = false;
     if (!calmMotion)
       detailView.animate(
@@ -590,7 +593,7 @@ POPUP_RENDERERS.map = function (popup) {
   });
 
   const side = popupEl('div', '', 'map-side');
-  side.append(banner, listView, detailView);
+  side.append(banner, detailHead, listView, detailView);
 
   const layout = popupEl('div', '', 'map-layout');
   layout.append(globeWrap, side);
