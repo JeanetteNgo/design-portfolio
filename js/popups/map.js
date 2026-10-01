@@ -393,6 +393,18 @@ POPUP_RENDERERS.map = function (popup) {
       .finished.then(finish, finish);
   }
 
+  // Desktop: pads the postcard's column so the card centres on the globe, not the whole column
+  function _alignCard() {
+    if (detailView.hidden) return;
+    const wide = matchMedia('(min-width: 720px)').matches;
+    const g = globeFrame.getBoundingClientRect();
+    const d = detailView.getBoundingClientRect();
+    detailView.style.paddingBottom = wide
+      ? `${Math.max(8, d.top + 6 + d.bottom - (g.top + g.bottom))}px`
+      : '';
+  }
+  addEventListener('resize', _alignCard);
+
   // Turns the globe to a place and opens its postcard
   function _select(place, turnGlobe) {
     selected = place;
@@ -402,6 +414,7 @@ POPUP_RENDERERS.map = function (popup) {
     listView.hidden = true;
     banner.hidden = true; // a place is open: the postcard gets the room
     detailView.hidden = false;
+    _alignCard();
     if (!calmMotion)
       currentCard.animate(
         [
