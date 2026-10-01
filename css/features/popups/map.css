@@ -78,7 +78,15 @@
     align-self: stretch;
     align-items: flex-start; /* zoom buttons share the Esc tag's left edge */
     justify-content: flex-end; /* sits low, with a fixed gap above the Esc tag in the corner */
+    position: relative;
     padding-bottom: 41px;
+  }
+  /* The zoom buttons stand in a column at the globe's empty bottom-right corner (+ on top) */
+  .popup[data-popup='map'] .map-zoom {
+    position: absolute;
+    right: -16px; /* just clear of the globe, into the gap */
+    bottom: 41px;
+    flex-direction: column-reverse;
   }
   .popup[data-popup='map'] .map-globe-frame {
     align-self: flex-start; /* globe, zoom buttons and Esc tag share one left edge */
