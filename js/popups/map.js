@@ -69,7 +69,7 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, size, size);
 
-    const radius = (size / 2 - 1.5) * zoom; // the outline just fits the canvas
+    const radius = (size / 2 - 1) * zoom; // the outline just fits the canvas
     const projection = d3geo
       .geoOrthographic()
       .clipAngle(90)
@@ -112,7 +112,7 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.beginPath();
     path({ type: 'Sphere' });
     ctx.strokeStyle = ink;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2; // matches the zoom capsule's border
     ctx.stroke();
 
     // Pins, drawn from the back of the globe forward so nearer ones sit on top (selected last)

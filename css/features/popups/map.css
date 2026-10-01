@@ -27,7 +27,7 @@
   position: absolute;
   z-index: -1;
   inset: 14px;
-  border: 1px solid var(--accent-a25);
+  border: 1px solid color-mix(in srgb, var(--ink-brown) 22%, transparent); /* soft ink line, not salmon */
   pointer-events: none;
 }
 /* Whitespace: more room around the content than the other popups */
@@ -141,7 +141,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border: 3px solid var(--ink-brown);
+  border: 2px solid var(--ink-brown); /* same weight as the zoom capsule */
   border-radius: 50%;
   pointer-events: none;
 }
@@ -188,7 +188,7 @@
   font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn + .map-zoom-btn {
-  border-left: 1.5px solid var(--accent-a33);
+  border-left: 2px solid color-mix(in srgb, var(--ink-brown) 22%, transparent);
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
   background: var(--accent-a20);
@@ -419,7 +419,7 @@
   margin-block: auto; /* centred in the column */
   padding: 16px 14px 14px 16px;
   background: var(--paper-texture), var(--paper-bg);
-  border: 1px solid var(--accent-a33);
+  border: 1px solid color-mix(in srgb, var(--ink) 40%, transparent);
   border-radius: 3px;
   box-shadow:
     0 1px 2px rgb(var(--shadow-rgb) / 14%),
@@ -527,7 +527,7 @@
   flex-direction: column;
   min-height: 0;
   padding-left: 12px;
-  border-left: 1.5px solid var(--accent-a33);
+  border-left: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent);
 }
 .postcard-stamp {
   position: absolute;
@@ -587,7 +587,7 @@
   margin-top: 66px; /* clears the stamp */
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: var(--accent-a20) transparent;
+  scrollbar-color: color-mix(in srgb, var(--ink) 30%, transparent) transparent;
 }
 .postcard-note {
   margin: 0 0 14px;
@@ -599,7 +599,7 @@
   padding: 0;
   min-height: 56px; /* always a couple of lines, like a blank address block */
   list-style: none;
-  background: repeating-linear-gradient(transparent 0 25px, var(--accent-a25) 25px 26px);
+  background: repeating-linear-gradient(transparent 0 25px, color-mix(in srgb, var(--ink) 28%, transparent) 25px 26px);
 }
 .postcard-lines li {
   margin: 0; /* reset the global li spacing */
@@ -614,7 +614,7 @@
   flex: none;
   margin: 6px 0 0;
   padding-top: 6px;
-  border-top: 1.5px solid var(--accent-a33);
+  border-top: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent);
   font: 600 11px var(--font-secondary);
   color: var(--text-body);
 }
@@ -648,7 +648,7 @@
     margin-top: 16px;
     padding: 12px 0 0;
     border-left: 0;
-    border-top: 1.5px solid var(--accent-a33);
+    border-top: 1.5px solid color-mix(in srgb, var(--ink) 40%, transparent);
   }
   .postcard-body {
     flex: none;
