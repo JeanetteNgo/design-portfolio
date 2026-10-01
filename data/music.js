@@ -90,12 +90,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/1e/6a/ea1e6a4a-10fb-6cb9-ff1f-277417b14f62/mzaf_9942791211849297892.plus.aac.p.m4a',
   },
   {
-    title: 'Roslyn',
-    artist: 'Bon Iver & St. Vincent',
-    image: 'img/music/roslyn-bon-iver-st-vincent.jpg',
-    alt: 'Cover of Roslyn by Bon Iver & St. Vincent',
+    title: 'Sailor Song',
+    artist: 'Gigi Perez',
+    image: 'img/music/sailor-song-gigi-perez.jpg',
+    alt: 'Cover of Sailor Song by Gigi Perez',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e6/3a/d2/e63ad227-ea29-267c-9d4c-9f4bc47e0754/mzaf_4636346321278107695.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/6d/fe/18/6dfe184e-7612-f171-0356-0b7a84112e9a/mzaf_9760607751711758843.plus.aac.p.m4a',
   },
   {
     title: 'Die for You',
