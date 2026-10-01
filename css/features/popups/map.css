@@ -74,10 +74,14 @@
     align-items: stretch;
     gap: 48px; /* space between the globe and the words */
   }
-  .map-globe-wrap {
+  .popup[data-popup='map'] .map-globe-wrap {
     align-self: stretch;
+    align-items: flex-start; /* zoom buttons share the Esc tag's left edge */
     justify-content: flex-end; /* sits low, with a fixed gap above the Esc tag in the corner */
     padding-bottom: 41px;
+  }
+  .popup[data-popup='map'] .map-globe-frame {
+    align-self: flex-start; /* globe, zoom buttons and Esc tag share one left edge */
   }
   /* "Esc to close" (or "back") sits in the bottom left corner, beside the right column */
   .popup[data-popup='map'] .popup-footer {

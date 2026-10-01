@@ -399,8 +399,10 @@ POPUP_RENDERERS.map = function (popup) {
     const wide = matchMedia('(min-width: 720px)').matches;
     const g = globeFrame.getBoundingClientRect();
     const d = detailView.getBoundingClientRect();
+    const k = detailView.offsetHeight / d.height || 1; // undoes the popup's open-animation scale
+    const globeMid = ((g.top + g.bottom) / 2 - d.top) * k;
     detailView.style.paddingBottom = wide
-      ? `${Math.max(8, d.top + 6 + d.bottom - (g.top + g.bottom))}px`
+      ? `${Math.max(8, 6 + detailView.offsetHeight - 2 * globeMid)}px`
       : '';
   }
   addEventListener('resize', _alignCard);
@@ -415,6 +417,7 @@ POPUP_RENDERERS.map = function (popup) {
     banner.hidden = true; // a place is open: the postcard gets the room
     detailView.hidden = false;
     _alignCard();
+    requestAnimationFrame(_alignCard); // again once the layout has settled
     if (!calmMotion)
       currentCard.animate(
         [
