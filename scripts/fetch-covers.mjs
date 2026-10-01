@@ -5,6 +5,8 @@
      node scripts/fetch-covers.mjs          show what it would download (nothing is saved)
      node scripts/fetch-covers.mjs --yes    download, and add image / alt / preview to the data files
      --force                                also redo entries that already have an image
+     --credits                              only correct each entry's artist to the credit on the
+                                            store (no downloads), e.g. BORNS to BØRNS
 
    Songs and albums come from the iTunes Search API (the 30-second preview is a link to
    Apple's file, never copied). Books come from Open Library. Covers are saved as JPEG,
@@ -21,6 +23,7 @@ import vm from 'node:vm';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const YES = process.argv.includes('--yes');
 const FORCE = process.argv.includes('--force');
+const CREDITS = process.argv.includes('--credits');
 const WIDTH = 400;
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -28,9 +31,18 @@ const slug = (text) =>
   text
     .normalize('NFKD')
     .replace(/[̀-ͯ]/g, '')
+    .replace(/[øØ]/g, 'o')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+
+// Lower case, no accents, so BORNS finds BØRNS; a result by someone else is never used
+const plain = (text) =>
+  text
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[øØ]/g, 'o')
+    .toLowerCase();
 
 async function getJson(url) {
   await wait(300); // one request at a time, politely
@@ -47,8 +59,8 @@ async function findMusic(item) {
   const { results } = await getJson(
     `https://itunes.apple.com/search?term=${term}&entity=${kind}&limit=5`
   );
-  const wanted = item.artist.toLowerCase();
-  const hit = results.find((r) => r.artistName?.toLowerCase().includes(wanted)) || results[0];
+  const wanted = plain(item.artist);
+  const hit = results.find((r) => r.artistName && plain(r.artistName).includes(wanted));
   if (!hit?.artworkUrl100) return null;
 
   let preview = hit.previewUrl;
@@ -62,6 +74,7 @@ async function findMusic(item) {
     cover: hit.artworkUrl100.replace(/\d+x\d+bb/, '600x600bb'),
     preview,
     found: `${hit.trackName || hit.collectionName} by ${hit.artistName}`,
+    artist: hit.artistName,
   };
 }
 
@@ -128,12 +141,20 @@ async function fillCovers({ file, name, keys, folder, find, label, altText }) {
   for (const item of data.list) {
     const title = item.title || '';
     if (title.startsWith('[')) continue; // a placeholder, not a real entry
-    if (item.image && !FORCE) continue;
+    if (item.image && !FORCE && !CREDITS) continue;
     const who = `${title} (${label(item)})`;
     try {
       const found = await find(item);
       if (!found) {
         console.log(`  not found   ${who}; it keeps its placeholder`);
+        continue;
+      }
+      if (CREDITS) {
+        if (found.artist && found.artist !== item.artist) {
+          console.log(`  credit      ${title}: ${item.artist} -> ${found.artist}`);
+          item.artist = found.artist;
+          changed = true;
+        }
         continue;
       }
       const file = `${slug(title)}-${slug(label(item))}`;
@@ -146,6 +167,7 @@ async function fillCovers({ file, name, keys, folder, find, label, altText }) {
         continue;
       }
       const saved = await save(found.cover, folder, file);
+      if (found.artist) item.artist = found.artist; // always the credited artist
       item.image = saved.path;
       item.alt = altText(item);
       if (found.preview) item.preview = found.preview;

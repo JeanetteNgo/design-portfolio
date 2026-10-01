@@ -42,12 +42,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/de/c3/e8/dec3e884-7237-9622-718a-12c5f48c5ca2/mzaf_3134455671785145822.plus.aac.p.m4a',
   },
   {
-    title: 'Chemtrails Over the Country Club',
-    artist: 'Lana Del Rey',
-    image: 'img/music/chemtrails-over-the-country-club-lana-del-rey.jpg',
-    alt: 'Cover of Chemtrails Over the Country Club by Lana Del Rey',
+    title: 'Past Lives',
+    artist: 'BØRNS',
+    image: 'img/music/past-lives-borns.jpg',
+    alt: 'Cover of Past Lives by BØRNS',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1d/59/86/1d598640-7656-604c-6318-2ae1ed53ab59/mzaf_4388248553281826308.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ba/b6/5b/bab65b54-b62b-afe7-7b2c-42d17c175479/mzaf_180048884343447783.plus.aac.p.m4a',
   },
   {
     title: 'Background',
@@ -58,12 +58,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a1/e1/a4/a1e1a4f3-c2d8-9eaf-cd7d-9dd7f60b4855/mzaf_16049331198487744650.plus.aac.p.m4a',
   },
   {
-    title: 'Past Lives',
-    artist: 'BORNS',
-    image: 'img/music/past-lives-borns.jpg',
-    alt: 'Cover of Past Lives by BORNS',
+    title: 'Chemtrails Over the Country Club',
+    artist: 'Lana Del Rey',
+    image: 'img/music/chemtrails-over-the-country-club-lana-del-rey.jpg',
+    alt: 'Cover of Chemtrails Over the Country Club by Lana Del Rey',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3b/50/a9/3b50a931-770e-50de-8903-bac4dba8ab75/mzaf_482579192048014415.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1d/59/86/1d598640-7656-604c-6318-2ae1ed53ab59/mzaf_4388248553281826308.plus.aac.p.m4a',
   },
   {
     title: 'Brave Shine',
@@ -75,19 +75,11 @@ const MUSIC = [
   },
   {
     title: 'Die for You',
-    artist: 'Starset',
+    artist: 'STARSET',
     image: 'img/music/die-for-you-starset.jpg',
     alt: 'Cover of Die for You by Starset',
     preview:
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/20/74/ad2074d5-a737-100c-6c19-65aac02ebc42/mzaf_9706352191788642174.plus.aac.p.m4a',
-  },
-  {
-    title: 'Unethical',
-    artist: 'Faouzia',
-    image: 'img/music/unethical-faouzia.jpg',
-    alt: 'Cover of Unethical by Faouzia',
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/1e/6a/ea1e6a4a-10fb-6cb9-ff1f-277417b14f62/mzaf_9942791211849297892.plus.aac.p.m4a',
   },
   {
     title: 'Sailor Song',
@@ -96,6 +88,14 @@ const MUSIC = [
     alt: 'Cover of Sailor Song by Gigi Perez',
     preview:
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/6d/fe/18/6dfe184e-7612-f171-0356-0b7a84112e9a/mzaf_9760607751711758843.plus.aac.p.m4a',
+  },
+  {
+    title: 'Unethical',
+    artist: 'Faouzia',
+    image: 'img/music/unethical-faouzia.jpg',
+    alt: 'Cover of Unethical by Faouzia',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/1e/6a/ea1e6a4a-10fb-6cb9-ff1f-277417b14f62/mzaf_9942791211849297892.plus.aac.p.m4a',
   },
   {
     title: 'I Wanna Be Yours',
