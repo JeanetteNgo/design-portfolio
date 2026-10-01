@@ -511,6 +511,9 @@
   rotate: 3deg;
   opacity: 0.92;
 }
+.postcard-stamp.is-word {
+  font-size: 11px;
+}
 .postcard-stamp::before {
   content: '';
   position: absolute;

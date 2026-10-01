@@ -323,6 +323,7 @@ POPUP_RENDERERS.map = function (popup) {
       place.status === 'home' ? 'Home' : _years(place).latest,
       'postcard-stamp'
     );
+    stampArt.classList.toggle('is-word', !/\d{4}/.test(stampArt.textContent)); // "Someday", "Home"
     stampArt.setAttribute('aria-hidden', 'true');
     const postmark = popupEl('div', '', 'postcard-postmark');
     postmark.setAttribute('aria-hidden', 'true');
