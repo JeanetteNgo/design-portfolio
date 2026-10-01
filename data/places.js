@@ -217,8 +217,8 @@ const PLACES = [
     ],
     note: 'Beaches and volcano sunrises.',
     photo:
-      'img/map/placeholder/indonesia.svg',
-    alt: 'Illustration of a volcano over the sea at sunrise',
+      'img/map/placeholder/next-stop.svg',
+    alt: 'Illustration of a dashed flight path to a map pin',
   },
   {
     name: 'Australia',
@@ -231,8 +231,8 @@ const PLACES = [
     ],
     note: 'Coastal drives and good coffee.',
     photo:
-      'img/map/placeholder/australia.svg',
-    alt: 'Illustration of white sails on the harbour',
+      'img/map/placeholder/next-stop.svg',
+    alt: 'Illustration of a dashed flight path to a map pin',
   },
   {
     name: 'Kyrgyzstan',
@@ -245,7 +245,7 @@ const PLACES = [
     ],
     note: 'Mountain lakes and yurt stays.',
     photo:
-      'img/map/placeholder/kyrgyzstan.svg',
-    alt: 'Illustration of a yurt below mountain peaks',
+      'img/map/placeholder/next-stop.svg',
+    alt: 'Illustration of a dashed flight path to a map pin',
   },
 ];

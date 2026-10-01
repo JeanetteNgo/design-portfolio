@@ -186,14 +186,14 @@
   outline: 3px solid var(--accent-500);
   outline-offset: 4px;
 }
-/* The same yellow teardrop as the home pin on the globe */
+/* The same yellow teardrop as the home pin on the globe, at the right of the banner */
 .map-home-pin {
   flex: none;
   position: relative;
   width: 26px;
   height: 26px;
   box-sizing: border-box;
-  margin: 0 4px 0 2px;
+  margin: 0 12px 0 auto;
   translate: 0 -3px; /* the tip hangs below the head, so lift it to centre the whole drop */
   border: 3px solid var(--ink-brown);
   border-radius: 50% 50% 50% 0;
@@ -210,27 +210,6 @@
 .map-home-text {
   display: flex;
   flex-direction: column;
-}
-/* A small chevron: the banner opens the postcard */
-.map-home::after {
-  content: '';
-  flex: none;
-  width: 9px;
-  height: 9px;
-  margin: 0 6px 0 auto;
-  border: solid var(--ink-brown);
-  border-width: 2.5px 2.5px 0 0;
-  rotate: 45deg;
-  opacity: 0.55;
-  transition:
-    translate 0.15s ease,
-    opacity 0.15s ease;
-}
-@media (hover: hover) {
-  .map-home:hover::after {
-    translate: 3px 0;
-    opacity: 1;
-  }
 }
 .map-home-label {
   margin-bottom: 8px;
@@ -425,7 +404,7 @@
   width: min(80cqw, calc(100cqh * var(--ratio)));
 }
 .postcard-photo {
-  --tape: color-mix(in srgb, #e3cfa6 82%, transparent);
+  --tape: color-mix(in srgb, #f4b9aa 80%, transparent);
   position: relative;
   aspect-ratio: var(--ratio);
   box-shadow:
@@ -439,7 +418,7 @@
   height: 100%;
   object-fit: cover;
 }
-/* Two strips of kraft tape on opposite corners: tan, slightly see-through, with a dashed edge */
+/* Two strips of washi tape on opposite corners: soft salmon, slightly see-through, dashed edge */
 .postcard-photo::before,
 .postcard-photo::after {
   content: '';
@@ -449,7 +428,7 @@
   width: 46px;
   height: 14px;
   rotate: -38deg;
-  border-block: 1px dashed rgb(120 85 40 / 35%);
+  border-block: 1px dashed rgb(170 85 65 / 38%);
   background:
     repeating-linear-gradient(90deg, rgb(255 255 255 / 14%) 0 2px, transparent 2px 5px), var(--tape);
   clip-path: polygon(

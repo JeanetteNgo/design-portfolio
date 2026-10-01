@@ -292,7 +292,11 @@ POPUP_RENDERERS.map = function (popup) {
     const message = popupEl('div', '', 'postcard-message');
     message.append(
       popupEl('p', STATUS[place.status][0], 'postcard-status'),
-      popupEl('h3', `Greetings from ${place.name}`, 'postcard-greeting')
+      popupEl(
+        'h3',
+        place.status === 'next' ? `Dreaming of ${place.name}` : `Greetings from ${place.name}`,
+        'postcard-greeting'
+      )
     );
     // The photo, taped on and keeping its 3:4 or 4:3 shape
     if (place.photo) {
@@ -561,7 +565,7 @@ POPUP_RENDERERS.map = function (popup) {
     popupEl('span', 'Currently based in', 'map-home-label'),
     popupEl('span', home.name, 'map-home-name')
   );
-  banner.append(popupEl('span', '', 'map-home-pin'), bannerText);
+  banner.append(bannerText, popupEl('span', '', 'map-home-pin'));
   banner.addEventListener('click', () => _select(home, true));
 
   Object.entries(STATUS).forEach(([status, [, heading]]) => {
