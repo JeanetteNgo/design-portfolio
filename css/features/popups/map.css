@@ -41,7 +41,7 @@
   .popup[data-popup='map'] .popup-card {
     --pad-top: 40px;
     --pad-x: 52px;
-    --pad-bottom: 36px;
+    --pad-bottom: 20px;
     --close-top: 28px;
     height: min(580px, calc(100dvh - 32px)); /* fixed, so it doesn't jump between views */
   }
@@ -53,7 +53,7 @@
 @media (max-width: 719px) {
   .popup[data-popup='map'] .popup-card {
     --pad-x: 24px;
-    --pad-bottom: 36px;
+    --pad-bottom: 20px;
   }
 }
 .popup[data-popup='map'] .popup-title {
@@ -109,7 +109,7 @@
   position: relative;
   flex: 1;
   width: 100%;
-  max-width: min(376px, calc(100dvh - 300px)); /* shrinks on short windows so nothing is clipped */
+  max-width: min(376px, calc(100dvh - 340px)); /* shrinks on short windows so nothing is clipped */
 }
 /* A fixed outline ring, so the globe still has an edge when it is zoomed past the frame */
 .map-globe-frame::after {
@@ -360,7 +360,7 @@
   flex: none;
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin-top: auto; /* with the footer's margin-bottom: centres the postcard in the column */
+  margin-block: auto; /* centred in the column */
   padding: 16px 14px 14px 16px;
   background: var(--paper-texture), var(--paper-bg);
   border: 1px solid var(--accent-a33);
@@ -566,11 +566,6 @@
   margin-right: 6px;
   font-weight: 400;
   color: var(--text-muted);
-}
-.map-detail-footer {
-  flex: none;
-  margin-top: 16px;
-  margin-bottom: auto;
 }
 
 /* On phones the halves stack and the popup scrolls, so the card takes its natural height */

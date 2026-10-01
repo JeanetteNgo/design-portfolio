@@ -153,7 +153,9 @@ html:has(.popup[open]) {
 /* The "Esc to close" row under a popup's main view */
 .popup-footer {
   flex: none;
-  padding-top: 8px;
+}
+.popup-footer .esc-tag {
+  margin-left: -8px; /* the key lines up with the content's left edge */
 }
 
 /* Default content: intro line, then headed lists */

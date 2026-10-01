@@ -12,7 +12,7 @@
   .popup[data-popup='tools'] .popup-card {
     --pad-top: 52px;
     --pad-x: 48px;
-    --pad-bottom: 44px;
+    --pad-bottom: 24px;
     --close-top: 28px;
   }
 }

@@ -278,8 +278,9 @@ POPUP_RENDERERS.map = function (popup) {
   }
 
   const listView = popupEl('div', '', 'map-stamps-view');
-  const listFooter = popupEl('div', '', 'popup-footer'); // "Esc to close" under the stamps
-  listFooter.appendChild(popupCloseTag());
+  const closeTag = popupCloseTag();
+  const footer = popupEl('div', '', 'popup-footer'); // bottom left: "Esc to close", or "← back" on a postcard
+  footer.appendChild(closeTag);
   const detailView = popupEl('div', '', 'map-detail');
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
@@ -347,9 +348,8 @@ POPUP_RENDERERS.map = function (popup) {
 
     card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
-    const footer = popupEl('div', '', 'map-detail-footer');
-    footer.appendChild(back);
-    detailView.replaceChildren(card, footer);
+    detailView.replaceChildren(card);
+    footer.replaceChildren(back);
     return back;
   }
 
@@ -360,7 +360,8 @@ POPUP_RENDERERS.map = function (popup) {
     openPlace = null;
     selected = home;
     detailView.hidden = true;
-    listView.hidden = listFooter.hidden = false;
+    listView.hidden = false;
+    footer.replaceChildren(closeTag);
     banner.hidden = false;
     if (refocus) {
       (stamps.get(place) || banner).focus();
@@ -377,7 +378,7 @@ POPUP_RENDERERS.map = function (popup) {
     selected = place;
     openPlace = place;
     const back = _detail(place);
-    listView.hidden = listFooter.hidden = true;
+    listView.hidden = true;
     banner.hidden = true; // a place is open: the postcard gets the room
     detailView.hidden = false;
     if (!calmMotion)
@@ -590,7 +591,7 @@ POPUP_RENDERERS.map = function (popup) {
   });
 
   const side = popupEl('div', '', 'map-side');
-  side.append(banner, listView, listFooter, detailView);
+  side.append(banner, listView, detailView);
 
   const layout = popupEl('div', '', 'map-layout');
   layout.append(globeWrap, side);
@@ -621,5 +622,5 @@ POPUP_RENDERERS.map = function (popup) {
     cancelAnimationFrame(frame);
   });
 
-  return [scroll];
+  return [scroll, footer];
 };
