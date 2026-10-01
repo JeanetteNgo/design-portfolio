@@ -193,6 +193,44 @@
   margin-inline: auto;
   background: var(--text-strong);
 }
+/* The clip's own play/pause button, bottom left, in the cream style of the Playlist records */
+.quest-video {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+.quest-video video {
+  cursor: pointer;
+}
+.quest-video-toggle {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper-bg) 90%, transparent);
+  box-shadow: 0 2px 6px rgb(var(--shadow-rgb) / 30%);
+  cursor: pointer;
+}
+.quest-video-toggle::before {
+  content: '';
+  position: absolute;
+  inset: 13px;
+  background: var(--ink-brown);
+  mask: var(--toggle-icon) center / contain no-repeat;
+  --toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z'/%3E%3C/svg%3E");
+}
+.quest-video-toggle.is-playing::before {
+  --toggle-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='5' height='16' rx='1.5'/%3E%3Crect x='14' y='4' width='5' height='16' rx='1.5'/%3E%3C/svg%3E");
+}
+.quest-video-toggle:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
 .quest-polaroid figcaption {
   padding: 8px 4px 2px;
   font: 400 14px/1.5 var(--font-hand);

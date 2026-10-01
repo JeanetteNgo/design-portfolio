@@ -57,21 +57,37 @@ POPUP_RENDERERS['side-quests'] = function (popup) {
       const polaroid = popupEl('figure', '', 'quest-polaroid');
       let media;
       if (video) {
-        // Tap to play (preload none, poster shows); loop: true autoplays silently, unless motion is reduced
+        // Autoplays silently when `loop` is set (unless motion is reduced); otherwise tap to play
         const silentLoop = loop && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-        media = popupEl('video');
-        media.src = video;
-        media.poster = poster || image || '';
-        media.controls = true;
-        media.playsInline = true; // plays in the polaroid on iPhones, not full screen
+        const clip = popupEl('video');
+        clip.src = video;
+        clip.poster = poster || image || '';
+        clip.playsInline = true; // plays in the polaroid on iPhones, not full screen
         if (silentLoop) {
-          media.muted = true; // browsers only autoplay silent video
-          media.loop = true;
-          media.autoplay = true;
+          clip.muted = true; // browsers only autoplay silent video
+          clip.loop = true;
+          clip.autoplay = true;
         } else {
-          media.preload = 'none';
+          clip.preload = 'none';
         }
-        if (alt) media.setAttribute('aria-label', alt);
+        if (alt) clip.setAttribute('aria-label', alt);
+
+        // Own play/pause button instead of the browser's controls
+        const toggle = popupEl('button', '', 'quest-video-toggle');
+        toggle.type = 'button';
+        const syncToggle = () => {
+          toggle.classList.toggle('is-playing', !clip.paused);
+          toggle.setAttribute('aria-label', clip.paused ? 'Play video' : 'Pause video');
+        };
+        const playPause = () => (clip.paused ? clip.play().catch(() => {}) : clip.pause());
+        toggle.addEventListener('click', playPause);
+        clip.addEventListener('click', playPause);
+        clip.addEventListener('play', syncToggle);
+        clip.addEventListener('pause', syncToggle);
+        syncToggle();
+
+        media = popupEl('div', '', 'quest-video');
+        media.append(clip, toggle);
       } else {
         media = popupEl('img');
         media.src = image;
