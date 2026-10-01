@@ -24,6 +24,7 @@ const POPUPS = {
     ],
   },
   'off-the-clock': {
+    paper: true, // paper-note look (css/features/popups/paper.css)
     title: 'Off the clock',
     intro: 'What I get up to when the laptop is shut.',
     // the tabs are in js/popups/off-the-clock/; their items are in data/gallery.js, music.js, books.js, doodles.js

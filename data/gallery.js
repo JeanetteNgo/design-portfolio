@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    GALLERY
-   The photos pinned on the corkboard in the "Off the clock" popup's Hobbies tab
+   The photos stuck on the page in the "Off the clock" popup's Hobbies tab
    (built by js/popups/off-the-clock/hobbies.js). Add one by adding a block to the list.
    The order here is the order on the board.
 

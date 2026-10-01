@@ -72,11 +72,8 @@ OFF_CLOCK_SECTIONS.push({
       grid.appendChild(item);
     });
 
-    // The page lies on the cork; the grid scrolls inside it
     const scroll = popupEl('div', '', 'popup-scroll');
-    const page = popupEl('div', '', 'sketch-page');
-    page.appendChild(grid);
-    scroll.appendChild(page);
+    scroll.appendChild(grid);
     return scroll;
   },
 });

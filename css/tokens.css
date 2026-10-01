@@ -138,14 +138,7 @@
   --pouch: var(--accent-200);
   --pouch-back: var(--accent-300); /* the inside back of the pouch */
 
-  /* Gallery (the Doodles popup) */
-  --gallery-wall: #fbf7f3; /* the wall */
-  --frame: var(--ink-brown); /* picture frames */
-
-  /* Corkboard (the Gallery popup) */
-  --cork: #d6a56b;
-  --cork-fleck: #b98548;
-  --cork-frame: #8a5a3b;
+  /* Red pin head (record labels in the Off the clock popup) */
   --pin: var(--accent-500);
 
   /* Globe (Map popup): water, ice caps and the grid lines over them. Land uses --pencil-d */

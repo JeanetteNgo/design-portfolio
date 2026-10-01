@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK: HOBBIES
-   A corkboard of polaroids and postcards from GALLERY (data/gallery.js). Click one to open
+   Polaroids and postcards from GALLERY (data/gallery.js). Click one to open
    it with its story; ← or the back tag returns.
 ────────────────────────────────────────────── */
 
@@ -46,7 +46,7 @@ OFF_CLOCK_SECTIONS.push({
       const item = popupEl('li');
       const button = _print(photo, false);
       button.addEventListener('click', () => _open(photo, button));
-      item.append(popupEl('span', '', 'gallery-pin'), button);
+      item.appendChild(button);
       board.appendChild(item);
     });
 

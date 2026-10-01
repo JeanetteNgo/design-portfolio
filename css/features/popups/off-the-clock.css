@@ -1,83 +1,68 @@
 /* ══════════════════════════════════════════
    OFF THE CLOCK POPUP
-   A corkboard with tabs (hobbies, listening, reading, sketchbook). Built by
-   js/popups/off-the-clock.js and the sections in js/popups/off-the-clock/.
-   Card padding is zero so the board reaches the frame.
+   A notebook-paper sheet with tabs (hobbies, listening, reading, sketchbook). Built by
+   js/popups/off-the-clock.js and the sections in js/popups/off-the-clock/. The sheet itself
+   is the shared paper look in paper.css; this adds the torn top, the tabs and the contents.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='off-the-clock'] .popup-card {
-  width: min(100%, 860px);
+  width: min(100%, 800px);
   height: min(640px, calc(100dvh - 32px)); /* same size on every tab */
-  --pad-top: 0px;
-  --pad-x: 0px;
-  --pad-bottom: 0px;
-  --close-top: 16px;
-  overflow: hidden;
-  border: 10px solid var(--cork-frame);
-  border-radius: 10px;
-  /* Cork: two layers of flecks over a warm base */
-  background:
-    radial-gradient(circle at 20% 30%, var(--cork-fleck) 0 1.5px, transparent 2.5px) 0 0 / 27px 29px,
-    radial-gradient(circle at 70% 60%, var(--cork-fleck) 0 1px, transparent 2px) 0 0 / 17px 23px,
-    var(--cork);
+  --pad-top: 32px; /* the heading adds 16px of its own */
+}
+.popup[data-popup='off-the-clock'] .popup-card::before {
+  -webkit-mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
+  mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
 }
 .popup[data-popup='off-the-clock'] .popup-scroll {
-  margin-inline: 0;
-  padding: 24px 32px 36px;
+  padding-top: 12px; /* room for the tilted prints */
 }
 
-/* ── Heading: a paper label pinned to the board ── */
+/* ── Heading ── */
 .otc-head {
   flex: none;
-  padding: 28px 68px 0 32px; /* the right gap leaves room for the × */
+  padding: 16px 44px 6px 0; /* the right gap leaves room for the × */
 }
-.otc-tag {
-  padding: 8px 18px 8px 30px;
-  font: 800 22px var(--font-primary);
+.otc-title {
+  display: block;
+  margin: 0 0 12px;
+  font: 900 26px/1 var(--font-primary);
+  color: var(--text-strong);
 }
-.otc-tag::before {
-  left: 11px;
-  width: 10px;
-  height: 10px;
-  margin-top: -5px;
-  background: var(--pin);
-}
-.otc-intro {
-  margin: 12px 0 0 4px;
-  font: 400 15px var(--font-hand);
-  color: var(--ink-brown);
+.otc-head .popup-intro {
+  margin: 0;
 }
 
-/* ── Tabs: paper index tabs along the top of the board ── */
+/* ── Tabs: dashed pen-drawn pills, like the sticker ring on the × ── */
 .otc-tabs {
   flex: none;
   display: flex;
   flex-wrap: wrap;
   gap: 4px 8px;
-  padding: 14px 32px 0;
+  padding: 8px 0 4px;
 }
 .otc-tab {
   min-height: 44px;
   padding: 0 16px;
-  border: 0;
-  border-radius: 6px 6px 0 0;
-  background: color-mix(in srgb, var(--paper-bg) 62%, var(--cork));
+  border: 2px dashed var(--accent-a50);
+  border-radius: 999px;
+  background: none;
   font: 700 14px var(--font-secondary);
   color: var(--text-body);
   cursor: pointer;
 }
 .otc-tab[aria-selected='true'] {
-  background: var(--paper-bg);
+  border-color: var(--ink-red);
+  background: var(--accent-a14);
   color: var(--text-strong);
-  box-shadow: inset 0 3px 0 var(--ink-red);
 }
 @media (hover: hover) {
   .otc-tab[aria-selected='false']:hover {
-    background: color-mix(in srgb, var(--paper-bg) 82%, var(--cork));
+    background: var(--accent-a8);
   }
 }
 .otc-tab:focus-visible {
-  outline: 3px solid var(--surface);
+  outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }
 .otc-panels {
@@ -97,17 +82,14 @@
     flex-wrap: nowrap;
     overflow-x: auto; /* one row that scrolls sideways instead of wrapping */
     scrollbar-width: none;
-    padding-inline: 20px;
   }
   .otc-tab {
     flex: none;
-  }
-  .otc-tab {
     padding: 0 12px;
   }
 }
 
-/* ── The board: prints scattered in 3, 2 or 1 columns, each at its own angle ── */
+/* ── The page: prints stuck on at slightly different angles in 3, 2 or 1 columns, each at its own angle ── */
 .gallery-board {
   column-count: 3;
   column-gap: 28px;
@@ -116,10 +98,8 @@
   list-style: none;
 }
 .gallery-board li {
-  position: relative;
   break-inside: avoid; /* a print never splits across two columns */
   margin: 0 0 30px; /* also resets the global li spacing */
-  padding-top: 8px; /* room for the pin */
 }
 .gallery-board li:nth-child(4n + 1) {
   --tilt: -2.5deg;
@@ -143,27 +123,6 @@
   .gallery-board {
     column-count: 1;
   }
-  .otc-head {
-    padding-left: 20px;
-  }
-  .popup[data-popup='off-the-clock'] .popup-scroll {
-    padding-inline: 24px;
-  }
-}
-
-/* The pin: a round head with a highlight, sitting on the top edge of the print */
-.gallery-pin {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 50%;
-  width: 14px;
-  height: 14px;
-  margin-left: -7px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, var(--pencil-light) 0 2px, var(--pin) 3px);
-  box-shadow: 0 2px 3px rgb(var(--shadow-rgb) / 30%);
-  pointer-events: none;
 }
 
 /* ── A print ── */
@@ -178,9 +137,11 @@
   color: inherit;
   text-align: center;
   rotate: var(--tilt, 0deg);
+  /* Stuck flat on the page: a thin edge and a short soft shadow, as on the Map postcards */
   box-shadow:
-    0 1px 2px rgb(var(--shadow-rgb) / 20%),
-    0 8px 14px rgb(var(--shadow-rgb) / 22%);
+    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+    1px 1.5px 1.5px rgb(var(--shadow-rgb) / 28%),
+    2px 4px 6px -1px rgb(var(--shadow-rgb) / 16%);
   transition:
     rotate 0.2s ease,
     translate 0.2s ease,
@@ -194,12 +155,13 @@ button.print {
     rotate: 0deg;
     translate: 0 -3px;
     box-shadow:
-      0 2px 4px rgb(var(--shadow-rgb) / 20%),
-      0 14px 22px rgb(var(--shadow-rgb) / 28%);
+      0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+      2px 4px 4px rgb(var(--shadow-rgb) / 22%),
+      4px 10px 14px -2px rgb(var(--shadow-rgb) / 18%);
   }
 }
 button.print:focus-visible {
-  outline: 3px solid var(--surface);
+  outline: 3px solid var(--accent-500);
   outline-offset: 3px;
 }
 .print-photo {
@@ -271,7 +233,10 @@ button.print:focus-visible {
   padding: 18px 22px;
   border-radius: 4px;
   background: var(--paper-bg);
-  box-shadow: 0 6px 14px rgb(var(--shadow-rgb) / 22%);
+  box-shadow:
+    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+    1px 1.5px 1.5px rgb(var(--shadow-rgb) / 24%),
+    2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
   rotate: 0.8deg;
 }
 .gallery-date {
@@ -292,18 +257,13 @@ button.print:focus-visible {
 }
 .otc-footer {
   flex: none;
-  padding: 0 16px 8px;
+  padding-top: 8px;
 }
-/* The back tag sits on cork here, so it gets a paper backing to stay readable */
 .otc-footer .esc-tag {
-  background: var(--paper-bg);
-  box-shadow: 0 2px 6px rgb(var(--shadow-rgb) / 20%);
-}
-.otc-footer .esc-tag:hover {
-  background: var(--surface);
+  margin-left: -8px; /* the key lines up with the content's left edge */
 }
 
-/* ── Listening and Reading: sleeves and covers laid out on the cork ── */
+/* ── Listening and Reading: sleeves and covers laid out on the page ── */
 .record-shelf,
 .book-shelf {
   display: grid;
@@ -363,8 +323,9 @@ button.print:focus-visible {
   inset: 0;
   background: var(--paper-bg);
   box-shadow:
-    0 1px 2px rgb(var(--shadow-rgb) / 20%),
-    0 8px 14px rgb(var(--shadow-rgb) / 22%);
+    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+    1px 1.5px 1.5px rgb(var(--shadow-rgb) / 24%),
+    2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
 }
 .record-cover {
   display: block;
@@ -390,8 +351,9 @@ button.print:focus-visible {
   background: var(--paper-bg);
   box-shadow:
     inset 6px 0 0 rgb(var(--shadow-rgb) / 14%),
-    0 1px 2px rgb(var(--shadow-rgb) / 20%),
-    0 8px 14px rgb(var(--shadow-rgb) / 22%);
+    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+    1px 1.5px 1.5px rgb(var(--shadow-rgb) / 24%),
+    2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
 }
 .book-image {
   display: block;
@@ -420,18 +382,7 @@ button.print:focus-visible {
   color: var(--surface);
 }
 
-/* ── Sketchbook: a notebook page lying on the cork, doodles loose on it ── */
-.popup[data-popup='off-the-clock'] .sketch-page {
-  min-height: 100%;
-  box-sizing: border-box;
-  padding: 24px 24px 12px;
-  background:
-    var(--paper-texture),
-    repeating-linear-gradient(transparent 0 31px, var(--paper-rule) 31px 32px) 0 22px,
-    var(--paper-bg);
-  box-shadow: 0 6px 14px rgb(var(--shadow-rgb) / 22%);
-  rotate: -0.4deg;
-}
+/* ── Sketchbook: doodles loose on the ruled page ── */
 .doodle-grid {
   column-count: 3;
   column-gap: 24px;
@@ -504,14 +455,17 @@ button.print:focus-visible {
   font-size: 10px;
   color: var(--surface);
 }
-/* An opened doodle: its own sheet of paper on the cork */
+/* An opened doodle: its own sheet of paper */
 .otc-detail .doodle-sheet {
   width: fit-content;
   max-width: min(100%, 460px);
   margin: 8px auto 0;
   padding: 16px;
   background: var(--paper-bg);
-  box-shadow: 0 6px 14px rgb(var(--shadow-rgb) / 22%);
+  box-shadow:
+    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+    1px 1.5px 1.5px rgb(var(--shadow-rgb) / 24%),
+    2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
   rotate: -0.6deg;
 }
 .otc-detail .doodle-media {

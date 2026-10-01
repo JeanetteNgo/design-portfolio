@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK POPUP
-   What I'm into outside work, on a corkboard with tabs. This file is the shell (heading,
+   What I'm into outside work, on a notebook page with tabs. This file is the shell (heading,
    tabs, the opened view); each tab is a section in js/popups/off-the-clock/ that adds itself:
      OFF_CLOCK_SECTIONS.push({ id, label, build(shell) { return element; } });
    Tabs appear in the order the section scripts load. A section that opens an item calls
@@ -42,12 +42,12 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
 
   /* ── Heading ── */
 
-  // The title is a pinned label; the dialog's hidden title names it for screen readers
+  // The dialog's hidden title names the popup for screen readers
   const head = popupEl('header', '', 'otc-head');
-  const label = popupEl('span', popup.title, 'paper-tag otc-tag');
-  label.setAttribute('aria-hidden', 'true');
-  head.appendChild(label);
-  if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'otc-intro'));
+  const title = popupEl('span', popup.title, 'otc-title');
+  title.setAttribute('aria-hidden', 'true');
+  head.appendChild(title);
+  if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
 
   /* ── Tabs ── */
 
