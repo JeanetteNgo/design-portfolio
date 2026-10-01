@@ -74,7 +74,7 @@
   }
   .map-layout {
     height: 100%;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr); /* globe at most 45%, words at least 55% */
     grid-template-rows: minmax(0, 1fr);
     align-items: stretch;
     gap: 48px; /* space between the globe and the words */
@@ -409,27 +409,23 @@
   font: 400 20px/1.15 var(--font-hand);
   color: var(--text-strong);
 }
-/* Photo and signature share a slot that takes the leftover column height. The photo keeps its
-   3:4 or 4:3 shape (--ratio, set when it loads): 80% of the column wide, or less if it is tall. */
+/* The photo's slot takes the leftover column height. The photo keeps its 3:4 or 4:3 shape
+   (--ratio, set when it loads): 80% of the column wide, or less if it is tall. */
 .postcard-slot {
   flex: 1 1 0;
   min-height: 0;
+  margin-top: 16px;
   container-type: size;
   display: grid;
-  align-content: end;
-  justify-items: center;
-}
-.postcard-slot.has-photo {
   align-content: center;
+  justify-items: center;
 }
 .postcard-print {
   --ratio: 1.333;
-  width: min(80cqw, calc((100cqh - 30px) * var(--ratio)));
-}
-.postcard-slot:not(.has-photo) .postcard-print {
-  width: 100%;
+  width: min(80cqw, calc(100cqh * var(--ratio)));
 }
 .postcard-photo {
+  --tape: color-mix(in srgb, #e3cfa6 82%, transparent);
   position: relative;
   aspect-ratio: var(--ratio);
   box-shadow:
@@ -443,15 +439,19 @@
   height: 100%;
   object-fit: cover;
 }
-/* Two strips of washi tape across opposite corners (same patterns as the dock's tapes) */
+/* Two strips of kraft tape on opposite corners: tan, slightly see-through, with a dashed edge */
 .postcard-photo::before,
 .postcard-photo::after {
   content: '';
   position: absolute;
   z-index: 1;
+  box-sizing: border-box;
   width: 46px;
-  height: 13px;
-  opacity: 0.95;
+  height: 14px;
+  rotate: -38deg;
+  border-block: 1px dashed rgb(120 85 40 / 35%);
+  background:
+    repeating-linear-gradient(90deg, rgb(255 255 255 / 14%) 0 2px, transparent 2px 5px), var(--tape);
   clip-path: polygon(
     0 0,
     100% 0,
@@ -467,32 +467,22 @@
   pointer-events: none;
 }
 .postcard-photo::before {
-  top: 1px;
+  top: 2px;
   left: -16px;
-  rotate: -38deg;
-  background: repeating-linear-gradient(
-    45deg,
-    color-mix(in srgb, var(--accent-500) 38%, white) 0 5px,
-    var(--dock-tile-b) 5px 10px
-  );
 }
 .postcard-photo::after {
-  top: 1px;
   right: -16px;
-  rotate: 38deg;
-  background:
-    linear-gradient(90deg, var(--accent-a33) 50%, transparent 50%) 0 0 / 6px 6px,
-    linear-gradient(var(--accent-a33) 50%, transparent 50%) 0 0 / 6px 6px,
-    var(--surface-band);
+  bottom: 2px;
 }
-/* Initials signed under the photo */
+/* Initials signed at the foot of the left column */
 .postcard-sign {
-  display: block;
-  margin-top: 6px;
-  font: 400 20px/24px var(--font-hand);
-  color: var(--ink-brown);
-  text-align: right;
-  rotate: -4deg;
+  flex: none;
+  margin-top: auto;
+  padding-top: 6px;
+  font: 400 14px/18px var(--font-hand);
+  color: var(--text-muted);
+  rotate: -2deg;
+  transform-origin: left center;
 }
 
 /* The address side: stamp and postmark on top, then the note and cities (scrolling), then the years */
@@ -614,11 +604,12 @@
   .postcard-slot {
     flex: none;
     container-type: normal;
-    margin-top: 12px;
   }
-  .postcard-print,
-  .postcard-slot:not(.has-photo) .postcard-print {
+  .postcard-print {
     width: 80%;
+  }
+  .postcard-sign {
+    margin-top: 10px;
   }
   .postcard-address {
     margin-top: 16px;
