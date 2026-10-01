@@ -607,9 +607,12 @@
   right: 8px;
   padding: 3px 8px;
   border-radius: 999px;
-  background: var(--ink-red);
+  background: var(--paper-bg);
+  box-shadow:
+    0 0 0 1.5px var(--ink-red),
+    0 2px 5px rgb(var(--shadow-rgb) / 30%);
   font: 700 11px var(--font-secondary);
-  color: var(--surface);
+  color: var(--ink-brown);
 }
 
 /* ── Doodles: doodles loose on the ruled page ── */
