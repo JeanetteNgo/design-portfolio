@@ -78,7 +78,7 @@
     align-self: stretch;
     align-items: flex-start; /* zoom buttons share the Esc tag's left edge */
     justify-content: flex-end; /* sits low, with a fixed gap above the Esc tag in the corner */
-    padding-bottom: 59px; /* leaves 20px between the zoom capsule and the Esc tag */
+    padding-bottom: calc(41px + (var(--zoom-h) + 4px) / 2); /* 20px between the zoom capsule and the Esc tag */
   }
   .popup[data-popup='map'] .map-globe-frame {
     align-self: flex-start; /* globe, zoom buttons and Esc tag share one left edge */
@@ -164,10 +164,20 @@
   outline: 3px solid var(--accent-500);
   outline-offset: 4px;
 }
+.popup[data-popup='map'] {
+  --zoom-w: 44px; /* each zoom button; bigger on touch screens */
+  --zoom-h: 36px;
+}
+@media (pointer: coarse) {
+  .popup[data-popup='map'] {
+    --zoom-w: 48px;
+    --zoom-h: 44px;
+  }
+}
 .map-zoom {
   position: absolute;
   left: 50%;
-  bottom: -18px; /* straddles the globe's bottom edge */
+  bottom: calc((var(--zoom-h) + 4px) / -2); /* straddles the globe's bottom edge */
   z-index: 2;
   display: flex;
   flex-direction: row;
@@ -179,16 +189,21 @@
 }
 /* One capsule in the globe's solid-ink style (the paper-sticker dashes are overridden) */
 .popup[data-popup='map'] .map-zoom .map-zoom-btn {
-  width: 40px;
-  height: 32px;
+  width: var(--zoom-w);
+  height: var(--zoom-h);
   padding: 0;
   border: 0;
   border-radius: 0;
   background: transparent;
   font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
-.popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:active {
   background: var(--accent-a20);
+}
+@media (hover: hover) {
+  .popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
+    background: var(--accent-a20);
+  }
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:focus-visible {
   outline-offset: -3px;
@@ -224,6 +239,7 @@
   top: 8px;
   bottom: 8px;
   width: 1.5px;
+  pointer-events: none;
   background: color-mix(in srgb, var(--ink-brown) 18%, transparent);
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:not(.paper-sticker--plus, .paper-sticker--minus)::before {
@@ -238,7 +254,7 @@
   opacity: 0.4;
   cursor: default;
 }
-.popup[data-popup='map'] .map-zoom .map-zoom-btn[aria-disabled='true']:hover {
+.popup[data-popup='map'] .map-zoom .map-zoom-btn[aria-disabled='true']:is(:hover, :active) {
   background: transparent;
 }
 
