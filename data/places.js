@@ -128,7 +128,8 @@ const PLACES = [
       'Hainan',
     ],
     note: 'Reconnecting with my roots?',
-    photo: 'img/map/placeholder/been.svg',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in China',
   },
   {
@@ -142,7 +143,8 @@ const PLACES = [
       'Kaohsiung',
     ],
     note: 'Once is never enough! x2',
-    photo: 'img/map/placeholder/been.svg',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in Taiwan',
   },
   {
@@ -155,8 +157,9 @@ const PLACES = [
       'Rome',
       'Venice',
     ],
-    note: 'Beautiful churches.',
-    photo: 'img/map/placeholder/been.svg',
+    note: 'Beautiful churches, and many "Ni-haos".',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in Italy',
   },
   {
@@ -170,7 +173,8 @@ const PLACES = [
       'Interlaken',
     ],
     note: 'Freshest air, probably ever.',
-    photo: 'img/map/placeholder/been.svg',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in Switzerland',
   },
   {
@@ -184,7 +188,8 @@ const PLACES = [
       'Rotterdam',
     ],
     note: 'Windmills!',
-    photo: 'img/map/placeholder/been.svg',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in The Netherlands',
   },
   {
@@ -197,7 +202,8 @@ const PLACES = [
       'Paris',
     ],
     note: 'Did someone say "croissant"? 😀',
-    photo: 'img/map/placeholder/been.svg',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in France',
   },
   {
@@ -210,8 +216,9 @@ const PLACES = [
       'Bangkok',
       'Pattaya',
     ],
-    note: 'Gotta revisit!',
-    photo: 'img/map/placeholder/been.svg',
+    note: 'Hot!',
+    photo:
+      'img/map/placeholder/been.svg',
     alt: 'Me in Thailand',
   },
   {

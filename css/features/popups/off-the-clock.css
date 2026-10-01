@@ -318,6 +318,57 @@ button.print:focus-visible {
   background: radial-gradient(circle, var(--pin) 0 11%, var(--ink-brown) 12% 100%);
   box-shadow: 0 4px 8px rgb(var(--shadow-rgb) / 25%);
 }
+/* The play button: a paper sticker with a dashed ring (as on the tabs) in the sleeve's corner */
+.record-play {
+  position: absolute;
+  z-index: 1;
+  right: 8px;
+  bottom: 8px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px dashed var(--accent-a50);
+  border-radius: 50%;
+  background: var(--paper-bg);
+  color: var(--text-strong);
+  cursor: pointer;
+}
+.record-play::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: currentColor;
+  -webkit-mask: var(--glyph) center / contain no-repeat;
+  mask: var(--glyph) center / contain no-repeat;
+  --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z'/%3E%3C/svg%3E");
+}
+.record-play[aria-pressed='true']::before {
+  --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='5' height='16' rx='1.5'/%3E%3Crect x='14' y='4' width='5' height='16' rx='1.5'/%3E%3C/svg%3E");
+}
+.record-play[aria-pressed='true'] {
+  border-color: var(--ink-red);
+  background: var(--accent-a14);
+}
+@media (hover: hover) {
+  .record-play:hover {
+    border-color: var(--ink-red);
+  }
+}
+.record-play:focus-visible {
+  outline: 3px solid var(--accent-500);
+  outline-offset: 2px;
+}
+/* While playing, the vinyl turns slowly */
+.record.is-playing .record-disc {
+  animation: record-spin 4s linear infinite;
+}
+@keyframes record-spin {
+  to {
+    rotate: 360deg;
+  }
+}
 .record-sleeve {
   position: absolute;
   inset: 0;
@@ -487,5 +538,8 @@ button.print:focus-visible {
   .print,
   .doodle {
     transition: none;
+  }
+  .record.is-playing .record-disc {
+    animation: none;
   }
 }
