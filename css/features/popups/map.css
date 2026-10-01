@@ -532,18 +532,18 @@
   object-fit: cover;
   filter: sepia(0.22) saturate(0.95); /* a faint warm tone so every photo feels like part of the set */
 }
-/* Album photo corners: four small dark triangles hold the print in place */
+/* The photo is framed like the stamp beside it: a white mat inside a double line in the stamp's ink */
+.postcard-photo {
+  box-sizing: border-box;
+  padding: 7px;
+  border: 2px solid var(--ink);
+  background: #fffdf8;
+}
 .postcard-photo::before {
   content: '';
   position: absolute;
-  inset: -1px;
-  z-index: 1;
-  --corner: color-mix(in srgb, var(--ink-brown) 82%, #fff);
-  background:
-    linear-gradient(135deg, var(--corner) 50%, transparent 50%) top left / 22px 22px no-repeat,
-    linear-gradient(225deg, var(--corner) 50%, transparent 50%) top right / 22px 22px no-repeat,
-    linear-gradient(45deg, var(--corner) 50%, transparent 50%) bottom left / 22px 22px no-repeat,
-    linear-gradient(315deg, var(--corner) 50%, transparent 50%) bottom right / 22px 22px no-repeat;
+  inset: 2px;
+  border: 1px solid var(--ink);
   pointer-events: none;
 }
 /* Initials signed at the foot of the left column */

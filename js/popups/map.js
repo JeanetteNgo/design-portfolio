@@ -303,7 +303,7 @@ POPUP_RENDERERS.map = function (popup) {
         'postcard-greeting'
       )
     );
-    // The photo, held by photo corners and keeping its 3:4 or 4:3 shape
+    // The photo, framed like a stamp and keeping its 3:4 or 4:3 shape
     if (place.photo) {
       const slot = popupEl('div', '', 'postcard-slot');
       const print = popupEl('div', '', 'postcard-print');
