@@ -332,6 +332,9 @@ button.print:focus-visible {
   border: 2px dashed var(--accent-a50);
   border-radius: 50%;
   background: var(--paper-bg);
+  box-shadow:
+    0 0 0 2px var(--paper-bg),
+    0 2px 6px rgb(var(--shadow-rgb) / 35%);
   color: var(--text-strong);
   cursor: pointer;
 }
@@ -349,7 +352,7 @@ button.print:focus-visible {
 }
 .record-play[aria-pressed='true'] {
   border-color: var(--ink-red);
-  background: var(--accent-a14);
+  background: linear-gradient(var(--accent-a14), var(--accent-a14)), var(--paper-bg);
 }
 @media (hover: hover) {
   .record-play:hover {

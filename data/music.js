@@ -66,20 +66,20 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3b/50/a9/3b50a931-770e-50de-8903-bac4dba8ab75/mzaf_482579192048014415.plus.aac.p.m4a',
   },
   {
-    title: 'Sparkle',
-    artist: 'RADWIMPS',
-    image: 'img/music/sparkle-radwimps.jpg',
-    alt: 'Cover of Sparkle by RADWIMPS',
+    title: 'Brave Shine',
+    artist: 'Aimer',
+    image: 'img/music/brave-shine-aimer.jpg',
+    alt: 'Cover of Brave Shine by Aimer',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d8/fa/07/d8fa073d-c1ca-6928-b5ee-94a437af581f/mzaf_1898817050310855929.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/23/3d/22/233d22af-2b53-2732-e88c-db95ce330988/mzaf_8454975281954723147.plus.aac.p.m4a',
   },
   {
-    title: 'All the Stars',
-    artist: 'Kendrick Lamar & SZA',
-    image: 'img/music/all-the-stars-kendrick-lamar-sza.jpg',
-    alt: 'Cover of All the Stars by Kendrick Lamar & SZA',
+    title: "Star Walkin'",
+    artist: 'Lil Nas X',
+    image: 'img/music/star-walkin-lil-nas-x.jpg',
+    alt: "Cover of Star Walkin' by Lil Nas X",
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/8b/2c/ea8b2cf4-95f2-b0b3-ffc5-10f4611bf98f/mzaf_6758805407695014001.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e9/07/86/e9078647-0c34-c2b7-be50-5fb1dd78e798/mzaf_1863924217540366618.plus.aac.p.m4a',
   },
   {
     title: 'Unethical',
