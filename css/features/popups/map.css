@@ -167,12 +167,6 @@
 .popup[data-popup='map'] {
   --zoom-w: 44px; /* each zoom button; bigger on touch screens */
   --zoom-h: 36px;
-  /* the hover / press fill: a circle that fits inside the capsule, centred on the button */
-  --zoom-fill: radial-gradient(
-    circle calc(var(--zoom-h) / 2 - 3px) at center,
-    var(--accent-a20) 98%,
-    transparent 100%
-  );
 }
 @media (pointer: coarse) {
   .popup[data-popup='map'] {
@@ -197,18 +191,27 @@
 .popup[data-popup='map'] .map-zoom .map-zoom-btn {
   width: var(--zoom-w);
   height: var(--zoom-h);
-  padding: 0;
+  padding: 3px; /* the hover fill is inset by this much from the border and dividers */
   border: 0;
-  border-radius: 0;
+  border-radius: 10px;
   background: transparent;
+  background-clip: content-box;
   font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:first-child {
+  border-top-left-radius: calc(var(--zoom-h) / 2); /* follows the capsule's curve */
+  border-bottom-left-radius: calc(var(--zoom-h) / 2);
+}
+.popup[data-popup='map'] .map-zoom .map-zoom-btn:last-child {
+  border-top-right-radius: calc(var(--zoom-h) / 2);
+  border-bottom-right-radius: calc(var(--zoom-h) / 2);
+}
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:active {
-  background: var(--zoom-fill);
+  background-color: var(--accent-a20);
 }
 @media (hover: hover) {
   .popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
-    background: var(--zoom-fill);
+    background-color: var(--accent-a20);
   }
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:focus-visible {
@@ -261,7 +264,7 @@
   cursor: default;
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn[aria-disabled='true']:is(:hover, :active) {
-  background: transparent;
+  background-color: transparent;
 }
 
 /* ── "Based in" banner: shown above the stamps (hidden while a postcard is open) ── */
