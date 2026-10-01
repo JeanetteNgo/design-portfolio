@@ -1,0 +1,42 @@
+/* ─────────────────────────────────────────────
+   OFF THE CLOCK: INTERESTS
+   Polaroids and postcards from INTERESTS (data/interests.js), stuck on the page
+   with a short caption each.
+────────────────────────────────────────────── */
+
+OFF_CLOCK_SECTIONS.push({
+  id: 'interests',
+  label: 'Interests',
+  build() {
+    function _print(item) {
+      const print = popupEl('figure', '', `print print--${item.kind}`);
+      let picture;
+      if (item.image) {
+        picture = popupEl('img', '', 'print-photo');
+        picture.src = item.image;
+        picture.alt = item.alt || '';
+        picture.loading = 'lazy'; // only downloaded when it scrolls near view
+        picture.decoding = 'async';
+        popupReserveShape(picture, item, 'load');
+      } else {
+        picture = popupEl('span', 'coming soon', 'print-photo print-blank');
+        picture.setAttribute('aria-hidden', 'true');
+        popupReserveShape(picture, item);
+      }
+      print.appendChild(picture);
+      if (item.caption) print.appendChild(popupEl('figcaption', item.caption, 'print-caption'));
+      return print;
+    }
+
+    const board = popupEl('ul', '', 'interests-board');
+    INTERESTS.forEach((item) => {
+      const entry = popupEl('li');
+      entry.appendChild(_print(item));
+      board.appendChild(entry);
+    });
+
+    const scroll = popupEl('div', '', 'popup-scroll');
+    scroll.appendChild(board);
+    return scroll;
+  },
+});

@@ -27,7 +27,7 @@ const POPUPS = {
     paper: true, // paper-note look (css/features/popups/paper.css)
     title: 'Off the clock',
     intro: 'I occasionally touch grass.',
-    // the tabs are in js/popups/off-the-clock/; their items are in data/gallery.js, music.js, books.js and doodles.js
+    // the tabs are in js/popups/off-the-clock/; their items are in data/interests.js, music.js, books.js and doodles.js
   },
   map: {
     paper: true, // paper-note look (css/features/popups/paper.css)

@@ -152,37 +152,37 @@
 }
 
 /* ── The page: prints stuck on at slightly different angles in 3, 2 or 1 columns, each at its own angle ── */
-.gallery-board {
+.interests-board {
   column-count: 3;
   column-gap: 48px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
-.gallery-board li {
+.interests-board li {
   break-inside: avoid; /* a print never splits across two columns */
   margin: 0 0 48px; /* also resets the global li spacing */
 }
-.gallery-board li:nth-child(4n + 1) {
+.interests-board li:nth-child(4n + 1) {
   --tilt: -2.5deg;
 }
-.gallery-board li:nth-child(4n + 2) {
+.interests-board li:nth-child(4n + 2) {
   --tilt: 1.5deg;
 }
-.gallery-board li:nth-child(4n + 3) {
+.interests-board li:nth-child(4n + 3) {
   --tilt: -1deg;
 }
-.gallery-board li:nth-child(4n + 4) {
+.interests-board li:nth-child(4n + 4) {
   --tilt: 2.5deg;
 }
 @media (max-width: 720px) {
-  .gallery-board {
+  .interests-board {
     column-count: 2;
     column-gap: 20px;
   }
 }
 @media (max-width: 440px) {
-  .gallery-board {
+  .interests-board {
     column-count: 1;
   }
 }
@@ -192,11 +192,10 @@
   display: block;
   box-sizing: border-box;
   width: 100%;
+  margin: 0;
   padding: 10px 10px 8px;
   border: 0;
   background: var(--surface);
-  font: inherit;
-  color: inherit;
   text-align: center;
   rotate: var(--tilt, 0deg);
   /* Stuck flat on the page: a thin edge and a short soft shadow, as on the Map postcards */
@@ -204,27 +203,6 @@
     0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
     1px 1.5px 1.5px rgb(var(--shadow-rgb) / 28%),
     2px 4px 6px -1px rgb(var(--shadow-rgb) / 16%);
-  transition:
-    rotate 0.2s ease,
-    translate 0.2s ease,
-    box-shadow 0.2s ease;
-}
-button.print {
-  cursor: pointer;
-}
-@media (hover: hover) {
-  button.print:hover {
-    rotate: 0deg;
-    translate: 0 -3px;
-    box-shadow:
-      0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
-      2px 4px 4px rgb(var(--shadow-rgb) / 22%),
-      4px 10px 14px -2px rgb(var(--shadow-rgb) / 18%);
-  }
-}
-button.print:focus-visible {
-  outline: 3px solid var(--accent-500);
-  outline-offset: 3px;
 }
 .print-photo {
   display: block;
@@ -266,27 +244,7 @@ button.print:focus-visible {
   font-size: 15px;
 }
 
-/* ── An opened item (hobby print or sketch) ── */
-.otc-detail .print {
-  width: fit-content;
-  max-width: min(100%, 460px);
-  margin: 8px auto 0;
-  padding: 14px 14px 10px;
-  rotate: -1deg;
-}
-.otc-detail .print--postcard {
-  padding: 12px 12px 8px;
-}
-.otc-detail .print-photo {
-  max-height: min(44vh, 440px); /* leaves room for the story beneath */
-  width: auto;
-  max-width: 100%;
-  margin-inline: auto;
-}
-.otc-detail .print-blank {
-  width: min(60vw, 380px);
-}
-/* The story: a small paper note under the print */
+/* ── An opened sketch: a small paper note under it ── */
 .otc-note {
   width: fit-content;
   max-width: min(100%, 460px);
@@ -301,21 +259,10 @@ button.print:focus-visible {
     2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
   rotate: 0.8deg;
 }
-.gallery-date {
-  margin: 0;
-  font: 700 12px var(--font-secondary);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-red);
-}
 .gallery-story-title {
   margin: 4px 0 0;
   font-size: 22px;
   color: var(--text-strong);
-}
-.gallery-story-text {
-  margin: 8px 0 0;
-  color: var(--text-body);
 }
 .otc-footer {
   flex: none;
@@ -729,7 +676,6 @@ button.print:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .print,
   .doodle {
     transition: none;
   }
