@@ -330,7 +330,8 @@ button.print:focus-visible {
     var(--ink-brown);
   box-shadow: 0 4px 8px rgb(var(--shadow-rgb) / 25%);
 }
-/* The whole sleeve is the play/pause button; the little disc in the corner shows its state */
+/* The whole sleeve is the play/pause button. On hover or focus a soft overlay appears with the
+   button (a little vinyl disc) in the middle. */
 .record-play {
   position: absolute;
   z-index: 1;
@@ -344,14 +345,23 @@ button.print:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 3px;
 }
+.record-play::before {
+  content: '';
+  position: absolute;
+  inset: 6px; /* over the cover, not the paper border */
+  background: rgb(var(--shadow-rgb) / 38%);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
 .record-play-icon {
   position: absolute;
-  left: 8px;
-  bottom: 8px;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   border: 2px solid var(--paper-bg);
   border-radius: 50%;
   background:
@@ -359,12 +369,25 @@ button.print:focus-visible {
     var(--ink-brown);
   box-shadow: 0 2px 6px rgb(var(--shadow-rgb) / 35%);
   color: var(--paper-bg);
-  transition: background-color 0.15s ease;
+  opacity: 0;
+  transition:
+    opacity 0.15s ease,
+    background-color 0.15s ease;
+}
+@media (hover: hover) {
+  .record-play:hover::before,
+  .record-play:hover .record-play-icon {
+    opacity: 1;
+  }
+}
+.record-play:focus-visible::before,
+.record-play:focus-visible .record-play-icon {
+  opacity: 1;
 }
 .record-play-icon::before {
   content: '';
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   background: currentColor;
   -webkit-mask: var(--glyph) center / contain no-repeat;
   mask: var(--glyph) center / contain no-repeat;
@@ -580,7 +603,9 @@ button.print:focus-visible {
   .record.has-played .record-disc {
     animation: none;
   }
-  .record-cover {
+  .record-cover,
+  .record-play::before,
+  .record-play-icon {
     transition: none;
   }
 }
