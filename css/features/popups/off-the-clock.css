@@ -42,7 +42,7 @@
 }
 
 /* ── Tabs: small coloured paper labels stuck on the page, like the dock's label; the chosen
-   one turns white, straightens and lifts ── */
+   one is the strongest colour, straightens and lifts ── */
 .otc-tabs {
   flex: none;
   display: flex;
@@ -56,7 +56,7 @@
   padding: 0 16px 0 28px;
   border: 0;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--paper-bg) 62%, var(--tab-tint));
+  background: color-mix(in srgb, var(--paper-bg) 82%, var(--tab-tint));
   box-shadow:
     0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
     1px 2px 3px rgb(var(--shadow-rgb) / 16%);
@@ -100,7 +100,7 @@
   transition: background-color 0.25s ease;
 }
 .otc-tab[aria-selected='true'] {
-  background: var(--surface-faint);
+  background: color-mix(in srgb, var(--paper-bg) 25%, var(--tab-tint));
   box-shadow:
     0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
     2px 4px 8px rgb(var(--shadow-rgb) / 20%);
@@ -113,7 +113,7 @@
 }
 @media (hover: hover) {
   .otc-tab[aria-selected='false']:hover {
-    background: color-mix(in srgb, var(--paper-bg) 48%, var(--tab-tint));
+    background: color-mix(in srgb, var(--paper-bg) 68%, var(--tab-tint));
     rotate: calc(var(--tilt) / 2);
     translate: 0 -1px;
   }
@@ -330,10 +330,13 @@ button.print:focus-visible {
 .book-shelf {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 48px 40px;
+  gap: 40px 32px;
   margin: 0;
   padding: 0;
   list-style: none;
+}
+.book-shelf {
+  gap: 48px 40px;
 }
 @media (max-width: 720px) {
   .record-shelf,
