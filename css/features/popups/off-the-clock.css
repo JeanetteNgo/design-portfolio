@@ -9,13 +9,21 @@
   width: min(100%, 800px);
   height: min(640px, calc(100dvh - 32px)); /* same size on every tab */
   --pad-top: 32px; /* the heading adds 16px of its own */
+  --pad-x: 44px;
+  --pad-bottom: 32px;
+}
+@media (max-width: 640px) {
+  .popup[data-popup='off-the-clock'] .popup-card {
+    --pad-x: 24px;
+    --pad-bottom: 24px;
+  }
 }
 .popup[data-popup='off-the-clock'] .popup-card::before {
   -webkit-mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
   mask: radial-gradient(circle 7px at 50% 0, transparent 97%, black) 0 0 / 24px 100%;
 }
 .popup[data-popup='off-the-clock'] .popup-scroll {
-  padding-top: 12px; /* room for the tilted prints */
+  padding: 24px var(--pad-x) 48px; /* space around the content, and below the last row */
 }
 
 /* ── Heading ── */
@@ -39,7 +47,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 4px 8px;
-  padding: 8px 0 4px;
+  padding: 8px 0 12px;
 }
 .otc-tab {
   min-height: 44px;
@@ -79,6 +87,8 @@
 }
 @media (max-width: 440px) {
   .otc-tabs {
+    width: 0; /* with min-width, keeps the row's width from stretching the sheet */
+    min-width: 100%;
     flex-wrap: nowrap;
     overflow-x: auto; /* one row that scrolls sideways instead of wrapping */
     scrollbar-width: none;
@@ -92,14 +102,14 @@
 /* ── The page: prints stuck on at slightly different angles in 3, 2 or 1 columns, each at its own angle ── */
 .gallery-board {
   column-count: 3;
-  column-gap: 28px;
+  column-gap: 36px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .gallery-board li {
   break-inside: avoid; /* a print never splits across two columns */
-  margin: 0 0 30px; /* also resets the global li spacing */
+  margin: 0 0 40px; /* also resets the global li spacing */
 }
 .gallery-board li:nth-child(4n + 1) {
   --tilt: -2.5deg;
@@ -257,7 +267,7 @@ button.print:focus-visible {
 }
 .otc-footer {
   flex: none;
-  padding-top: 8px;
+  padding-top: 12px;
 }
 .otc-footer .esc-tag {
   margin-left: -8px; /* the key lines up with the content's left edge */
@@ -267,8 +277,8 @@ button.print:focus-visible {
 .record-shelf,
 .book-shelf {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px 32px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -276,7 +286,8 @@ button.print:focus-visible {
 @media (max-width: 720px) {
   .record-shelf,
   .book-shelf {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 20px;
   }
 }
 .record,
@@ -564,14 +575,14 @@ button.print:focus-visible {
 /* ── Doodles: doodles loose on the ruled page ── */
 .doodle-grid {
   column-count: 3;
-  column-gap: 24px;
+  column-gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 .doodle-grid li {
   break-inside: avoid; /* a doodle never splits across two columns */
-  margin: 0 0 24px; /* also resets the global li spacing */
+  margin: 0 0 32px; /* also resets the global li spacing */
 }
 @media (max-width: 720px) {
   .doodle-grid {
