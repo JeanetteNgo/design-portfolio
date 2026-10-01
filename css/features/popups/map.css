@@ -76,14 +76,14 @@
   }
   .popup[data-popup='map'] .map-globe-wrap {
     align-self: stretch;
-    align-items: flex-start; /* zoom buttons share the Esc tag's left edge */
-    justify-content: flex-end; /* sits low, with a fixed gap above the Esc tag in the corner */
+    align-items: flex-start;
+    justify-content: flex-end;
     padding-bottom: calc(
       41px + (var(--zoom-h) + 4px) / 2
-    ); /* 20px between the zoom capsule and the Esc tag */
+    );
   }
   .popup[data-popup='map'] .map-globe-frame {
-    align-self: flex-start; /* globe, zoom buttons and Esc tag share one left edge */
+    align-self: flex-start;
   }
   /* "Esc to close" (or "back") sits in the bottom left corner, beside the right column */
   .popup[data-popup='map'] .popup-footer {
@@ -143,7 +143,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  border: 2.5px solid var(--ink-brown); /* same weight as the zoom capsule */
+  border: 2.5px solid var(--ink-brown);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -184,7 +184,7 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  border: 2.5px solid var(--ink-brown); /* same weight as the globe ring */
+  border: 2.5px solid var(--ink-brown);
   border-radius: 999px;
   background: var(--paper-bg);
   transform: translateX(-50%);
@@ -540,12 +540,12 @@
   --sepia: 0.25;
   --sheen: 25%;
   --lift-light: 55%;
-  --lift-shade: 9%;
-  --edge: 30%;
-  --edge-light: 20%;
+  --lift-shade: 4%;
+  --edge: 10%;
+  --edge-light: 30%;
   position: relative;
   aspect-ratio: var(--ratio);
-  rotate: var(--tilt); /* casually stuck on, slightly off square */
+  rotate: var(--tilt);
   /* A print lying on the card: a tight contact shadow and a short soft one, both falling the
      same way (light from the top left) */
   box-shadow:

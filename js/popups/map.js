@@ -112,7 +112,7 @@ POPUP_RENDERERS.map = function (popup) {
     ctx.beginPath();
     path({ type: 'Sphere' });
     ctx.strokeStyle = ink;
-    ctx.lineWidth = 2.5; // matches the zoom capsule's border
+    ctx.lineWidth = 2.5;
     ctx.stroke();
 
     // Pins, drawn from the back of the globe forward so nearer ones sit on top (selected last)
@@ -303,7 +303,7 @@ POPUP_RENDERERS.map = function (popup) {
         'postcard-greeting'
       )
     );
-    // The photo, glued on with two lifted corners, keeping its 3:4 or 4:3 shape
+    // The photo, keeping its 3:4 or 4:3 shape
     if (place.photo) {
       const slot = popupEl('div', '', 'postcard-slot');
       const print = popupEl('div', '', 'postcard-print');
