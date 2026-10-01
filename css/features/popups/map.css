@@ -235,21 +235,6 @@
   text-transform: uppercase;
   color: var(--ink-red);
 }
-/* The back tag takes the banner's place while a postcard is open (same height and rule) */
-.map-detail-head {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  min-height: 78px;
-  padding-bottom: 20px;
-  border-bottom: 1.5px solid var(--accent-a33);
-}
-.map-detail-head[hidden] {
-  display: none;
-}
-.map-detail-head .esc-tag {
-  margin-left: -8px; /* the key lines up with the content's left edge */
-}
 .map-home-row {
   display: flex;
   align-items: center;
@@ -386,6 +371,7 @@
 .map-detail {
   display: flex;
   flex-direction: column;
+  perspective: 900px; /* so the postcard flip reads as a card turning over */
   padding: 6px 8px 8px 6px;
 }
 .map-detail[hidden] {
@@ -401,7 +387,7 @@
   flex: none;
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin-block: auto; /* centred in the column */
+  margin-top: auto; /* with the back row's bottom margin: centred in the column */
   padding: 16px 14px 14px 16px;
   background: var(--paper-texture), var(--paper-bg);
   border: 1px solid var(--accent-a33);
@@ -410,6 +396,10 @@
     0 1px 2px rgb(var(--shadow-rgb) / 14%),
     0 10px 22px rgb(var(--shadow-rgb) / 18%);
   rotate: -1deg;
+}
+.map-detail-back {
+  flex: none;
+  margin: 14px 0 auto;
 }
 .postcard-message {
   display: flex;

@@ -281,9 +281,9 @@ POPUP_RENDERERS.map = function (popup) {
   const closeTag = popupCloseTag();
   const footer = popupEl('div', '', 'popup-footer'); // bottom left: "Esc to close", or "← back" on a postcard
   footer.appendChild(closeTag);
-  const detailHead = popupEl('div', '', 'map-detail-head'); // "← back", where the banner is on the list
-  detailHead.hidden = true;
   const detailView = popupEl('div', '', 'map-detail');
+  let currentCard = null; // the open postcard, for the flip
+  let closing = false; // true while the postcard flips away
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
 
@@ -350,29 +350,48 @@ POPUP_RENDERERS.map = function (popup) {
 
     card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
-    detailView.replaceChildren(card);
-    detailHead.replaceChildren(back);
+    const backRow = popupEl('div', '', 'map-detail-back');
+    backRow.appendChild(back);
+    detailView.replaceChildren(card, backRow);
+    currentCard = card;
     return back;
   }
 
-  // Shows the stamps again. `refocus` puts keyboard focus back on the stamp that was open.
+  // Flips the postcard away, then shows the stamps again. `refocus` puts keyboard focus back on
+  // the stamp that was open.
   function _close(refocus) {
-    if (!openPlace) return;
+    if (!openPlace || closing) return;
     const place = openPlace;
     openPlace = null;
     selected = home;
-    detailView.hidden = true;
-    listView.hidden = false;
-    detailHead.hidden = true;
-    banner.hidden = false;
-    if (refocus) {
-      (stamps.get(place) || banner).focus();
-      clearTimeout(idleTimer);
-      spin = SPIN; // back on the stamps: the globe drifts again
-      last = performance.now();
-      _wake();
-    }
     _draw();
+
+    const finish = () => {
+      closing = false;
+      if (openPlace) return; // another place was chosen while it flipped
+      detailView.hidden = true;
+      listView.hidden = false;
+      banner.hidden = false;
+      if (!calmMotion) [listView, banner].forEach((el) => el.animate({ opacity: [0, 1] }, 180));
+      if (refocus) {
+        (stamps.get(place) || banner).focus();
+        clearTimeout(idleTimer);
+        spin = SPIN; // back on the stamps: the globe drifts again
+        last = performance.now();
+        _wake();
+      }
+    };
+    if (calmMotion || !currentCard) return finish();
+    closing = true;
+    currentCard
+      .animate(
+        [
+          { transform: 'none', opacity: 1 },
+          { transform: 'rotateY(90deg) scale(0.96)', opacity: 0 },
+        ],
+        { duration: 240, easing: 'ease-in', fill: 'forwards' }
+      )
+      .finished.then(finish, finish);
   }
 
   // Turns the globe to a place and opens its postcard
@@ -381,16 +400,16 @@ POPUP_RENDERERS.map = function (popup) {
     openPlace = place;
     const back = _detail(place);
     listView.hidden = true;
-    banner.hidden = true; // a place is open: the back tag takes the banner's place
-    detailHead.hidden = false;
+    banner.hidden = true; // a place is open: the postcard gets the room
     detailView.hidden = false;
     if (!calmMotion)
-      detailView.animate(
+      currentCard.animate(
         [
-          { opacity: 0, translate: '0 4px' },
-          { opacity: 1, translate: '0' },
+          { transform: 'rotateY(-90deg) scale(0.96)', opacity: 0 },
+          { opacity: 1, offset: 0.25 },
+          { transform: 'none', opacity: 1 },
         ],
-        180
+        { duration: 420, easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)' }
       );
     back.focus({ preventScroll: true });
     if (turnGlobe) _turnTo(place);
@@ -593,7 +612,7 @@ POPUP_RENDERERS.map = function (popup) {
   });
 
   const side = popupEl('div', '', 'map-side');
-  side.append(banner, detailHead, listView, detailView);
+  side.append(banner, listView, detailView);
 
   const layout = popupEl('div', '', 'map-layout');
   layout.append(globeWrap, side);
