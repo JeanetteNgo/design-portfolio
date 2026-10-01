@@ -301,10 +301,6 @@ POPUP_RENDERERS.map = function (popup) {
       img.alt = place.alt || '';
       img.loading = 'lazy';
       img.decoding = 'async';
-      // cropped to 3:4 (portrait) or 4:3 (landscape) once its shape is known
-      img.addEventListener('load', () => {
-        img.style.aspectRatio = img.naturalHeight > img.naturalWidth ? '3 / 4' : '4 / 3';
-      });
       photo.appendChild(img);
       message.appendChild(photo);
     }
