@@ -167,6 +167,12 @@
 .popup[data-popup='map'] {
   --zoom-w: 44px; /* each zoom button; bigger on touch screens */
   --zoom-h: 36px;
+  /* the hover / press fill: a circle that fits inside the capsule, centred on the button */
+  --zoom-fill: radial-gradient(
+    circle calc(var(--zoom-h) / 2 - 3px) at center,
+    var(--accent-a20) 98%,
+    transparent 100%
+  );
 }
 @media (pointer: coarse) {
   .popup[data-popup='map'] {
@@ -198,11 +204,11 @@
   font: 700 12px/1 var(--font-secondary); /* only the "1×" shows text; + and − are pen strokes */
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:active {
-  background: var(--accent-a20);
+  background: var(--zoom-fill);
 }
 @media (hover: hover) {
   .popup[data-popup='map'] .map-zoom .map-zoom-btn:hover {
-    background: var(--accent-a20);
+    background: var(--zoom-fill);
   }
 }
 .popup[data-popup='map'] .map-zoom .map-zoom-btn:focus-visible {
