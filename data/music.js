@@ -52,12 +52,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ba/b6/5b/bab65b54-b62b-afe7-7b2c-42d17c175479/mzaf_180048884343447783.plus.aac.p.m4a',
   },
   {
-    title: 'Chemtrails Over the Country Club',
+    title: 'Brooklyn Baby',
     artist: 'Lana Del Rey',
-    image: 'img/music/chemtrails-over-the-country-club-lana-del-rey.jpg',
-    alt: 'Cover of Chemtrails Over the Country Club by Lana Del Rey',
+    image: 'img/music/brooklyn-baby-lana-del-rey.jpg',
+    alt: 'Cover of Brooklyn Baby by Lana Del Rey',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1d/59/86/1d598640-7656-604c-6318-2ae1ed53ab59/mzaf_4388248553281826308.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f2/3c/62/f23c6236-7d20-0318-0c38-71addabb9470/mzaf_5291675828735270159.plus.aac.p.m4a',
   },
   {
     title: 'Wildflower',
