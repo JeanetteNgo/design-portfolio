@@ -9,8 +9,8 @@
 
 POPUP_RENDERERS.map = function (popup) {
   const STATUS = {
-    home: ['Home base', 'Based in'],
-    been: ['Been here', 'Been'],
+    home: ['Home base', 'Currently based in'],
+    been: ['Been here', 'Visited'],
     next: ['Next stop', 'Next stops'],
   };
   const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -542,10 +542,10 @@ POPUP_RENDERERS.map = function (popup) {
 
   const banner = popupEl('button', '', 'map-home');
   banner.type = 'button';
-  banner.setAttribute('aria-label', `Based in ${home.name}. Show it on the globe.`);
+  banner.setAttribute('aria-label', `Currently based in ${home.name}. Show it on the globe.`);
   const bannerText = popupEl('span', '', 'map-home-text');
   bannerText.append(
-    popupEl('span', 'Based in', 'map-home-label'),
+    popupEl('span', 'Currently based in', 'map-home-label'),
     popupEl('span', home.name, 'map-home-name')
   );
   if (home.note) bannerText.appendChild(popupEl('span', home.note, 'map-home-note'));
