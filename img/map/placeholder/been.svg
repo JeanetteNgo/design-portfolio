@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+<defs>
+<pattern id="a" width="40" height="40" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="20" height="40" fill="#e9dcc6"/><rect x="20" width="20" height="40" fill="#f3e9d8"/></pattern>
+</defs>
+<rect width="800" height="600" fill="url(#a)"/>
+<rect x="34" y="34" width="732" height="532" rx="6" fill="#f5eee0"/>
+<rect x="50" y="50" width="700" height="500" rx="4" fill="none" stroke="#c9ad88" stroke-width="4" stroke-dasharray="14 12"/>
+<g fill="none" stroke="#a87a52" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity=".75">
+<rect x="270" y="190" width="260" height="190" rx="14" stroke-dasharray="2 22"/>
+<path d="M290 360 L360 290 L410 335 L460 270 L510 340" stroke-dasharray="2 20"/>
+<circle cx="470" cy="236" r="20" stroke-dasharray="2 14"/>
+</g>
+<g fill="#a87a52" opacity=".6"><circle cx="360" cy="450" r="9"/><circle cx="400" cy="450" r="9"/><circle cx="440" cy="450" r="9"/></g>
+</svg>
