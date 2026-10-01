@@ -84,22 +84,6 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/23/3d/22/233d22af-2b53-2732-e88c-db95ce330988/mzaf_8454975281954723147.plus.aac.p.m4a',
   },
   {
-    title: "Star Walkin'",
-    artist: 'Lil Nas X',
-    image: 'img/music/star-walkin-lil-nas-x.jpg',
-    alt: "Cover of Star Walkin' by Lil Nas X",
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e9/07/86/e9078647-0c34-c2b7-be50-5fb1dd78e798/mzaf_1863924217540366618.plus.aac.p.m4a',
-  },
-  {
-    title: 'I Wanna Be Yours',
-    artist: 'Arctic Monkeys',
-    image: 'img/music/i-wanna-be-yours-arctic-monkeys.jpg',
-    alt: 'Cover of I Wanna Be Yours by Arctic Monkeys',
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/99/9a/21/999a2138-9398-ed91-d6bc-aede9d8d6c79/mzaf_7342524110072517987.plus.aac.p.m4a',
-  },
-  {
     title: 'Sailor Song',
     artist: 'Gigi Perez',
     image: 'img/music/sailor-song-gigi-perez.jpg',
@@ -108,11 +92,27 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/6d/fe/18/6dfe184e-7612-f171-0356-0b7a84112e9a/mzaf_9760607751711758843.plus.aac.p.m4a',
   },
   {
-    title: 'Unethical',
-    artist: 'Faouzia',
-    image: 'img/music/unethical-faouzia.jpg',
-    alt: 'Cover of Unethical by Faouzia',
+    title: 'Airplanes',
+    artist: 'B.o.B feat. Hayley Williams',
+    image: 'img/music/airplanes-b-o-b.jpg',
+    alt: 'Cover of Airplanes by B.o.B feat. Hayley Williams',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/1e/6a/ea1e6a4a-10fb-6cb9-ff1f-277417b14f62/mzaf_9942791211849297892.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4b/d3/29/4bd3293f-bd9d-2605-ad8f-4b1daa410236/mzaf_3244454318053033485.plus.aac.p.m4a',
+  },
+  {
+    title: "Star Walkin'",
+    artist: 'Lil Nas X',
+    image: 'img/music/star-walkin-lil-nas-x.jpg',
+    alt: "Cover of Star Walkin' by Lil Nas X",
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e9/07/86/e9078647-0c34-c2b7-be50-5fb1dd78e798/mzaf_1863924217540366618.plus.aac.p.m4a',
+  },
+  {
+    title: 'Escapism',
+    artist: 'RAYE & 070 Shake',
+    image: 'img/music/escapism-raye.jpg',
+    alt: 'Cover of Escapism by RAYE & 070 Shake',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/13/5a/89/135a893e-034b-1d11-71c8-a1e6f848d169/mzaf_12638001538529638232.plus.aac.p.m4a',
   },
 ];
