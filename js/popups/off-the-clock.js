@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────
-   OFF THE CLOCK POPUP
+   SIDE QUESTS POPUP
    A side-quest checklist from QUESTS (data/quests.js). Done quests open their memory;
    wip/todo jiggle and show a reply from QUEST_REPLIES. State comes from the data.
    Styles: css/features/popups/off-the-clock.css.

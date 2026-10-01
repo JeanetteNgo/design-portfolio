@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    SIDE QUESTS
-   The checklist inside the "Off the clock" popup
+   The checklist inside the "Side Quests" popup
    (built by js/popups/off-the-clock.js).
 
    Each quest has:
