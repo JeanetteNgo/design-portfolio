@@ -51,7 +51,7 @@ const INTERESTS = [
     image: 'img/gallery/gaming.webp',
     width: 4,
     height: 3,
-    alt: '',
+    alt: 'Mobile Legends',
     caption: 'Makes me mad, still playing',
   },
   {
@@ -70,7 +70,7 @@ const INTERESTS = [
     image: 'img/gallery/penguin.webp',
     width: 1,
     height: 1,
-    alt: '',
+    alt: 'A Penguin',
     caption: 'Penguins',
   },
 ];
