@@ -36,12 +36,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3a/09/a6/3a09a6ff-40a8-9e7e-98e3-5b3ceba236cb/mzaf_17032523870044311157.plus.aac.p.m4a',
   },
   {
-    title: 'Background',
-    artist: 'Jin',
-    image: 'img/music/background-jin.jpg',
-    alt: 'Cover of Background by Jin',
+    title: 'Moonchild',
+    artist: 'RM',
+    image: 'img/music/moonchild-rm.jpg',
+    alt: 'Cover of Moonchild by RM',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a1/e1/a4/a1e1a4f3-c2d8-9eaf-cd7d-9dd7f60b4855/mzaf_16049331198487744650.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/8a/71/74/8a717478-a17f-b105-d5bb-52679bd82b58/mzaf_10651692690078303648.plus.aac.p.m4a',
   },
   {
     title: 'Past Lives',
