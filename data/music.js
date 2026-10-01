@@ -34,12 +34,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/56/42/3c/56423c53-f9e5-6f2c-25b8-9d8432238815/mzaf_4569738009026504165.plus.aac.p.m4a',
   },
   {
-    title: 'Wildflower',
-    artist: 'Billie Eilish',
-    image: 'img/music/wildflower-billie-eilish.jpg',
-    alt: 'Cover of Wildflower by Billie Eilish',
+    title: 'Background',
+    artist: 'Jin',
+    image: 'img/music/background-jin.jpg',
+    alt: 'Cover of Background by Jin',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/de/c3/e8/dec3e884-7237-9622-718a-12c5f48c5ca2/mzaf_3134455671785145822.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a1/e1/a4/a1e1a4f3-c2d8-9eaf-cd7d-9dd7f60b4855/mzaf_16049331198487744650.plus.aac.p.m4a',
   },
   {
     title: 'Past Lives',
@@ -50,20 +50,28 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ba/b6/5b/bab65b54-b62b-afe7-7b2c-42d17c175479/mzaf_180048884343447783.plus.aac.p.m4a',
   },
   {
-    title: 'Background',
-    artist: 'Jin',
-    image: 'img/music/background-jin.jpg',
-    alt: 'Cover of Background by Jin',
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a1/e1/a4/a1e1a4f3-c2d8-9eaf-cd7d-9dd7f60b4855/mzaf_16049331198487744650.plus.aac.p.m4a',
-  },
-  {
     title: 'Chemtrails Over the Country Club',
     artist: 'Lana Del Rey',
     image: 'img/music/chemtrails-over-the-country-club-lana-del-rey.jpg',
     alt: 'Cover of Chemtrails Over the Country Club by Lana Del Rey',
     preview:
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1d/59/86/1d598640-7656-604c-6318-2ae1ed53ab59/mzaf_4388248553281826308.plus.aac.p.m4a',
+  },
+  {
+    title: 'Wildflower',
+    artist: 'Billie Eilish',
+    image: 'img/music/wildflower-billie-eilish.jpg',
+    alt: 'Cover of Wildflower by Billie Eilish',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/de/c3/e8/dec3e884-7237-9622-718a-12c5f48c5ca2/mzaf_3134455671785145822.plus.aac.p.m4a',
+  },
+  {
+    title: 'Die for You',
+    artist: 'STARSET',
+    image: 'img/music/die-for-you-starset.jpg',
+    alt: 'Cover of Die for You by Starset',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/20/74/ad2074d5-a737-100c-6c19-65aac02ebc42/mzaf_9706352191788642174.plus.aac.p.m4a',
   },
   {
     title: 'Brave Shine',
@@ -74,12 +82,20 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/23/3d/22/233d22af-2b53-2732-e88c-db95ce330988/mzaf_8454975281954723147.plus.aac.p.m4a',
   },
   {
-    title: 'Die for You',
-    artist: 'STARSET',
-    image: 'img/music/die-for-you-starset.jpg',
-    alt: 'Cover of Die for You by Starset',
+    title: "Star Walkin'",
+    artist: 'Lil Nas X',
+    image: 'img/music/star-walkin-lil-nas-x.jpg',
+    alt: "Cover of Star Walkin' by Lil Nas X",
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/20/74/ad2074d5-a737-100c-6c19-65aac02ebc42/mzaf_9706352191788642174.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e9/07/86/e9078647-0c34-c2b7-be50-5fb1dd78e798/mzaf_1863924217540366618.plus.aac.p.m4a',
+  },
+  {
+    title: 'I Wanna Be Yours',
+    artist: 'Arctic Monkeys',
+    image: 'img/music/i-wanna-be-yours-arctic-monkeys.jpg',
+    alt: 'Cover of I Wanna Be Yours by Arctic Monkeys',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/99/9a/21/999a2138-9398-ed91-d6bc-aede9d8d6c79/mzaf_7342524110072517987.plus.aac.p.m4a',
   },
   {
     title: 'Sailor Song',
@@ -96,21 +112,5 @@ const MUSIC = [
     alt: 'Cover of Unethical by Faouzia',
     preview:
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ea/1e/6a/ea1e6a4a-10fb-6cb9-ff1f-277417b14f62/mzaf_9942791211849297892.plus.aac.p.m4a',
-  },
-  {
-    title: 'I Wanna Be Yours',
-    artist: 'Arctic Monkeys',
-    image: 'img/music/i-wanna-be-yours-arctic-monkeys.jpg',
-    alt: 'Cover of I Wanna Be Yours by Arctic Monkeys',
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/99/9a/21/999a2138-9398-ed91-d6bc-aede9d8d6c79/mzaf_7342524110072517987.plus.aac.p.m4a',
-  },
-  {
-    title: "Star Walkin'",
-    artist: 'Lil Nas X',
-    image: 'img/music/star-walkin-lil-nas-x.jpg',
-    alt: "Cover of Star Walkin' by Lil Nas X",
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e9/07/86/e9078647-0c34-c2b7-be50-5fb1dd78e798/mzaf_1863924217540366618.plus.aac.p.m4a',
   },
 ];
