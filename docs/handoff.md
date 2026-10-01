@@ -5,7 +5,7 @@ Paste or save this in the repo (e.g. `HANDOFF.md`) and tell Claude Code:
 
 ## 0. Where things stand (updated 2026-10-01)
 
-Sections 2 to 4 below describe the original plan. What is actually built differs in places:
+Sections 3 and 4 below describe the original plan. What is actually built differs in places:
 
 - **Folders:** root holds pages only. `css/` (tokens, base, layout, components, `pages/`, `features/`), `js/`, `data/` (registries), `img/` (`profile/`, `dock/`), `docs/`.
 - **Nav and footer:** edit `data/site.js`; `js/site-shell.js` renders them on every page.
@@ -35,17 +35,17 @@ Sections 2 to 4 below describe the original plan. What is actually built differs
 
 ## 2. The site
 
-- Static HTML/CSS/JS, no framework. Hosted on GitHub Pages, custom domain jeanettengo.com (CNAME in this repo). Older v3 lives at jeanettengo.github.io. Decision under way: evolve this v4 in place instead of a from-scratch v5 desk site (the "desk" idea is parked).
-- Repo root: `index.html`, `projects.html`, `about.html`, `styles.css`, `projects-registry.js`, `render-projects.js`, `logo.svg`, `favicon.ico`, `CNAME`, `README.md`, `LICENSE`, `.gitattributes`, plus folders `img/`, `projects/` (aea, apa, asua, ata, haast-compen…, univus; each has its own index.html) and `backup/` (can be deleted, Git is the backup).
-- Fonts: Nunito (primary) and Lexend (secondary), loaded from Google Fonts in `<head>`.
-- Home page markup today (`index.html`): `nav > .nav-container` (logo, `.nav-links` with Home / Projects / Resume; the About link is commented out), then `header.home-page-header` containing the photo (`img/dp_2.jpeg`), `<h1>Hi! I am Jeanette.</h1>`, `<p>I dabble in design <span class="wave">…</span></p>`, and `div.about > ul` with four facts (Singapore, likes new skills and penguins, learning inline skating, latest read Origin by Dan Brown). Then `main.featured-projects` with the "Selected Works" heading; cards are rendered by `render-projects.js` from `projects-registry.js`.
-- `styles.css` was refactored (drop-in, same class names) into design tokens. If not yet committed, check `git status`/`git log`.
-  - Layer 1 palette: `--neutral-0…500`, `--salmon-25…500`, `--salmon-rgb`.
-  - Layer 2 roles (components use only these): `--accent-25…500`, `--accent`, `--accent-rgb`, `--accent-a8/a14/a20/a25/a33/a50` (translucent tints), `--text-heading`, `--text-accent`, `--text-body`, `--text-muted`, `--text-strong`, `--text-faint`, `--text-band`, `--text-on-accent`, `--nav-link`, `--bg-top`, `--bg-bottom`, `--page-bg`, `--surface`, `--surface-soft`, `--surface-faint`, `--surface-band`, `--surface-glass`, `--surface-neutral`, `--nav-bg`, `--border-neutral`, `--divider`, `--shadow-rgb`, `--shadow-card`, `--shadow-card-hover`, `--font-primary`, `--font-secondary`. Legacy aliases kept (`--text-color-primary`, etc.).
+- Static HTML/CSS/JS, no framework. Hosted on GitHub Pages, custom domain jeanettengo.com (`CNAME`). Older v3 lives at jeanettengo.github.io. v4 is being evolved in place (the "desk" site idea is parked).
+- Repo root: `index.html`, `projects.html`, `about.html`, `favicon.ico`, `CNAME`, `README.md`, `LICENSE`, `.gitattributes`, `.gitignore`, `.prettierrc`, `.prettierignore`, `.vscode/settings.json`. Folders: `css/`, `js/`, `data/`, `img/`, `scripts/` (`fetch-covers.mjs`), `docs/` (this file), `projects/` (one folder per project with its `img/`; `apa`, `asua`, `ata`, `univus` also have a case study `index.html`).
+- Fonts: Nunito (primary), Lexend (secondary) and Gloria Hallelujah (handwriting, for notes), loaded from Google Fonts in `<head>`.
+- Pages: `<body data-page="home|projects|about">`. `js/site-shell.js` renders the nav and footer from `data/site.js`. Project cards are rendered by `js/render-projects.js` from `data/projects.js` (home: "Selected Works"; Projects page: a timeline by year).
+- Home page (`index.html`): `nav#site-nav`, then `.home-top` holding the sparkle layer, `header.home-page-header` (pinned photo `img/profile/dp_2.jpeg`, "Hi! I am Jeanette.", "I dabble in design") and `section.dock-strip` (the six dock buttons). Below it `main.featured-projects`, then `footer#site-footer`, then the popup `<dialog>` and the scripts. The old fact list (`div.about`) moved into the popups.
+- CSS: one file per concern. `css/tokens.css` holds the tokens, `base.css`, `layout.css` (nav, footer), `components.css` (project card, paper tag), `pages/` (`home`, `projects`, `about`, `case-study`), `features/` (`dock`, `sparkles`, `popup`, `popups/<name>`).
+  - Layer 1 palette: `--neutral-*`, `--salmon-*`, `--salmon-rgb`. Layer 2 roles (components use only these): `--accent-*`, `--accent-a8…a50` (translucent tints), `--text-*`, `--surface-*`, `--shadow-*`, fonts, and the dock, paper, ink, pencil, map and sparkle groups. Legacy aliases are kept at the bottom.
   - Rule: no raw hex/rgb outside `:root`. New colours become new role tokens.
-- Known contrast issues (left as-is on purpose): headings salmon-400 on pale pink about 2.5:1 (large text needs 3:1); inactive nav links about 1.7:1; white on salmon-400 (tags, CTA) about 2.7:1. Fix later via `--text-accent`/`--text-heading` pointing at `--accent-500` (about 3.1:1) plus a darker shade for small text. Not part of the strip work.
-- Other findings: some `.timeline-*` selectors appear only in the responsive block (check `render-projects.js` before deleting); `gap: -20px` in `.timeline-group` is invalid.
-- Suggested Prettier config (`.prettierrc`: printWidth 100, tabWidth 2, singleQuote, semi, trailingComma es5, endOfLine lf, htmlWhitespaceSensitivity css), `.prettierignore` (backup/, img/), and `.vscode/settings.json` (formatOnSave, detectIndentation false, wordWrap bounded at 100). Check whether these were applied; run the first format as its own commit. `.gitignore` should include `.DS_Store`; untrack existing ones with `git ls-files -z '*.DS_Store' | xargs -0 git rm --cached`.
+- Known contrast issues (left as-is on purpose): headings salmon-400 on pale pink about 2.5:1 (large text needs 3:1); inactive nav links about 1.7:1; white on salmon-400 (tags, CTA) about 2.7:1. Fix later via `--text-accent`/`--text-heading` pointing at `--accent-500` (about 3.1:1) plus a darker shade for small text.
+- Known bug: `gap: -20px` in `.timeline-group` (`css/pages/projects.css`) is invalid.
+- Tooling: Prettier (`.prettierrc`: printWidth 100, tabWidth 2, singleQuote, semi, trailingComma es5, endOfLine lf), applied on save via `.vscode/settings.json`. `.prettierignore` skips `img/`, `backup/`, `node_modules/` and minified files. `.DS_Store` is gitignored.
 
 ## 3. Design decisions (final for the strip)
 
