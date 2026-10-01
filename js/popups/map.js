@@ -350,9 +350,7 @@ POPUP_RENDERERS.map = function (popup) {
 
     card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
-    const backRow = popupEl('div', '', 'map-detail-back');
-    backRow.appendChild(back);
-    detailView.replaceChildren(card, backRow);
+    detailView.replaceChildren(card);
     currentCard = card;
     return back;
   }
@@ -370,6 +368,7 @@ POPUP_RENDERERS.map = function (popup) {
       closing = false;
       if (openPlace) return; // another place was chosen while it flipped
       detailView.hidden = true;
+      footer.replaceChildren(closeTag);
       listView.hidden = false;
       banner.hidden = false;
       if (!calmMotion) [listView, banner].forEach((el) => el.animate({ opacity: [0, 1] }, 180));
@@ -399,6 +398,7 @@ POPUP_RENDERERS.map = function (popup) {
     selected = place;
     openPlace = place;
     const back = _detail(place);
+    footer.replaceChildren(back); // "← back" takes the Esc tag's place
     listView.hidden = true;
     banner.hidden = true; // a place is open: the postcard gets the room
     detailView.hidden = false;

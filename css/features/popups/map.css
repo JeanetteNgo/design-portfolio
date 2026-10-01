@@ -397,10 +397,6 @@
     0 10px 22px rgb(var(--shadow-rgb) / 18%);
   rotate: -1deg;
 }
-.map-detail-back {
-  flex: none;
-  margin: 14px 0 auto;
-}
 .postcard-message {
   display: flex;
   flex-direction: column;
