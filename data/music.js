@@ -76,20 +76,20 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ad/20/74/ad2074d5-a737-100c-6c19-65aac02ebc42/mzaf_9706352191788642174.plus.aac.p.m4a',
   },
   {
-    title: 'back to friends',
-    artist: 'sombr',
-    image: 'img/music/back-to-friends-sombr.jpg',
-    alt: 'Cover of back to friends by sombr',
-    preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d7/63/7d/d7637dec-cf2d-1455-3398-f1a6340359d0/mzaf_88927986796632454.plus.aac.p.m4a',
-  },
-  {
     title: 'Brave Shine',
     artist: 'Aimer',
     image: 'img/music/brave-shine-aimer.jpg',
     alt: 'Cover of Brave Shine by Aimer',
     preview:
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/23/3d/22/233d22af-2b53-2732-e88c-db95ce330988/mzaf_8454975281954723147.plus.aac.p.m4a',
+  },
+  {
+    title: 'back to friends',
+    artist: 'sombr',
+    image: 'img/music/back-to-friends-sombr.jpg',
+    alt: 'Cover of back to friends by sombr',
+    preview:
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d7/63/7d/d7637dec-cf2d-1455-3398-f1a6340359d0/mzaf_88927986796632454.plus.aac.p.m4a',
   },
   {
     title: 'Airplanes',
