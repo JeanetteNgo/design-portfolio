@@ -52,12 +52,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ba/b6/5b/bab65b54-b62b-afe7-7b2c-42d17c175479/mzaf_180048884343447783.plus.aac.p.m4a',
   },
   {
-    title: 'Brooklyn Baby',
+    title: 'Say Yes to Heaven',
     artist: 'Lana Del Rey',
-    image: 'img/music/brooklyn-baby-lana-del-rey.jpg',
-    alt: 'Cover of Brooklyn Baby by Lana Del Rey',
+    image: 'img/music/say-yes-to-heaven-lana-del-rey.jpg',
+    alt: 'Cover of Say Yes to Heaven by Lana Del Rey',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f2/3c/62/f23c6236-7d20-0318-0c38-71addabb9470/mzaf_5291675828735270159.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ca/f9/11/caf911f4-6ea5-6889-37ec-8d2a3d050fce/mzaf_11121553984364330632.plus.aac.p.m4a',
   },
   {
     title: 'Wildflower',
