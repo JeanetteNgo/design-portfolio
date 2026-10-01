@@ -387,7 +387,7 @@
   flex: none;
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin-top: auto; /* with the back row's bottom margin: centred in the column */
+  margin-block: auto; /* centred in the column */
   padding: 16px 14px 14px 16px;
   background: var(--paper-texture), var(--paper-bg);
   border: 1px solid var(--accent-a33);
