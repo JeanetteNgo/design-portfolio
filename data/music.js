@@ -28,12 +28,12 @@ const MUSIC = [
       'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/01/7c/bb/017cbbf3-507a-68ce-9c99-56b8f4ebcf00/mzaf_11438914958599107132.plus.aac.p.m4a',
   },
   {
-    title: 'Drunk-Dazed',
+    title: 'No Way Back',
     artist: 'ENHYPEN',
-    image: 'img/music/drunk-dazed-enhypen.jpg',
-    alt: 'Cover of Drunk-Dazed by ENHYPEN',
+    image: 'img/music/no-way-back-enhypen.jpg',
+    alt: 'Cover of No Way Back by ENHYPEN',
     preview:
-      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/56/42/3c/56423c53-f9e5-6f2c-25b8-9d8432238815/mzaf_4569738009026504165.plus.aac.p.m4a',
+      'https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3a/09/a6/3a09a6ff-40a8-9e7e-98e3-5b3ceba236cb/mzaf_17032523870044311157.plus.aac.p.m4a',
   },
   {
     title: 'Background',
