@@ -282,7 +282,7 @@ POPUP_RENDERERS.map = function (popup) {
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
 
-  // One place as a postcard: message on the left, address side (stamp, postmark, cities) on the right
+  // One place as a postcard: greeting and photo on the left; stamp, years, note and cities on the right
   function _detail(place) {
     const card = popupEl('article', '', 'map-postcard');
     const stampButton = stamps.get(place);
@@ -301,14 +301,12 @@ POPUP_RENDERERS.map = function (popup) {
       img.alt = place.alt || '';
       img.loading = 'lazy';
       img.decoding = 'async';
+      // cropped to 3:4 (portrait) or 4:3 (landscape) once its shape is known
+      img.addEventListener('load', () => {
+        img.style.aspectRatio = img.naturalHeight > img.naturalWidth ? '3 / 4' : '4 / 3';
+      });
       photo.appendChild(img);
       message.appendChild(photo);
-    }
-    if (place.note) message.appendChild(popupEl('p', place.note, 'postcard-note'));
-    if (place.when) {
-      const when = popupEl('p', place.when, 'postcard-when');
-      when.prepend(popupEl('span', place.status === 'next' ? 'Planned' : 'Visited'));
-      message.appendChild(when);
     }
 
     // The stamp and postmark are decoration; the year is already in the message
@@ -318,9 +316,17 @@ POPUP_RENDERERS.map = function (popup) {
     stampArt.setAttribute('aria-hidden', 'true');
     const postmark = popupEl('div', '', 'postcard-postmark');
     postmark.setAttribute('aria-hidden', 'true');
+    const body = popupEl('div', '', 'postcard-body');
+    if (place.when) {
+      const when = popupEl('p', place.when, 'postcard-when');
+      when.prepend(popupEl('span', place.status === 'next' ? 'Planned' : 'Visited'));
+      body.appendChild(when);
+    }
+    if (place.note) body.appendChild(popupEl('p', place.note, 'postcard-note'));
     const lines = popupEl('ul', '', 'postcard-lines');
     (place.cities || []).forEach((city) => lines.appendChild(popupEl('li', city)));
-    address.append(postmark, stampArt, lines);
+    body.appendChild(lines);
+    address.append(postmark, stampArt, body);
 
     card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));

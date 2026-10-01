@@ -402,12 +402,12 @@
   color: var(--text-strong);
 }
 .postcard-note {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   font: 400 16px/1.45 var(--font-hand);
   color: var(--text-body);
 }
 .postcard-when {
-  margin: 12px 0 0;
+  margin: 0;
   font: 600 12px var(--font-secondary);
   color: var(--text-body);
 }
@@ -418,7 +418,7 @@
 }
 /* Optional photo: a small tilted polaroid tucked into the message side */
 .postcard-photo {
-  width: 96px;
+  width: 104px;
   margin: 12px 0 0;
   padding: 5px;
   background: var(--surface);
@@ -432,9 +432,11 @@
   display: block;
   width: 100%;
   height: auto;
+  aspect-ratio: 4 / 3; /* until the real shape is known */
+  object-fit: cover;
 }
 
-/* The address side: a stamp, a postmark, and the cities on ruled lines */
+/* The address side: a stamp and postmark, then the years, note and cities on ruled lines */
 .postcard-address {
   position: relative;
   padding-left: 14px;
@@ -489,8 +491,11 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='22'%3E%3Cpath d='M0 4q7-6 14 0t14 0 14 0 14 0M0 11q7-6 14 0t14 0 14 0 14 0M0 18q7-6 14 0t14 0 14 0 14 0' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")
     center / 100% 100% no-repeat;
 }
+.postcard-body {
+  margin-top: 84px; /* clears the stamp */
+}
 .postcard-lines {
-  margin: 84px 0 0;
+  margin: 12px 0 0;
   padding: 0;
   min-height: 112px; /* always a few lines, like a blank address block */
   list-style: none;
@@ -529,7 +534,7 @@
   .postcard-postmark {
     top: 24px;
   }
-  .postcard-lines {
+  .postcard-body {
     margin-top: 76px;
   }
 }
