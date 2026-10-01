@@ -534,7 +534,7 @@
   scrollbar-color: var(--accent-a20) transparent;
 }
 .postcard-note {
-  margin: 0 0 6px;
+  margin: 0 0 14px;
   font: 400 15px/1.35 var(--font-hand);
   color: var(--text-body);
 }

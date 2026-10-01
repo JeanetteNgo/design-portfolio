@@ -77,7 +77,9 @@ POPUP_RENDERERS.gallery = function (popup) {
 
   const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(board);
-  boardView.appendChild(scroll);
+  const boardFooter = popupEl('div', '', 'gallery-footer');
+  boardFooter.appendChild(popupCloseTag());
+  boardView.append(scroll, boardFooter);
 
   // The title is a pinned label; the dialog's hidden title names it for screen readers
   const head = popupEl('header', '', 'gallery-head');

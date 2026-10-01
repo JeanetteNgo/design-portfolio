@@ -36,6 +36,15 @@ function popupBackTag(label, onBack) {
   return tag;
 }
 
+/** The "Esc to close" tag every popup shows on its main view. Clicking it closes (for touch). */
+function popupCloseTag() {
+  const tag = popupEl('button', '', 'esc-tag');
+  tag.type = 'button';
+  tag.dataset.popupClose = '';
+  tag.append(popupEl('kbd', 'Esc', 'esc-key'), ' to close');
+  return tag;
+}
+
 /** Call fn once, the next time the popup closes (Esc, ×, tapping outside). */
 function popupOnClose(fn) {
   document.getElementById('popup').addEventListener('close', fn, { once: true });
@@ -74,7 +83,9 @@ function popupOnLeftKey(isActive, onBack) {
     });
     const scroll = popupEl('div', '', 'popup-scroll');
     scroll.append(...parts);
-    return [scroll];
+    const footer = popupEl('div', '', 'popup-footer');
+    footer.appendChild(popupCloseTag());
+    return [scroll, footer];
   }
 
   function open(id) {

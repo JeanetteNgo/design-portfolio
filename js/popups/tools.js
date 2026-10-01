@@ -43,5 +43,7 @@ POPUP_RENDERERS.tools = function (popup) {
 
   const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(layout);
-  return [scroll];
+  const footer = popupEl('div', '', 'popup-footer');
+  footer.appendChild(popupCloseTag());
+  return [scroll, footer];
 };

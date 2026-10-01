@@ -150,6 +150,12 @@ html:has(.popup[open]) {
   outline-offset: 2px;
 }
 
+/* The "Esc to close" row under a popup's main view */
+.popup-footer {
+  flex: none;
+  padding-top: 8px;
+}
+
 /* Default content: intro line, then headed lists */
 .popup-intro {
   margin: 0;

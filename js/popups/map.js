@@ -278,6 +278,8 @@ POPUP_RENDERERS.map = function (popup) {
   }
 
   const listView = popupEl('div', '', 'map-stamps-view');
+  const listFooter = popupEl('div', '', 'popup-footer'); // "Esc to close" under the stamps
+  listFooter.appendChild(popupCloseTag());
   const detailView = popupEl('div', '', 'map-detail');
   detailView.hidden = true;
   let openPlace = null; // the place whose details are showing
@@ -358,7 +360,7 @@ POPUP_RENDERERS.map = function (popup) {
     openPlace = null;
     selected = home;
     detailView.hidden = true;
-    listView.hidden = false;
+    listView.hidden = listFooter.hidden = false;
     banner.hidden = false;
     if (refocus) {
       (stamps.get(place) || banner).focus();
@@ -375,7 +377,7 @@ POPUP_RENDERERS.map = function (popup) {
     selected = place;
     openPlace = place;
     const back = _detail(place);
-    listView.hidden = true;
+    listView.hidden = listFooter.hidden = true;
     banner.hidden = true; // a place is open: the postcard gets the room
     detailView.hidden = false;
     if (!calmMotion)
@@ -588,7 +590,7 @@ POPUP_RENDERERS.map = function (popup) {
   });
 
   const side = popupEl('div', '', 'map-side');
-  side.append(banner, listView, detailView);
+  side.append(banner, listView, listFooter, detailView);
 
   const layout = popupEl('div', '', 'map-layout');
   layout.append(globeWrap, side);

@@ -83,10 +83,6 @@
   border-color: var(--ink-red);
   background: linear-gradient(var(--accent-a8), var(--accent-a8)), var(--paper-bg);
 }
-.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus):hover::before,
-.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus):hover::after {
-  background: var(--ink-red);
-}
 .popup[data-paper] .paper-sticker:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;

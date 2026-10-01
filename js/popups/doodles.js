@@ -149,7 +149,9 @@ POPUP_RENDERERS.doodles = function (popup) {
 
   const scroll = popupEl('div', '', 'popup-scroll');
   scroll.appendChild(grid);
-  gridView.append(filters, status, scroll);
+  const gridFooter = popupEl('div', '', 'doodle-footer');
+  gridFooter.appendChild(popupCloseTag());
+  gridView.append(filters, status, scroll, gridFooter);
 
   /* ── Exhibition heading ── */
 

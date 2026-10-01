@@ -136,10 +136,7 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   });
 
   // "Esc to close" tag: shows the keyboard shortcut, and closes on click for touch screens
-  const close = popupEl('button', '', 'esc-tag');
-  close.type = 'button';
-  close.dataset.popupClose = '';
-  close.append(popupEl('kbd', 'Esc', 'esc-key'), ' to close');
+  const close = popupCloseTag();
 
   // Title and intro sit in a header above the scrolling list. The title is repeated here
   // for the eye; the dialog's own (hidden) title still names it for screen readers.
