@@ -62,6 +62,10 @@ OFF_CLOCK_SECTIONS.push({
         play.addEventListener('click', () => _toggle(record, play, item));
         play.appendChild(popupEl('span', '', 'record-play-icon'));
         art.appendChild(play);
+        const eq = popupEl('span', '', 'record-eq');
+        eq.setAttribute('aria-hidden', 'true');
+        eq.append(popupEl('i'), popupEl('i'), popupEl('i'));
+        art.appendChild(eq);
       }
       item.append(
         art,

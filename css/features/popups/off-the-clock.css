@@ -330,8 +330,8 @@ button.print:focus-visible {
     var(--ink-brown);
   box-shadow: 0 4px 8px rgb(var(--shadow-rgb) / 25%);
 }
-/* The whole sleeve is the play/pause button. On hover or focus a soft overlay appears with the
-   button (a little vinyl disc) in the middle. */
+/* The whole sleeve is the play/pause button. On hover or focus a light overlay fades in with a
+   small cream button in the middle. */
 .record-play {
   position: absolute;
   z-index: 1;
@@ -349,59 +349,69 @@ button.print:focus-visible {
   content: '';
   position: absolute;
   inset: 6px; /* over the cover, not the paper border */
-  background: rgb(var(--shadow-rgb) / 38%);
+  background: rgb(var(--shadow-rgb) / 22%);
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.45s ease;
 }
 .record-play-icon {
   position: absolute;
   top: 50%;
   left: 50%;
   translate: -50% -50%;
+  scale: 0.88;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
-  border: 2px solid var(--paper-bg);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle, transparent 0 58%, rgb(255 255 255 / 14%) 60% 63%, transparent 65%),
-    var(--ink-brown);
-  box-shadow: 0 2px 6px rgb(var(--shadow-rgb) / 35%);
-  color: var(--paper-bg);
+  background: rgb(255 253 248 / 85%);
+  box-shadow: 0 1px 6px rgb(var(--shadow-rgb) / 22%);
+  color: var(--ink-brown);
   opacity: 0;
   transition:
-    opacity 0.15s ease,
-    background-color 0.15s ease;
+    opacity 0.45s ease,
+    scale 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 @media (hover: hover) {
   .record-play:hover::before,
   .record-play:hover .record-play-icon {
     opacity: 1;
   }
+  .record-play:hover .record-play-icon {
+    scale: 1;
+  }
 }
 .record-play:focus-visible::before,
 .record-play:focus-visible .record-play-icon {
   opacity: 1;
 }
+.record-play:focus-visible .record-play-icon {
+  scale: 1;
+}
 .record-play-icon::before {
   content: '';
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   background: currentColor;
   -webkit-mask: var(--glyph) center / contain no-repeat;
   mask: var(--glyph) center / contain no-repeat;
   --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z'/%3E%3C/svg%3E");
 }
-.record-play[aria-pressed='true'] .record-play-icon {
-  background-color: var(--pin);
-}
 .record-play[aria-pressed='true'] .record-play-icon::before {
   --glyph: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='5' height='16' rx='1.5'/%3E%3Crect x='14' y='4' width='5' height='16' rx='1.5'/%3E%3C/svg%3E");
 }
-/* The vinyl turns while playing and stops where it is when paused */
+
+/* Playing: the vinyl slides out and turns, the sleeve gets a red outline, the title turns red,
+   and a small "now playing" badge with moving bars appears. Paused: the vinyl stops where it
+   is and slides back in. */
+.record-disc {
+  transition: translate 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.record.is-playing .record-disc {
+  translate: 11% 0;
+}
 .record.has-played .record-disc {
-  animation: record-spin 4s linear infinite paused;
+  animation: record-spin 3s linear infinite paused;
 }
 .record.is-playing .record-disc {
   animation-play-state: running;
@@ -409,6 +419,63 @@ button.print:focus-visible {
 @keyframes record-spin {
   to {
     rotate: 360deg;
+  }
+}
+.record-sleeve {
+  transition: box-shadow 0.4s ease;
+}
+.record.is-playing .record-sleeve {
+  box-shadow:
+    0 0 0 2px var(--ink-red),
+    1px 1.5px 1.5px rgb(var(--shadow-rgb) / 24%),
+    2px 4px 6px -1px rgb(var(--shadow-rgb) / 14%);
+}
+.record-title {
+  transition: color 0.3s ease;
+}
+.record.is-playing .record-title {
+  color: var(--ink-red);
+}
+.record-eq {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  display: none;
+  align-items: flex-end;
+  gap: 2px;
+  height: 12px;
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: var(--paper-bg);
+  box-shadow: 0 1px 4px rgb(var(--shadow-rgb) / 25%);
+  pointer-events: none;
+}
+.record.is-playing .record-eq {
+  display: flex;
+}
+.record-eq i {
+  width: 3px;
+  height: 100%;
+  border-radius: 1px;
+  background: var(--ink-red);
+  transform-origin: bottom;
+  animation: record-eq 0.9s ease-in-out infinite alternate;
+}
+.record-eq i:nth-child(2) {
+  animation-delay: -0.3s;
+  animation-duration: 0.7s;
+}
+.record-eq i:nth-child(3) {
+  animation-delay: -0.6s;
+  animation-duration: 1.1s;
+}
+@keyframes record-eq {
+  from {
+    transform: scaleY(0.25);
+  }
+  to {
+    transform: scaleY(1);
   }
 }
 .record-sleeve {
@@ -435,7 +502,7 @@ button.print:focus-visible {
   height: 100%;
   object-fit: cover;
   filter: sepia(var(--fade-sepia)) saturate(var(--fade-saturate)) contrast(var(--fade-contrast));
-  transition: filter 0.25s ease;
+  transition: filter 0.4s ease;
 }
 @media (hover: hover) {
   .record:hover .record-cover {
@@ -600,8 +667,14 @@ button.print:focus-visible {
   .doodle {
     transition: none;
   }
-  .record.has-played .record-disc {
+  .record.has-played .record-disc,
+  .record-eq i {
     animation: none;
+  }
+  .record-disc,
+  .record-sleeve,
+  .record-title {
+    transition: none;
   }
   .record-cover,
   .record-play::before,
