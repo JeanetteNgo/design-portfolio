@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    DOODLES
-   The sketches in the "Off the clock" popup's Sketchbook tab (built by js/popups/off-the-clock/sketchbook.js).
+   The sketches in the "Off the clock" popup's Doodles tab (built by js/popups/off-the-clock/sketchbook.js).
    Add a doodle by adding a block to the list; the newest can go first.
 
    Each doodle has:

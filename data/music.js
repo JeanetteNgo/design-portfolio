@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    MUSIC
-   The record sleeves in the "Off the clock" popup's Listening tab
+   The record sleeves in the "Off the clock" popup's Playlist tab
    (built by js/popups/off-the-clock/listening.js). The order here is the order shown.
 
    Each record has:

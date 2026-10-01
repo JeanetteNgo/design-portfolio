@@ -1,6 +1,6 @@
 /* ══════════════════════════════════════════
    OFF THE CLOCK POPUP
-   A notebook-paper sheet with tabs (hobbies, listening, reading, sketchbook). Built by
+   A notebook-paper sheet with tabs (general, playlist, books, doodles). Built by
    js/popups/off-the-clock.js and the sections in js/popups/off-the-clock/. The sheet itself
    is the shared paper look in paper.css; this adds the torn top, the tabs and the contents.
 ══════════════════════════════════════════ */
@@ -263,7 +263,7 @@ button.print:focus-visible {
   margin-left: -8px; /* the key lines up with the content's left edge */
 }
 
-/* ── Listening and Reading: sleeves and covers laid out on the page ── */
+/* ── Playlist and Books: sleeves and covers laid out on the page ── */
 .record-shelf,
 .book-shelf {
   display: grid;
@@ -382,7 +382,7 @@ button.print:focus-visible {
   color: var(--surface);
 }
 
-/* ── Sketchbook: doodles loose on the ruled page ── */
+/* ── Doodles: doodles loose on the ruled page ── */
 .doodle-grid {
   column-count: 3;
   column-gap: 24px;

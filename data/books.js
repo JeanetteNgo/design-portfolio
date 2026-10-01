@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────
    BOOKS
-   The book covers in the "Off the clock" popup's Reading tab
+   The book covers in the "Off the clock" popup's Books tab
    (built by js/popups/off-the-clock/reading.js). The order here is the order shown.
 
    Each book has:

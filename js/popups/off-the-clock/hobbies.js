@@ -1,12 +1,12 @@
 /* ─────────────────────────────────────────────
-   OFF THE CLOCK: HOBBIES
+   OFF THE CLOCK: GENERAL
    Polaroids and postcards from GALLERY (data/gallery.js). Click one to open
    it with its story; ← or the back tag returns.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'hobbies',
-  label: 'Hobbies',
+  label: 'General',
   build(shell) {
     // A polaroid or postcard print. `big` is the opened view (a block, not a button).
     function _print(photo, big) {

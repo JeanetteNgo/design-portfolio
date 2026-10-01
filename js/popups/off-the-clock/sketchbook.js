@@ -1,12 +1,12 @@
 /* ─────────────────────────────────────────────
-   OFF THE CLOCK: SKETCHBOOK
+   OFF THE CLOCK: DOODLES
    Loose doodles on a notebook page, from DOODLES (data/doodles.js). Click one to open it
    larger with its caption; ← or the back tag returns.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'sketchbook',
-  label: 'Sketchbook',
+  label: 'Doodles',
   build(shell) {
     const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 

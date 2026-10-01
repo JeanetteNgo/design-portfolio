@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────
-   OFF THE CLOCK: READING
+   OFF THE CLOCK: BOOKS
    Book covers from BOOKS (data/books.js), with a one-line take scribbled under each.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'reading',
-  label: 'Reading',
+  label: 'Books',
   build() {
     const STATUS_TEXT = { reading: 'Reading now', next: 'Up next' };
 

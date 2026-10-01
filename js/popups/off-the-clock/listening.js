@@ -1,11 +1,11 @@
 /* ─────────────────────────────────────────────
-   OFF THE CLOCK: LISTENING
+   OFF THE CLOCK: PLAYLIST
    Record sleeves from MUSIC (data/music.js), with a note scribbled under each.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'listening',
-  label: 'Listening',
+  label: 'Playlist',
   build() {
     const shelf = popupEl('ul', '', 'record-shelf');
     MUSIC.forEach((record) => {
