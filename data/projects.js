@@ -20,20 +20,20 @@
 
 const PROJECTS = [
   /* ── 2026 ─────────────────────────────────── */
-  {
-    id: 'nz-blog',
-    title: 'NZ Work Holiday Blog',
-    description: 'Vibe coding a personal blog to document my work holiday experience in NZ.',
-    year: '2026',
-    cover: 'projects/img/nz-blog-cover.png',
-    coverAlt: 'NZ Work Holiday Blog cover',
-    tags: ['Personal Project'],
-    tagOutlines: ['Web'],
-    type: 'external',
-    href: 'https://nz.jeanettengo.com/',
-    note: '✦ Work in Progress',
-    featured: false,
-  },
+  // {
+  //   id: 'nz-blog',
+  //   title: 'NZ Work Holiday Blog',
+  //   description: 'Vibe coding a personal blog to document my work holiday experience in NZ.',
+  //   year: '2026',
+  //   cover: 'projects/img/nz-blog-cover.png',
+  //   coverAlt: 'NZ Work Holiday Blog cover',
+  //   tags: ['Personal Project'],
+  //   tagOutlines: ['Web'],
+  //   type: 'external',
+  //   href: '#',
+  //   note: '✦ Work in Progress',
+  //   featured: false,
+  // },
 
   /* ── 2025 ─────────────────────────────────── */
   {
