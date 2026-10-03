@@ -99,13 +99,17 @@
   --accent-400: var(--oat-400);
   --accent-500: var(--oat-500);
   --accent-rgb: var(--oat-rgb);
-  --bg-top: #fbfaf8;
-  --surface-soft: #fbfaf8;
-  --surface-faint: #fefefc;
-  --surface-band: #f2efea;
-  --surface-glass: #fefefc90;
-  --surface-glass-soft: #fefefc60;
-  --nav-bg: #faf9f6aa;
+  /* A neutral reads pale at the usual 400, so Oat's text uses its darker shades */
+  --text-heading: var(--accent-500);
+  --text-accent: var(--accent-500);
+  --nav-link: var(--accent-300);
+  --bg-top: #fbf9f5;
+  --surface-soft: #fbf9f5;
+  --surface-faint: #fefdfa;
+  --surface-band: #f3eee6;
+  --surface-glass: #fefdfa90;
+  --surface-glass-soft: #fefdfa60;
+  --nav-bg: #faf8f4aa;
   --dock-tile-b: #e3eedf;
   --sparkle-b: #b5d3a8;
 }
