@@ -2,7 +2,9 @@
    COLOUR THEMES
    Picked in the Palette popup; js/theme.js puts the choice on <html data-theme="…">.
    Each theme points the accent ramp at its Layer 1 colours (css/tokens.css) and
-   re-tints the pale surfaces that are hard-coded for Salmon. Salmon is the default,
+   re-tints the pale surfaces that are hard-coded for Salmon, plus a second,
+   complementary tint for the striped dock tape, every other dock tile and the
+   sparkles (--dock-tile-b, --sparkle-b; Salmon's is butter yellow). Salmon is the default,
    so it has no block. To add a theme: a Layer 1 ramp, a block here, a line in
    POPUPS.palette.themes (data/popups.js).
 ══════════════════════════════════════════ */
@@ -23,6 +25,8 @@
   --surface-glass: #fcfdfc90;
   --surface-glass-soft: #fcfdfc60;
   --nav-bg: #f2f7f2aa;
+  --dock-tile-b: #fbe6df;
+  --sparkle-b: #f4b3a3;
 }
 
 :root[data-theme='lavender'] {
@@ -34,13 +38,15 @@
   --accent-400: var(--lavender-400);
   --accent-500: var(--lavender-500);
   --accent-rgb: var(--lavender-rgb);
-  --bg-top: #f8f5fd;
-  --surface-soft: #f8f5fd;
-  --surface-faint: #fdfcff;
-  --surface-band: #f0ebfb;
-  --surface-glass: #fdfcff90;
-  --surface-glass-soft: #fdfcff60;
-  --nav-bg: #f6f3fcaa;
+  --bg-top: #f9f7fc;
+  --surface-soft: #f9f7fc;
+  --surface-faint: #fdfcfe;
+  --surface-band: #f1eef8;
+  --surface-glass: #fdfcfe90;
+  --surface-glass-soft: #fdfcfe60;
+  --nav-bg: #f7f5fbaa;
+  --dock-tile-b: #dcf2e6;
+  --sparkle-b: #9fd9bb;
 }
 
 :root[data-theme='sky'] {
@@ -52,13 +58,15 @@
   --accent-400: var(--sky-400);
   --accent-500: var(--sky-500);
   --accent-rgb: var(--sky-rgb);
-  --bg-top: #f3f9fe;
-  --surface-soft: #f3f9fe;
-  --surface-faint: #fcfdff;
-  --surface-band: #e7f2fb;
-  --surface-glass: #fcfdff90;
-  --surface-glass-soft: #fcfdff60;
-  --nav-bg: #f0f7fdaa;
+  --bg-top: #f4f9fc;
+  --surface-soft: #f4f9fc;
+  --surface-faint: #fcfdfe;
+  --surface-band: #e8f2f9;
+  --surface-glass: #fcfdfe90;
+  --surface-glass-soft: #fcfdfe60;
+  --nav-bg: #f1f7fbaa;
+  --dock-tile-b: #ffe7d6;
+  --sparkle-b: #ffbe94;
 }
 
 :root[data-theme='butter'] {
@@ -77,5 +85,6 @@
   --surface-glass: #fffefb90;
   --surface-glass-soft: #fffefb60;
   --nav-bg: #fffaebaa;
-  --dock-tile-b: #fde6d8; /* the default butter tile would match the tiles beside it */
+  --dock-tile-b: #fde3e3;
+  --sparkle-b: #f7a8b0;
 }

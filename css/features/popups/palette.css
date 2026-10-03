@@ -1,28 +1,31 @@
 /* ══════════════════════════════════════════
    PALETTE POPUP
    The card is an open colour-chip book (js/popups/palette.js): a kraft cover
-   round two cream pages. Left page: title, the shades of the chip being
-   previewed (step and hex), and Apply. Right page: the chips.
+   round two textured cream pages with a few page edges showing underneath.
+   Left page: title, the shades of the chip being previewed (dark to light, step
+   and hex), and Apply. Right page: the chips. The × is the paper sticker
+   (popups/paper.css).
    --c25 … --c500 are set inline to one family's colours (the chip's own, or the
    one being previewed on the left page). On phones the book is a single page.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='palette'] .popup-card {
   width: min(100%, 860px);
-  --pad-top: 12px;
-  --pad-x: 12px;
-  --pad-bottom: 12px;
-  --close-top: 28px;
-  --close-right: 28px;
-  background: var(--book-cover);
+  --pad-top: 16px;
+  --pad-x: 16px;
+  --pad-bottom: 18px;
+  --close-top: 34px;
+  --close-right: 34px;
+  /* Kraft cover: grain, a soft sheen from the top, and a darker rim */
+  background:
+    var(--paper-texture), linear-gradient(rgb(255 255 255 / 14%), transparent 40%),
+    var(--book-cover);
   border-radius: 18px;
-  box-shadow: 0 16px 36px rgb(var(--shadow-rgb) / 28%);
-}
-.popup[data-popup='palette'] .popup-close {
-  background: rgb(var(--shadow-rgb) / 5%);
-}
-.popup[data-popup='palette'] .popup-close:hover {
-  background: rgb(var(--shadow-rgb) / 10%);
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--shadow-rgb) / 10%),
+    inset 0 -3px 0 rgb(var(--shadow-rgb) / 8%),
+    0 4px 8px rgb(var(--shadow-rgb) / 14%),
+    0 22px 44px rgb(var(--shadow-rgb) / 26%);
 }
 
 .pal-book {
@@ -31,24 +34,49 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  border-radius: 8px;
+  padding: 0 6px 6px; /* room for the page edges underneath */
   scrollbar-width: thin;
 }
 .pal-page {
+  position: relative;
   display: flex;
   flex-direction: column;
   padding: 40px 44px 24px;
-  background: var(--book-page);
 }
-/* Shading where the pages meet the spine */
+/* Each page: grain, shading that deepens towards the spine, and the edges of the
+   pages beneath peeking out at the outer corner */
 .pal-left {
-  box-shadow: inset -18px 0 18px -14px rgb(var(--shadow-rgb) / 22%);
+  border-radius: 8px 2px 2px 8px;
+  background:
+    var(--paper-texture), linear-gradient(to left, rgb(var(--shadow-rgb) / 13%), transparent 14%),
+    var(--book-page);
+  box-shadow:
+    -2px 2px 0 -0.5px var(--book-page-edge),
+    -4px 4px 0 -1px var(--book-page),
+    -5px 5px 0 -1px var(--book-page-edge),
+    -6px 7px 10px rgb(var(--shadow-rgb) / 14%);
 }
 .pal-right {
   justify-content: center;
   padding-top: 84px; /* clears the × */
   padding-bottom: 48px;
-  box-shadow: inset 18px 0 18px -14px rgb(var(--shadow-rgb) / 22%);
+  border-radius: 2px 8px 8px 2px;
+  background:
+    var(--paper-texture), linear-gradient(to right, rgb(var(--shadow-rgb) / 13%), transparent 14%),
+    var(--book-page);
+  box-shadow:
+    2px 2px 0 -0.5px var(--book-page-edge),
+    4px 4px 0 -1px var(--book-page),
+    5px 5px 0 -1px var(--book-page-edge),
+    6px 7px 10px rgb(var(--shadow-rgb) / 14%);
+}
+/* The crease down the middle */
+.pal-left::after {
+  content: '';
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 1px;
+  background: rgb(var(--shadow-rgb) / 12%);
 }
 
 /* ── Left page ── */
@@ -105,77 +133,55 @@
   letter-spacing: 0.04em;
   opacity: 0.85;
 }
-.pal-shades li:nth-child(1) {
-  background: var(--c25);
-}
-.pal-shades li:nth-child(2) {
-  background: var(--c50);
-}
-.pal-shades li:nth-child(3) {
-  background: var(--c100);
-}
-.pal-shades li:nth-child(4) {
-  background: var(--c200);
-}
-.pal-shades li:nth-child(5) {
-  background: var(--c300);
-}
-.pal-shades li:nth-child(6) {
-  background: var(--c400);
-  color: var(--text-on-accent);
-}
-.pal-shades li:nth-child(7) {
-  background: var(--c500);
+/* The two darkest shades take white text */
+.pal-shades li:nth-child(-n + 2) {
   color: var(--text-on-accent);
 }
 
-/* Apply: a solid ink button with a dot of the previewed colour */
+/* Apply: a paper tag (.paper-tag in components.css) whose pin is the previewed colour */
 .pal-apply {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  min-height: 48px;
-  margin-top: 24px;
-  padding: 10px 20px;
-  border: 1.5px solid var(--text-strong);
-  border-radius: 12px;
-  background: var(--text-strong);
-  font: 700 15px var(--font-primary);
-  color: var(--text-on-accent);
+  align-self: flex-start;
+  min-height: 44px;
+  margin-top: 28px;
+  padding: 10px 20px 10px 34px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--surface);
+  font: 700 14px var(--font-secondary);
   cursor: pointer;
-  box-shadow: 0 2px 0 rgb(var(--shadow-rgb) / 20%);
+  box-shadow:
+    0 2px 0 rgb(var(--shadow-rgb) / 6%),
+    0 4px 12px rgb(var(--shadow-rgb) / 10%);
   transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
+    transform 0.2s cubic-bezier(0.3, 1.5, 0.5, 1),
+    box-shadow 0.2s ease;
+}
+.pal-apply::before {
+  left: 14px;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  background: var(--c400);
+  box-shadow: inset 0 -2px 0 rgb(var(--shadow-rgb) / 15%);
 }
 .pal-apply:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 10px rgb(var(--shadow-rgb) / 18%);
+  transform: rotate(0deg) translateY(-2px);
+  box-shadow:
+    0 3px 0 rgb(var(--shadow-rgb) / 6%),
+    0 8px 16px rgb(var(--shadow-rgb) / 12%);
 }
-.pal-apply:active {
-  transform: translateY(1px);
-  box-shadow: none;
-}
-.pal-apply-dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--c400);
-  box-shadow: 0 0 0 2px rgb(255 255 255 / 85%);
-}
-/* Already in use: same size, quietly outlined */
+/* Already in use: a handwritten note instead of a tag */
 .pal-apply.is-current {
-  border: 1.5px dashed var(--book-slot);
+  padding-inline: 0;
   background: none;
-  color: var(--text-muted);
-  cursor: default;
   box-shadow: none;
+  font: 400 17px var(--font-hand);
+  color: var(--ink-marker);
+  cursor: default;
   transform: none;
 }
-.pal-apply.is-current .pal-apply-dot {
-  box-shadow: none;
+.pal-apply.is-current::before {
+  display: none;
 }
 .pal-apply:focus-visible {
   outline: 3px solid var(--text-strong);
@@ -277,8 +283,8 @@
   stroke: var(--ink-marker);
   stroke-width: 2.4;
   stroke-linecap: round;
-  stroke-dasharray: 100;
-  stroke-dashoffset: 100;
+  stroke-dasharray: 1400; /* longer than the loop, so it draws in whole */
+  stroke-dashoffset: 1400;
   vector-effect: non-scaling-stroke;
 }
 .pal-chip.is-in-use .pal-circle {
@@ -315,7 +321,14 @@
     display: flex;
     flex-direction: column;
     padding: 24px 20px 10px;
-    background: var(--book-page);
+    border-radius: 8px;
+    background: var(--paper-texture), var(--book-page);
+    box-shadow:
+      0 3px 0 -1px var(--book-page-edge),
+      0 6px 10px rgb(var(--shadow-rgb) / 14%);
+  }
+  .pal-left::after {
+    display: none;
   }
   .pal-page {
     display: contents;
@@ -341,6 +354,7 @@
   }
   .pal-apply {
     order: 3;
+    align-self: flex-start;
   }
   .pal-status,
   .pal-footer {

@@ -11,7 +11,7 @@
 
 POPUP_RENDERERS.palette = function (popup) {
   const themes = popup.themes;
-  const SHADES = ['25', '50', '100', '200', '300', '400', '500'];
+  const SHADES = ['500', '400', '300', '200', '100', '50', '25'];
   let previewing = currentTheme();
 
   // Point a set of short vars (--c25 … --c500) at one family's Layer 1 colours
@@ -30,9 +30,8 @@ POPUP_RENDERERS.palette = function (popup) {
     const path = document.createElementNS(ns, 'path');
     path.setAttribute(
       'd',
-      'M54 4 C 88 2, 98 30, 97 72 C 96 118, 82 137, 48 136 C 12 135, 3 110, 4 66 C 5 26, 18 6, 60 8'
+      'M46 5 C 84 1, 98 30, 97 72 C 96 118, 82 137, 48 136 C 12 135, 3 110, 4 66 C 5 28, 20 4, 66 7'
     );
-    path.setAttribute('pathLength', '100');
     svg.appendChild(path);
     return svg;
   }
@@ -44,12 +43,13 @@ POPUP_RENDERERS.palette = function (popup) {
   title.setAttribute('aria-hidden', 'true'); // the dialog's hidden title names it
   const intro = popupEl('p', popup.intro, 'popup-intro pal-intro');
 
-  // One band per shade, light to dark: its step and hex code (read from tokens.css)
+  // One band per shade, dark to light: its step and hex code (read from tokens.css)
   const details = popupEl('div', '', 'pal-details');
   const name = popupEl('p', '', 'pal-name');
   const shades = popupEl('ul', '', 'pal-shades');
   const hexes = SHADES.map((s) => {
     const band = popupEl('li');
+    band.style.background = `var(--c${s})`;
     const hex = popupEl('span', '', 'pal-hex');
     band.append(popupEl('span', s, 'pal-step'), hex);
     shades.appendChild(band);
@@ -57,7 +57,7 @@ POPUP_RENDERERS.palette = function (popup) {
   });
   details.append(name, shades);
 
-  const apply = popupEl('button', '', 'pal-apply');
+  const apply = popupEl('button', '', 'paper-tag pal-apply');
   apply.type = 'button';
   const status = popupEl('p', '', 'pal-status');
   status.setAttribute('aria-live', 'polite');
@@ -107,10 +107,7 @@ POPUP_RENDERERS.palette = function (popup) {
     });
 
     const isCurrent = previewing === inUse;
-    apply.replaceChildren(
-      popupEl('span', '', 'pal-apply-dot'),
-      isCurrent ? `${theme.name} is in use` : `Apply ${theme.name}`
-    );
+    apply.textContent = isCurrent ? `${theme.name}'s in use ✓` : `Apply ${theme.name}`;
     apply.classList.toggle('is-current', isCurrent);
     apply.setAttribute('aria-disabled', String(isCurrent));
 

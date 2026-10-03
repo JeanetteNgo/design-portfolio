@@ -42,23 +42,23 @@
   --sage-500: #578f5d;
   --sage-rgb: 103 163 109;
 
-  --lavender-25: #f6f3fc;
-  --lavender-50: #ece6fa;
-  --lavender-100: #e0d7f7;
-  --lavender-200: #c2b0ee;
-  --lavender-300: #a991e6;
-  --lavender-400: #9072dc;
-  --lavender-500: #7c5fc7;
-  --lavender-rgb: 144 114 220;
+  --lavender-25: #f7f5fb;
+  --lavender-50: #eeeaf7;
+  --lavender-100: #e2dcf1;
+  --lavender-200: #c8bce4;
+  --lavender-300: #ad9fd6;
+  --lavender-400: #9483c4;
+  --lavender-500: #7d6bad;
+  --lavender-rgb: 148 131 196;
 
-  --sky-25: #f0f7fd;
-  --sky-50: #e0effa;
-  --sky-100: #cfe6f7;
-  --sky-200: #9fcbee;
-  --sky-300: #7bb7e6;
-  --sky-400: #56a2de;
-  --sky-500: #3f8bc6;
-  --sky-rgb: 86 162 222;
+  --sky-25: #f1f7fb;
+  --sky-50: #e2eff7;
+  --sky-100: #cfe4f2;
+  --sky-200: #a5cbe5;
+  --sky-300: #7fb3d9;
+  --sky-400: #5c99c9;
+  --sky-500: #4581b3;
+  --sky-rgb: 92 153 201;
 
   --butter-25: #fffaeb;
   --butter-50: #fff3d1;
@@ -177,6 +177,7 @@
      circles the theme in use. Fixed, so they look the same in every theme */
   --book-cover: #cdb592;
   --book-page: #fbf8f2;
+  --book-page-edge: #e4dccd;
   --book-slot: #d8cfc0;
   --ink-marker: #e6635b;
 

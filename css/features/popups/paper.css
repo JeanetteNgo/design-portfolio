@@ -2,6 +2,7 @@
    PAPER POPUPS
    The notebook-paper look for popups with paper: true (the dialog gets data-paper):
    ruled, textured sheet and the sticker ×. Each popup adds its own touches.
+   The Palette popup isn't paper but borrows the sticker ×.
 ══════════════════════════════════════════ */
 
 .popup[data-paper] .popup-card {
@@ -39,7 +40,7 @@
 .popup[data-paper] .paper-sticker {
   position: relative; /* the pen strokes are placed inside it (the × is already sticky) */
 }
-.popup[data-paper] :is(.popup-close, .paper-sticker) {
+:is(.popup[data-paper], .popup[data-popup='palette']) :is(.popup-close, .paper-sticker) {
   z-index: 2; /* above anything that scrolls or sticks */
   border: 2px dashed var(--sticker-ring, var(--accent-a50));
   background: var(--paper-bg);
@@ -49,11 +50,14 @@
   color: var(--text-body);
   cursor: pointer;
 }
-.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus) {
+:is(.popup[data-paper], .popup[data-popup='palette'])
+  :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus) {
   font-size: 0;
 }
-.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::before,
-.popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::after {
+:is(.popup[data-paper], .popup[data-popup='palette'])
+  :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::before,
+:is(.popup[data-paper], .popup[data-popup='palette'])
+  :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -66,7 +70,7 @@
   rotate: 45deg;
   transition: background-color 0.15s ease;
 }
-.popup[data-paper] .popup-close::after {
+:is(.popup[data-paper], .popup[data-popup='palette']) .popup-close::after {
   rotate: -45deg;
 }
 .popup[data-paper] .paper-sticker--plus::before,
@@ -79,7 +83,7 @@
 .popup[data-paper] .paper-sticker--minus::after {
   display: none;
 }
-.popup[data-paper] :is(.popup-close, .paper-sticker):hover {
+:is(.popup[data-paper], .popup[data-popup='palette']) :is(.popup-close, .paper-sticker):hover {
   border-color: var(--ink-red);
   background: linear-gradient(var(--accent-a8), var(--accent-a8)), var(--paper-bg);
 }
@@ -98,8 +102,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::before,
-  .popup[data-paper] :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::after {
+  :is(.popup[data-paper], .popup[data-popup='palette'])
+    :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::before,
+  :is(.popup[data-paper], .popup[data-popup='palette'])
+    :is(.popup-close, .paper-sticker--plus, .paper-sticker--minus)::after {
     transition: none;
   }
 }
