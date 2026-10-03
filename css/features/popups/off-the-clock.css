@@ -234,6 +234,7 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   line-clamp: 2;
+  margin-top: 4px;
   font-size: 15px;
   color: color-mix(in srgb, var(--ink-brown) 62%, var(--paper-bg));
 }
@@ -274,19 +275,22 @@
   .otc-spot {
     display: grid;
     grid-template-columns: 112px 1fr;
-    grid-template-rows: 1fr auto auto 1fr;
     column-gap: 18px;
     align-items: center;
     justify-items: start;
     text-align: left;
   }
   .otc-clip {
-    grid-row: 1 / -1;
+    align-items: center; /* centred beside the note, so the arrow points at it */
     justify-self: center;
     height: 136px;
   }
+  .otc-pile li {
+    top: 50%;
+    bottom: auto;
+    translate: calc(-50% + var(--shift, 0px)) -50%;
+  }
   .otc-spot-note {
-    grid-row: 2 / 4;
     align-items: flex-start;
     width: auto;
     max-width: none;
@@ -299,8 +303,6 @@
     rotate: -50deg; /* points left, at the clipping */
   }
   .otc-note-detail {
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
     font-size: 14px;
   }
   .otc-spot-more {
