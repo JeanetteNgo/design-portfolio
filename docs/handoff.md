@@ -15,8 +15,8 @@ Sections 3 and 4 below describe the original plan. What is actually built differ
 - **Popups built:**
   - **Tools** (`js/popups/tools.js`, `css/features/popups/tools.css`): words are `POPUPS.tools`, one pencil per group.
   - **Side Quests** (`js/popups/side-quests.js`, `data/quests.js`, photos and one video in `img/quests/`): checklist; done quests open a memory.
-  - **Off the clock** (`js/popups/off-the-clock.js` is the shell; one file per section in `js/popups/off-the-clock/`, each adding itself to `OFF_CLOCK_SECTIONS`; `css/features/popups/off-the-clock.css`). One page, no tabs: each section shows a "spot" with a few highlights (Likes: a pile of the first three prints; On repeat: the first record, which plays; On my shelf: the first book) and a "See all" tag that opens its full view (← back). On phones each spot is a row. A section with `soon: true` is left off the page.
-    - **Likes** (`data/interests.js`, photos in `img/gallery/`): polaroids and postcards with a short caption, no stories.
+  - **Off the clock** (`js/popups/off-the-clock.js` is the shell; one file per section in `js/popups/off-the-clock/`, each adding itself to `OFF_CLOCK_SECTIONS`; `css/features/popups/off-the-clock.css`). A scrapbook page, no tabs: each section is a taped-in clipping (Interests: a pile of the first three prints; Playlist: the first record, which plays; Books: the first book) with a handwritten note and a "+N more" link that opens its full view (← back). The page hugs its content; full views get a fixed height. On phones each clipping is a row. A section with `soon: true` is left off the page.
+    - **Interests** (`data/interests.js`, photos in `img/gallery/`): polaroids and postcards with a short caption, no stories.
     - **Playlist** (`data/music.js`): record sleeves; a record with a `preview` link plays and pauses on click.
     - **Books** (`data/books.js`): four books with covers in `img/books/`.
     - **Doodles** (`data/doodles.js`, `img/doodles/`): built, currently disabled with `soon: true` in `sketchbook.js`.
@@ -25,7 +25,7 @@ Sections 3 and 4 below describe the original plan. What is actually built differ
   - **Map** (`js/popups/map.js`, `css/features/popups/map.css`, `data/places.js`): fixed-height (580px on desktop) worn-chart popup with an interactive canvas globe (drag, pinch, trackpad, keys, +/−, auto-spin that resumes after 6s idle) beside a "Based in" banner and passport stamps (six muted inks, latest year only). Choosing a place shows it as a postcard. Places use `lat`/`lng` on the capital, plus optional `when`, `cities`, `note`, `photo`. `img/map/chart.svg` is the faint compass rose; the world outline `data/land.json` and `js/vendor/d3-geo.min.js` load only when the Map opens.
   - **Palette:** waits for the theme system; not built.
 - **Tidy pass: done** (2026-10-01): `js/dock.js` renamed `js/popup.js`; comments across the code cut to short, necessary ones (only write comments that explain how something works, not small tweaks); `.DS_Store` untracked; `.prettierrc` has a narrow print width for `data/places.js` only. Don't run Prettier on `js/render-projects.js` or `data/doodles.js`.
-- **Next:** Palette (after the theme system); real photos for Likes; a one-line take for each book; real doodles, then remove `soon: true`; push and tag `v4.1.0`. Real dock icons still to be exported from Figma into `img/dock/` (same file names).
+- **Next:** Palette (after the theme system); real photos for Interests; a one-line take for each book; real doodles, then remove `soon: true`; push and tag `v4.1.0`. Real dock icons still to be exported from Figma into `img/dock/` (same file names).
 
 ## 1. About me and how to work with me
 

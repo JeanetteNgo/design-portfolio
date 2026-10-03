@@ -1,14 +1,13 @@
 /* ══════════════════════════════════════════
    OFF THE CLOCK POPUP
-   A notebook-paper sheet with a spot per section (likes, playlist, books, doodles), each
-   opening a full view. Built by js/popups/off-the-clock.js and the sections in
+   A notebook-paper scrapbook page with a taped-in clipping per section (interests, playlist,
+   books, doodles), each opening a full view. Built by js/popups/off-the-clock.js and the sections in
    js/popups/off-the-clock/. The sheet itself is the shared paper look in paper.css; this
-   adds the torn top, the spots and the contents.
+   adds the torn top, the clippings and the contents.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='off-the-clock'] .popup-card {
   width: min(100%, 800px);
-  height: min(max(640px, 75dvh), calc(100dvh - 32px)); /* same size on every view */
   --pad-top: 32px; /* the heading adds 16px of its own */
   --pad-x: 60px;
   --pad-bottom: 36px;
@@ -17,9 +16,15 @@
   filter: none;
   box-shadow: 0 8px 18px rgb(var(--shadow-rgb) / 18%);
 }
+/* The page hugs its clippings; a full view gets a fixed, roomy height */
+.popup[data-popup='off-the-clock'] .popup-card:has(.otc-detail:not([hidden])) {
+  height: min(max(640px, 75dvh), calc(100dvh - 32px));
+}
 @media (max-width: 640px) {
-  .popup[data-popup='off-the-clock'] .popup-card {
+  .popup[data-popup='off-the-clock'] .popup-card:has(.otc-detail:not([hidden])) {
     height: min(max(640px, 90dvh), calc(100dvh - 32px));
+  }
+  .popup[data-popup='off-the-clock'] .popup-card {
     --pad-x: 28px;
     --pad-bottom: 28px;
   }
@@ -32,7 +37,8 @@
   padding: 36px var(--pad-x) 72px;
 }
 .popup[data-popup='off-the-clock'] .otc-page {
-  padding-bottom: 24px;
+  padding-top: 20px;
+  padding-bottom: 8px;
 }
 
 /* ── Heading ── */
@@ -50,11 +56,11 @@
   margin: 0;
 }
 
-/* ── The page: a spot per section, side by side (stacked on phones) ── */
+/* ── The page: taped-in clippings, side by side (rows on phones), each with a note ── */
 .otc-cover {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 40px 32px;
+  gap: 32px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -63,47 +69,90 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  align-self: stretch;
   min-width: 0;
   text-align: center;
   cursor: pointer;
 }
-.otc-spot-title {
-  margin: 0;
-  font: 400 26px/1 var(--font-hand);
-  color: var(--text-strong);
+/* Every clipping sits on the same baseline */
+.otc-clip {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 200px;
+  transition: translate 0.3s ease;
 }
 .otc-spot-items {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
-  width: 100%;
-  min-height: 240px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
+.otc-spot-items > li {
+  position: relative;
+  rotate: var(--clip-tilt, 0deg);
+  transition: rotate 0.3s ease;
+}
 .otc-spot .record {
-  width: 170px;
+  width: 168px;
+  --clip-tilt: -2deg;
 }
 .otc-spot .book {
-  width: 112px;
+  width: 116px;
+  --clip-tilt: 2.5deg;
 }
 .otc-spot .doodle {
-  width: 180px;
-  cursor: inherit;
+  width: 170px;
+  --clip-tilt: -1.5deg;
 }
-/* Likes: three prints in a loose pile that fans out on hover */
+/* The note says what it is, so the cover's own labels go */
+.otc-spot :is(.record-title, .record-artist, .record-note, .book-status) {
+  display: none;
+}
+
+/* Washi tape holding each clipping, in the dock's tape patterns */
+.otc-spot-items:not(.otc-pile) > li::after,
+.otc-pile li:last-child::after {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  top: -10px;
+  left: 50%;
+  width: 64px;
+  height: 20px;
+  translate: -50% 0;
+  rotate: -4deg;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--dock-tile-b) 0 6px,
+    var(--surface-faint) 6px 12px
+  );
+  box-shadow: 0 1px 3px rgb(var(--shadow-rgb) / 18%);
+  opacity: 0.92;
+}
+.otc-spot:nth-child(2n) .otc-spot-items > li::after {
+  rotate: 5deg;
+  background:
+    linear-gradient(90deg, var(--accent-a8) 50%, transparent 50%) 0 0 / 8px 8px,
+    linear-gradient(var(--accent-a8) 50%, transparent 50%) 0 0 / 8px 8px,
+    var(--surface-band);
+}
+
+/* Interests: three prints in a loose pile that fans out on hover */
 .otc-pile {
   position: relative;
-  height: 240px;
+  width: 100%;
+  height: 100%;
 }
 .otc-pile li {
   position: absolute;
-  top: 50%;
+  bottom: 4px;
   left: 50%;
   width: 136px;
-  translate: calc(-50% + var(--shift, 0px)) -50%;
+  translate: calc(-50% + var(--shift, 0px)) 0;
   transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .otc-pile li:nth-child(1) {
@@ -117,7 +166,15 @@
 .otc-pile li:nth-child(3) {
   --tilt: -2deg;
 }
+
+/* Hover: the clipping lifts and straightens, as if peeled up */
 @media (hover: hover) {
+  .otc-spot:hover .otc-clip {
+    translate: 0 -4px;
+  }
+  .otc-spot:hover .otc-spot-items > li {
+    rotate: 0deg;
+  }
   .otc-spot:hover .otc-pile li:nth-child(1) {
     --shift: -44px;
   }
@@ -130,86 +187,62 @@
   }
 }
 
-/* "See all" label: a paper tag with the section's icon, which fills in on hover */
-.otc-spot-open {
-  position: relative;
-  min-height: 44px;
-  margin-top: auto;
-  padding: 0 16px 0 36px;
-  border: 0;
-  border-radius: 4px;
-  background: color-mix(in srgb, var(--paper-bg) 66%, var(--pencil-wood));
-  box-shadow:
-    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
-    1px 2px 3px rgb(var(--shadow-rgb) / 16%);
-  font: 700 14px var(--font-secondary);
-  color: var(--text-body);
-  rotate: var(--tilt, 0deg);
-  cursor: pointer;
-  transition:
-    rotate 0.25s ease,
-    translate 0.25s ease,
-    box-shadow 0.25s ease,
-    background-color 0.25s ease;
+/* The handwritten note, with a little arrow pointing up at the clipping */
+.otc-spot-note {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  max-width: 230px;
+  margin-top: 18px;
 }
-.otc-spot:nth-child(3n + 1) .otc-spot-open {
-  --tilt: -1.5deg;
+.otc-note-lead,
+.otc-note-detail {
+  margin: 0;
+  font: 400 18px/1.3 var(--font-hand);
+  text-wrap: balance;
+  color: var(--ink-brown);
 }
-.otc-spot:nth-child(3n + 2) .otc-spot-open {
-  --tilt: 1deg;
+.otc-note-lead {
+  text-wrap: pretty;
 }
-.otc-spot:nth-child(3n + 3) .otc-spot-open {
-  --tilt: -1deg;
-}
-.otc-spot-open::before {
-  /* Lucide icons (ISC licence) used as a mask; hover swaps to a filled version */
+.otc-note-lead::before {
   content: '';
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  width: 18px;
-  height: 18px;
-  margin-top: -9px;
-  background: color-mix(in srgb, var(--pencil-wood) 65%, var(--ink-brown));
-  mask: var(--spot-icon) center / contain no-repeat;
-  transition: background-color 0.25s ease;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 6px;
+  vertical-align: -2px;
+  background: currentColor;
+  -webkit-mask: var(--arrow) center / contain no-repeat;
+  mask: var(--arrow) center / contain no-repeat;
+  --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 20c-7 1-13-3-15-14'/%3E%3Cpath d='M2 9l4-5 4 4'/%3E%3C/svg%3E");
 }
-.otc-spot[data-section='interests'] {
-  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5'/%3E%3C/svg%3E");
-  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5' fill='%23000'/%3E%3C/svg%3E");
+.otc-note-detail {
+  margin-bottom: 2px;
+  font-size: 15px;
+  color: var(--text-body);
 }
-.otc-spot[data-section='listening'] {
-  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3'/%3E%3C/svg%3E");
-  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14v-2a9 9 0 0 1 18 0v2'/%3E%3Cpath d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' fill='%23000'/%3E%3Cpath d='M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2z' fill='%23000'/%3E%3C/svg%3E");
+/* "+11 more →": a scribbled link, still a button */
+.otc-spot-more {
+  margin-top: auto;
+  padding: 10px 4px;
+  border: 0;
+  background: none;
+  font: 400 16px var(--font-hand);
+  color: var(--ink-red);
+  text-decoration: underline wavy;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  cursor: pointer;
 }
-.otc-spot[data-section='reading'] {
-  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v16'/%3E%3Cpath d='M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z'/%3E%3C/svg%3E");
-  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1 1 22 22'%3E%3Cpath d='M2 17V5a2 2 0 0 1 2-2h4a5 5 0 0 1 3.3 1.24v16A5 5 0 0 0 8 19H4a2 2 0 0 1-2-2z'/%3E%3Cpath d='M22 17V5a2 2 0 0 0-2-2h-4a5 5 0 0 0-3.3 1.24v16A5 5 0 0 1 16 19h4a2 2 0 0 0 2-2z'/%3E%3C/svg%3E");
-}
-.otc-spot[data-section='sketchbook'] {
-  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.622 17.897-10.68-2.913'/%3E%3Cpath d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/%3E%3Cpath d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/%3E%3C/svg%3E");
-  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.622 17.897-10.68-2.913'/%3E%3Cpath d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z' fill='%23000'/%3E%3Cpath d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15' fill='%23000'/%3E%3C/svg%3E");
-}
-@media (hover: hover) {
-  .otc-spot:hover .otc-spot-open {
-    background: var(--surface-faint);
-    box-shadow:
-      0 0 0 1.5px var(--ink-red),
-      2px 4px 8px rgb(var(--shadow-rgb) / 20%);
-    color: var(--text-strong);
-    rotate: 0deg;
-    translate: 0 -2px;
-  }
-  .otc-spot:hover .otc-spot-open::before {
-    background: var(--ink-red);
-    mask-image: var(--spot-icon-on);
-  }
-}
-.otc-spot-open:focus-visible {
+.otc-spot-more:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
+  border-radius: 4px;
 }
-/* Phones: each spot is a row, picture on the left, title and tag on the right */
+
+/* Phones: each clipping is a row, picture on the left and its note on the right */
 @media (max-width: 560px) {
   .otc-cover {
     grid-template-columns: 1fr;
@@ -217,52 +250,47 @@
   }
   .otc-spot {
     display: grid;
-    grid-template-columns: 128px 1fr;
-    grid-template-rows: 1fr auto auto 1fr;
-    gap: 12px 24px;
-    align-items: start;
-    justify-items: start;
+    grid-template-columns: 112px 1fr;
+    gap: 18px;
+    align-items: center;
     text-align: left;
   }
-  .otc-spot-items {
-    grid-column: 1;
-    grid-row: 1 / -1;
-    min-height: 0;
-  }
-  .otc-spot-title {
-    grid-row: 2;
-    font-size: 24px;
-    white-space: nowrap;
-  }
-  .otc-spot-open {
-    grid-row: 3;
-    margin-top: 0;
-    white-space: nowrap;
-  }
-  .otc-spot-see,
-  .otc-spot :is(.record-title, .record-artist) {
-    display: none;
-  }
-  .otc-pile {
+  .otc-clip {
     height: 150px;
   }
+  .otc-spot-note {
+    align-items: flex-start;
+    margin-top: 0;
+  }
+  .otc-note-lead {
+    font-size: 16px;
+  }
+  .otc-note-lead::before {
+    rotate: -50deg; /* points left, at the clipping */
+  }
+  .otc-note-detail {
+    font-size: 14px;
+  }
+  .otc-spot-more {
+    padding-left: 0;
+  }
   .otc-pile li {
-    width: 88px;
+    width: 80px;
   }
   .otc-pile li:nth-child(1) {
-    --shift: -10px;
+    --shift: -8px;
   }
   .otc-pile li:nth-child(2) {
-    --shift: 10px;
+    --shift: 8px;
   }
   .otc-spot .record {
-    width: 128px;
+    width: 112px;
   }
   .otc-spot .book {
-    width: 88px;
+    width: 80px;
   }
   .otc-spot .doodle {
-    width: 128px;
+    width: 112px;
   }
 }
 
@@ -826,9 +854,9 @@
   .record-title {
     transition: none;
   }
+  .otc-clip,
   .otc-pile li,
-  .otc-spot-open,
-  .otc-spot-open::before,
+  .otc-spot-items > li,
   .record-cover,
   .record-play::before,
   .record-play-icon {

@@ -1,13 +1,12 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK: INTERESTS
    Polaroids and postcards from INTERESTS (data/interests.js), stuck on the page
-   with a short caption each. The spot shows the first three in a small pile.
+   with a short caption each. The clipping is the first three in a small pile, the first on top.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'interests',
-  label: 'Likes',
-  title: 'Likes',
+  label: 'Interests',
   build() {
     function _print(item, withCaption) {
       const print = popupEl('figure', '', `print print--${item.kind}`);
@@ -38,7 +37,8 @@ OFF_CLOCK_SECTIONS.push({
     });
 
     const pile = popupEl('ul', '', 'otc-spot-items otc-pile');
-    INTERESTS.slice(0, 3).forEach((item) => {
+    const top = INTERESTS.slice(0, 3);
+    [...top].reverse().forEach((item) => {
       const entry = popupEl('li');
       entry.appendChild(_print(item, false));
       pile.appendChild(entry);
@@ -46,6 +46,16 @@ OFF_CLOCK_SECTIONS.push({
 
     const scroll = popupEl('div', '', 'popup-scroll');
     scroll.appendChild(board);
-    return { preview: pile, view: scroll, more: `${INTERESTS.length} likes` };
+    return {
+      preview: pile,
+      view: scroll,
+      note: [
+        'things that make me happy',
+        `${top.map((item) => item.title.toLowerCase()).join(', ')}…`,
+      ],
+      count: INTERESTS.length,
+      shown: top.length,
+      noun: 'interests',
+    };
   },
 });

@@ -1,13 +1,12 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK: BOOKS
    Book covers from BOOKS (data/books.js), with a one-line take scribbled under each.
-   The spot shows the first one on the shelf.
+   The clipping is the first one on the shelf.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'reading',
   label: 'Books',
-  title: 'On my shelf',
   build() {
     const STATUS_TEXT = { reading: 'Reading now', next: 'Up next' };
     const SHELF_ORDER = ['reading', 'next', 'read'];
@@ -48,6 +47,18 @@ OFF_CLOCK_SECTIONS.push({
 
     const scroll = popupEl('div', '', 'popup-scroll');
     scroll.appendChild(shelf);
-    return { preview: first, view: scroll, more: `${BOOKS.length} books` };
+    const LEAD = {
+      reading: 'reading now',
+      next: 'up next on my nightstand',
+      read: 'just finished',
+    };
+    return {
+      preview: first,
+      view: scroll,
+      note: [LEAD[books[0].status] || 'on my shelf', books[0].title],
+      count: BOOKS.length,
+      shown: 1,
+      noun: 'books',
+    };
   },
 });

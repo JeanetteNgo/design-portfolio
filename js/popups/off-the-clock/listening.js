@@ -2,13 +2,12 @@
    OFF THE CLOCK: PLAYLIST
    Record sleeves from MUSIC (data/music.js), with a note scribbled under each. A record with a
    preview clip gets a play button; one plays at a time and it stops when the popup closes
-   or the view changes. The spot shows the first record, and plays too.
+   or the view changes. The clipping is the first record, and plays too.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'listening',
   label: 'Playlist',
-  title: 'On repeat',
   build(shell) {
     const audio = new Audio();
     audio.preload = 'none'; // nothing downloads until someone presses play
@@ -85,6 +84,13 @@ OFF_CLOCK_SECTIONS.push({
 
     const scroll = popupEl('div', '', 'popup-scroll');
     scroll.appendChild(shelf);
-    return { preview: first, view: scroll, more: `${MUSIC.length} songs` };
+    return {
+      preview: first,
+      view: scroll,
+      note: ['on repeat lately', `${MUSIC[0].title} · ${MUSIC[0].artist}`],
+      count: MUSIC.length,
+      shown: 1,
+      noun: 'songs',
+    };
   },
 });
