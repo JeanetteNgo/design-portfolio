@@ -1,22 +1,22 @@
 /* ─────────────────────────────────────────────
    PALETTE POPUP
    An open colour-chip book. The right page holds a chip per theme
-   (POPUPS.palette.themes); clicking one previews it on the left page (a mini
-   home page, its shades and an Apply button) without touching the site.
+   (POPUPS.palette.themes); clicking one shows its shades (step and hex) on the
+   left page, with an Apply button, without touching the site.
    Apply calls setTheme (js/theme.js), and the theme in use is circled in red.
-   Each chip and the preview read a family's own colours from Layer 1 of
+   Each chip and the shades read a family's own colours from Layer 1 of
    css/tokens.css, so they show true whichever theme is on.
    Styles: css/features/popups/palette.css.
 ────────────────────────────────────────────── */
 
 POPUP_RENDERERS.palette = function (popup) {
   const themes = popup.themes;
-  const SHADES = ['25', '50', '200', '300', '400', '500'];
+  const SHADES = ['25', '50', '100', '200', '300', '400', '500'];
   let previewing = currentTheme();
 
   // Point a set of short vars (--c25 … --c500) at one family's Layer 1 colours
   function _paint(el, id) {
-    SHADES.concat('100').forEach((s) => el.style.setProperty(`--c${s}`, `var(--${id}-${s})`));
+    SHADES.forEach((s) => el.style.setProperty(`--c${s}`, `var(--${id}-${s})`));
   }
 
   // A hand-drawn loop, drawn round the chip in use
@@ -37,33 +37,25 @@ POPUP_RENDERERS.palette = function (popup) {
     return svg;
   }
 
-  /* ── Left page: title, preview, shades, Apply ── */
+  /* ── Left page: title, the previewed family's shades, Apply ── */
 
   const left = popupEl('div', '', 'pal-page pal-left');
   const title = popupEl('p', popup.title, 'pal-title');
   title.setAttribute('aria-hidden', 'true'); // the dialog's hidden title names it
   const intro = popupEl('p', popup.intro, 'popup-intro pal-intro');
 
-  // A mini sketch of the home page: nav, greeting, and the dock strip
-  const preview = popupEl('div', '', 'pal-preview');
-  preview.setAttribute('aria-hidden', 'true');
-  const nav = popupEl('span', '', 'pal-mini-nav');
-  nav.append(popupEl('b'), popupEl('i'), popupEl('i'), popupEl('i'));
-  const dock = popupEl('span', '', 'pal-mini-dock');
-  for (let i = 0; i < 5; i++) dock.appendChild(popupEl('i'));
-  preview.append(
-    nav,
-    popupEl('span', 'Hi! I am Jeanette.', 'pal-mini-hi'),
-    popupEl('span', 'I dabble in design', 'pal-mini-sub'),
-    dock
-  );
-
+  // One band per shade, light to dark: its step and hex code (read from tokens.css)
   const details = popupEl('div', '', 'pal-details');
   const name = popupEl('p', '', 'pal-name');
-  const ramp = popupEl('div', '', 'pal-ramp');
-  ramp.setAttribute('aria-hidden', 'true');
-  SHADES.forEach((s) => ramp.appendChild(popupEl('span', s)));
-  details.append(name, ramp);
+  const shades = popupEl('ul', '', 'pal-shades');
+  const hexes = SHADES.map((s) => {
+    const band = popupEl('li');
+    const hex = popupEl('span', '', 'pal-hex');
+    band.append(popupEl('span', s, 'pal-step'), hex);
+    shades.appendChild(band);
+    return hex;
+  });
+  details.append(name, shades);
 
   const apply = popupEl('button', '', 'pal-apply');
   apply.type = 'button';
@@ -84,14 +76,10 @@ POPUP_RENDERERS.palette = function (popup) {
     chip.dataset.theme = theme.id;
     _paint(chip, theme.id);
     const swatch = popupEl('span', '', 'pal-swatch');
-    const tints = popupEl('span', '', 'pal-tints');
-    tints.append(popupEl('i'), popupEl('i'), popupEl('i'));
-    swatch.appendChild(tints);
     const caption = popupEl('span', '', 'pal-caption');
     caption.append(
-      popupEl('span', 'Jeanette', 'pal-brand'),
-      popupEl('span', theme.code, 'pal-code'),
-      popupEl('span', theme.name, 'pal-chip-name')
+      popupEl('span', theme.name, 'pal-chip-name'),
+      popupEl('span', theme.code, 'pal-code')
     );
     chip.append(swatch, caption, _circle());
     chip.addEventListener('click', () => {
@@ -112,10 +100,17 @@ POPUP_RENDERERS.palette = function (popup) {
     const inUse = currentTheme();
     const theme = themes.find((t) => t.id === previewing);
     _paint(left, theme.id);
-    name.replaceChildren(popupEl('strong', theme.name), popupEl('span', `Jeanette ${theme.code}`));
+    name.replaceChildren(popupEl('strong', theme.name), popupEl('span', theme.code));
+    const root = getComputedStyle(document.documentElement);
+    hexes.forEach((hex, i) => {
+      hex.textContent = root.getPropertyValue(`--${theme.id}-${SHADES[i]}`).trim().toUpperCase();
+    });
 
     const isCurrent = previewing === inUse;
-    apply.textContent = isCurrent ? 'in use ✓' : `Apply ${theme.name}`;
+    apply.replaceChildren(
+      popupEl('span', '', 'pal-apply-dot'),
+      isCurrent ? `${theme.name} is in use` : `Apply ${theme.name}`
+    );
     apply.classList.toggle('is-current', isCurrent);
     apply.setAttribute('aria-disabled', String(isCurrent));
 
@@ -144,7 +139,7 @@ POPUP_RENDERERS.palette = function (popup) {
 
   _update();
 
-  left.append(title, intro, preview, details, apply, status, footer);
+  left.append(title, intro, details, apply, status, footer);
   right.appendChild(chips);
   const book = popupEl('div', '', 'pal-book');
   book.append(left, right);

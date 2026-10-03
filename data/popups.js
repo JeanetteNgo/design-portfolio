@@ -43,7 +43,7 @@ const POPUPS = {
   },
   palette: {
     title: 'Palette',
-    intro: 'Pick a colour. The whole site follows.',
+    intro: "Go on, repaint the place. I won't mind.",
     themes: [
       { id: 'salmon', name: 'Salmon', code: '16-1546' },
       { id: 'sage', name: 'Sage', code: '15-6316' },
