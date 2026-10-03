@@ -1,13 +1,14 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK POPUP
    What I'm into outside work, as a scrapbook page: each section is a clipping with a
-   handwritten title; clicking either opens its full view (← goes back). This file is the
+   handwritten title and a "see all →" tag; clicking the clipping or the tag opens its full
+   view (← goes back). This file is the
    shell; each section is a file in js/popups/off-the-clock/ that adds itself:
      OFF_CLOCK_SECTIONS.push({ id, label, build(shell) {
        return { preview, view, note, count, noun };
      } });
    preview is the clipping, view the full view, note the title, and count / noun name the
-   title button for screen readers ("See all 12 songs").
+   tag for screen readers ("See all 12 songs").
    Add `soon: true` to leave a section off the page. Spots appear in the order the section
    scripts load. Inside a full view, shell.open(elements, backLabel, buttonToReturnTo) opens
    an item; shell.onChange(fn) runs fn whenever the view changes (e.g. to stop audio).
@@ -86,18 +87,18 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     const clip = popupEl('div', '', 'otc-clip');
     clip.appendChild(preview);
 
-    const opener = popupEl('button', note, 'otc-spot-title');
-    opener.type = 'button';
-    opener.setAttribute('aria-label', `See all ${count} ${noun}`);
-    opener.addEventListener('click', () => {
+    const more = popupEl('button', 'see all →', 'otc-spot-more');
+    more.type = 'button';
+    more.setAttribute('aria-label', `See all ${count} ${noun}`);
+    more.addEventListener('click', () => {
       const viewHead = popupEl('header', '', 'otc-head');
       viewHead.appendChild(popupEl('h3', section.label, 'otc-title'));
-      _push([viewHead, view, _footer(`back to ${popup.title}`)], opener);
+      _push([viewHead, view, _footer(`back to ${popup.title}`)], more);
     });
     // The whole spot opens it too, except its own buttons (e.g. a record's play)
-    spot.addEventListener('click', (e) => !e.target.closest('button') && opener.click());
+    spot.addEventListener('click', (e) => !e.target.closest('button') && more.click());
 
-    spot.append(clip, opener);
+    spot.append(clip, popupEl('p', note, 'otc-spot-title'), more);
     cover.appendChild(spot);
   });
 

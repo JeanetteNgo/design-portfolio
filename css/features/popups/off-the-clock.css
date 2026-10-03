@@ -56,11 +56,12 @@
   margin: 0;
 }
 
-/* ── The page: taped-in clippings, side by side (rows on phones), each with a note ── */
+/* ── The page: clippings side by side (rows on phones), each with a title and a tag.
+   Each spot is as wide as its picture, so the gaps between pictures are even. ── */
 .otc-cover {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 32px;
+  display: flex;
+  justify-content: center;
+  gap: 72px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -68,18 +69,29 @@
 .otc-spot {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  align-self: stretch;
-  min-width: 0;
+  align-items: center; /* a title wider than its picture spills evenly both sides */
+  margin: 0;
   text-align: center;
   cursor: pointer;
+}
+/* Picture widths: the pile's fan, the sleeve plus vinyl, the book */
+.otc-spot[data-section='interests'] {
+  width: 180px;
+}
+.otc-spot[data-section='listening'] {
+  width: 158px;
+}
+.otc-spot[data-section='reading'] {
+  width: 124px;
+}
+.otc-spot[data-section='sketchbook'] {
+  width: 170px;
 }
 /* Every clipping sits on the same baseline */
 .otc-clip {
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  width: 100%;
   height: 200px;
   transition: translate 0.3s ease;
 }
@@ -93,22 +105,24 @@
 }
 .otc-spot-items > li {
   position: relative;
+  margin: 0;
   rotate: var(--clip-tilt, 0deg);
   transition: rotate 0.3s ease;
 }
 .otc-spot .record {
-  width: 200px;
+  width: 176px;
+  margin-right: -18px; /* the sleeve's empty right side, so the sleeve and vinyl centre */
   --clip-tilt: -2deg;
 }
 .otc-spot .book {
-  width: 116px;
+  width: 124px;
   --clip-tilt: 2.5deg;
 }
 .otc-spot .doodle {
   width: 170px;
   --clip-tilt: -1.5deg;
 }
-/* The note says what it is, so the cover's own labels go */
+/* The title says what it is, so the cover's own labels go */
 .otc-spot :is(.record-title, .record-artist, .record-note, .book-status) {
   display: none;
 }
@@ -116,7 +130,7 @@
 /* Interests: three prints in a loose pile that fans out on hover */
 .otc-pile {
   position: relative;
-  width: 100%;
+  width: 180px;
   height: 100%;
 }
 .otc-pile li {
@@ -139,6 +153,30 @@
   --tilt: -2deg;
 }
 
+/* The record's play/pause: a round sticker on the sleeve's corner, so clicking the rest
+   of the record opens the playlist like the other clippings */
+.otc-spot .record-play {
+  inset: auto 8px 8px auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+.otc-spot .record-play::before {
+  display: none;
+}
+.otc-spot .record-play-icon {
+  width: 36px;
+  height: 36px;
+  background: rgb(255 253 248 / 92%);
+  opacity: 1;
+  scale: 1;
+}
+@media (hover: hover) {
+  .otc-spot .record-play:hover .record-play-icon {
+    scale: 1.12;
+  }
+}
+
 /* Hover: the clipping lifts and straightens, as if peeled up */
 @media (hover: hover) {
   .otc-spot:hover .otc-clip {
@@ -159,21 +197,14 @@
   }
 }
 
-/* The handwritten title, with a little arrow pointing up at the clipping. It's the button
-   that opens the full view; underlined on hover and focus. */
+/* The handwritten title, with a little arrow pointing up at the clipping */
 .otc-spot-title {
-  max-width: 230px;
-  margin-top: 16px;
-  padding: 4px 6px;
-  border: 0;
-  border-radius: 4px;
-  background: none;
+  width: max-content;
+  max-width: 190px;
+  margin: 16px 0 0;
   font: 400 18px/1.3 var(--font-hand);
   text-wrap: pretty;
-  text-underline-offset: 5px;
-  text-decoration-thickness: 1px;
   color: var(--ink-brown);
-  cursor: pointer;
 }
 .otc-spot-title::before {
   content: '';
@@ -187,44 +218,93 @@
   mask: var(--arrow) center / contain no-repeat;
   --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 20c-7 1-13-3-15-14'/%3E%3Cpath d='M2 9l4-5 4 4'/%3E%3C/svg%3E");
 }
+
+/* "see all →": a small paper tag that straightens and gets a red edge on hover */
+.otc-spot-more {
+  min-height: 34px;
+  margin-top: 10px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--paper-bg) 66%, var(--pencil-wood));
+  box-shadow:
+    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
+    1px 2px 3px rgb(var(--shadow-rgb) / 16%);
+  font: 700 13px var(--font-secondary);
+  white-space: nowrap;
+  color: var(--text-body);
+  rotate: var(--tilt, 0deg);
+  cursor: pointer;
+  transition:
+    rotate 0.25s ease,
+    translate 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+.otc-spot:nth-child(3n + 1) .otc-spot-more {
+  --tilt: -2deg;
+}
+.otc-spot:nth-child(3n + 2) .otc-spot-more {
+  --tilt: 1.5deg;
+}
+.otc-spot:nth-child(3n + 3) .otc-spot-more {
+  --tilt: -1deg;
+}
 @media (hover: hover) {
-  .otc-spot:hover .otc-spot-title {
-    text-decoration-line: underline;
-    text-decoration-style: wavy;
+  .otc-spot:hover .otc-spot-more {
+    background: var(--surface-faint);
+    box-shadow:
+      0 0 0 1.5px var(--ink-red),
+      2px 4px 8px rgb(var(--shadow-rgb) / 20%);
+    color: var(--text-strong);
+    rotate: 0deg;
+    translate: 0 -1px;
   }
 }
-.otc-spot-title:focus-visible {
+.otc-spot-more:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
-  text-decoration-line: underline;
-  text-decoration-style: wavy;
 }
 
-/* Phones: each clipping is a row, picture on the left and its note on the right */
+/* Phones: each clipping is a row, picture on the left, title and tag on the right */
 @media (max-width: 560px) {
   .otc-cover {
-    grid-template-columns: 1fr;
+    flex-direction: column;
     gap: 20px;
+  }
+  .otc-spot,
+  .otc-spot[data-section] {
+    width: auto;
   }
   .otc-spot {
     display: grid;
     grid-template-columns: 112px 1fr;
-    gap: 18px;
+    grid-template-rows: 1fr auto auto 1fr;
+    column-gap: 18px;
     align-items: center;
+    justify-items: start;
     text-align: left;
   }
   .otc-clip {
+    grid-row: 1 / -1;
+    justify-self: center;
     height: 136px;
   }
   .otc-spot-title {
-    justify-self: start;
+    grid-row: 2;
+    width: auto;
     margin-top: 0;
-    padding-left: 0;
     font-size: 17px;
-    text-align: left;
+    text-wrap: balance;
   }
   .otc-spot-title::before {
     rotate: -50deg; /* points left, at the clipping */
+  }
+  .otc-spot-more {
+    grid-row: 3;
+  }
+  .otc-pile {
+    width: 112px;
   }
   .otc-pile li {
     width: 80px;
@@ -236,13 +316,19 @@
     --shift: 8px;
   }
   .otc-spot .record {
-    width: 124px;
+    width: 112px;
+    margin-right: -11px;
   }
   .otc-spot .book {
     width: 80px;
   }
   .otc-spot .doodle {
     width: 112px;
+  }
+  .otc-spot .record-play,
+  .otc-spot .record-play-icon {
+    width: 32px;
+    height: 32px;
   }
 }
 
@@ -809,6 +895,7 @@
   .otc-clip,
   .otc-pile li,
   .otc-spot-items > li,
+  .otc-spot-more,
   .record-cover,
   .record-play::before,
   .record-play-icon {
