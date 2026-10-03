@@ -10,6 +10,8 @@
      groups   lists, each with a heading and items (optional)
      paper    true = show it on a sheet of notebook paper (optional)
      pencil   (in a Tools group) shorter name to print on that group's pencil (optional)
+     themes   (Palette only) the colour chips: id (matches css/themes.css), name, and the
+              made-up code printed on the chip
 ────────────────────────────────────────────── */
 
 const POPUPS = {
@@ -41,6 +43,13 @@ const POPUPS = {
   },
   palette: {
     title: 'Palette',
-    intro: 'Pick a colour theme for the site. Coming soon.',
+    intro: 'Pick a colour. The whole site follows.',
+    themes: [
+      { id: 'salmon', name: 'Salmon', code: '16-1546' },
+      { id: 'sage', name: 'Sage', code: '15-6316' },
+      { id: 'lavender', name: 'Lavender', code: '16-3817' },
+      { id: 'sky', name: 'Sky', code: '14-4318' },
+      { id: 'butter', name: 'Butter', code: '13-0840' },
+    ],
   },
 };

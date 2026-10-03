@@ -1,0 +1,407 @@
+/* ══════════════════════════════════════════
+   PALETTE POPUP
+   The card is an open colour-chip book (js/popups/palette.js): a kraft cover
+   round two cream pages. Left page: title, a mini home page and the shades of
+   the chip being previewed, and Apply. Right page: the chips.
+   --c25 … --c500 are set inline to one family's colours (the chip's own, or the
+   one being previewed on the left page). On phones the book is a single page.
+══════════════════════════════════════════ */
+
+.popup[data-popup='palette'] .popup-card {
+  width: min(100%, 680px);
+  --pad-top: 10px;
+  --pad-x: 10px;
+  --pad-bottom: 10px;
+  --close-top: 22px;
+  --close-right: 22px;
+  background: var(--book-cover);
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgb(var(--shadow-rgb) / 28%);
+}
+.popup[data-popup='palette'] .popup-close {
+  background: rgb(var(--shadow-rgb) / 5%);
+}
+.popup[data-popup='palette'] .popup-close:hover {
+  background: rgb(var(--shadow-rgb) / 10%);
+}
+
+.pal-book {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  border-radius: 8px;
+  scrollbar-width: thin;
+}
+.pal-page {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px 12px;
+  background: var(--book-page);
+}
+/* Shading where the pages meet the spine */
+.pal-left {
+  box-shadow: inset -18px 0 18px -14px rgb(var(--shadow-rgb) / 22%);
+}
+.pal-right {
+  padding-top: 64px; /* clears the × */
+  box-shadow: inset 18px 0 18px -14px rgb(var(--shadow-rgb) / 22%);
+}
+
+/* ── Left page ── */
+
+.pal-title {
+  margin: 0;
+  font: 800 26px/1.2 var(--font-primary);
+  color: var(--text-heading);
+}
+.pal-intro {
+  margin: 2px 0 16px;
+  font-size: 14px;
+}
+
+/* Mini home page in the previewed colours */
+.pal-preview {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 12px 12px;
+  border: 1px solid rgb(var(--shadow-rgb) / 8%);
+  border-radius: 8px;
+  background: linear-gradient(var(--c25), var(--surface));
+}
+.pal-mini-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.pal-mini-nav b {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--c400);
+}
+.pal-mini-nav i {
+  width: 22px;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--c200);
+}
+.pal-mini-hi {
+  font: 800 14px var(--font-primary);
+  color: var(--c400);
+}
+.pal-mini-sub {
+  margin-bottom: 8px;
+  font-size: 10px;
+  color: var(--text-muted);
+}
+.pal-mini-dock {
+  display: flex;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  background: var(--c50);
+}
+.pal-mini-dock i {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--c200);
+}
+.pal-mini-dock i:nth-child(even) {
+  background: var(--surface);
+}
+
+/* Name, code and the family's shades */
+.pal-details {
+  margin-top: 14px;
+}
+.pal-name {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+}
+.pal-name strong {
+  font: 800 16px var(--font-primary);
+  color: var(--text-strong);
+}
+.pal-name span {
+  font: 700 11px var(--font-primary);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.pal-ramp {
+  display: flex;
+  margin-top: 6px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.pal-ramp span {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 32px;
+  padding-bottom: 3px;
+  font: 700 9px var(--font-primary);
+  color: var(--text-body);
+}
+.pal-ramp span:nth-child(1) {
+  background: var(--c25);
+}
+.pal-ramp span:nth-child(2) {
+  background: var(--c50);
+}
+.pal-ramp span:nth-child(3) {
+  background: var(--c200);
+}
+.pal-ramp span:nth-child(4) {
+  background: var(--c300);
+  color: var(--text-on-accent);
+}
+.pal-ramp span:nth-child(5) {
+  background: var(--c400);
+  color: var(--text-on-accent);
+}
+.pal-ramp span:nth-child(6) {
+  background: var(--c500);
+  color: var(--text-on-accent);
+}
+
+.pal-apply {
+  align-self: flex-start;
+  min-height: 40px;
+  margin-top: 16px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--c500);
+  font: 800 14px var(--font-primary);
+  color: var(--text-on-accent);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.pal-apply:hover {
+  transform: translateY(-1px);
+}
+.pal-apply.is-current {
+  padding-inline: 0;
+  background: none;
+  font: 400 17px var(--font-hand);
+  color: var(--ink-marker);
+  cursor: default;
+  transform: none;
+}
+.pal-apply:focus-visible {
+  outline: 3px solid var(--text-strong);
+  outline-offset: 3px;
+}
+.pal-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+.pal-footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+/* ── Right page: the chips ── */
+
+.pal-chips {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 16px;
+  margin: 0;
+  padding: 0 8px;
+  list-style: none;
+}
+.pal-chips li {
+  margin: 0;
+}
+.pal-chip {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgb(var(--shadow-rgb) / 14%);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 0.25s cubic-bezier(0.3, 1.5, 0.5, 1),
+    box-shadow 0.2s ease;
+}
+.pal-chip:hover {
+  transform: translateY(-3px);
+}
+.pal-chip[aria-pressed='true'] {
+  transform: translateY(-5px);
+}
+/* The chip being previewed (the one in use has the red circle instead) */
+.pal-chip[aria-pressed='true']:not(.is-in-use) {
+  box-shadow:
+    0 0 0 2px var(--text-strong),
+    0 6px 12px rgb(var(--shadow-rgb) / 16%);
+}
+.pal-chip:focus-visible {
+  outline: 3px solid var(--text-strong);
+  outline-offset: 4px;
+}
+/* The colour, with a strip of its lighter tints along the bottom */
+.pal-swatch {
+  position: relative;
+  display: block;
+  height: 64px;
+  background: var(--c300);
+}
+.pal-tints {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  height: 8px;
+}
+.pal-tints i {
+  flex: 1;
+  background: var(--c50);
+}
+.pal-tints i:nth-child(2) {
+  background: var(--c100);
+}
+.pal-tints i:nth-child(3) {
+  background: var(--c200);
+}
+.pal-caption {
+  display: block;
+  padding: 6px 8px 8px;
+  line-height: 1.3;
+}
+.pal-brand {
+  display: block;
+  font: 900 8px var(--font-primary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-strong);
+}
+.pal-code {
+  display: block;
+  font: 700 11px var(--font-primary);
+  color: var(--text-strong);
+}
+.pal-chip-name {
+  display: block;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+/* The red marker loop round the theme in use; draws itself in */
+.pal-circle {
+  position: absolute;
+  inset: -10px -10px -9px -11px;
+  width: calc(100% + 21px);
+  height: calc(100% + 19px);
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+}
+.pal-circle path {
+  fill: none;
+  stroke: var(--ink-marker);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  vector-effect: non-scaling-stroke;
+}
+.pal-chip.is-in-use .pal-circle {
+  opacity: 1;
+}
+.pal-chip.is-in-use .pal-circle path {
+  animation: pal-draw 0.5s ease forwards;
+}
+@keyframes pal-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.pal-slot {
+  display: grid;
+  place-items: center;
+  min-height: 108px;
+  border: 1.5px dashed var(--book-slot);
+  font: 400 15px var(--font-hand);
+  color: var(--text-muted);
+}
+
+/* Phones: one page — title, preview, chips, then Apply */
+@media (max-width: 560px) {
+  .pal-book {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px 8px;
+    background: var(--book-page);
+  }
+  .pal-page {
+    display: contents;
+  }
+  .pal-title {
+    margin-right: 44px;
+  }
+  .pal-intro {
+    margin-bottom: 12px;
+  }
+  .pal-preview {
+    order: 1;
+  }
+  .pal-details {
+    order: 2;
+    margin-top: 10px;
+  }
+  .pal-chips {
+    order: 3;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px 10px;
+    margin-top: 18px;
+    padding: 0 4px;
+  }
+  .pal-apply {
+    order: 4;
+  }
+  .pal-status,
+  .pal-footer {
+    order: 5;
+  }
+  .pal-swatch {
+    height: 44px;
+  }
+  .pal-caption {
+    padding: 5px 6px 6px;
+  }
+  .pal-slot {
+    min-height: 0;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pal-chip,
+  .pal-apply {
+    transition: none;
+  }
+  .pal-chip:hover,
+  .pal-chip[aria-pressed='true'],
+  .pal-apply:hover {
+    transform: none;
+  }
+  .pal-chip.is-in-use .pal-circle path {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

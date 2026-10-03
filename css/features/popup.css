@@ -111,7 +111,8 @@ html:has(.popup[open]) {
 }
 
 /* Popups with their own visible title keep the real one for screen readers only */
-.popup:is([data-popup='side-quests'], [data-popup='off-the-clock']) .popup-title {
+.popup:is([data-popup='side-quests'], [data-popup='off-the-clock'], [data-popup='palette'])
+  .popup-title {
   position: absolute;
   width: 1px;
   height: 1px;
