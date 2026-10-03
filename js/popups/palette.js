@@ -58,7 +58,7 @@ POPUP_RENDERERS.palette = function (popup) {
   });
   details.append(name, shades);
 
-  const apply = popupEl('button', '', 'paper-tag pal-apply');
+  const apply = popupEl('button', '', 'pal-apply');
   apply.type = 'button';
   const status = popupEl('p', '', 'pal-status');
   status.setAttribute('aria-live', 'polite');

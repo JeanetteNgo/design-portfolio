@@ -140,49 +140,45 @@
   color: var(--text-on-accent);
 }
 
-/* Apply: a full-width paper tag (.paper-tag in components.css, without its tilt) whose
-   pin is the previewed colour */
+/* Apply: a round paper sticker like the × (popups/paper.css), its dashed ring and dot in
+   the previewed colour */
 .pal-apply {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 100%;
   min-height: 48px;
   margin-top: 28px;
-  padding: 10px 34px;
-  text-align: center;
-  transform: none;
-  border: 0;
-  border-radius: 6px;
-  background: var(--surface);
+  padding: 10px 24px;
+  border: 2px dashed color-mix(in srgb, var(--c400) 55%, transparent);
+  border-radius: 999px;
+  background: var(--paper-bg);
   font: 700 14px var(--font-secondary);
+  color: var(--text-strong);
   cursor: pointer;
-  box-shadow:
-    0 2px 0 rgb(var(--shadow-rgb) / 6%),
-    0 4px 12px rgb(var(--shadow-rgb) / 10%);
   transition:
-    transform 0.2s cubic-bezier(0.3, 1.5, 0.5, 1),
-    box-shadow 0.2s ease;
+    border-color 0.15s ease,
+    background-color 0.15s ease;
 }
 .pal-apply::before {
-  left: 14px;
+  content: '';
   width: 10px;
   height: 10px;
-  margin-top: -5px;
+  border-radius: 50%;
   background: var(--c400);
-  box-shadow: inset 0 -2px 0 rgb(var(--shadow-rgb) / 15%);
 }
 .pal-apply:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 3px 0 rgb(var(--shadow-rgb) / 6%),
-    0 8px 16px rgb(var(--shadow-rgb) / 12%);
+  border-color: var(--c500);
+  background: color-mix(in srgb, var(--c400) 8%, var(--paper-bg));
 }
-/* Already in use: a handwritten note in the same space, instead of a tag */
+/* Already in use: a handwritten note in the same space, instead of a sticker */
 .pal-apply.is-current {
+  border-color: transparent;
   background: none;
-  box-shadow: none;
   font: 400 17px var(--font-hand);
   color: var(--ink-brown-soft);
   cursor: default;
-  transform: none;
 }
 .pal-apply.is-current::before {
   display: none;
@@ -377,9 +373,7 @@
     transition: none;
   }
   .pal-chip:hover,
-  .pal-chip[aria-pressed='true'],
-  .pal-apply:hover,
-  .pal-apply:active {
+  .pal-chip[aria-pressed='true'] {
     transform: none;
   }
   .pal-chip.is-in-use .pal-circle path {
