@@ -3,7 +3,7 @@
 Paste or save this in the repo (e.g. `HANDOFF.md`) and tell Claude Code:
 "Read HANDOFF.md. Start with Step 1 (the dock strip). Work in small steps, explain what you change, and don't touch anything outside the listed files."
 
-## 0. Where things stand (updated 2026-10-01)
+## 0. Where things stand (updated 2026-10-03)
 
 Sections 3 and 4 below describe the original plan. What is actually built differs in places:
 
@@ -23,15 +23,16 @@ Sections 3 and 4 below describe the original plan. What is actually built differ
     - **Covers:** list songs and books by title, run `node scripts/fetch-covers.mjs` (dry run), then `--yes`. It saves covers to `img/music/` and `img/books/` and fills in `image`, `alt` and `preview` (iTunes Search API for music, Open Library for books; the credited artist always replaces the typed one).
     - It replaced the separate Doodles and Gallery popups; their dock icons (`img/dock/doodles.svg`, `gallery.svg`) are kept unused.
   - **Map** (`js/popups/map.js`, `css/features/popups/map.css`, `data/places.js`): fixed-height (580px on desktop) worn-chart popup with an interactive canvas globe (drag, pinch, trackpad, keys, +/−, auto-spin that resumes after 6s idle) beside a "Based in" banner and passport stamps (six muted inks, latest year only). Choosing a place shows it as a postcard. Places use `lat`/`lng` on the capital, plus optional `when`, `cities`, `note`, `photo`. `img/map/chart.svg` is the faint compass rose; the world outline `data/land.json` and `js/vendor/d3-geo.min.js` load only when the Map opens.
-  - **Palette:** waits for the theme system; not built.
+  - **Palette** (`js/popups/palette.js`, `css/features/popups/palette.css`; the chips are `POPUPS.palette.themes`): the card is an open colour-chip book. The right page has a Pantone-style chip per theme; clicking one previews it on the left page (a mini home page, its shades) without changing the site, and Apply switches the theme. The theme in use is circled in red marker. On phones the book is one page.
+- **Colour themes:** Salmon (default), Sage, Lavender, Sky, Butter. `js/theme.js` is loaded in every page's `<head>` before the stylesheets: it puts the saved theme (`localStorage.theme`) on `<html data-theme>` so there's no flash, and defines `setTheme(id)`. `css/themes.css` (after `tokens.css` on every page) re-points the accent ramp and the pale salmon-tinted surfaces per theme. The nav logo is painted in `--accent-400` through a mask, so it follows too. To add a theme: a Layer 1 ramp in `tokens.css`, a block in `themes.css`, a line in `POPUPS.palette.themes`. Keep each theme's 400/500 at least as readable as Salmon's.
 - **Tidy pass: done** (2026-10-01): `js/dock.js` renamed `js/popup.js`; comments across the code cut to short, necessary ones (only write comments that explain how something works, not small tweaks); `.DS_Store` untracked; `.prettierrc` has a narrow print width for `data/places.js` only. Don't run Prettier on `js/render-projects.js` or `data/doodles.js`.
-- **Next:** Palette (after the theme system); real photos for Interests; a one-line take for each book; real doodles, then remove `soon: true`; push and tag `v4.1.0`. Real dock icons still to be exported from Figma into `img/dock/` (same file names).
+- **Next:** real photos for Interests; a one-line take for each book; real doodles, then remove `soon: true`; push and tag `v4.1.0`. Real dock icons still to be exported from Figma into `img/dock/` (same file names).
 
 ## 1. About me and how to work with me
 
 - Jeanette, UI/UX designer in Singapore. Little coding knowledge, so explain changes plainly and keep steps small.
 - Preferences: surgical, scoped CSS (no broad overrides), no CSS duplication (reuse classes, add variants only when needed), centralised data registries with thin HTML shells, accessibility and mobile-friendliness, fast pages, relative paths (never leading-slash paths).
-- Salmon palette only for now. Do NOT add dark mode or extra palettes yet (the token system is ready for them later).
+- Light colour themes only (picked in the Palette popup). Do NOT add dark mode yet.
 - Tools: VS Code (Live Server on port 5500), GitHub Desktop on a Mac, Prettier. Commit in small, separate commits ("Refactor css", "Stop tracking .DS_Store", etc.).
 
 ## 2. The site
@@ -42,7 +43,7 @@ Sections 3 and 4 below describe the original plan. What is actually built differ
 - Pages: `<body data-page="home|projects|about">`. `js/site-shell.js` renders the nav and footer from `data/site.js`. Project cards are rendered by `js/render-projects.js` from `data/projects.js` (home: "Selected Works"; Projects page: a timeline by year).
 - Home page (`index.html`): `nav#site-nav`, then `.home-top` holding the sparkle layer, `header.home-page-header` (pinned photo `img/profile/dp_2.jpeg`, "Hi! I am Jeanette.", "I dabble in design") and `section.dock-strip` (the six dock buttons). Below it `main.featured-projects`, then `footer#site-footer`, then the popup `<dialog>` and the scripts. The old fact list (`div.about`) moved into the popups.
 - CSS: one file per concern. `css/tokens.css` holds the tokens, `base.css`, `layout.css` (nav, footer), `components.css` (project card, paper tag), `pages/` (`home`, `projects`, `about`, `case-study`), `features/` (`dock`, `sparkles`, `popup`, `popups/<name>`).
-  - Layer 1 palette: `--neutral-*`, `--salmon-*`, `--salmon-rgb`. Layer 2 roles (components use only these): `--accent-*`, `--accent-a8…a50` (translucent tints), `--text-*`, `--surface-*`, `--shadow-*`, fonts, and the dock, paper, ink, pencil, map and sparkle groups. Legacy aliases are kept at the bottom.
+  - Layer 1 palette: `--neutral-*`, plus a 25–500 ramp and `-rgb` per theme (`--salmon-*`, `--sage-*`, `--lavender-*`, `--sky-*`, `--butter-*`). Layer 2 roles (components use only these): `--accent-*`, `--accent-a8…a50` (translucent tints), `--text-*`, `--surface-*`, `--shadow-*`, fonts, and the dock, paper, ink, pencil, map and sparkle groups. Legacy aliases are kept at the bottom.
   - Rule: no raw hex/rgb outside `:root`. New colours become new role tokens.
 - Known contrast issues (left as-is on purpose): headings salmon-400 on pale pink about 2.5:1 (large text needs 3:1); inactive nav links about 1.7:1; white on salmon-400 (tags, CTA) about 2.7:1. Fix later via `--text-accent`/`--text-heading` pointing at `--accent-500` (about 3.1:1) plus a darker shade for small text.
 - Known bug: `gap: -20px` in `.timeline-group` (`css/pages/projects.css`) is invalid.
