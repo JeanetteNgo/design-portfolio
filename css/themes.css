@@ -25,7 +25,7 @@
   --surface-glass: #fcfdfc90;
   --surface-glass-soft: #fcfdfc60;
   --nav-bg: #f2f7f2aa;
-  --dock-tile-b: #fbe6df;
+  --dock-tile-b: #fcefeb;
   --sparkle-b: #f4b3a3;
 }
 
@@ -65,7 +65,7 @@
   --surface-glass: #fcfdfe90;
   --surface-glass-soft: #fcfdfe60;
   --nav-bg: #f1f7fbaa;
-  --dock-tile-b: #ffe7d6;
+  --dock-tile-b: #fff0e6;
   --sparkle-b: #ffbe94;
 }
 
@@ -85,7 +85,7 @@
   --surface-glass: #fffefb90;
   --surface-glass-soft: #fffefb60;
   --nav-bg: #fffaebaa;
-  --dock-tile-b: #fde3e3;
+  --dock-tile-b: #fdeeee;
   --sparkle-b: #f7a8b0;
   --map-pin: #f4a3a3; /* butter pins would match the yellow home pin */
 }
@@ -110,6 +110,6 @@
   --surface-glass: #fefdfa90;
   --surface-glass-soft: #fefdfa60;
   --nav-bg: #faf8f4aa;
-  --dock-tile-b: #e3eedf;
+  --dock-tile-b: #edf3ea;
   --sparkle-b: #b5d3a8;
 }
