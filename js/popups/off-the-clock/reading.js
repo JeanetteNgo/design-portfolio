@@ -55,8 +55,9 @@ OFF_CLOCK_SECTIONS.push({
     return {
       preview: first,
       view: scroll,
-      note: [LEAD[books[0].status] || 'on my shelf', books[0].title.split(':')[0]],
+      note: [LEAD[books[0].status] || 'on my shelf', books[0].title],
       count: BOOKS.length,
+      shown: 1,
       noun: 'books',
     };
   },

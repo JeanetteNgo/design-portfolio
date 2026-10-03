@@ -198,7 +198,7 @@
 }
 
 /* The handwritten note: a title with a little arrow pointing up at the clipping, a short
-   subtitle, and a red "see all →" link. It can be wider than its picture (spills evenly). */
+   subtitle, and a red "+N more" link with a faint squiggle. It can be wider than its picture (spills evenly). */
 .otc-spot-note {
   display: flex;
   flex: 1;
@@ -235,7 +235,7 @@
   -webkit-line-clamp: 2;
   line-clamp: 2;
   font-size: 15px;
-  color: var(--text-body);
+  color: color-mix(in srgb, var(--ink-brown) 62%, var(--paper-bg));
 }
 .otc-spot-more {
   margin-top: auto;
@@ -245,6 +245,9 @@
   background: none;
   font: 400 16px var(--font-hand);
   color: var(--ink-red);
+  text-decoration: underline wavy rgb(var(--accent-rgb) / 35%);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
   cursor: pointer;
   transition: translate 0.25s ease;
 }

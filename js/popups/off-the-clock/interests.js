@@ -51,11 +51,10 @@ OFF_CLOCK_SECTIONS.push({
       view: scroll,
       note: [
         'things that make me happy',
-        `${INTERESTS.slice(0, 2)
-          .map((item) => item.title.toLowerCase())
-          .join(', ')}…`,
+        `${top.map((item) => item.title.toLowerCase()).join(', ')}…`,
       ],
       count: INTERESTS.length,
+      shown: top.length,
       noun: 'interests',
     };
   },
