@@ -171,7 +171,14 @@ footer .copyright {
     padding: 0;
     margin-bottom: 20px;
   }
+  .footer-cta {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0;
+  }
   .cta-button {
+    min-width: 180px;
+    text-align: center;
     font-size: 14px;
     margin: 8px;
   }
