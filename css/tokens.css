@@ -172,6 +172,7 @@
   /* Pencils (the Tools popup's pen holder). Fixed colours, so the illustration looks the same
      in every theme */
   --ink-brown: #4a2e25;
+  --ink-brown-soft: color-mix(in srgb, var(--ink-brown) 62%, var(--paper-bg)); /* lighter pen notes */
   --sticker-ring-brown: rgba(166, 129, 100, 0.5);
   --pencil-wood: #f3d9b1;
   --pencil-a: #ffd36e;

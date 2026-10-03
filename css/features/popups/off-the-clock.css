@@ -236,7 +236,7 @@
   line-clamp: 2;
   margin-top: 4px;
   font-size: 15px;
-  color: color-mix(in srgb, var(--ink-brown) 62%, var(--paper-bg));
+  color: var(--ink-brown-soft);
 }
 .otc-spot-more {
   margin-top: auto;
