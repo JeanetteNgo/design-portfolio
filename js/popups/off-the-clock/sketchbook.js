@@ -1,12 +1,13 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK: DOODLES
    Loose doodles on a notebook page, from DOODLES (data/doodles.js). Click one to open it
-   larger with its caption; ← or the back tag returns.
+   larger with its caption; ← or the back tag returns. The spot shows the first doodle.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'sketchbook',
   label: 'Doodles',
+  title: 'Doodles',
   soon: true,
   build(shell) {
     const calmMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -73,8 +74,13 @@ OFF_CLOCK_SECTIONS.push({
       grid.appendChild(item);
     });
 
+    const first = popupEl('ul', '', 'otc-spot-items');
+    const firstItem = popupEl('li', '', 'doodle');
+    firstItem.appendChild(_media(DOODLES[0], false));
+    first.appendChild(firstItem);
+
     const scroll = popupEl('div', '', 'popup-scroll');
     scroll.appendChild(grid);
-    return scroll;
+    return { preview: first, view: scroll, more: `${DOODLES.length} doodles` };
   },
 });

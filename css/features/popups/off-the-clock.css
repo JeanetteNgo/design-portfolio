@@ -1,18 +1,19 @@
 /* ══════════════════════════════════════════
    OFF THE CLOCK POPUP
-   A notebook-paper sheet with tabs (general, playlist, books, doodles). Built by
-   js/popups/off-the-clock.js and the sections in js/popups/off-the-clock/. The sheet itself
-   is the shared paper look in paper.css; this adds the torn top, the tabs and the contents.
+   A notebook-paper sheet with a spot per section (likes, playlist, books, doodles), each
+   opening a full view. Built by js/popups/off-the-clock.js and the sections in
+   js/popups/off-the-clock/. The sheet itself is the shared paper look in paper.css; this
+   adds the torn top, the spots and the contents.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='off-the-clock'] .popup-card {
   width: min(100%, 800px);
-  height: min(max(640px, 75dvh), calc(100dvh - 32px)); /* same size on every tab */
+  height: min(max(640px, 75dvh), calc(100dvh - 32px)); /* same size on every view */
   --pad-top: 32px; /* the heading adds 16px of its own */
   --pad-x: 60px;
   --pad-bottom: 36px;
   /* A plain shadow instead of paper.css's filter: a filter on the sheet stops the scroll area
-     from clipping clicks, so scrolled-out covers would sit over the tabs and block them. */
+     from clipping clicks, so scrolled-out covers would sit over the footer and block it. */
   filter: none;
   box-shadow: 0 8px 18px rgb(var(--shadow-rgb) / 18%);
 }
@@ -30,6 +31,9 @@
 .popup[data-popup='off-the-clock'] .popup-scroll {
   padding: 36px var(--pad-x) 72px;
 }
+.popup[data-popup='off-the-clock'] .otc-page {
+  padding-bottom: 24px;
+}
 
 /* ── Heading ── */
 .otc-head {
@@ -46,17 +50,91 @@
   margin: 0;
 }
 
-/* ── Tabs: paper labels; the chosen one turns white, straightens and lifts ── */
-.otc-tabs {
-  flex: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 12px;
-  padding: 24px 6px 16px;
+/* ── The page: a spot per section, side by side (stacked on phones) ── */
+.otc-cover {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 40px 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.otc-tab {
+.otc-spot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+  text-align: center;
+  cursor: pointer;
+}
+.otc-spot-title {
+  margin: 0;
+  font: 400 26px/1 var(--font-hand);
+  color: var(--text-strong);
+}
+.otc-spot-items {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 240px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.otc-spot .record {
+  width: 170px;
+}
+.otc-spot .book {
+  width: 112px;
+}
+.otc-spot .doodle {
+  width: 180px;
+  cursor: inherit;
+}
+/* Likes: three prints in a loose pile that fans out on hover */
+.otc-pile {
+  position: relative;
+  height: 240px;
+}
+.otc-pile li {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 136px;
+  translate: calc(-50% + var(--shift, 0px)) -50%;
+  transition: translate 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.otc-pile li:nth-child(1) {
+  --tilt: -9deg;
+  --shift: -14px;
+}
+.otc-pile li:nth-child(2) {
+  --tilt: 6deg;
+  --shift: 16px;
+}
+.otc-pile li:nth-child(3) {
+  --tilt: -2deg;
+}
+@media (hover: hover) {
+  .otc-spot:hover .otc-pile li:nth-child(1) {
+    --shift: -44px;
+  }
+  .otc-spot:hover .otc-pile li:nth-child(2) {
+    --shift: 46px;
+  }
+  .otc-pile .print:hover {
+    scale: 1;
+    rotate: var(--tilt);
+  }
+}
+
+/* "See all" label: a paper tag with the section's icon, which fills in on hover */
+.otc-spot-open {
   position: relative;
   min-height: 44px;
+  margin-top: auto;
   padding: 0 16px 0 36px;
   border: 0;
   border-radius: 4px;
@@ -74,20 +152,17 @@
     box-shadow 0.25s ease,
     background-color 0.25s ease;
 }
-.otc-tab:nth-child(4n + 1) {
+.otc-spot:nth-child(3n + 1) .otc-spot-open {
   --tilt: -1.5deg;
 }
-.otc-tab:nth-child(4n + 2) {
+.otc-spot:nth-child(3n + 2) .otc-spot-open {
   --tilt: 1deg;
 }
-.otc-tab:nth-child(4n + 3) {
+.otc-spot:nth-child(3n + 3) .otc-spot-open {
   --tilt: -1deg;
 }
-.otc-tab:nth-child(4n + 4) {
-  --tilt: 1.5deg;
-}
-.otc-tab::before {
-  /* Lucide icons (ISC licence) used as a mask; the selected tab swaps to a filled version */
+.otc-spot-open::before {
+  /* Lucide icons (ISC licence) used as a mask; hover swaps to a filled version */
   content: '';
   position: absolute;
   left: 10px;
@@ -96,115 +171,98 @@
   height: 18px;
   margin-top: -9px;
   background: color-mix(in srgb, var(--pencil-wood) 65%, var(--ink-brown));
-  mask: var(--tab-icon) center / contain no-repeat;
+  mask: var(--spot-icon) center / contain no-repeat;
   transition: background-color 0.25s ease;
 }
-.otc-tab[data-section='interests'] {
-  --tab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5'/%3E%3C/svg%3E");
-  --tab-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5' fill='%23000'/%3E%3C/svg%3E");
+.otc-spot[data-section='interests'] {
+  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5'/%3E%3C/svg%3E");
+  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5' fill='%23000'/%3E%3C/svg%3E");
 }
-.otc-tab[data-section='listening'] {
-  --tab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3'/%3E%3C/svg%3E");
-  --tab-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14v-2a9 9 0 0 1 18 0v2'/%3E%3Cpath d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' fill='%23000'/%3E%3Cpath d='M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2z' fill='%23000'/%3E%3C/svg%3E");
+.otc-spot[data-section='listening'] {
+  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3'/%3E%3C/svg%3E");
+  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 14v-2a9 9 0 0 1 18 0v2'/%3E%3Cpath d='M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' fill='%23000'/%3E%3Cpath d='M21 14h-3a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2z' fill='%23000'/%3E%3C/svg%3E");
 }
-.otc-tab[data-section='reading'] {
-  --tab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v16'/%3E%3Cpath d='M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z'/%3E%3C/svg%3E");
-  --tab-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1 1 22 22'%3E%3Cpath d='M2 17V5a2 2 0 0 1 2-2h4a5 5 0 0 1 3.3 1.24v16A5 5 0 0 0 8 19H4a2 2 0 0 1-2-2z'/%3E%3Cpath d='M22 17V5a2 2 0 0 0-2-2h-4a5 5 0 0 0-3.3 1.24v16A5 5 0 0 1 16 19h4a2 2 0 0 0 2-2z'/%3E%3C/svg%3E");
+.otc-spot[data-section='reading'] {
+  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v16'/%3E%3Cpath d='M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z'/%3E%3C/svg%3E");
+  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='1 1 22 22'%3E%3Cpath d='M2 17V5a2 2 0 0 1 2-2h4a5 5 0 0 1 3.3 1.24v16A5 5 0 0 0 8 19H4a2 2 0 0 1-2-2z'/%3E%3Cpath d='M22 17V5a2 2 0 0 0-2-2h-4a5 5 0 0 0-3.3 1.24v16A5 5 0 0 1 16 19h4a2 2 0 0 0 2-2z'/%3E%3C/svg%3E");
 }
-.otc-tab[data-section='sketchbook'] {
-  --tab-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.622 17.897-10.68-2.913'/%3E%3Cpath d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/%3E%3Cpath d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/%3E%3C/svg%3E");
-  --tab-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.622 17.897-10.68-2.913'/%3E%3Cpath d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z' fill='%23000'/%3E%3Cpath d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15' fill='%23000'/%3E%3C/svg%3E");
-}
-.otc-tab[aria-selected='true'] {
-  background: var(--surface-faint);
-  box-shadow:
-    0 0 0 1.5px var(--ink-red),
-    2px 4px 8px rgb(var(--shadow-rgb) / 20%);
-  color: var(--text-strong);
-  rotate: 0deg;
-  translate: 0 -2px;
-}
-.otc-tab[aria-selected='true']::before {
-  background: var(--ink-red);
-  mask-image: var(--tab-icon-on);
+.otc-spot[data-section='sketchbook'] {
+  --spot-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.622 17.897-10.68-2.913'/%3E%3Cpath d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z'/%3E%3Cpath d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15'/%3E%3C/svg%3E");
+  --spot-icon-on: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m14.622 17.897-10.68-2.913'/%3E%3Cpath d='M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z' fill='%23000'/%3E%3Cpath d='M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15' fill='%23000'/%3E%3C/svg%3E");
 }
 @media (hover: hover) {
-  .otc-tab[aria-selected='false']:hover {
-    background: color-mix(in srgb, var(--paper-bg) 80%, var(--pencil-wood));
-    rotate: calc(var(--tilt) / 2);
-    translate: 0 -1px;
+  .otc-spot:hover .otc-spot-open {
+    background: var(--surface-faint);
+    box-shadow:
+      0 0 0 1.5px var(--ink-red),
+      2px 4px 8px rgb(var(--shadow-rgb) / 20%);
+    color: var(--text-strong);
+    rotate: 0deg;
+    translate: 0 -2px;
+  }
+  .otc-spot:hover .otc-spot-open::before {
+    background: var(--ink-red);
+    mask-image: var(--spot-icon-on);
   }
 }
-.otc-tab:focus-visible {
+.otc-spot-open:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
 }
-/* Disabled tab with a "Coming Soon!" tag */
-.otc-tab.is-soon {
-  background: color-mix(in srgb, var(--paper-bg) 80%, var(--pencil-wood));
-  color: var(--text-muted);
-  cursor: not-allowed;
-  box-shadow: 0 0 0 0.5px rgb(var(--shadow-rgb) / 10%);
-}
-.otc-tab.is-soon::before {
-  background: color-mix(in srgb, var(--pencil-wood) 60%, var(--paper-bg));
-}
-.otc-tab-tip {
-  position: absolute;
-  bottom: calc(100% + 2px);
-  left: 50%;
-  translate: -50% 4px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: var(--text-strong);
-  font: 700 12px/1.4 var(--font-secondary);
-  white-space: nowrap;
-  color: var(--paper-bg);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.2s ease,
-    translate 0.2s ease;
-}
-.otc-tab.is-soon:hover .otc-tab-tip,
-.otc-tab.is-soon:focus-visible .otc-tab-tip {
-  opacity: 1;
-  translate: -50% 0;
-}
-.otc-panels {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
-.otc-panel:not([hidden]) {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-}
-@media (max-width: 440px) {
-  .otc-tabs {
-    width: 0; /* with min-width, keeps the row's width from stretching the sheet */
-    min-width: 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
+/* Phones: each spot is a row, picture on the left, title and tag on the right */
+@media (max-width: 560px) {
+  .otc-cover {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-  .otc-tab {
-    flex: none;
-    padding: 0 12px 0 32px;
+  .otc-spot {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    grid-template-rows: 1fr auto auto 1fr;
+    gap: 12px 24px;
+    align-items: start;
+    justify-items: start;
+    text-align: left;
   }
-  .otc-tab::before {
-    left: 8px;
+  .otc-spot-items {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    min-height: 0;
   }
-  /* Keeps the tag inside the clipped row */
-  .otc-tab-tip,
-  .otc-tab.is-soon:hover .otc-tab-tip,
-  .otc-tab.is-soon:focus-visible .otc-tab-tip {
-    left: auto;
-    right: 0;
-    translate: 0;
+  .otc-spot-title {
+    grid-row: 2;
+    font-size: 24px;
+    white-space: nowrap;
+  }
+  .otc-spot-open {
+    grid-row: 3;
+    margin-top: 0;
+    white-space: nowrap;
+  }
+  .otc-spot-see,
+  .otc-spot :is(.record-title, .record-artist) {
+    display: none;
+  }
+  .otc-pile {
+    height: 150px;
+  }
+  .otc-pile li {
+    width: 88px;
+  }
+  .otc-pile li:nth-child(1) {
+    --shift: -10px;
+  }
+  .otc-pile li:nth-child(2) {
+    --shift: 10px;
+  }
+  .otc-spot .record {
+    width: 128px;
+  }
+  .otc-spot .book {
+    width: 88px;
+  }
+  .otc-spot .doodle {
+    width: 128px;
   }
 }
 
@@ -768,9 +826,9 @@
   .record-title {
     transition: none;
   }
-  .otc-tab,
-  .otc-tab::before,
-  .otc-tab-tip,
+  .otc-pile li,
+  .otc-spot-open,
+  .otc-spot-open::before,
   .record-cover,
   .record-play::before,
   .record-play-icon {

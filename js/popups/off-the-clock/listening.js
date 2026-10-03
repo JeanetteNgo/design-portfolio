@@ -2,13 +2,14 @@
    OFF THE CLOCK: PLAYLIST
    Record sleeves from MUSIC (data/music.js), with a note scribbled under each. A record with a
    preview clip gets a play button; one plays at a time and it stops when the popup closes
-   or the tab changes.
+   or the view changes. The spot shows the first record, and plays too.
 ────────────────────────────────────────────── */
 
 OFF_CLOCK_SECTIONS.push({
   id: 'listening',
   label: 'Playlist',
-  build() {
+  title: 'On repeat',
+  build(shell) {
     const audio = new Audio();
     audio.preload = 'none'; // nothing downloads until someone presses play
     let playing = null; // { button, item } for the record that is playing
@@ -36,8 +37,7 @@ OFF_CLOCK_SECTIONS.push({
       item.classList.add('is-playing', 'has-played');
     }
 
-    const shelf = popupEl('ul', '', 'record-shelf');
-    MUSIC.forEach((record) => {
+    function _record(record) {
       const item = popupEl('li', '', 'record');
       const art = popupEl('span', '', 'record-art');
       const sleeve = popupEl('span', '', 'record-sleeve');
@@ -73,17 +73,18 @@ OFF_CLOCK_SECTIONS.push({
         popupEl('span', record.artist, 'record-artist')
       );
       if (record.note) item.appendChild(popupEl('span', record.note, 'record-note'));
-      shelf.appendChild(item);
-    });
+      return item;
+    }
 
-    // Stop when the popup closes or another tab is chosen
-    popupOnClose(_stop);
-    document
-      .getElementById('popup')
-      .addEventListener('click', (e) => e.target.closest('.otc-tab') && _stop());
+    const shelf = popupEl('ul', '', 'record-shelf');
+    MUSIC.forEach((record) => shelf.appendChild(_record(record)));
+    const first = popupEl('ul', '', 'otc-spot-items');
+    first.appendChild(_record(MUSIC[0]));
+
+    shell.onChange(_stop);
 
     const scroll = popupEl('div', '', 'popup-scroll');
     scroll.appendChild(shelf);
-    return scroll;
+    return { preview: first, view: scroll, more: `${MUSIC.length} songs` };
   },
 });

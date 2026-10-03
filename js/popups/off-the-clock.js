@@ -1,11 +1,14 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK POPUP
-   What I'm into outside work, on a notebook page with tabs. This file is the shell (heading,
-   tabs, the opened view); each tab is a section in js/popups/off-the-clock/ that adds itself:
-     OFF_CLOCK_SECTIONS.push({ id, label, build(shell) { return element; } });
-   Add `soon: true` to show the tab greyed out with a "Coming Soon!" tooltip instead of opening.
-   Tabs appear in the order the section scripts load. A section that opens an item calls
-   shell.open(elements, backLabel, buttonToReturnTo); shell.close() brings the tabs back.
+   What I'm into outside work, on one notebook page: a "spot" per section showing a few
+   highlights, which opens that section's full view (← goes back). This file is the shell;
+   each section is a file in js/popups/off-the-clock/ that adds itself:
+     OFF_CLOCK_SECTIONS.push({ id, label, title, build(shell) {
+       return { preview, view, more };   // spot contents, full view, e.g. '12 songs'
+     } });
+   Add `soon: true` to leave a section off the page. Spots appear in the order the section
+   scripts load. Inside a full view, shell.open(elements, backLabel, buttonToReturnTo) opens
+   an item; shell.onChange(fn) runs fn whenever the view changes (e.g. to stop audio).
    Styles: css/features/popups/off-the-clock.css.
 ────────────────────────────────────────────── */
 
@@ -15,29 +18,49 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   const mainView = popupEl('div', '', 'popup-view');
   const detailView = popupEl('div', '', 'popup-view otc-detail');
   detailView.hidden = true;
-  let lastButton = null; // so focus can return to the item after it closes
+  const stack = []; // views opened over the page, each { nodes, from }
+  const changeHandlers = [];
 
-  /* ── Opened view ── */
+  // Stop anything playing in the view being left
+  function _leave() {
+    changeHandlers.forEach((fn) => fn());
+    detailView.querySelector('video')?.pause();
+  }
+
+  function _footer(backLabel) {
+    const footer = popupEl('div', '', 'otc-footer');
+    footer.appendChild(popupBackTag(backLabel, shell.close));
+    return footer;
+  }
+
+  function _push(nodes, from) {
+    _leave();
+    stack.push({ nodes, from });
+    detailView.replaceChildren(...nodes);
+    mainView.hidden = true;
+    detailView.hidden = false;
+    detailView.querySelector('.otc-footer button').focus();
+  }
 
   const shell = {
     open(content, backLabel, from) {
       const scroll = popupEl('div', '', 'popup-scroll');
       scroll.append(...content);
-      const back = popupBackTag(backLabel, shell.close);
-      const footer = popupEl('div', '', 'otc-footer');
-      footer.appendChild(back);
-
-      lastButton = from;
-      detailView.replaceChildren(scroll, footer);
-      mainView.hidden = true;
-      detailView.hidden = false;
-      back.focus();
+      _push([scroll, _footer(backLabel)], from);
     },
     close() {
-      detailView.querySelector('video')?.pause();
-      detailView.hidden = true;
-      mainView.hidden = false;
-      lastButton?.focus();
+      _leave();
+      const { from } = stack.pop();
+      if (stack.length) {
+        detailView.replaceChildren(...stack.at(-1).nodes);
+      } else {
+        detailView.hidden = true;
+        mainView.hidden = false;
+      }
+      from?.focus();
+    },
+    onChange(fn) {
+      changeHandlers.push(fn);
     },
   };
 
@@ -50,71 +73,37 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   head.appendChild(title);
   if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
 
-  /* ── Tabs ── */
+  /* ── The page: one spot per section ── */
 
-  const tabs = popupEl('div', '', 'otc-tabs');
-  tabs.setAttribute('role', 'tablist');
-  tabs.setAttribute('aria-label', 'Off the clock');
-  const panels = popupEl('div', '', 'otc-panels');
-  const parts = [];
-  OFF_CLOCK_SECTIONS.forEach((section) => {
-    const tab = popupEl('button', section.label, 'otc-tab');
-    tab.type = 'button';
-    tab.id = `otc-tab-${section.id}`;
-    tab.dataset.section = section.id;
-    tab.setAttribute('role', 'tab');
-    tabs.appendChild(tab);
+  const cover = popupEl('ul', '', 'otc-cover');
+  OFF_CLOCK_SECTIONS.filter((section) => !section.soon).forEach((section) => {
+    const { preview, view, more } = section.build(shell);
+    const spot = popupEl('li', '', 'otc-spot');
+    spot.dataset.section = section.id;
 
-    if (section.soon) {
-      tab.classList.add('is-soon');
-      tab.setAttribute('aria-disabled', 'true');
-      tab.setAttribute('aria-label', `${section.label}, coming soon`);
-      tab.tabIndex = -1;
-      tab.appendChild(popupEl('span', 'Coming Soon!', 'otc-tab-tip'));
-      return;
-    }
-
-    tab.setAttribute('aria-controls', `otc-panel-${section.id}`);
-    const panel = popupEl('div', '', 'otc-panel');
-    panel.id = `otc-panel-${section.id}`;
-    panel.setAttribute('role', 'tabpanel');
-    panel.setAttribute('aria-labelledby', tab.id);
-    panel.appendChild(section.build(shell));
-    panels.appendChild(panel);
-    parts.push({ tab, panel });
-  });
-
-  function _select(chosen, focus) {
-    parts.forEach(({ tab, panel }) => {
-      const on = tab === chosen;
-      tab.setAttribute('aria-selected', String(on));
-      tab.tabIndex = on ? 0 : -1;
-      panel.hidden = !on;
+    const open = popupEl('button', '', 'otc-spot-open');
+    open.type = 'button';
+    open.append(popupEl('span', 'See all ', 'otc-spot-see'), `${more} →`);
+    open.addEventListener('click', () => {
+      const viewHead = popupEl('header', '', 'otc-head');
+      viewHead.appendChild(popupEl('h3', section.label, 'otc-title'));
+      _push([viewHead, view, _footer(`back to ${popup.title}`)], open);
     });
-    if (focus) chosen.focus();
-  }
-  parts.forEach(({ tab }) => tab.addEventListener('click', () => _select(tab)));
-  tabs.addEventListener('keydown', (e) => {
-    const step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-    const at = parts.findIndex(({ tab }) => tab === e.target);
-    if (!step || at < 0) {
-      if (e.key === 'Home' || e.key === 'End') {
-        e.preventDefault();
-        _select(parts[e.key === 'Home' ? 0 : parts.length - 1].tab, true);
-      }
-      return;
-    }
-    e.preventDefault();
-    _select(parts[(at + step + parts.length) % parts.length].tab, true);
-  });
-  _select(parts[0].tab);
+    // The whole spot opens it too, except its own buttons (e.g. a record's play)
+    spot.addEventListener('click', (e) => !e.target.closest('button') && open.click());
 
+    spot.append(popupEl('h3', section.title, 'otc-spot-title'), preview, open);
+    cover.appendChild(spot);
+  });
+
+  const scroll = popupEl('div', '', 'popup-scroll otc-page');
+  scroll.appendChild(cover);
   const footer = popupEl('div', '', 'otc-footer');
   footer.appendChild(popupCloseTag());
-  mainView.append(head, tabs, panels, footer);
+  mainView.append(head, scroll, footer);
 
   popupOnLeftKey(() => !detailView.hidden, shell.close);
-  popupOnClose(() => detailView.querySelector('video')?.pause());
+  popupOnClose(_leave);
 
   return [mainView, detailView];
 };
