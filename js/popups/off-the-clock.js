@@ -1,13 +1,13 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK POPUP
-   What I'm into outside work, as a scrapbook page: each section is a taped-in clipping with
-   a handwritten note and a "+N more" link to its full view (← goes back). This file is the
+   What I'm into outside work, as a scrapbook page: each section is a clipping with a
+   handwritten title; clicking either opens its full view (← goes back). This file is the
    shell; each section is a file in js/popups/off-the-clock/ that adds itself:
      OFF_CLOCK_SECTIONS.push({ id, label, build(shell) {
-       return { preview, view, note, count, shown, noun };
+       return { preview, view, note, count, noun };
      } });
-   preview is the clipping, view the full view, note one or two handwritten lines, and
-   count / shown / noun make "+11 more" (read out as "See all 12 songs").
+   preview is the clipping, view the full view, note the title, and count / noun name the
+   title button for screen readers ("See all 12 songs").
    Add `soon: true` to leave a section off the page. Spots appear in the order the section
    scripts load. Inside a full view, shell.open(elements, backLabel, buttonToReturnTo) opens
    an item; shell.onChange(fn) runs fn whenever the view changes (e.g. to stop audio).
@@ -75,35 +75,29 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
   head.appendChild(title);
   if (popup.intro) head.appendChild(popupEl('p', popup.intro, 'popup-intro'));
 
-  /* ── The page: a taped-in clipping per section, with a handwritten note ── */
+  /* ── The page: a clipping per section, with a handwritten title ── */
 
   const cover = popupEl('ul', '', 'otc-cover');
   OFF_CLOCK_SECTIONS.filter((section) => !section.soon).forEach((section) => {
-    const { preview, view, note, count, shown, noun } = section.build(shell);
+    const { preview, view, note, count, noun } = section.build(shell);
     const spot = popupEl('li', '', 'otc-spot');
     spot.dataset.section = section.id;
 
     const clip = popupEl('div', '', 'otc-clip');
     clip.appendChild(preview);
 
-    const notes = popupEl('div', '', 'otc-spot-note');
-    const [lead, detail] = note;
-    notes.appendChild(popupEl('p', lead, 'otc-note-lead'));
-    if (detail) notes.appendChild(popupEl('p', detail, 'otc-note-detail'));
-
-    const more = popupEl('button', `+${count - shown} more →`, 'otc-spot-more');
-    more.type = 'button';
-    more.setAttribute('aria-label', `See all ${count} ${noun}`);
-    more.addEventListener('click', () => {
+    const opener = popupEl('button', note, 'otc-spot-title');
+    opener.type = 'button';
+    opener.setAttribute('aria-label', `See all ${count} ${noun}`);
+    opener.addEventListener('click', () => {
       const viewHead = popupEl('header', '', 'otc-head');
       viewHead.appendChild(popupEl('h3', section.label, 'otc-title'));
-      _push([viewHead, view, _footer(`back to ${popup.title}`)], more);
+      _push([viewHead, view, _footer(`back to ${popup.title}`)], opener);
     });
-    notes.appendChild(more);
     // The whole spot opens it too, except its own buttons (e.g. a record's play)
-    spot.addEventListener('click', (e) => !e.target.closest('button') && more.click());
+    spot.addEventListener('click', (e) => !e.target.closest('button') && opener.click());
 
-    spot.append(clip, notes);
+    spot.append(clip, opener);
     cover.appendChild(spot);
   });
 

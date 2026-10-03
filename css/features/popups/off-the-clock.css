@@ -97,7 +97,7 @@
   transition: rotate 0.3s ease;
 }
 .otc-spot .record {
-  width: 168px;
+  width: 200px;
   --clip-tilt: -2deg;
 }
 .otc-spot .book {
@@ -111,34 +111,6 @@
 /* The note says what it is, so the cover's own labels go */
 .otc-spot :is(.record-title, .record-artist, .record-note, .book-status) {
   display: none;
-}
-
-/* Washi tape holding each clipping, in the dock's tape patterns */
-.otc-spot-items:not(.otc-pile) > li::after,
-.otc-pile li:last-child::after {
-  content: '';
-  position: absolute;
-  z-index: 3;
-  top: -10px;
-  left: 50%;
-  width: 64px;
-  height: 20px;
-  translate: -50% 0;
-  rotate: -4deg;
-  background: repeating-linear-gradient(
-    45deg,
-    var(--dock-tile-b) 0 6px,
-    var(--surface-faint) 6px 12px
-  );
-  box-shadow: 0 1px 3px rgb(var(--shadow-rgb) / 18%);
-  opacity: 0.92;
-}
-.otc-spot:nth-child(2n) .otc-spot-items > li::after {
-  rotate: 5deg;
-  background:
-    linear-gradient(90deg, var(--accent-a8) 50%, transparent 50%) 0 0 / 8px 8px,
-    linear-gradient(var(--accent-a8) 50%, transparent 50%) 0 0 / 8px 8px,
-    var(--surface-band);
 }
 
 /* Interests: three prints in a loose pile that fans out on hover */
@@ -187,26 +159,23 @@
   }
 }
 
-/* The handwritten note, with a little arrow pointing up at the clipping */
-.otc-spot-note {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
+/* The handwritten title, with a little arrow pointing up at the clipping. It's the button
+   that opens the full view; underlined on hover and focus. */
+.otc-spot-title {
   max-width: 230px;
-  margin-top: 18px;
-}
-.otc-note-lead,
-.otc-note-detail {
-  margin: 0;
+  margin-top: 16px;
+  padding: 4px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
   font: 400 18px/1.3 var(--font-hand);
-  text-wrap: balance;
-  color: var(--ink-brown);
-}
-.otc-note-lead {
   text-wrap: pretty;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1px;
+  color: var(--ink-brown);
+  cursor: pointer;
 }
-.otc-note-lead::before {
+.otc-spot-title::before {
   content: '';
   display: inline-block;
   width: 20px;
@@ -218,28 +187,17 @@
   mask: var(--arrow) center / contain no-repeat;
   --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 20c-7 1-13-3-15-14'/%3E%3Cpath d='M2 9l4-5 4 4'/%3E%3C/svg%3E");
 }
-.otc-note-detail {
-  margin-bottom: 2px;
-  font-size: 15px;
-  color: var(--text-body);
+@media (hover: hover) {
+  .otc-spot:hover .otc-spot-title {
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+  }
 }
-/* "+11 more →": a scribbled link, still a button */
-.otc-spot-more {
-  margin-top: auto;
-  padding: 10px 4px;
-  border: 0;
-  background: none;
-  font: 400 16px var(--font-hand);
-  color: var(--ink-red);
-  text-decoration: underline wavy;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 5px;
-  cursor: pointer;
-}
-.otc-spot-more:focus-visible {
+.otc-spot-title:focus-visible {
   outline: 3px solid var(--accent-500);
   outline-offset: 2px;
-  border-radius: 4px;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
 }
 
 /* Phones: each clipping is a row, picture on the left and its note on the right */
@@ -256,23 +214,17 @@
     text-align: left;
   }
   .otc-clip {
-    height: 150px;
+    height: 136px;
   }
-  .otc-spot-note {
-    align-items: flex-start;
+  .otc-spot-title {
+    justify-self: start;
     margin-top: 0;
-  }
-  .otc-note-lead {
-    font-size: 16px;
-  }
-  .otc-note-lead::before {
-    rotate: -50deg; /* points left, at the clipping */
-  }
-  .otc-note-detail {
-    font-size: 14px;
-  }
-  .otc-spot-more {
     padding-left: 0;
+    font-size: 17px;
+    text-align: left;
+  }
+  .otc-spot-title::before {
+    rotate: -50deg; /* points left, at the clipping */
   }
   .otc-pile li {
     width: 80px;
@@ -284,7 +236,7 @@
     --shift: 8px;
   }
   .otc-spot .record {
-    width: 112px;
+    width: 124px;
   }
   .otc-spot .book {
     width: 80px;

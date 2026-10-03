@@ -49,15 +49,14 @@ OFF_CLOCK_SECTIONS.push({
     scroll.appendChild(shelf);
     const LEAD = {
       reading: 'reading now',
-      next: 'up next on my nightstand',
+      next: 'next on my reading list',
       read: 'just finished',
     };
     return {
       preview: first,
       view: scroll,
-      note: [LEAD[books[0].status] || 'on my shelf', books[0].title],
+      note: LEAD[books[0].status] || 'on my shelf',
       count: BOOKS.length,
-      shown: 1,
       noun: 'books',
     };
   },
