@@ -2,11 +2,11 @@
    PALETTE POPUP
    The card is an open colour-chip book (js/popups/palette.js): a kraft cover
    round two textured cream pages with a few page edges showing underneath.
-   Left page: title, the shades of the chip being previewed (dark to light, step
-   and hex), and Apply. Right page: the chips. The × is the paper sticker
+   Left page: title and the chips. Right page: the shades of the chip being
+   previewed (dark to light, step and hex), and Apply. The × is the paper sticker
    (popups/paper.css).
    --c25 … --c500 are set inline to one family's colours (the chip's own, or the
-   one being previewed on the left page). On phones the book is a single page.
+   one being previewed on the right page). On phones the book is a single page.
 ══════════════════════════════════════════ */
 
 .popup[data-popup='palette'] .popup-card {
@@ -79,7 +79,7 @@
   background: rgb(var(--shadow-rgb) / 12%);
 }
 
-/* ── Left page ── */
+/* ── Left page: title and tagline ── */
 
 .pal-title {
   margin: 0;
@@ -90,6 +90,8 @@
   margin: 4px 0 28px;
   font-size: 15px;
 }
+
+/* ── Right page ── */
 
 /* Name, code, then the family's shades as a stack of bands */
 .pal-name {
@@ -138,12 +140,15 @@
   color: var(--text-on-accent);
 }
 
-/* Apply: a paper tag (.paper-tag in components.css) whose pin is the previewed colour */
+/* Apply: a full-width paper tag (.paper-tag in components.css, without its tilt) whose
+   pin is the previewed colour */
 .pal-apply {
-  align-self: flex-start;
-  min-height: 44px;
+  width: 100%;
+  min-height: 48px;
   margin-top: 28px;
-  padding: 10px 20px 10px 34px;
+  padding: 10px 34px;
+  text-align: center;
+  transform: none;
   border: 0;
   border-radius: 6px;
   background: var(--surface);
@@ -165,14 +170,13 @@
   box-shadow: inset 0 -2px 0 rgb(var(--shadow-rgb) / 15%);
 }
 .pal-apply:hover {
-  transform: rotate(0deg) translateY(-2px);
+  transform: translateY(-2px);
   box-shadow:
     0 3px 0 rgb(var(--shadow-rgb) / 6%),
     0 8px 16px rgb(var(--shadow-rgb) / 12%);
 }
-/* Already in use: a handwritten note instead of a tag */
+/* Already in use: a handwritten note in the same space, instead of a tag */
 .pal-apply.is-current {
-  padding-inline: 0;
   background: none;
   box-shadow: none;
   font: 400 17px var(--font-hand);
@@ -200,7 +204,7 @@
   padding-top: 20px;
 }
 
-/* ── Right page: the chips ── */
+/* ── Left page: the chips ── */
 
 .pal-chips {
   display: grid;
@@ -298,15 +302,6 @@
     stroke-dashoffset: 0;
   }
 }
-.pal-slot {
-  display: grid;
-  place-items: center;
-  min-height: 120px;
-  border: 1.5px dashed var(--book-slot);
-  border-radius: 10px;
-  font: 400 15px var(--font-hand);
-  color: var(--text-muted);
-}
 
 /* Phones: one page — title, shades, chips, then Apply */
 @media (max-width: 560px) {
@@ -354,7 +349,6 @@
   }
   .pal-apply {
     order: 3;
-    align-self: flex-start;
   }
   .pal-status,
   .pal-footer {
@@ -372,10 +366,6 @@
     padding: 6px 2px 2px;
   }
   .pal-chip-name {
-    font-size: 13px;
-  }
-  .pal-slot {
-    min-height: 0;
     font-size: 13px;
   }
 }

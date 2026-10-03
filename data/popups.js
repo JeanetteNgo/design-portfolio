@@ -50,6 +50,7 @@ const POPUPS = {
       { id: 'lavender', name: 'Lavender', code: '16-3817' },
       { id: 'sky', name: 'Sky', code: '14-4318' },
       { id: 'butter', name: 'Butter', code: '13-0840' },
+      { id: 'oat', name: 'Oat', code: '13-1008' },
     ],
   },
 };

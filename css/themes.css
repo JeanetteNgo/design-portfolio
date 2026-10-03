@@ -88,3 +88,23 @@
   --dock-tile-b: #fde3e3;
   --sparkle-b: #f7a8b0;
 }
+
+:root[data-theme='oat'] {
+  --accent-25: var(--oat-25);
+  --accent-50: var(--oat-50);
+  --accent-100: var(--oat-100);
+  --accent-200: var(--oat-200);
+  --accent-300: var(--oat-300);
+  --accent-400: var(--oat-400);
+  --accent-500: var(--oat-500);
+  --accent-rgb: var(--oat-rgb);
+  --bg-top: #fbf8f5;
+  --surface-soft: #fbf8f5;
+  --surface-faint: #fefdfb;
+  --surface-band: #f3ede5;
+  --surface-glass: #fefdfb90;
+  --surface-glass-soft: #fefdfb60;
+  --nav-bg: #faf7f3aa;
+  --dock-tile-b: #e3eedf;
+  --sparkle-b: #b5d3a8;
+}

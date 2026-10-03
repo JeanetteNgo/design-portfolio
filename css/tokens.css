@@ -69,6 +69,15 @@
   --butter-500: #b07b0a;
   --butter-rgb: 204 148 23;
 
+  --oat-25: #faf7f3;
+  --oat-50: #f2ece4;
+  --oat-100: #e8dfd3;
+  --oat-200: #cdbca7;
+  --oat-300: #b8a28a;
+  --oat-400: #9a826a;
+  --oat-500: #806a55;
+  --oat-rgb: 154 130 106;
+
   /* ── LAYER 2: ROLES ── */
 
   /* Accent ramp: points at the active palette */
@@ -160,25 +169,25 @@
   --map-stain: rgb(165 115 70 / 14%);
   --map-edge: rgb(150 100 60 / 16%);
 
-  /* Pencils (the Tools popup's pen holder) */
+  /* Pencils (the Tools popup's pen holder). Fixed colours, so the illustration looks the same
+     in every theme */
   --ink-brown: #4a2e25;
   --sticker-ring-brown: rgba(166, 129, 100, 0.5);
   --pencil-wood: #f3d9b1;
   --pencil-a: #ffd36e;
   --pencil-b: #8ec5e8;
-  --pencil-c: var(--accent-300);
+  --pencil-c: var(--salmon-300);
   --pencil-d: #a9d6a0;
   --pencil-light: rgb(255 255 255 / 35%);
   --pencil-shade: rgb(var(--shadow-rgb) / 10%);
-  --pouch: var(--accent-200);
-  --pouch-back: var(--accent-300);
+  --pouch: var(--salmon-200);
+  --pouch-back: var(--salmon-300);
 
   /* Palette popup: the chip book's kraft cover and cream pages, and the red marker that
      circles the theme in use. Fixed, so they look the same in every theme */
   --book-cover: #cdb592;
   --book-page: #fbf8f2;
   --book-page-edge: #e4dccd;
-  --book-slot: #d8cfc0;
   --ink-marker: #e6635b;
 
   /* Red pin head (record labels in the Off the clock popup) */

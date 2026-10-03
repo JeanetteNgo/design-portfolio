@@ -1,8 +1,8 @@
 /* ─────────────────────────────────────────────
    PALETTE POPUP
-   An open colour-chip book. The right page holds a chip per theme
+   An open colour-chip book. The left page holds a chip per theme
    (POPUPS.palette.themes); clicking one shows its shades (step and hex) on the
-   left page, with an Apply button, without touching the site.
+   right page, with an Apply button, without touching the site.
    Apply calls setTheme (js/theme.js), and the theme in use is circled in red.
    Each chip and the shades read a family's own colours from Layer 1 of
    css/tokens.css, so they show true whichever theme is on.
@@ -36,9 +36,9 @@ POPUP_RENDERERS.palette = function (popup) {
     return svg;
   }
 
-  /* ── Left page: title, the previewed family's shades, Apply ── */
+  /* ── Title (left page), then the previewed family's shades and Apply (right page) ── */
 
-  const left = popupEl('div', '', 'pal-page pal-left');
+  const shadePage = popupEl('div', '', 'pal-page pal-right');
   const title = popupEl('p', popup.title, 'pal-title');
   title.setAttribute('aria-hidden', 'true'); // the dialog's hidden title names it
   const intro = popupEl('p', popup.intro, 'popup-intro pal-intro');
@@ -65,9 +65,9 @@ POPUP_RENDERERS.palette = function (popup) {
   const footer = popupEl('div', '', 'popup-footer pal-footer');
   footer.appendChild(popupCloseTag());
 
-  /* ── Right page: the chips ── */
+  /* ── Left page: title and the chips ── */
 
-  const right = popupEl('div', '', 'pal-page pal-right');
+  const chipPage = popupEl('div', '', 'pal-page pal-left');
   const chips = popupEl('ul', '', 'pal-chips');
   const buttons = themes.map((theme) => {
     const li = popupEl('li');
@@ -90,16 +90,13 @@ POPUP_RENDERERS.palette = function (popup) {
     chips.appendChild(li);
     return chip;
   });
-  const slot = popupEl('li', 'more soon…', 'pal-slot');
-  slot.setAttribute('aria-hidden', 'true');
-  chips.appendChild(slot);
 
   /* ── State ── */
 
   function _update() {
     const inUse = currentTheme();
     const theme = themes.find((t) => t.id === previewing);
-    _paint(left, theme.id);
+    _paint(shadePage, theme.id);
     name.replaceChildren(popupEl('strong', theme.name), popupEl('span', theme.code));
     const root = getComputedStyle(document.documentElement);
     hexes.forEach((hex, i) => {
@@ -136,9 +133,9 @@ POPUP_RENDERERS.palette = function (popup) {
 
   _update();
 
-  left.append(title, intro, details, apply, status, footer);
-  right.appendChild(chips);
+  chipPage.append(title, intro, chips, footer);
+  shadePage.append(details, apply, status);
   const book = popupEl('div', '', 'pal-book');
-  book.append(left, right);
+  book.append(chipPage, shadePage);
   return [book];
 };
