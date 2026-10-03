@@ -49,7 +49,7 @@ OFF_CLOCK_SECTIONS.push({
     scroll.appendChild(shelf);
     const LEAD = {
       reading: 'reading now',
-      next: 'next on my reading list',
+      next: 'next on my list',
       read: 'just finished',
     };
     return {

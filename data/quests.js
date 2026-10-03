@@ -115,6 +115,17 @@ const QUESTS = [
     },
   },
   {
+    title: 'Work on a farm',
+    status: 'done',
+    memory: {
+      date: '[Oct 2024]',
+      description: 'The only type of farming I like.',
+      image: 'img/quests/241018-farm.webp',
+      alt: 'Me on a farm',
+      caption: 'A day in the life of a farm hand',
+    },
+  },
+  {
     title: 'Visit Middle Earth',
     status: 'done',
     memory: {
