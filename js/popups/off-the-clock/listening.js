@@ -87,7 +87,10 @@ OFF_CLOCK_SECTIONS.push({
     return {
       preview: first,
       view: scroll,
-      note: 'on repeat lately',
+      note: [
+        'on repeat lately',
+        `${MUSIC[0].title.replace(/\s*\(.*?\)/g, '')} · ${MUSIC[0].artist}`,
+      ],
       count: MUSIC.length,
       noun: 'songs',
     };

@@ -1,14 +1,14 @@
 /* ─────────────────────────────────────────────
    OFF THE CLOCK POPUP
    What I'm into outside work, as a scrapbook page: each section is a clipping with a
-   handwritten title and a "see all →" tag; clicking the clipping or the tag opens its full
+   handwritten note and a "see all →" link; clicking the clipping or the link opens its full
    view (← goes back). This file is the
    shell; each section is a file in js/popups/off-the-clock/ that adds itself:
      OFF_CLOCK_SECTIONS.push({ id, label, build(shell) {
        return { preview, view, note, count, noun };
      } });
-   preview is the clipping, view the full view, note the title, and count / noun name the
-   tag for screen readers ("See all 12 songs").
+   preview is the clipping, view the full view, note [title, subtitle] (subtitle optional),
+   and count / noun name the link for screen readers ("See all 12 songs").
    Add `soon: true` to leave a section off the page. Spots appear in the order the section
    scripts load. Inside a full view, shell.open(elements, backLabel, buttonToReturnTo) opens
    an item; shell.onChange(fn) runs fn whenever the view changes (e.g. to stop audio).
@@ -98,7 +98,13 @@ POPUP_RENDERERS['off-the-clock'] = function (popup) {
     // The whole spot opens it too, except its own buttons (e.g. a record's play)
     spot.addEventListener('click', (e) => !e.target.closest('button') && more.click());
 
-    spot.append(clip, popupEl('p', note, 'otc-spot-title'), more);
+    const [lead, detail] = note;
+    const notes = popupEl('div', '', 'otc-spot-note');
+    notes.appendChild(popupEl('p', lead, 'otc-note-lead'));
+    if (detail) notes.appendChild(popupEl('p', detail, 'otc-note-detail'));
+    notes.appendChild(more);
+
+    spot.append(clip, notes);
     cover.appendChild(spot);
   });
 

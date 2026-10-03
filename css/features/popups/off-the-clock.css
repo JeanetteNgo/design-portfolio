@@ -197,16 +197,25 @@
   }
 }
 
-/* The handwritten title, with a little arrow pointing up at the clipping */
-.otc-spot-title {
+/* The handwritten note: a title with a little arrow pointing up at the clipping, a short
+   subtitle, and a red "see all →" link. It can be wider than its picture (spills evenly). */
+.otc-spot-note {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
   width: max-content;
-  max-width: 190px;
-  margin: 16px 0 0;
+  max-width: 200px;
+  margin-top: 16px;
+}
+.otc-note-lead,
+.otc-note-detail {
+  margin: 0;
   font: 400 18px/1.3 var(--font-hand);
-  text-wrap: pretty;
+  text-wrap: balance;
   color: var(--ink-brown);
 }
-.otc-spot-title::before {
+.otc-note-lead::before {
   content: '';
   display: inline-block;
   width: 20px;
@@ -218,47 +227,30 @@
   mask: var(--arrow) center / contain no-repeat;
   --arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 20c-7 1-13-3-15-14'/%3E%3Cpath d='M2 9l4-5 4 4'/%3E%3C/svg%3E");
 }
-
-/* "see all →": a small paper tag that straightens and gets a red edge on hover */
+/* At most two lines; the full text is in the full view */
+.otc-note-detail {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  font-size: 15px;
+  color: var(--text-body);
+}
 .otc-spot-more {
-  min-height: 34px;
-  margin-top: 10px;
-  padding: 0 12px;
+  margin-top: auto;
+  padding: 10px 4px 4px;
   border: 0;
   border-radius: 4px;
-  background: color-mix(in srgb, var(--paper-bg) 66%, var(--pencil-wood));
-  box-shadow:
-    0 0 0 0.5px rgb(var(--shadow-rgb) / 10%),
-    1px 2px 3px rgb(var(--shadow-rgb) / 16%);
-  font: 700 13px var(--font-secondary);
-  white-space: nowrap;
-  color: var(--text-body);
-  rotate: var(--tilt, 0deg);
+  background: none;
+  font: 400 16px var(--font-hand);
+  color: var(--ink-red);
   cursor: pointer;
-  transition:
-    rotate 0.25s ease,
-    translate 0.25s ease,
-    box-shadow 0.25s ease,
-    background-color 0.25s ease;
-}
-.otc-spot:nth-child(3n + 1) .otc-spot-more {
-  --tilt: -2deg;
-}
-.otc-spot:nth-child(3n + 2) .otc-spot-more {
-  --tilt: 1.5deg;
-}
-.otc-spot:nth-child(3n + 3) .otc-spot-more {
-  --tilt: -1deg;
+  transition: translate 0.25s ease;
 }
 @media (hover: hover) {
   .otc-spot:hover .otc-spot-more {
-    background: var(--surface-faint);
-    box-shadow:
-      0 0 0 1.5px var(--ink-red),
-      2px 4px 8px rgb(var(--shadow-rgb) / 20%);
-    color: var(--text-strong);
-    rotate: 0deg;
-    translate: 0 -1px;
+    translate: 3px 0;
   }
 }
 .otc-spot-more:focus-visible {
@@ -266,7 +258,7 @@
   outline-offset: 2px;
 }
 
-/* Phones: each clipping is a row, picture on the left, title and tag on the right */
+/* Phones: each clipping is a row, picture on the left and its note on the right */
 @media (max-width: 560px) {
   .otc-cover {
     flex-direction: column;
@@ -290,18 +282,27 @@
     justify-self: center;
     height: 136px;
   }
-  .otc-spot-title {
-    grid-row: 2;
+  .otc-spot-note {
+    grid-row: 2 / 4;
+    align-items: flex-start;
     width: auto;
+    max-width: none;
     margin-top: 0;
-    font-size: 17px;
-    text-wrap: balance;
   }
-  .otc-spot-title::before {
+  .otc-note-lead {
+    font-size: 16px;
+  }
+  .otc-note-lead::before {
     rotate: -50deg; /* points left, at the clipping */
   }
+  .otc-note-detail {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    font-size: 14px;
+  }
   .otc-spot-more {
-    grid-row: 3;
+    margin-top: 0;
+    padding-left: 0;
   }
   .otc-pile {
     width: 112px;

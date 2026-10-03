@@ -83,7 +83,7 @@ OFF_CLOCK_SECTIONS.push({
     return {
       preview: first,
       view: scroll,
-      note: 'fresh from my sketchbook',
+      note: ['fresh from my sketchbook', DOODLES[0].title],
       count: DOODLES.length,
       noun: 'doodles',
     };
