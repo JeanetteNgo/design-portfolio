@@ -90,26 +90,26 @@
   --map-pin: #f4a3a3; /* butter pins would match the yellow home pin */
 }
 
-:root[data-theme='oat'] {
-  --accent-25: var(--oat-25);
-  --accent-50: var(--oat-50);
-  --accent-100: var(--oat-100);
-  --accent-200: var(--oat-200);
-  --accent-300: var(--oat-300);
-  --accent-400: var(--oat-400);
-  --accent-500: var(--oat-500);
-  --accent-rgb: var(--oat-rgb);
-  /* A neutral reads pale at the usual 400, so Oat's text uses its darker shades */
+:root[data-theme='slate'] {
+  --accent-25: var(--slate-25);
+  --accent-50: var(--slate-50);
+  --accent-100: var(--slate-100);
+  --accent-200: var(--slate-200);
+  --accent-300: var(--slate-300);
+  --accent-400: var(--slate-400);
+  --accent-500: var(--slate-500);
+  --accent-rgb: var(--slate-rgb);
+  /* A neutral reads pale at the usual 400, so Slate's text uses its darker shades */
   --text-heading: var(--accent-500);
   --text-accent: var(--accent-500);
   --nav-link: var(--accent-300);
-  --bg-top: #fbf9f5;
-  --surface-soft: #fbf9f5;
-  --surface-faint: #fefdfa;
-  --surface-band: #f3eee6;
-  --surface-glass: #fefdfa90;
-  --surface-glass-soft: #fefdfa60;
-  --nav-bg: #faf8f4aa;
-  --dock-tile-b: #edf3ea;
-  --sparkle-b: #b5d3a8;
+  --bg-top: #f8f9fb;
+  --surface-soft: #f8f9fb;
+  --surface-faint: #fdfdfe;
+  --surface-band: #edf0f4;
+  --surface-glass: #fdfdfe90;
+  --surface-glass-soft: #fdfdfe60;
+  --nav-bg: #f6f7f9aa;
+  --dock-tile-b: #fdf4e3;
+  --sparkle-b: #f5d38a;
 }

@@ -12,7 +12,8 @@
 POPUP_RENDERERS.palette = function (popup) {
   const themes = popup.themes;
   const SHADES = ['25', '50', '100', '200', '300', '400', '500'];
-  let previewing = currentTheme();
+  // A saved theme that no longer exists falls back to Salmon
+  let previewing = themes.some((t) => t.id === currentTheme()) ? currentTheme() : 'salmon';
 
   // Point a set of short vars (--c25 … --c500) at one family's Layer 1 colours
   function _paint(el, id) {
