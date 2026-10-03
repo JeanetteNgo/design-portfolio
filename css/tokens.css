@@ -34,31 +34,31 @@
   --salmon-rgb: 245 115 107; /* = salmon-400, for translucent tints */
 
   --sage-25: #f2f7f2;
-  --sage-50: #e3efe4;
-  --sage-100: #d2e6d4;
-  --sage-200: #a8cdac;
-  --sage-300: #86b98b;
-  --sage-400: #67a36d;
-  --sage-500: #578f5d;
-  --sage-rgb: 103 163 109;
+  --sage-50: #e2f0e3;
+  --sage-100: #d0e8d2;
+  --sage-200: #98cb9e;
+  --sage-300: #81be87;
+  --sage-400: #61a968;
+  --sage-500: #519559;
+  --sage-rgb: 97 169 104;
 
   --lavender-25: #f7f5fb;
-  --lavender-50: #eeeaf7;
-  --lavender-100: #e2dcf1;
-  --lavender-200: #c8bce4;
-  --lavender-300: #ad9fd6;
-  --lavender-400: #9483c4;
-  --lavender-500: #7d6bad;
-  --lavender-rgb: 148 131 196;
+  --lavender-50: #eee9f8;
+  --lavender-100: #e1dbf2;
+  --lavender-200: #c7b9e7;
+  --lavender-300: #ab9cd9;
+  --lavender-400: #927fc8;
+  --lavender-500: #7b67b1;
+  --lavender-rgb: 146 127 200;
 
-  --sky-25: #f1f7fb;
-  --sky-50: #e2eff7;
-  --sky-100: #cfe4f2;
-  --sky-200: #a5cbe5;
-  --sky-300: #7fb3d9;
-  --sky-400: #5c99c9;
-  --sky-500: #4581b3;
-  --sky-rgb: 92 153 201;
+  --sky-25: #f0f7fb;
+  --sky-50: #e1eff8;
+  --sky-100: #cde4f4;
+  --sky-200: #97c6e5;
+  --sky-300: #7bb4de;
+  --sky-400: #579ace;
+  --sky-500: #4082b8;
+  --sky-rgb: 87 154 206;
 
   --butter-25: #fffaeb;
   --butter-50: #fff3d1;
