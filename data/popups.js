@@ -11,7 +11,7 @@
      paper    true = show it on a sheet of notebook paper (optional)
      pencil   (in a Tools group) shorter name to print on that group's pencil (optional)
      themes   (Palette only) the colour chips: id (matches css/themes.css), name, and the
-              made-up code printed on the chip
+              code printed on the chip (the closest real Pantone colour to the chip's swatch)
 ────────────────────────────────────────────── */
 
 const POPUPS = {
@@ -45,12 +45,12 @@ const POPUPS = {
     title: 'Palette',
     intro: "Go on, repaint the deck. I won't mind!",
     themes: [
-      { id: 'salmon', name: 'Salmon', code: '16-1546' },
-      { id: 'sage', name: 'Sage', code: '15-6316' },
-      { id: 'lavender', name: 'Lavender', code: '16-3817' },
-      { id: 'sky', name: 'Sky', code: '14-4318' },
-      { id: 'butter', name: 'Butter', code: '13-0840' },
-      { id: 'slate', name: 'Slate', code: '17-4111' },
+      { id: 'salmon', name: 'Salmon', code: '16-1529' },
+      { id: 'sage', name: 'Sage', code: '14-0127' },
+      { id: 'lavender', name: 'Lavender', code: '16-3823' },
+      { id: 'sky', name: 'Sky', code: '14-4320' },
+      { id: 'butter', name: 'Butter', code: '13-0759' },
+      { id: 'slate', name: 'Slate', code: '15-4008' },
     ],
   },
 };
