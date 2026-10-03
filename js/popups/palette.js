@@ -59,7 +59,7 @@ POPUP_RENDERERS.palette = function (popup) {
   });
   // Small print along the foot, like a paint shop's sample card
   const foot = popupEl('p', '', 'pal-card-foot');
-  foot.append(popupEl('span', 'Sample card'), popupEl('span', 'Matte · Interior'));
+  foot.append(popupEl('span', 'Dries instantly'), popupEl('span', 'No brushes needed'));
   details.append(name, shades, foot);
 
   const apply = popupEl('button', '', 'pal-apply');
