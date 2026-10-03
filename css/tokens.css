@@ -100,7 +100,7 @@
   --accent-a50: rgb(var(--accent-rgb) / 50%);
 
   /* Text */
-  --text-heading: var(--accent-400);
+  --text-heading: var(--accent-500);
   --text-accent: var(--accent-400);
   --text-body: var(--neutral-400);
   --text-muted: var(--neutral-300);

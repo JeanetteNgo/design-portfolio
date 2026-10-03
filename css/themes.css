@@ -99,8 +99,7 @@
   --accent-400: var(--slate-400);
   --accent-500: var(--slate-500);
   --accent-rgb: var(--slate-rgb);
-  /* A neutral reads pale at the usual 400, so Slate's text uses its darker shades */
-  --text-heading: var(--accent-500);
+  /* A neutral reads pale at the usual 400, so Slate's accent text uses its darker shades */
   --text-accent: var(--accent-500);
   --nav-link: var(--accent-300);
   --bg-top: #f8f9fb;
