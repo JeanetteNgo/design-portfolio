@@ -44,7 +44,8 @@ POPUP_RENDERERS.palette = function (popup) {
   title.setAttribute('aria-hidden', 'true'); // the dialog's hidden title names it
   const intro = popupEl('p', popup.intro, 'popup-intro pal-intro');
 
-  // One band per shade, light to dark: its step and hex code (read from tokens.css)
+  // A paint sample card: one band per shade, light to dark, with its step and hex code
+  // (read from tokens.css)
   const details = popupEl('div', '', 'pal-details');
   const name = popupEl('p', '', 'pal-name');
   const shades = popupEl('ul', '', 'pal-shades');
@@ -56,7 +57,10 @@ POPUP_RENDERERS.palette = function (popup) {
     shades.appendChild(band);
     return hex;
   });
-  details.append(name, shades);
+  // Small print along the foot, like a paint shop's sample card
+  const foot = popupEl('p', '', 'pal-card-foot');
+  foot.append(popupEl('span', 'Sample card'), popupEl('span', 'Matte · Interior'));
+  details.append(name, shades, foot);
 
   const apply = popupEl('button', '', 'pal-apply');
   apply.type = 'button';

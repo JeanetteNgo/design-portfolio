@@ -93,7 +93,33 @@
 
 /* ── Right page ── */
 
-/* Name, code, then the family's shades as a stack of bands */
+/* The shades as a paint shop's sample card: a slightly tilted white card with a punched
+   hole, printed name and code, bands of colour with white gutters, and small print below
+   a tear line */
+.pal-details {
+  position: relative;
+  padding: 30px 16px 12px;
+  border-radius: 6px;
+  background: var(--surface);
+  box-shadow:
+    0 1px 0 rgb(var(--shadow-rgb) / 6%),
+    0 3px 6px rgb(var(--shadow-rgb) / 8%),
+    0 12px 22px -8px rgb(var(--shadow-rgb) / 16%);
+  rotate: -1.2deg;
+}
+/* The punched hole it would hang from on a rack */
+.pal-details::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  background: var(--book-page);
+  box-shadow: inset 0 1px 2px rgb(var(--shadow-rgb) / 30%);
+}
 .pal-name {
   display: flex;
   align-items: baseline;
@@ -101,43 +127,59 @@
   margin: 0 0 10px;
 }
 .pal-name strong {
-  font: 800 17px var(--font-primary);
+  font: 800 18px var(--font-primary);
   color: var(--text-strong);
 }
 .pal-name span {
-  font: 700 12px var(--font-secondary);
-  letter-spacing: 0.04em;
+  font: 700 11px var(--font-secondary);
+  letter-spacing: 0.08em;
   color: var(--text-muted);
 }
+.pal-name span::before {
+  content: 'No. ';
+}
 .pal-shades {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgb(var(--shadow-rgb) / 6%);
 }
 .pal-shades li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 38px;
+  height: 36px;
   margin: 0;
-  padding: 0 14px;
-  font: 600 12px var(--font-secondary);
+  padding: 0 12px;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgb(var(--shadow-rgb) / 4%);
+  font: 600 11px var(--font-secondary);
+  letter-spacing: 0.04em;
   color: var(--text-body);
   transition: background-color 0.25s ease;
 }
 .pal-step {
-  font-weight: 700;
+  font-weight: 800;
 }
 .pal-hex {
-  letter-spacing: 0.04em;
   opacity: 0.85;
 }
 /* The two darkest shades take white text */
 .pal-shades li:nth-last-child(-n + 2) {
   color: var(--text-on-accent);
+}
+.pal-card-foot {
+  display: flex;
+  justify-content: space-between;
+  margin: 12px 0 0;
+  padding-top: 9px;
+  border-top: 1.5px dashed rgb(var(--shadow-rgb) / 12%);
+  font: 700 9px var(--font-secondary);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 /* Apply: a round paper sticker like the × (popups/paper.css), its dashed ring and dot in
@@ -157,9 +199,14 @@
   font: 700 14px var(--font-secondary);
   color: var(--text-strong);
   cursor: pointer;
+  box-shadow:
+    0 1px 0 rgb(var(--shadow-rgb) / 5%),
+    0 4px 10px rgb(var(--shadow-rgb) / 8%);
   transition:
     border-color 0.15s ease,
-    background-color 0.15s ease;
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 .pal-apply::before {
   content: '';
@@ -171,6 +218,10 @@
 .pal-apply:hover {
   border-color: var(--c500);
   background: color-mix(in srgb, var(--c400) 8%, var(--paper-bg));
+  box-shadow:
+    0 2px 0 rgb(var(--shadow-rgb) / 5%),
+    0 8px 16px rgb(var(--shadow-rgb) / 10%);
+  transform: translateY(-1px);
 }
 /* Already in use: a handwritten note in the same space, instead of a sticker */
 .pal-apply.is-current {
@@ -179,6 +230,8 @@
   font: 400 17px var(--font-hand);
   color: var(--ink-brown-soft);
   cursor: default;
+  box-shadow: none;
+  transform: none;
 }
 .pal-apply.is-current::before {
   display: none;
@@ -334,8 +387,11 @@
   .pal-details {
     order: 1;
   }
+  .pal-details {
+    rotate: -0.6deg;
+  }
   .pal-shades li {
-    height: 30px;
+    height: 28px;
   }
   .pal-chips {
     order: 2;
@@ -373,7 +429,8 @@
     transition: none;
   }
   .pal-chip:hover,
-  .pal-chip[aria-pressed='true'] {
+  .pal-chip[aria-pressed='true'],
+  .pal-apply:hover {
     transform: none;
   }
   .pal-chip.is-in-use .pal-circle path {
