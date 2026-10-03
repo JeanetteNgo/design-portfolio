@@ -5,8 +5,8 @@
      DESIGN TOKENS
      Layer 1 = PALETTE  (raw colours; defined once, never used directly in components)
      Layer 2 = ROLES    (what each colour is FOR; components only use these)
-     To add a mode or palette later, override Layer 2 only, on the <html> element,
-     e.g. [data-mode="dark"] { ... } and [data-theme="sage"] { ... }.
+     Colour themes (picked in the Palette popup) override Layer 2 only, on
+     <html data-theme="…">: see css/themes.css. Salmon is the default, below.
   ══════════════════════════════════════════ */
 
   /* Font family */
@@ -32,6 +32,42 @@
   --salmon-400: #ff6e65;
   --salmon-500: #e6635b;
   --salmon-rgb: 255 110 101; /* = salmon-400, for translucent tints */
+
+  --sage-25: #f2f7f2;
+  --sage-50: #e3efe4;
+  --sage-100: #d2e6d4;
+  --sage-200: #a8cdac;
+  --sage-300: #86b98b;
+  --sage-400: #67a36d;
+  --sage-500: #578f5d;
+  --sage-rgb: 103 163 109;
+
+  --lavender-25: #f6f3fc;
+  --lavender-50: #ece6fa;
+  --lavender-100: #e0d7f7;
+  --lavender-200: #c2b0ee;
+  --lavender-300: #a991e6;
+  --lavender-400: #9072dc;
+  --lavender-500: #7c5fc7;
+  --lavender-rgb: 144 114 220;
+
+  --sky-25: #f0f7fd;
+  --sky-50: #e0effa;
+  --sky-100: #cfe6f7;
+  --sky-200: #9fcbee;
+  --sky-300: #7bb7e6;
+  --sky-400: #56a2de;
+  --sky-500: #3f8bc6;
+  --sky-rgb: 86 162 222;
+
+  --butter-25: #fffaeb;
+  --butter-50: #fff3d1;
+  --butter-100: #ffebb8;
+  --butter-200: #f2c25c;
+  --butter-300: #e9b53f;
+  --butter-400: #cc9417;
+  --butter-500: #b07b0a;
+  --butter-rgb: 204 148 23;
 
   /* ── LAYER 2: ROLES ── */
 
@@ -136,6 +172,13 @@
   --pencil-shade: rgb(var(--shadow-rgb) / 10%);
   --pouch: var(--accent-200);
   --pouch-back: var(--accent-300);
+
+  /* Palette popup: the chip book's kraft cover and cream pages, and the red marker that
+     circles the theme in use. Fixed, so they look the same in every theme */
+  --book-cover: #cdb592;
+  --book-page: #fbf8f2;
+  --book-slot: #d8cfc0;
+  --ink-marker: #e6635b;
 
   /* Red pin head (record labels in the Off the clock popup) */
   --pin: var(--accent-500);

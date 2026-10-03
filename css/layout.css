@@ -38,6 +38,23 @@ body[data-page='home'] nav:not(.is-scrolled) {
 .nav-container img {
   width: 48px;
 }
+/* The logo is painted in the accent colour through its own shape, so it follows the colour
+   theme; the img underneath stays for its size and alt text */
+.logo {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+.logo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--accent-400);
+  mask: url('../img/logo.svg') center / contain no-repeat;
+}
+.logo img {
+  opacity: 0;
+}
 .nav-links {
   display: flex;
   align-items: center;

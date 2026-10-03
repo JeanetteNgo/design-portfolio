@@ -1,0 +1,81 @@
+/* ══════════════════════════════════════════
+   COLOUR THEMES
+   Picked in the Palette popup; js/theme.js puts the choice on <html data-theme="…">.
+   Each theme points the accent ramp at its Layer 1 colours (css/tokens.css) and
+   re-tints the pale surfaces that are hard-coded for Salmon. Salmon is the default,
+   so it has no block. To add a theme: a Layer 1 ramp, a block here, a line in
+   POPUPS.palette.themes (data/popups.js).
+══════════════════════════════════════════ */
+
+:root[data-theme='sage'] {
+  --accent-25: var(--sage-25);
+  --accent-50: var(--sage-50);
+  --accent-100: var(--sage-100);
+  --accent-200: var(--sage-200);
+  --accent-300: var(--sage-300);
+  --accent-400: var(--sage-400);
+  --accent-500: var(--sage-500);
+  --accent-rgb: var(--sage-rgb);
+  --bg-top: #f4f8f4;
+  --surface-soft: #f4f8f4;
+  --surface-faint: #fcfdfc;
+  --surface-band: #e9f2ea;
+  --surface-glass: #fcfdfc90;
+  --surface-glass-soft: #fcfdfc60;
+  --nav-bg: #f2f7f2aa;
+}
+
+:root[data-theme='lavender'] {
+  --accent-25: var(--lavender-25);
+  --accent-50: var(--lavender-50);
+  --accent-100: var(--lavender-100);
+  --accent-200: var(--lavender-200);
+  --accent-300: var(--lavender-300);
+  --accent-400: var(--lavender-400);
+  --accent-500: var(--lavender-500);
+  --accent-rgb: var(--lavender-rgb);
+  --bg-top: #f8f5fd;
+  --surface-soft: #f8f5fd;
+  --surface-faint: #fdfcff;
+  --surface-band: #f0ebfb;
+  --surface-glass: #fdfcff90;
+  --surface-glass-soft: #fdfcff60;
+  --nav-bg: #f6f3fcaa;
+}
+
+:root[data-theme='sky'] {
+  --accent-25: var(--sky-25);
+  --accent-50: var(--sky-50);
+  --accent-100: var(--sky-100);
+  --accent-200: var(--sky-200);
+  --accent-300: var(--sky-300);
+  --accent-400: var(--sky-400);
+  --accent-500: var(--sky-500);
+  --accent-rgb: var(--sky-rgb);
+  --bg-top: #f3f9fe;
+  --surface-soft: #f3f9fe;
+  --surface-faint: #fcfdff;
+  --surface-band: #e7f2fb;
+  --surface-glass: #fcfdff90;
+  --surface-glass-soft: #fcfdff60;
+  --nav-bg: #f0f7fdaa;
+}
+
+:root[data-theme='butter'] {
+  --accent-25: var(--butter-25);
+  --accent-50: var(--butter-50);
+  --accent-100: var(--butter-100);
+  --accent-200: var(--butter-200);
+  --accent-300: var(--butter-300);
+  --accent-400: var(--butter-400);
+  --accent-500: var(--butter-500);
+  --accent-rgb: var(--butter-rgb);
+  --bg-top: #fffaee;
+  --surface-soft: #fffaee;
+  --surface-faint: #fffefb;
+  --surface-band: #fff3d6;
+  --surface-glass: #fffefb90;
+  --surface-glass-soft: #fffefb60;
+  --nav-bg: #fffaebaa;
+  --dock-tile-b: #fde6d8; /* the default butter tile would match the tiles beside it */
+}
