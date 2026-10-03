@@ -20,6 +20,23 @@
 
 const PROJECTS = [
   /* ── 2026 ─────────────────────────────────── */
+
+  {
+    id: 'asua',
+    title: 'Aureus Trial Booking',
+    description: 'Simplifying trial lesson bookings for aspiring musicians.',
+    year: '2026',
+    cover: 'projects/asua/img/cover.png',
+    coverAlt: 'Aureus Trial Booking cover',
+    tags: ['UI/UX', 'Case Study'],
+    tagOutlines: ['Web'],
+    type: 'disabled',
+    href: 'projects/asua/index.html',
+    note: '✦ Coming soon!',
+    featured: true,
+    featuredOrder: 3,
+  },
+
   // {
   //   id: 'nz-blog',
   //   title: 'NZ Work Holiday Blog',
@@ -37,19 +54,18 @@ const PROJECTS = [
 
   /* ── 2025 ─────────────────────────────────── */
   {
-    id: 'asua',
-    title: 'Aureus Trial Booking',
+    id: 'ala',
+    title: 'Aureus Link',
     description: 'Simplifying trial lesson bookings for aspiring musicians.',
     year: '2025',
     cover: 'projects/asua/img/cover.png',
-    coverAlt: 'Aureus Trial Booking cover',
+    coverAlt: 'Aureus Link cover',
     tags: ['UI/UX', 'Case Study'],
     tagOutlines: ['Web'],
     type: 'disabled',
-    href: 'projects/asua/index.html',
+    href: 'projects/ala/index.html',
     note: '✦ Coming soon!',
-    featured: true,
-    featuredOrder: 3,
+    featured: false,
   },
 
   /* ── 2024 ─────────────────────────────────── */
@@ -66,6 +82,21 @@ const PROJECTS = [
   //   href:         "https://haastrivermotels.github.io/compendium/index.html",
   //   featured:     false,
   // },
+
+  {
+    id: 'ai',
+    title: 'Aureus Interactive',
+    description: 'Simplifying trial lesson bookings for aspiring musicians.',
+    year: '2024',
+    cover: 'projects/asua/img/cover.png',
+    coverAlt: 'Aureus Interactive cover',
+    tags: ['UI/UX', 'Case Study'],
+    tagOutlines: ['Web'],
+    type: 'disabled',
+    href: 'projects/ai/index.html',
+    note: '✦ Coming soon!',
+    featured: false,
+  },
 
   /* ── 2023 ─────────────────────────────────── */
   {
