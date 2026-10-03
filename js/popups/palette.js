@@ -11,7 +11,7 @@
 
 POPUP_RENDERERS.palette = function (popup) {
   const themes = popup.themes;
-  const SHADES = ['500', '400', '300', '200', '100', '50', '25'];
+  const SHADES = ['25', '50', '100', '200', '300', '400', '500'];
   let previewing = currentTheme();
 
   // Point a set of short vars (--c25 … --c500) at one family's Layer 1 colours
@@ -43,7 +43,7 @@ POPUP_RENDERERS.palette = function (popup) {
   title.setAttribute('aria-hidden', 'true'); // the dialog's hidden title names it
   const intro = popupEl('p', popup.intro, 'popup-intro pal-intro');
 
-  // One band per shade, dark to light: its step and hex code (read from tokens.css)
+  // One band per shade, light to dark: its step and hex code (read from tokens.css)
   const details = popupEl('div', '', 'pal-details');
   const name = popupEl('p', '', 'pal-name');
   const shades = popupEl('ul', '', 'pal-shades');

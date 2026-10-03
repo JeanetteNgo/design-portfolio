@@ -3,7 +3,7 @@
    The card is an open colour-chip book (js/popups/palette.js): a kraft cover
    round two textured cream pages with a few page edges showing underneath.
    Left page: title and the chips. Right page: the shades of the chip being
-   previewed (dark to light, step and hex), and Apply. The × is the paper sticker
+   previewed (light to dark, step and hex), and Apply. The × is the paper sticker
    (popups/paper.css).
    --c25 … --c500 are set inline to one family's colours (the chip's own, or the
    one being previewed on the right page). On phones the book is a single page.
@@ -136,7 +136,7 @@
   opacity: 0.85;
 }
 /* The two darkest shades take white text */
-.pal-shades li:nth-child(-n + 2) {
+.pal-shades li:nth-last-child(-n + 2) {
   color: var(--text-on-accent);
 }
 

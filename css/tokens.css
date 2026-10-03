@@ -69,14 +69,14 @@
   --butter-500: #b07b0a;
   --butter-rgb: 204 148 23;
 
-  --oat-25: #faf7f3;
-  --oat-50: #f2ece4;
-  --oat-100: #e8dfd3;
-  --oat-200: #cdbca7;
-  --oat-300: #b8a28a;
-  --oat-400: #9a826a;
-  --oat-500: #806a55;
-  --oat-rgb: 154 130 106;
+  --oat-25: #faf9f6;
+  --oat-50: #f3f1ec;
+  --oat-100: #e8e4dc;
+  --oat-200: #cec5b8;
+  --oat-300: #b5aa9a;
+  --oat-400: #968b7b;
+  --oat-500: #7d7365;
+  --oat-rgb: 150 139 123;
 
   /* ── LAYER 2: ROLES ── */
 
@@ -192,6 +192,9 @@
 
   /* Red pin head (record labels in the Off the clock popup) */
   --pin: var(--accent-500);
+
+  /* Visited pins on the Map globe (the home pin is --pencil-a) */
+  --map-pin: var(--accent-300);
 
   /* Globe (Map popup): water, ice caps and the grid lines over them. Land uses --pencil-d */
   --globe-water: #e3f1f8;

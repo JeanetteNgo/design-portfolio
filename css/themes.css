@@ -87,6 +87,7 @@
   --nav-bg: #fffaebaa;
   --dock-tile-b: #fde3e3;
   --sparkle-b: #f7a8b0;
+  --map-pin: #f4a3a3; /* butter pins would match the yellow home pin */
 }
 
 :root[data-theme='oat'] {
@@ -98,13 +99,13 @@
   --accent-400: var(--oat-400);
   --accent-500: var(--oat-500);
   --accent-rgb: var(--oat-rgb);
-  --bg-top: #fbf8f5;
-  --surface-soft: #fbf8f5;
-  --surface-faint: #fefdfb;
-  --surface-band: #f3ede5;
-  --surface-glass: #fefdfb90;
-  --surface-glass-soft: #fefdfb60;
-  --nav-bg: #faf7f3aa;
+  --bg-top: #fbfaf8;
+  --surface-soft: #fbfaf8;
+  --surface-faint: #fefefc;
+  --surface-band: #f2efea;
+  --surface-glass: #fefefc90;
+  --surface-glass-soft: #fefefc60;
+  --nav-bg: #faf9f6aa;
   --dock-tile-b: #e3eedf;
   --sparkle-b: #b5d3a8;
 }

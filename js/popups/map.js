@@ -157,7 +157,7 @@ POPUP_RENDERERS.map = function (popup) {
         ? css('--pencil-a')
         : place.status === 'next'
           ? css('--paper-bg')
-          : css('--accent-300');
+          : css('--map-pin');
     ctx.fill();
     ctx.strokeStyle = css('--ink-brown');
     ctx.lineWidth = 2.5;
