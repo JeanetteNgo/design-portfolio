@@ -298,9 +298,9 @@
 }
 /* The chip being previewed (the one in use has the red circle instead) */
 .pal-chip[aria-pressed='true']:not(.is-in-use) {
-  border-color: var(--text-strong);
+  border-color: var(--c400);
   box-shadow:
-    0 0 0 1px var(--text-strong),
+    0 0 0 1px var(--c400),
     0 6px 14px rgb(var(--shadow-rgb) / 12%);
 }
 .pal-chip:focus-visible {
