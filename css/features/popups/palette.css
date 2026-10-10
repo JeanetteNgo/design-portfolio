@@ -378,15 +378,24 @@
         transparent calc(50% + 16px)
       ),
       linear-gradient(rgb(255 255 255 / 14%), transparent 40%), var(--book-cover);
+    background-attachment: local; /* the fold scrolls with the book */
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .popup[data-popup='palette'] .popup-body {
+    flex: none;
   }
   /* One page folded across the middle: the title and sample card above the fold, the chips
      below it, then Apply and Esc along the bottom. The two 1fr rows always come out the same
      height (the taller of the card and the chips), and the fixed rows above (20 padding + 32
-     + 48) match those below (52 + 44 + 4 padding), so the rows meet exactly at the fold. */
+     + 48) match those below (52 + 44 + 4 padding), so the rows meet exactly at the fold.
+     The whole card scrolls when it's taller than the screen; Apply and Esc stay stuck to
+     the bottom. */
   .pal-book {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 32px 48px minmax(auto, 1fr) minmax(auto, 1fr) 52px 44px;
+    grid-template-rows: 32px 48px 1fr 1fr 52px 44px;
+    overflow: visible;
     padding: 20px 20px 4px;
     border-radius: 8px;
     background:
@@ -424,7 +433,7 @@
   .pal-details {
     grid-area: 3 / 1;
     align-self: end;
-    margin: 4px 2px 10px;
+    margin: 4px 2px 18px;
     padding: 24px 14px 10px;
     rotate: -0.6deg;
   }
@@ -439,7 +448,7 @@
     font-size: 10px;
   }
   .pal-shades li {
-    height: 22px;
+    height: 28px;
     padding: 0 10px;
     font-weight: 500;
     font-size: 10px;
@@ -449,30 +458,53 @@
     margin-top: 8px;
     padding-top: 7px;
   }
+  /* The chips fill the bottom half, their swatches growing to match the card above */
   .pal-chips {
     grid-area: 4 / 1;
-    align-content: center;
     grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
     gap: 14px 12px;
     margin: 0;
-    padding-top: 18px;
+    padding: 18px 0 16px;
+  }
+  .pal-chips li {
+    display: flex;
+  }
+  .pal-chip {
+    display: flex;
+    flex-direction: column;
+  }
+  .pal-chip .pal-swatch {
+    flex: 1;
+    min-height: 48px;
   }
   .pal-apply {
     grid-area: 5 / 1;
     align-self: start;
+    position: sticky;
+    bottom: 54px;
+    z-index: 2;
     margin: 0;
   }
   .pal-footer {
     grid-area: 6 / 1;
     align-self: end;
+    position: sticky;
+    bottom: 10px;
+    z-index: 1;
     margin: 0;
     padding: 0;
   }
+  /* Page-coloured strip behind the stuck buttons, so the chips scroll away under them */
+  .pal-footer::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -68px -20px -4px;
+    background: linear-gradient(transparent, var(--book-page) 18px);
+  }
   .pal-chip {
     padding: 4px;
-  }
-  .pal-swatch {
-    height: 48px;
   }
   .pal-caption {
     flex-direction: column;
@@ -481,26 +513,6 @@
   }
   .pal-chip-name {
     font-size: 13px;
-  }
-}
-
-/* Shorter phones: slimmer bands, smaller chips, and the sample card drops its small print */
-@media (max-width: 560px) and (max-height: 720px) {
-  .pal-shades li {
-    height: 16px;
-  }
-  .pal-details {
-    margin-bottom: 8px;
-  }
-  .pal-chips {
-    gap: 10px;
-    padding-top: 12px;
-  }
-  .pal-swatch {
-    height: 34px;
-  }
-  .pal-card-foot {
-    display: none;
   }
 }
 
