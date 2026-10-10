@@ -52,6 +52,15 @@ const BOOKS = [
     take: '',
   },
   {
+    title: 'The Subtle Art of Not Giving a F*ck',
+    author: 'Mark Manson',
+    isbn: '9780062457714',
+    status: 'next',
+    image: 'img/books/the-subtle-art-of-not-giving-a-f-ck-mark-manson.jpg',
+    alt: 'Cover of The Subtle Art of Not Giving a F*ck by Mark Manson',
+    take: '',
+  },
+  {
     title: 'Designing Products People Love',
     author: 'Scott Hurff',
     status: 'next',
