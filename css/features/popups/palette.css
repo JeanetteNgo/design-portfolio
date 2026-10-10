@@ -92,7 +92,7 @@
 .pal-title {
   margin: 0;
   font: 800 28px/1.2 var(--font-primary);
-  color: var(--text-heading);
+  color: var(--text-strong);
 }
 .pal-intro {
   margin: 4px 0 28px;
