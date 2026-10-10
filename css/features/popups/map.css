@@ -486,6 +486,11 @@
     0 1px 2px rgb(var(--shadow-rgb) / 14%),
     0 10px 22px rgb(var(--shadow-rgb) / 18%);
   rotate: -1deg;
+  cursor: pointer;
+  transition: translate 0.2s ease;
+}
+.map-postcard:hover {
+  translate: 0 -2px;
 }
 .postcard-message {
   display: flex;
@@ -742,6 +747,12 @@
   }
   .map-stamp:hover {
     rotate: -1.5deg;
+    translate: none;
+  }
+  .map-postcard {
+    transition: none;
+  }
+  .map-postcard:hover {
     translate: none;
   }
 }

@@ -352,6 +352,10 @@ POPUP_RENDERERS.map = function (popup) {
 
     card.append(message, address);
     const back = popupBackTag('back to all places', () => _close(true));
+    // Clicking the card itself flips it away too (unless the click was selecting its text)
+    card.addEventListener('click', () => {
+      if (!getSelection().toString()) _close(true);
+    });
     detailView.replaceChildren(card);
     currentCard = card;
     return back;
@@ -387,10 +391,11 @@ POPUP_RENDERERS.map = function (popup) {
     currentCard
       .animate(
         [
-          { transform: 'none', opacity: 1 },
-          { transform: 'rotateY(90deg) scale(0.96)', opacity: 0 },
+          { transform: 'none' },
+          { transform: 'translateY(-6px) rotateY(45deg) scale(1.02)', offset: 0.45 },
+          { transform: 'translateY(-2px) rotateY(90deg) scale(0.98)' },
         ],
-        { duration: 240, easing: 'ease-in', fill: 'forwards' }
+        { duration: 380, easing: 'cubic-bezier(0.5, 0, 0.75, 0.4)', fill: 'forwards' }
       )
       .finished.then(finish, finish);
   }
