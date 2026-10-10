@@ -464,13 +464,13 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 14px 12px;
     margin: 0;
-    padding: 18px 0 16px;
+    padding: 26px 0 16px;
   }
   .pal-apply {
     grid-area: 5 / 1;
     align-self: start;
     position: sticky;
-    bottom: 54px;
+    bottom: 48px;
     z-index: 2;
     margin: 0;
   }
@@ -478,18 +478,30 @@
     grid-area: 6 / 1;
     align-self: end;
     position: sticky;
-    bottom: 10px;
+    bottom: 4px; /* plus the card's 10px padding: exactly where the page ends when scrolled down */
     z-index: 1;
     margin: 0;
     padding: 0;
   }
-  /* Page-coloured strip behind the stuck buttons, so the chips scroll away under them */
+  /* The stuck buttons carry the page's bottom edge with them: a strip of page (::before)
+     the chips scroll away under, cut off cleanly like other popups' footers, and a strip of
+     cover below it (::after) so the page never runs into the cover's margin */
   .pal-footer::before {
     content: '';
     position: absolute;
     z-index: -1;
     inset: -68px -20px -4px;
-    background: linear-gradient(transparent, var(--book-page) 18px);
+    border-radius: 0 0 8px 8px;
+    background: var(--book-page-grain), var(--book-page);
+    box-shadow: 0 3px 0 -1px var(--book-page-edge);
+  }
+  .pal-footer::after {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    inset: auto -30px -14px;
+    height: 10px;
+    background: var(--book-cover-grain), var(--book-cover);
   }
   .pal-chip {
     padding: 4px;
