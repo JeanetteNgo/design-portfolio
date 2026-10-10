@@ -148,6 +148,112 @@
 .content-horizontal p {
   font-size: 15px;
 }
+
+/* Video controls (js/video-controls.js): a slim bar over the video's bottom edge with
+   play/pause, scrub, time and mute. It shows while paused, hovered or focused, and always on
+   touch screens, which can't hover. */
+.video-player {
+  position: relative;
+  flex: none;
+  line-height: 0;
+}
+.video-player video {
+  display: block;
+  cursor: pointer;
+}
+.video-bar {
+  position: absolute;
+  inset: auto 12px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 999px;
+  background: rgb(20 20 24 / 55%);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.video-player:hover .video-bar,
+.video-player:focus-within .video-bar,
+.video-player.is-paused .video-bar {
+  opacity: 1;
+}
+@media (hover: none) {
+  .video-bar {
+    opacity: 1;
+  }
+}
+.video-bar button {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+.video-bar button:hover {
+  background: rgb(255 255 255 / 15%);
+}
+.video-bar svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+.video-bar :focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.video-time {
+  flex: none;
+  font: 600 12px var(--font-secondary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  white-space: nowrap;
+}
+/* The scrub bar: a thin track filled up to --progress, with a round handle */
+.video-scrub {
+  flex: 1;
+  min-width: 0;
+  height: 32px;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.video-scrub::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff var(--progress, 0%), rgb(255 255 255 / 35%) 0);
+}
+.video-scrub::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #fff var(--progress, 0%), rgb(255 255 255 / 35%) 0);
+}
+.video-scrub::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  -webkit-appearance: none;
+}
+.video-scrub::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+}
 .image-horizontal {
   display: flex;
   flex-direction: row;
@@ -562,6 +668,9 @@
     height: auto;
     border-radius: 12px;
   }
+  .content-horizontal .video-player {
+    width: 100%;
+  }
   .content-horizontal p {
     font-size: 14px;
   }
@@ -603,6 +712,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .back-to-top {
+    transition: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .video-bar {
     transition: none;
   }
 }
