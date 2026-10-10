@@ -368,18 +368,32 @@
     --pad-bottom: 10px;
     --close-top: 22px;
     --close-right: 22px;
-    /* One page on phones, so no spine fold */
+    /* On phones the book opens top to bottom, so the spine folds across the middle */
     background:
       var(--book-cover-grain),
-      linear-gradient(rgb(255 255 255 / 14%), transparent 40%),
-      var(--book-cover);
+      linear-gradient(
+        transparent calc(50% - 16px),
+        rgb(var(--shadow-rgb) / 18%) calc(50% - 1px),
+        rgb(255 255 255 / 18%) calc(50% + 1px),
+        transparent calc(50% + 16px)
+      ),
+      linear-gradient(rgb(255 255 255 / 14%), transparent 40%), var(--book-cover);
   }
   .pal-book {
     display: flex;
     flex-direction: column;
     padding: 24px 20px 10px;
     border-radius: 8px;
-    background: var(--book-page-grain), var(--book-page);
+    background:
+      var(--book-page-grain),
+      linear-gradient(
+        transparent calc(50% - 48px),
+        rgb(var(--shadow-rgb) / 13%) calc(50% - 1px),
+        rgb(var(--shadow-rgb) / 22%) 50%,
+        rgb(var(--shadow-rgb) / 13%) calc(50% + 1px),
+        transparent calc(50% + 48px)
+      ),
+      var(--book-page);
     box-shadow:
       0 3px 0 -1px var(--book-page-edge),
       0 6px 10px rgb(var(--shadow-rgb) / 14%);
