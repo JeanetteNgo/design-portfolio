@@ -368,6 +368,11 @@
     --pad-bottom: 10px;
     --close-top: 22px;
     --close-right: 22px;
+    /* One page on phones, so no spine fold */
+    background:
+      var(--book-cover-grain),
+      linear-gradient(rgb(255 255 255 / 14%), transparent 40%),
+      var(--book-cover);
   }
   .pal-book {
     display: flex;
