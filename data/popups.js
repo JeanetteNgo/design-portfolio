@@ -39,7 +39,7 @@ const POPUPS = {
   'side-quests': {
     paper: true,
     title: 'Side Quests',
-    intro: 'To live with no ragrets...', // the checklist itself is in data/quests.js
+    intro: 'Live with no ragrets!!', // the checklist itself is in data/quests.js
   },
   palette: {
     title: 'Palette',
