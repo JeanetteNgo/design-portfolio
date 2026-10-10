@@ -6,8 +6,60 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 40px;
+  padding: 28px 40px 40px;
   margin: 20px auto;
+}
+
+/* Breadcrumb (built by js/site-shell.js): lines up with the body content's left edge.
+   Hover fades a soft pill in behind the link; the negative margin cancels its padding so
+   nothing shifts */
+.crumb-list {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 960px; /* = .project-container */
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-secondary);
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+.crumb-list li {
+  margin: 0;
+}
+.crumb-list li:last-child {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.crumb-list a {
+  display: inline-block;
+  padding: 2px 8px;
+  margin: -2px -8px;
+  border-radius: 999px;
+  color: var(--accent-300);
+  text-decoration: none;
+  transition:
+    color 200ms ease-out,
+    background-color 200ms ease-out;
+}
+.crumb-list a:hover,
+.crumb-list a:focus-visible {
+  color: var(--accent-500);
+  background-color: var(--accent-a8);
+  font-weight: 300;
+}
+.crumb-sep {
+  color: var(--accent-200);
+}
+.crumb-list [aria-current='page'] {
+  color: var(--text-accent);
+  font-weight: 400;
 }
 .project-header img {
   border-radius: 20px;
@@ -117,43 +169,226 @@
   display: flex;
 }
 
-/* Back button */
-.case-study-back {
-  max-width: 960px;
-  margin: 24px auto 0;
-  padding: 0 20px;
-}
-.back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--text-accent);
-  text-transform: uppercase;
-  letter-spacing: 0.6px;
-  text-decoration: none;
-  background-color: var(--surface-glass);
-  border: 2px solid var(--accent-100);
-  border-radius: 100px;
-  padding: 8px 16px 8px 12px;
+/* Back to top: a rocket on a dock-style tile, in the bottom corner once you've scrolled
+   down a way. It picks up like the dock icons on hover. Clicking it shakes the rocket
+   upright, puffs out clouds and blasts it off as the page shoots to the top
+   (js/site-shell.js adds .is-visible and .is-launching) */
+.back-to-top {
+  --rocket-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 900;
+  --icon-pop: translateY(-4%) rotate(-6deg) scale(1.15);
+  isolation: isolate;
+  width: 44px;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 20%;
+  background: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px);
   transition:
-    color 300ms ease,
-    border-color 300ms ease,
-    transform 300ms ease;
+    opacity 400ms var(--rocket-ease),
+    transform 400ms var(--rocket-ease),
+    visibility 0s linear 400ms;
 }
-.back-btn:hover {
-  border-color: var(--accent-200);
-  transform: translateX(-2px);
-  font-weight: 800;
+/* The tile is its own layer so it can vanish into the smoke while the rocket flies on */
+.back-to-top::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  box-sizing: border-box;
+  border-radius: inherit;
+  background: var(--surface-glass);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--accent-a14);
+  box-shadow: 0 2px 6px var(--accent-a8);
 }
-.back-btn .back-arrow {
-  font-size: 16px;
-  line-height: 1;
-  transition: transform 200ms ease;
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
 }
-.back-btn:hover .back-arrow {
-  transform: translateX(-1px);
+
+/* The wrapper holds the tilt and the launch; the svg takes the dock's hover pop, so the
+   two don't fight over transform */
+.back-to-top-rocket {
+  position: absolute;
+  left: 6%;
+  top: 6%;
+  width: 88%;
+  height: 88%;
+  transform: rotate(45deg);
+}
+.back-to-top-rocket svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform-origin: 50% 70%;
+  transition:
+    transform 0.28s cubic-bezier(0.3, 1.5, 0.5, 1),
+    filter 0.2s ease;
+  filter: drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent)
+    drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent) drop-shadow(0 0 0 transparent);
+}
+.back-to-top:focus-visible {
+  transform: var(--tile-lift);
+}
+.back-to-top:focus-visible .back-to-top-rocket svg {
+  transform: var(--icon-pop);
+  filter: var(--icon-outline);
+}
+@media (hover: hover) {
+  .back-to-top.is-visible:hover {
+    transform: var(--tile-lift);
+  }
+  .back-to-top:hover .back-to-top-rocket svg {
+    transform: var(--icon-pop);
+    filter: var(--icon-outline);
+  }
+}
+
+.rocket-flame {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+
+/* Label beside the tile, styled like the dock's */
+.back-to-top-tip {
+  position: absolute;
+  right: calc(100% + 10px);
+  top: 50%;
+  padding: 4px 10px;
+  border-radius: 10px;
+  white-space: nowrap;
+  font: 700 12px var(--font-primary);
+  background: var(--text-strong);
+  color: var(--surface);
+  opacity: 0;
+  transform: translate(8px, -50%);
+  transition:
+    opacity 0.18s ease,
+    transform 0.25s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .back-to-top:hover .back-to-top-tip {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+.back-to-top:focus-visible .back-to-top-tip {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+/* Exhaust smoke: soft white puffs that billow out sideways along the ground and fade,
+   plus a couple of butter sparks */
+.back-to-top-puffs {
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  pointer-events: none;
+}
+.back-to-top-puffs span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--s);
+  height: var(--s);
+  margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 32%, #ffffff 50%, #f7ebe8 100%);
+  box-shadow: 0 4px 10px rgb(var(--accent-rgb) / 20%);
+  opacity: 0;
+}
+.back-to-top-puffs span:nth-child(1) { --s: 24px; --dx: 0px; --dy: 5px; --d: 0ms; }
+.back-to-top-puffs span:nth-child(2) { --s: 21px; --dx: -21px; --dy: 2px; --d: 40ms; }
+.back-to-top-puffs span:nth-child(3) { --s: 21px; --dx: 21px; --dy: 2px; --d: 40ms; }
+.back-to-top-puffs span:nth-child(4) { --s: 16px; --dx: -37px; --dy: -5px; --d: 100ms; }
+.back-to-top-puffs span:nth-child(5) { --s: 16px; --dx: 35px; --dy: -5px; --d: 100ms; }
+/* Sparks */
+.back-to-top-puffs span:nth-child(6),
+.back-to-top-puffs span:nth-child(7) {
+  background: #ffd36e;
+  box-shadow: none;
+}
+.back-to-top-puffs span:nth-child(6) { --s: 6px; --dx: -24px; --dy: -24px; --d: 20ms; }
+.back-to-top-puffs span:nth-child(7) { --s: 5px; --dx: 22px; --dy: -27px; --d: 60ms; }
+
+.back-to-top.is-launching {
+  pointer-events: none;
+}
+.back-to-top.is-launching .back-to-top-tip {
+  opacity: 0;
+}
+.back-to-top.is-launching::before {
+  animation: tile-poof 250ms ease-in 300ms forwards;
+}
+.back-to-top.is-launching .back-to-top-rocket {
+  animation: rocket-launch 1100ms linear forwards;
+}
+.back-to-top.is-launching .rocket-flame {
+  animation: rocket-boost 300ms var(--rocket-ease) 250ms forwards;
+}
+.back-to-top.is-launching .back-to-top-puffs span {
+  animation: rocket-puff 1000ms var(--rocket-ease) calc(300ms + var(--d)) forwards;
+}
+
+@keyframes rocket-launch {
+  0% {
+    transform: rotate(45deg);
+  }
+  7% {
+    transform: translateX(-1.5px) rotate(40deg); /* ignition shake */
+  }
+  14% {
+    transform: translateX(1.5px) rotate(50deg);
+  }
+  20% {
+    transform: rotate(30deg);
+  }
+  30% {
+    transform: translateY(2px) rotate(0deg); /* upright, crouched */
+    animation-timing-function: cubic-bezier(0.55, 0, 0.75, 0.2);
+  }
+  100% {
+    transform: translateY(-110vh) rotate(0deg);
+  }
+}
+@keyframes tile-poof {
+  to {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+@keyframes rocket-boost {
+  to {
+    transform: scale(1.15, 2);
+  }
+}
+@keyframes rocket-puff {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.3);
+  }
+  15% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(1.5);
+  }
 }
 
 /* Prev / Next Project */
@@ -266,6 +501,10 @@
     padding: 12px;
     max-width: 100%;
   }
+  .crumb-list {
+    max-width: 100%;
+    margin-top: 4px;
+  }
   .project-header img {
     border-radius: 12px;
     max-width: 100%;
@@ -335,10 +574,10 @@
     border-radius: 12px;
   }
 
-  .case-study-back {
-    max-width: 96%;
-    padding: 0 16px;
-    margin-top: 16px;
+  .back-to-top {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: 40px;
   }
   .project-pagination {
     max-width: 96%;
@@ -359,5 +598,11 @@
   }
   .next-card .pagination-tag-row {
     justify-content: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-to-top {
+    transition: none;
   }
 }

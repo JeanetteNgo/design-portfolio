@@ -12,13 +12,24 @@ nav {
   left: 0;
   z-index: 1000;
   box-sizing: border-box;
-  min-height: var(--nav-height);
+  display: flex;
+  flex-direction: column;
   background-color: var(--nav-bg);
   backdrop-filter: blur(40px);
   border-bottom: 1px solid var(--accent-a8);
   transition:
     background-color 200ms ease,
     border-color 200ms ease;
+}
+/* Once scrolled the nav slims down; .nav-spacer (added after it by js/site-shell.js) grows
+   by the same amount so the page underneath doesn't jump. A spacer rather than a margin,
+   since a margin would merge with the next element's own margin */
+.nav-spacer {
+  height: 0;
+  transition: height var(--nav-ease);
+}
+nav.is-scrolled ~ .nav-spacer {
+  height: calc(var(--nav-height) - var(--nav-height-scrolled));
 }
 /* Home only: the nav blends into the page at the top, and gets its background
    and line once you scroll (js/site-shell.js adds .is-scrolled) */
@@ -32,12 +43,43 @@ body[data-page='home'] nav:not(.is-scrolled) {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: calc(var(--nav-height) - 1px); /* nav's bottom border makes up the rest */
   padding: 12px 0 8px;
   margin: 0 auto;
+  transition:
+    min-height var(--nav-ease),
+    padding var(--nav-ease);
 }
 .nav-container img {
   width: 48px;
+  transition: width var(--nav-ease);
 }
+nav.is-scrolled .nav-container {
+  min-height: calc(var(--nav-height-scrolled) - 1px);
+  padding: 0;
+}
+nav.is-scrolled .nav-container img {
+  width: var(--nav-logo-scrolled);
+}
+nav.is-scrolled .nav-links li {
+  font-size: var(--nav-link-scrolled);
+}
+/* Case study pages: a reading progress line along the nav's bottom edge, over its hairline.
+   js/site-shell.js adds it and sets --progress as you scroll */
+.nav-progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-100), var(--accent-200));
+  border-radius: 3px;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+}
+
 /* The logo is painted in the accent colour through its own shape, so it follows the colour
    theme; the img underneath stays for its size and alt text */
 .logo {
@@ -70,6 +112,7 @@ body[data-page='home'] nav:not(.is-scrolled) {
   font-weight: 900;
   text-transform: uppercase;
   margin: 0;
+  transition: font-size var(--nav-ease);
 }
 .nav-links a {
   color: var(--nav-link);
@@ -181,5 +224,23 @@ footer .copyright {
     text-align: center;
     font-size: 14px;
     margin: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --nav-height-scrolled: 48px;
+    --nav-logo-scrolled: 30px;
+    --nav-link-scrolled: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  nav,
+  .nav-container,
+  .nav-container img,
+  .nav-links li,
+  .nav-spacer {
+    transition: none;
   }
 }
