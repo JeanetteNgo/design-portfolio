@@ -378,13 +378,11 @@
         transparent calc(50% + 16px)
       ),
       linear-gradient(rgb(255 255 255 / 14%), transparent 40%), var(--book-cover);
-    height: 100vh;
-    height: calc(100dvh - 32px);
   }
-  /* One page filling the screen, folded across the middle: the title and sample card above
-     the fold, the chips below it, then Apply and Esc pinned along the bottom. The fixed rows
-     above (20 padding + 32 + 48) match those below (52 + 44 + 4 padding), so the two 1fr
-     rows meet exactly at the fold. */
+  /* One page folded across the middle: the title and sample card above the fold, the chips
+     below it, then Apply and Esc along the bottom. The two 1fr rows always come out the same
+     height (the taller of the card and the chips), and the fixed rows above (20 padding + 32
+     + 48) match those below (52 + 44 + 4 padding), so the rows meet exactly at the fold. */
   .pal-book {
     display: grid;
     grid-template-columns: 1fr;
@@ -436,9 +434,8 @@
     min-height: 0;
   }
   .pal-shades li {
-    flex: 1 1 0;
-    height: auto;
-    min-height: 12px;
+    flex: 1 0 auto;
+    height: 20px;
   }
   .pal-card-foot {
     margin-top: 8px;
@@ -479,8 +476,11 @@
   }
 }
 
-/* Shorter phones: smaller chips, and the sample card drops its small print */
+/* Shorter phones: slimmer bands, smaller chips, and the sample card drops its small print */
 @media (max-width: 560px) and (max-height: 720px) {
+  .pal-shades li {
+    height: 16px;
+  }
   .pal-chips {
     gap: 10px;
     padding-top: 12px;
